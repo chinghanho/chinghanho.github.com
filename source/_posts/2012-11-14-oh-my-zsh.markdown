@@ -1,0 +1,74 @@
+---
+layout: post
+title: "OH MY ZSHELL!"
+date: 2012-11-14 11:22
+comments: true
+categories: Programing
+---
+2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 [Homebrew][homebrew] 安裝新版本，管理也會比較方便。
+
+[homebrew]: http://mxcl.github.com/homebrew/
+
+2012.11.23 更新：今天換成一個從 [agnoster](https://github.com/agnoster) fork 出來的[主題](https://gist.github.com/3751033)，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 [Github][chh-github] 上下載。要有這個效果必須使用這[三種特殊字型][vim-powerline-patched-fonts]；而我的終端機主題用的是 [@godfat][godfat] 的 [DarkIllumina][darkillumina]。
+
+[vim-powerline-patched-fonts]: https://gist.github.com/1595572
+[godfat]: https://github.com/godfat
+[darkillumina]: https://raw.github.com/godfat/dev-tool/master/.config/iterm/DarkIllumina.itermcolors
+[chh-github]: https://raw.github.com/chinghanho/.dotfiles/master/.oh-my-zsh/custom/chh.zsh-theme
+
+![](http://lh5.googleusercontent.com/-3kZx026TRBs/UK7yHhBcRSI/AAAAAAAAFYM/XPmrOwB_E60/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-23%2520%25E4%25B8%258A%25E5%258D%258811.48.07.png)
+
+PS. 小叮嚀：背景不要用半透明的，對比要設到最小，這樣的顯示效果是最棒的。:)
+
+2012.11.15 更新：用了兩天，目前發現最大的問題就是 Zsh 啟動效能有點慢，每新開一個 session 都會花上快 2 秒鐘，不過還不致於影響到心情。:p
+
+****
+
+原本對於 Bash 用起來也沒什麼不滿，只是稍嫌單調的配色讓人感到有點無聊而已，而昨天把 [oh-my-zsh] 安裝起來後，一開始雖然對豐富的色彩感到新鮮，可是很快就疲勞了。
+
+不過 oh-my-zsh 還有超級強大的 auto-complete 功能，真的是很好玩的東西，敲一敲 tab 鍵就可以列出所有指令和說明，而且很多補丁和功能都已經有人幫你寫好了，所以我打算再玩一陣子看看。:p
+
+安裝方式也超級簡單，就用官方建議的自動安裝方法，只需要一條 `curl` 指令：
+
+    curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+
+之前我的 Bash 調教起來也是有不錯的色彩區別，不過 oh-my-zsh 做的更極致，可以在 [Github][oh-my-zsh-themes-wiki] 上或是 [zshthem.es] 上尋找喜歡的樣式，目前這是我用的主題「[nebirhos]」：
+
+![](https://lh5.googleusercontent.com/-YC6ShHhxmrQ/UKMXilZfROI/AAAAAAAAFVk/KYdxbNA9gyY/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-14%2520%25E4%25B8%258A%25E5%258D%258811.40.03.png)
+
+我不是很喜歡前面那個 username 的格式，可是我還沒研究過 Zsh 的語法怎麼寫，也不會改，看起來跟 Bash 好像完全不一樣，等有時間再來摸摸看。
+
+因為平常會有習慣做 [quantified self][quantified-self] 的統計，包括用終端機輸入的指令（果然夠宅 XD），但是從 Bash 切到 Zsh 後記錄檔案就換成 .zsh_history 了，為了年底記錄所以先在這邊些把 Bash 用過指令統計導出來：
+
+     1	1124  24.6006%    c
+     2	985   21.5583%    git
+     3	343   7.50711%    rails
+     4	328   7.17881%    cd
+     5	314   6.8724%     rspec
+     6	257   5.62486%    la
+     7	197   4.31167%    rake
+     8	154   3.37054%    s
+     9	109   2.38564%    ..
+    10	95    2.07923%    rvm
+    11	68    1.48829%    guard
+    12	36    0.787919%   bundle
+    13	29    0.634712%   ssh
+    14	28    0.612826%   pry
+    15	27    0.590939%   open
+    16	26    0.569052%   middleman
+    17	26    0.569052%   gem
+    18	24    0.525279%   rm
+    19	24    0.525279%   heroku
+    20	23    0.503392%   nvm
+
+看起來很少對吧？這是因為這份記錄只有不到二十天，原本 Bash 預設的歷史紀錄 size 很小，後來我才發現，所以我現在把它改成 1000000000 應該夠我用 10 年了！XD
+
+最後我整理了一下自己的 dotfiles，然後寫了一個 [Rakefile][rakefile] 腳本，以後如果換新機器，只要從 [Github][dotfiles] 上 clone 下來，執行 `rake install` 就完成了，超級方便的。
+
+[oh-my-zsh]: https://github.com/robbyrussell/oh-my-zsh
+[nebirhos]: https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/nebirhos.zsh-theme
+[oh-my-zsh-themes-wiki]: https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+[zshthem.es]: http://zshthem.es/
+[quantified-self]: http://en.wikipedia.org/wiki/Quantified_Self
+[rakefile]: https://github.com/chinghanho/.dotfiles/blob/master/Rakefile
+[dotfiles]: https://github.com/chinghanho/.dotfiles
