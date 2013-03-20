@@ -31,6 +31,8 @@ categories: Tech
 
 我目前把訂閱的清單暫時轉移到 [Feedly][feedly-google-reader] 去，或許哪天心血來潮還是會去翻翻看有什麼東西可以挖。
 
+2013.03.20 更新：Feedly 的套件需要存取所有網站資料的授權，因為它會在每個網站上嵌入一個小小的按鈕方便分享，而要使用 Feedly 似乎一定得裝他們的套件，實在太不乾淨，所以我決定不用了。
+
 ![removing-google-reader](http://lh4.googleusercontent.com/-nCh6xqkpDYQ/UUMzsAes5NI/AAAAAAAAF6s/uTRxBGGa4JU/s578/removing-google-reader.png)
 
 最後，跟 Google Reader 說再見的時候到了，謝謝你曾經提供這麼棒的服務來製造我的資訊焦慮，讓我一度以為你是那麼不可或缺，但又同時讓我理解到你並不是那麼地重要。
