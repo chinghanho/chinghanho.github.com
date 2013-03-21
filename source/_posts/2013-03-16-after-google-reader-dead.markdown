@@ -33,6 +33,10 @@ categories: Tech
 
 2013.03.20 更新：Feedly 的套件需要存取所有網站資料的授權，因為它會在每個網站上嵌入一個小小的按鈕方便分享，而要使用 Feedly 似乎一定得裝他們的套件，實在太不乾淨，所以我決定不用了。
 
+2013.03.21 更新：在 [Feedly 的偏好設定頁面][feedly-preferences] 可以關掉那顆 mini 按鈕，感謝網友的告知。雖然還是不喜歡看個 RSS 也要授權那麼多東西，不過我打算還是用一陣子觀察看看。
+
+[feedly-preferences]: http://www.feedly.com/home#preferences/mini%20toolbar
+
 ![removing-google-reader](http://lh4.googleusercontent.com/-nCh6xqkpDYQ/UUMzsAes5NI/AAAAAAAAF6s/uTRxBGGa4JU/s578/removing-google-reader.png)
 
 最後，跟 Google Reader 說再見的時候到了，謝謝你曾經提供這麼棒的服務來製造我的資訊焦慮，讓我一度以為你是那麼不可或缺，但又同時讓我理解到你並不是那麼地重要。
