@@ -101,3 +101,17 @@ tmux 預設的操作要加上 <kbd>Ctrl-b</kbd> 功能鍵；tmux 也有類似 Vi
 iTerm2 [wiki 頁面](https://code.google.com/p/iterm2/wiki/TmuxIntegration)上有教怎麼跟 tmux 整合，看了一下說要下載一些東西，然後還要編譯過才能用，可是我發現我直接輸入 `tmux -CC` 就可以用了，不清楚發生什麼事。
 
 跟 iTerm2 整合的好處是可以用 iTerm2 的分頁和切割區塊功能取代 tmux 那些一堆的指令，可是我試用的結果發現很多不方便的地方，所以我還是用原本 tmux 切割區塊的方式。
+
+## 已知問題
+
+目前發現有兩個問題。
+
+在 tmux 下無法使用系統 `pbcopy` 等複製貼上的指令，在 [thoughtbot](http://robots.thoughtbot.com/post/19398560514/how-to-copy-and-paste-with-tmux-on-mac-os-x) 網站上找到解決方法：
+
+    brew install reattach-to-user-namespace
+
+然後在 _.tmux.conf_ 檔案裡加上以下這行設定：
+
+    set-option -g default-command "reattach-to-user-namespace -l zsh"
+
+還有個問題是 `git commit` 我預設用的是 Sublime Text 2 編輯器，可是編輯提交訊息後會卡住不動，也就是 `subl -w` 無法返回，目前無解。
