@@ -35,7 +35,7 @@ categories: Programing
       +---- shell
       +---- shell
 
-透過 tmux 仍然會保持所有 shells 繼續運作，即便把整個終端機都關閉，因此可以之後重新將他們重新掛載上去，這也是為什麼在 tmux 下用 ssh 登入遠端主機不會斷線的原因：
+tmux 採用 client-server 的 model，每一個 session 作為一個 client。透過 tmux 仍然會保持所有 shells 繼續運作，即便把整個終端機都關閉，因此可以之後重新將他們重新掛載上去，這也是為什麼在 tmux 下用 ssh 登入遠端主機不會斷線的原因：
 
     iterm2
       +---- tmux
