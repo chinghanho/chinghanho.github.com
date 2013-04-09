@@ -67,11 +67,13 @@ tmux 預設的操作要加上 <kbd>Ctrl-b</kbd> 功能鍵；tmux 也有類似 Vi
 要將目前視窗切割多個區塊，快捷鍵如下：
 
 * <kbd>Ctrl-b</kbd> + <kbd>%</kbd>：垂直分離視窗；
-* <kbd>Ctrl-b</kbd> + <kbd>:split-window</kbd>：水平分離視窗；
+* <kbd>Ctrl-b</kbd> + `:split-window`：水平分離視窗；
 * <kbd>Ctrl-b</kbd> + <kbd>o</kbd>：移往下一個區塊；
 * <kbd>Ctrl-b</kbd> + <kbd>q</kbd>：顯示區塊的數字代號，當數字顯示時使用數字鍵移往該區塊；
 * <kbd>Ctrl-b</kbd> + <kbd>{</kbd>：將目前的區塊移往左邊；
 * <kbd>Ctrl-b</kbd> + <kbd>}</kbd>：將目前的區塊移往右邊；
+
+## 個人設定
 
 切割面板區塊的快捷鍵好像有點難記，可以在根目錄下建立 _~/.tmux.conf_ 檔案，定義自己容易記憶的快捷鍵：
 
@@ -79,12 +81,22 @@ tmux 預設的操作要加上 <kbd>Ctrl-b</kbd> 功能鍵；tmux 也有類似 Vi
     bind | split-window -h
     bind – split-window -v
 
-此外，推薦這兩個連結的文章，介紹非常詳細：
+<kbd>Ctrl-b</kbd> 距離太遠也很難按，先前有用 GNU screen 的人會將它改成 <kbd>Ctrl-a</kbd>，可是這會和某些快捷鍵衝突，所以我把它改成 <kbd>Ctrl-f</kbd>：
+
+    set -g prefix C-f
+    unbind C-b
+    bind C-f send-prefix
+
+我的 .tmux.conf 檔案放在我 Github 上的 [.dotfiles](https://github.com/chinghanho/.dotfiles/blob/master/.tmux.conf) 裡，有興趣可以去看看，這裡附上最後我修改的成果圖，加上原本 [oh-my-zsh](http://blog.chh.tw/posts/oh-my-zsh/) 修改結果，整個變得超級花俏啊 XD（點圖可放大）：
+
+[![tmux-final](https://lh5.googleusercontent.com/-zmNq9I6M8wY/UWQHQAdk1BI/AAAAAAAAF_s/ejDrVE8N_4M/s690/tmux-final.png)](https://lh5.googleusercontent.com/-zmNq9I6M8wY/UWQHQAdk1BI/AAAAAAAAF_s/ejDrVE8N_4M/s1788/tmux-final.png)
+
+底下的 status bar 是抄 [wemux](https://github.com/zolrath/wemux) 作者的設定，我覺得非常漂亮。最後推薦這兩個連結的文章，介紹非常詳細：
 
 * [TMUX – The Terminal Multiplexer (Part 1)](http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/)
 * [TMUX – The Terminal Multiplexer (Part 2)](http://blog.hawkhost.com/2010/07/02/tmux-%E2%80%93-the-terminal-multiplexer-part-2/)
 
-## 可以跟 iTerm2 整合
+## 可以與 iTerm2 整合
 
 iTerm2 [wiki 頁面](https://code.google.com/p/iterm2/wiki/TmuxIntegration)上有教怎麼跟 tmux 整合，看了一下說要下載一些東西，然後還要編譯過才能用，可是我發現我直接輸入 `tmux -CC` 就可以用了，不清楚發生什麼事。
 
