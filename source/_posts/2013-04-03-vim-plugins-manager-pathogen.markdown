@@ -53,3 +53,5 @@ git pull origin master
 ## 後記
 
 平常被 Sublime Text 的 Package Control 寵慣了，來用 Vim 感到非常的麻煩和不習慣，而且 Command-T 安裝後還要用 Ruby 跟 C 去編譯才能用，這到底是什麼鬼編輯器啦！XD
+
+2013.04.12 更新：今天把 Command-T 移除掉換用 [ctrlp](https://github.com/kien/ctrlp.vim)，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
