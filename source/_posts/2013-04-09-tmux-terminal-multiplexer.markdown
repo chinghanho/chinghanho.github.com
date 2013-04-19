@@ -28,6 +28,8 @@ categories: Programing
 
 ## tmux 運作方式
 
+2013.04.19 更新：Youtube 上 [tmux Quick Start](http://www.youtube.com/watch?v=wKEGA8oEWXw) 這部影片介紹非常清楚，值得一看。
+
 從 SuperUser 看到的[答案](http://superuser.com/questions/398735/difference-between-tmux-and-shell-split-options-on-iterm2)，如果關閉終端機掛載在上面的 shells 也會跟著被刪除，結構就像是這樣：
 
     iterm2
