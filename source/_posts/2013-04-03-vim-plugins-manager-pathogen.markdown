@@ -7,6 +7,9 @@ categories: Programing
 ---
 ![mvim-screenshot](https://lh5.googleusercontent.com/-8oZ4apnadkQ/UVuFq3nS-NI/AAAAAAAAF9A/oJi0DRBBXYk/s690/mvim-screenshot.png)
 
+2013.04.12 更新：今天把 Command-T 移除掉換用 [ctrlp](https://github.com/kien/ctrlp.vim)，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
+2013.05.25 更新：今天起改用 Vundle 來管理，可以參考我的新文章：「[更好用的 Vim 外掛管理工具：Vundle](/posts/vim-vundle/)」
+
 ## 安裝 Pathogen
 
 管理 Vim 補丁我用的是 [Pathogen](https://github.com/tpope/vim-pathogen) 這套，可以讓所有補丁統一放在 _~/.vim/bundle_ 下，每個補丁就是一個獨立的資料夾，想要移除就直接砍掉即可。安裝方法是將 _pathogen.vim_ 腳本放在 _~/.vim/autoload_ 目錄下，可以用以下指令完成：
@@ -53,5 +56,3 @@ git pull origin master
 ## 後記
 
 平常被 Sublime Text 的 Package Control 寵慣了，來用 Vim 感到非常的麻煩和不習慣，而且 Command-T 安裝後還要用 Ruby 跟 C 去編譯才能用，這到底是什麼鬼編輯器啦！XD
-
-2013.04.12 更新：今天把 Command-T 移除掉換用 [ctrlp](https://github.com/kien/ctrlp.vim)，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
