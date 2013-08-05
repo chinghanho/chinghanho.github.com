@@ -177,8 +177,8 @@ BEM 即 Block、Element、Modifier 的縮寫，這是一種 class 的命名技�
 ``` scss
 .sidebar {
   .sidebar--left__section {
-    .sidebar--left__section__header {}
-    .sidebar--left__section__footer {}
+    .sidebar--left__section--header {}
+    .sidebar--left__section--footer {}
   }
 }
 ```
