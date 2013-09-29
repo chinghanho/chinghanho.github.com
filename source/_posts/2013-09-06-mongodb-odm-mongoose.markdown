@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MongoDB ODM mongoose 淺談"
+title: "MongoDB 的 ODM：mongoose 簡單介紹"
 date: 2013-09-06 11:11
 comments: true
 categories: Programing
