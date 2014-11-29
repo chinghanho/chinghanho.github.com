@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Why no NFC in iPhone 5? - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="隨著 iPhone 5 的發表，NFC 這個東西被討論的越來越多，原本我不是很在乎這東西的，所以一直沒去關注。後來被朋友一句「（iPhone）該有的都沒有」刺激了一下，所以想去瞭解一下為什麼 Apple 沒有這個「該有」卻沒有的 NFC。 回顧 NFC 的歷史，這項技術最早是在 2004 年由 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/why-no-nfc-in-iphone-5/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="Why no NFC in iPhone 5?" /><meta itemprop="name" content="Why no NFC in iPhone 5?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/why-no-nfc-in-iphone-5/" />
+<meta property="og:description" content="隨著 iPhone 5 的發表，NFC 這個東西被討論的越來越多，原本我不是很在乎這東西的，所以一直沒去關注。後來被朋友一句「（iPhone）該有的都沒有」刺激了一下，所以想去瞭解一下為什麼 Apple 沒有這個「該有」卻沒有的 NFC。 回顧 NFC 的歷史，這項技術最早是在 2004 年由 &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2012-09-18 12:26:00 +0800" />
+
+<meta property="article:section" content="Tech" />
+<meta itemprop="description" content="隨著 iPhone 5 的發表，NFC 這個東西被討論的越來越多，原本我不是很在乎這東西的，所以一直沒去關注。後來被朋友一句「（iPhone）該有的都沒有」刺激了一下，所以想去瞭解一下為什麼 Apple 沒有這個「該有」卻沒有的 NFC。 回顧 NFC 的歷史，這項技術最早是在 2004 年由 &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Why No NFC in iPhone 5?</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-18T12:26:00+08:00" pubdate data-updated="true">Sep 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>隨著 iPhone 5 的發表，NFC 這個東西被討論的越來越多，原本我不是很在乎這東西的，所以一直沒去關注。後來被朋友一句「（iPhone）該有的都沒有」刺激了一下，所以想去瞭解一下為什麼 Apple 沒有這個「該有」卻沒有的 NFC。</p>
+
+<p>回顧 NFC 的歷史，這項技術最早是在 2004 年由 Nokia、Phillips 和 Sony 共同推動的，而 Apple 則是 2008 年就開始著手將 NFC 與多項設備進行結合，並且申請專利<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，可是過了四年至今都已經 2012 年了卻仍然不見 Apple 有任何產品配備 NFC 技術，這中間發生了什麼問題？</p>
+
+<p>目前的瓶頸看來絕對不是技術問題，而是整個產業生態系的普及率造成的瓶頸，這中間涉及手機製造商、系統商、軟體商、金融機構、設備製造商以及店家，從上而下的全面支持。例如 Apple 把 NFC 跟手機和 iOS 整合後，然後要跟金融機構合作建立完善的金流系統，最後是說服店家必須採購設備來使用 NFC。</p>
+
+<p>從這樣的流程中大概可以看出幾個問題：</p>
+
+<ol>
+<li>跟哪一家金融機構合作？</li>
+<li>店家願不願意購買設備？</li>
+</ol>
+
+
+<p>NFC 等於是軟體與金流的整合，但是全球這麼多金融機構牽扯更多的利益糾葛，Apple 再怎麼神通廣大也很未必能搞定這個完全不同領域的複雜世界<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>；再來就是效益評估後有沒有辦法讓店家願意採購 NFC 的設備<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>，如果不夠普及那也是做了一個沒人用的功能，這顯然並不是 Apple 所樂見的。</p>
+
+<p>軟硬體整合向來是 Apple 訴求的核心，如果只推出了一個沒辦法妥善整合軟體與金流的 NFC，那其實就跟在 iPhone 背面掛一個信用卡功能的悠遊卡卡套一樣。</p>
+
+<p>所以我猜目前 Apple 是想先透過 Passbook 試試水溫，施以緩兵之計來爭取更多時間和談判空間來跟金融機構合作，如果 Passbook 使用狀況不錯，那麼跟金融機構的談判也會容易許多。畢竟 Apple 在 NFC 上投入了很多力氣，不應該就這樣石沈大海。</p>
+
+<p>而且 Phill Schiller 話也沒說死：</p>
+
+<blockquote><p>Passbook does the kinds of things customers need today.</p></blockquote>
+
+<p>總之，期待之後的發展。</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>在最近似乎有部分已經<a href="http://unwire.hk/2012/07/11/apple-nfc-patent-passed/apple/" alt="apple-nfc-patent-passed">通過專利申請</a>了。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>同樣的困境，其他的手機製造商也是會遇到。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>Apple 賺這麼多乾脆幫他們買好了。XD <a href='#fnref:3' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-18T12:26:00+08:00" pubdate data-updated="true">Sep 18<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>Tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/why-no-nfc-in-iphone-5/" data-via="" data-counturl="http://blog.chh.tw/posts/why-no-nfc-in-iphone-5/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/the-advantage-of-the-16-9-display/" title="Previous Post: The Advantage Of The 16:9 Display">&laquo; The Advantage Of The 16:9 Display</a>
+      
+      
+        <a class="basic-alignment right" href="/posts/wo-de-mac-ruan-ti-gong-ju-xiang/" title="Next Post: 2012 我的 Mac 軟體工具箱">2012 我的 Mac 軟體工具箱 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/why-no-nfc-in-iphone-5/';
+        var disqus_url = 'http://blog.chh.tw/posts/why-no-nfc-in-iphone-5/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

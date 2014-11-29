@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>OH MY ZSHELL! - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/oh-my-zsh/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="OH MY ZSHELL!" /><meta itemprop="name" content="OH MY ZSHELL!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/oh-my-zsh/" />
+<meta property="og:description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2012-11-14 11:22:00 +0800" />
+
+<meta property="article:section" content="Programing" />
+<meta itemprop="description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">OH MY ZSHELL!</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-14T11:22:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 <a href="http://mxcl.github.com/homebrew/">Homebrew</a> 安裝新版本，管理也會比較方便。</p>
+
+<p>2012.11.23 更新：今天換成一個從 <a href="https://github.com/agnoster">agnoster</a> fork 出來的<a href="https://gist.github.com/3751033">主題</a>，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 <a href="https://raw.github.com/chinghanho/.dotfiles/master/.oh-my-zsh/custom/chh.zsh-theme">Github</a> 上下載。要有這個效果必須使用這<a href="https://gist.github.com/1595572">三種特殊字型</a>；而我的終端機主題用的是 <a href="https://github.com/godfat">@godfat</a> 的 <a href="https://raw.github.com/godfat/dev-tool/master/.config/iterm/DarkIllumina.itermcolors">DarkIllumina</a>。</p>
+
+<p><img src="http://lh5.googleusercontent.com/-3kZx026TRBs/UK7yHhBcRSI/AAAAAAAAFYM/XPmrOwB_E60/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-23%2520%25E4%25B8%258A%25E5%258D%258811.48.07.png" alt="" /></p>
+
+<p>PS. 小叮嚀：背景不要用半透明的，對比要設到最小，這樣的顯示效果是最棒的。:)</p>
+
+<p>2012.11.15 更新：用了兩天，目前發現最大的問題就是 Zsh 啟動效能有點慢，每新開一個 session 都會花上快 2 秒鐘，不過還不致於影響到心情。:p</p>
+
+<hr />
+
+<p>原本對於 Bash 用起來也沒什麼不滿，只是稍嫌單調的配色讓人感到有點無聊而已，而昨天把 <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> 安裝起來後，一開始雖然對豐富的色彩感到新鮮，可是很快就疲勞了。</p>
+
+<p>不過 oh-my-zsh 還有超級強大的 auto-complete 功能，真的是很好玩的東西，敲一敲 tab 鍵就可以列出所有指令和說明，而且很多補丁和功能都已經有人幫你寫好了，所以我打算再玩一陣子看看。:p</p>
+
+<p>安裝方式也超級簡單，就用官方建議的自動安裝方法，只需要一條 <code>curl</code> 指令：</p>
+
+<pre><code>curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+</code></pre>
+
+<p>之前我的 Bash 調教起來也是有不錯的色彩區別，不過 oh-my-zsh 做的更極致，可以在 <a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Themes">Github</a> 上或是 <a href="http://zshthem.es/">zshthem.es</a> 上尋找喜歡的樣式，目前這是我用的主題「<a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/nebirhos.zsh-theme">nebirhos</a>」：</p>
+
+<p><img src="https://lh5.googleusercontent.com/-YC6ShHhxmrQ/UKMXilZfROI/AAAAAAAAFVk/KYdxbNA9gyY/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-14%2520%25E4%25B8%258A%25E5%258D%258811.40.03.png" alt="" /></p>
+
+<p>我不是很喜歡前面那個 username 的格式，可是我還沒研究過 Zsh 的語法怎麼寫，也不會改，看起來跟 Bash 好像完全不一樣，等有時間再來摸摸看。</p>
+
+<p>因為平常會有習慣做 <a href="http://en.wikipedia.org/wiki/Quantified_Self">quantified self</a> 的統計，包括用終端機輸入的指令（果然夠宅 XD），但是從 Bash 切到 Zsh 後記錄檔案就換成 .zsh_history 了，為了年底記錄所以先在這邊些把 Bash 用過指令統計導出來：</p>
+
+<pre><code> 1  1124  24.6006%    c
+ 2  985   21.5583%    git
+ 3  343   7.50711%    rails
+ 4  328   7.17881%    cd
+ 5  314   6.8724%     rspec
+ 6  257   5.62486%    la
+ 7  197   4.31167%    rake
+ 8  154   3.37054%    s
+ 9  109   2.38564%    ..
+10  95    2.07923%    rvm
+11  68    1.48829%    guard
+12  36    0.787919%   bundle
+13  29    0.634712%   ssh
+14  28    0.612826%   pry
+15  27    0.590939%   open
+16  26    0.569052%   middleman
+17  26    0.569052%   gem
+18  24    0.525279%   rm
+19  24    0.525279%   heroku
+20  23    0.503392%   nvm
+</code></pre>
+
+<p>看起來很少對吧？這是因為這份記錄只有不到二十天，原本 Bash 預設的歷史紀錄 size 很小，後來我才發現，所以我現在把它改成 1000000000 應該夠我用 10 年了！XD</p>
+
+<p>最後我整理了一下自己的 dotfiles，然後寫了一個 <a href="https://github.com/chinghanho/.dotfiles/blob/master/Rakefile">Rakefile</a> 腳本，以後如果換新機器，只要從 <a href="https://github.com/chinghanho/.dotfiles">Github</a> 上 clone 下來，執行 <code>rake install</code> 就完成了，超級方便的。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-14T11:22:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programing/'>Programing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/oh-my-zsh/" data-via="" data-counturl="http://blog.chh.tw/posts/oh-my-zsh/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/setting-up-a-vpn-server-on-amazon-ec2/" title="Previous Post: 三秒鐘在 Amazon EC2 上架好 VPN-server">&laquo; 三秒鐘在 Amazon EC2 上架好 VPN-server</a>
+      
+      
+        <a class="basic-alignment right" href="/posts/enable-filevault-before-using-mac/" title="Next Post: 使用 Mac 前務必先開啟 FileVault 2 功能">使用 Mac 前務必先開啟 FileVault 2 功能 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/oh-my-zsh/';
+        var disqus_url = 'http://blog.chh.tw/posts/oh-my-zsh/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

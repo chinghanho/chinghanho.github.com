@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby on Rails 的開發歷史視覺化 - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="這是老影片了，剛好在 Youtube 上亂逛看到，這部影片使用一套叫做 Gource 的工具，可以將版本控制的提交歷史，用生動的視覺化方式呈現。這部影片記錄了 2004 年到 2009 年間，Rails 社群生態圈的發展，一開始看著 DHH1 一人構築這套框架的基礎，隨後越來越多的社群加入， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/ruby-on-rails-de-kai-fa-li-shi-shi-jue-hua/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="Ruby on Rails 的開發歷史視覺化" /><meta itemprop="name" content="Ruby on Rails 的開發歷史視覺化" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/ruby-on-rails-de-kai-fa-li-shi-shi-jue-hua/" />
+<meta property="og:description" content="這是老影片了，剛好在 Youtube 上亂逛看到，這部影片使用一套叫做 Gource 的工具，可以將版本控制的提交歷史，用生動的視覺化方式呈現。這部影片記錄了 2004 年到 2009 年間，Rails 社群生態圈的發展，一開始看著 DHH1 一人構築這套框架的基礎，隨後越來越多的社群加入， &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2012-10-08 21:14:00 +0800" />
+
+<meta property="article:section" content="Tech" />
+<meta itemprop="description" content="這是老影片了，剛好在 Youtube 上亂逛看到，這部影片使用一套叫做 Gource 的工具，可以將版本控制的提交歷史，用生動的視覺化方式呈現。這部影片記錄了 2004 年到 2009 年間，Rails 社群生態圈的發展，一開始看著 DHH1 一人構築這套框架的基礎，隨後越來越多的社群加入， &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Ruby on Rails 的開發歷史視覺化</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-08T21:14:00+08:00" pubdate data-updated="true">Oct 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="https://lh6.googleusercontent.com/-9KEDXvvNzgI/UHLUvKGbJoI/AAAAAAAAEUM/t1NtvQP5xlo/s800/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-10-08%2520%25E4%25B8%258B%25E5%258D%25889.09.46.png" alt="ruby-on-rails-virtulization" /></p>
+
+<p>這是老影片了，剛好在 Youtube 上亂逛看到，這部影片使用一套叫做 <a href="http://code.google.com/p/gource/">Gource</a> 的工具，可以將版本控制的提交歷史，用生動的視覺化方式呈現。這部影片記錄了 2004 年到 2009 年間，Rails 社群生態圈的發展，一開始看著 DHH<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup> 一人構築這套框架的基礎，隨後越來越多的社群加入，看了實在讓人熱血沸騰！XD</p>
+
+<ul>
+<li>影片網址：<a href="http://www.youtube.com/watch?&amp;v=r0ji8FDNTj0">Ruby on Rails repository virtulization from 2004 to 2009 with Gource</a></li>
+</ul>
+
+
+<p>可以注意到 2008 年四月的時候 Rails 將專案移往 <a href="https://github.com">Github</a> 之後，提交的數量突然之間大爆炸，整個社群瘋狂地活躍。不得不說 Github 真的影響現代程式開發模式相當深遠，而且這老闆本身就是一位非常厲害的 Hacker<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>，難怪開了一家很酷的公司<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>。</p>
+
+<p>要能成就一件事情真的相當不容易，必須靠著每天點點滴滴經驗的累積，而要練就一門專業至少要花<a href="http://blog.vgod.tw/2011/02/23/divine-code-extra/">一萬個小時</a>，尤其對於想要投入的資訊這塊領域，偷懶是絕對不行的。所以我打算，從今天開始每個禮拜至少要寫三篇文章，記錄我每天學到了什麼，過個幾年後回頭來看這段歷程，我想這會非常有趣。</p>
+
+<p>PS. 喔對了，因為網友的<a href="/posts/why-no-nfc-in-iphone-5/#comment-665501377">建議</a>，我改用中文打標題了，不過網址變成漢語拼音了…… :p</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>David Heinemeier Hansson，Rails 框架的發明者，是我所敬愛的一位 Hacker。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>Tom Preston-Werner 是 Github 的共同創辦人，目前的 Github CEO，今天才知道原來 Gravatar 是他建立的，後來被 <a href="http://automattic.com/" alt="automattic">Automattic</a> 給買去了，而 Automattic 是目前最紅的 CMS：WordPress 主要貢獻者，WordPress 一開始則是由 Michel Valdrighi 用 PHP 和 MySQL 開發的。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>前陣子注意到中國大陸也有不少 clone，其中最引人注意的是一家叫做 <a href="https://gitcafe.com/" alt="gitcafe">GitCafe</a> 的公司，也是採用 Ruby on Rail 進行開發，創辦人和開發團隊好像也是很厲害的角色。 <a href='#fnref:3' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-08T21:14:00+08:00" pubdate data-updated="true">Oct 8<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>Tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/ruby-on-rails-de-kai-fa-li-shi-shi-jue-hua/" data-via="" data-counturl="http://blog.chh.tw/posts/ruby-on-rails-de-kai-fa-li-shi-shi-jue-hua/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/wo-de-mac-ruan-ti-gong-ju-xiang/" title="Previous Post: 2012 我的 Mac 軟體工具箱">&laquo; 2012 我的 Mac 軟體工具箱</a>
+      
+      
+        <a class="basic-alignment right" href="/posts/cloc-kuai-su-ji-suan-zhuan-an-zhong-yuan-shi-ma-xing-shu/" title="Next Post: CLOC：快速計算專案中原始碼行數">CLOC：快速計算專案中原始碼行數 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/ruby-on-rails-de-kai-fa-li-shi-shi-jue-hua/';
+        var disqus_url = 'http://blog.chh.tw/posts/ruby-on-rails-de-kai-fa-li-shi-shi-jue-hua/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

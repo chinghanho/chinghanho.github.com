@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tools | @ChingHanHo]]></title>
+  <link href="http://blog.chh.tw/blog/categories/tools/atom.xml" rel="self"/>
+  <link href="http://blog.chh.tw/"/>
+  <updated>2014-11-29T07:12:09+08:00</updated>
+  <id>http://blog.chh.tw/</id>
+  <author>
+    <name><![CDATA[Ching-Han Ho]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[關閉 OS X 雞肋的 Dashboard]]></title>
+    <link href="http://blog.chh.tw/posts/disable-os-x-dashboard/"/>
+    <updated>2012-11-17T06:36:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/disable-os-x-dashboard</id>
+    <content type="html"><![CDATA[<p>OS X 不知道在哪一個版本加進 Dashboard 這個功能，對我來說這東西一點用也沒有，如果把 widgets 挪到桌面上可能還方便一點，可是放到 Dashboard 上真的超級不方便。</p>
+
+<p>不過就算把 widgets 弄到桌面上，我還是不會用到這些工具，所以我決定把它整個給移除掉，因為開在背景這東西也是會消耗資源的。關閉的方法很簡單，在終端機中輸入：</p>
+
+<pre><code>defaults write com.apple.dashboard mcx-disabled -boolean YES
+killall Dock
+</code></pre>
+
+<p>第一條指令後面的 YES 換成 NO 的話，就是復原這個動作，不過記得，都要下 <code>killall Dock</code> 這個指令重新啟動 Dock 才會生效。</p>
+
+<p><img src="http://lh5.googleusercontent.com/-sPmI3eSBgYU/UKbA4bQtJOI/AAAAAAAAFXs/LAGQ9ySlNVI/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-17%2520%25E4%25B8%258A%25E5%258D%25886.37.49.png" alt="" /></p>
+
+<p>現在滑到 Mission Control 也不會出現 Dashboard 了，整個心情都變好，頭腦也變聰明，考試都考一百分。XD</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[關閉 Time Machine 本機快照備份節省硬碟空間]]></title>
+    <link href="http://blog.chh.tw/posts/disable-the-feature-that-dont-allow-time-machine-local-backups-in-mac-os-x-lion/"/>
+    <updated>2012-11-16T06:49:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/disable-the-feature-that-dont-allow-time-machine-local-backups-in-mac-os-x-lion</id>
+    <content type="html"><![CDATA[<p><img src="http://lh4.googleusercontent.com/-DdQoYkv3voo/UKVzqUZRQEI/AAAAAAAAFWw/XN5s9URR5OI/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-16%2520%25E4%25B8%258A%25E5%258D%25886.58.10.png" alt="os-x-disk-usage" /></p>
+
+<p>我的 Macbook Air 就一個硬碟一個磁區，所以硬碟快照備份在本機一點意義也沒有，因為一旦硬碟掛了，那連備份也一起跟著掛。而且總容量只有 128GB，備份的檔案就吃掉 7GB 了，所以我打算把這個本地備份的功能給關掉。</p>
+
+<p>此外，備份的意思就是要備份在不同的地方，備份在本機也是多此一舉。我通常會把一些常用但非「極機密」的資料，另外備份在 <a href="https://www.dropbox.com/">Dropbox</a> 上；也會定期（通常是十天做一次）外接硬碟，用 Time Machine 備份。</p>
+
+<p>所以本機的硬碟快照沒有保留的理由，刪掉的方法很容易，從終端機下指令把這個功能關閉，馬上就會多 7GB 的空間可以用。不過也可能會很危險，使用以下指令前先確保資料都已經另外備份到別的硬碟上。</p>
+
+<p>關閉本地快照這個功能：</p>
+
+<pre><code>sudo tmutil disablelocal
+</code></pre>
+
+<p>重新啟用本地快照功能：</p>
+
+<pre><code>sudo tmutil enablelocal
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用 Mac 前務必先開啟 FileVault 2 功能]]></title>
+    <link href="http://blog.chh.tw/posts/enable-filevault-before-using-mac/"/>
+    <updated>2012-11-15T07:16:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/enable-filevault-before-using-mac</id>
+    <content type="html"><![CDATA[<p>硬碟是相當精密的硬體，運作原理說起來簡單，其實非常複雜，如果要科普解釋，我通常會把硬碟比喻成「油畫」，如果畫錯了或是要修改，並不是用橡皮擦擦掉，而是用顏料直接覆蓋。</p>
+
+<p>直接覆蓋就會有個問題，油畫可以用紅外線掃描來得知底層是什麼樣子，所以才會有人發現<a href="http://big5.xinhuanet.com/gate/big5/news.xinhuanet.com/tech/2007-10/24/content_6928914.htm">蒙娜麗莎原來是有眉毛的</a>。XD</p>
+
+<p>可是硬碟如果有重要資料，這就變成很大的問題了，尤其是 <a href="http://www.ithome.com.tw/itadm/article.php?c=66722&amp;s=1">SSD 更麻煩</a>，所以這也是為什麼業界硬碟如果損壞了，都是採用<a href="http://youtu.be/avP5d16wEp0?t=1m15s">物理銷燬</a>這種方式，例如 Google 的資料中心：</p>
+
+<p><img src="http://lh3.googleusercontent.com/-G0aVvazyu3I/UKQuYHiWVkI/AAAAAAAAFV4/0hR-0glZG-g/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-15%2520%25E4%25B8%258A%25E5%258D%25887.49.52.png" alt="google-destroy-hdd" /></p>
+
+<p>對於個人使用者而言，有時候用電腦不一定是「用到死」，也許中間會二手賣出，那也不大可能把硬碟砸爛再給對方，所以有一種方式就是啟用 FileVault 2 這個功能（Windows 上我記得好像也有類似的功能），替你的資料先行加密，這樣別人就算從廢棄電腦裡面讀出資料，也不會直接得到原始資料。</p>
+
+<p><img src="http://lh3.googleusercontent.com/-1FanB4n87e8/UKQwaYadieI/AAAAAAAAFWA/8bI5u6ok61c/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-15%2520%25E4%25B8%258A%25E5%258D%25887.59.13.png" alt="filevault-2" /></p>
+
+<p>這必須在剛拿到電腦存入任何個人資料之前，就先設定好。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CLOC：快速計算專案中原始碼行數]]></title>
+    <link href="http://blog.chh.tw/posts/cloc-kuai-su-ji-suan-zhuan-an-zhong-yuan-shi-ma-xing-shu/"/>
+    <updated>2012-10-09T07:37:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/cloc-kuai-su-ji-suan-zhuan-an-zhong-yuan-shi-ma-xing-shu</id>
+    <content type="html"><![CDATA[<p>昨天在看新一期 <a href="http://railscasts.com/episodes/384-exploring-rubygems">RailsCasts</a> 的時候，見到 <a href="http://twitter.com/rbates">Ryan Bates</a> 用了一個有趣的小工具叫做 <a href="http://cloc.sourceforge.net/">CLOC</a>，如果用的是 OS X 可以透過 <a href="http://mxcl.github.com/homebrew/">Homebrew</a> 來安裝：</p>
+
+<p><code>
+brew update
+brew install cloc
+</code></p>
+
+<p>儘管 Rails 有內建的指令 <code>rake stats</code> 可以查詢寫過多少程式碼，但是提供的資訊沒有很清楚；CLOC 不只可以詳細的計算寫了幾行程式碼，還可以清楚地辨識你用什麼語言來寫，每個語言個寫了多少行、多少註解、多少空白：</p>
+
+<p>```
+$ cloc rails-v3.2.8.tar.gz</p>
+
+<pre><code>2286 text files.
+2214 unique files.                                          
+ 533 files ignored.
+</code></pre>
+
+<h2>http://cloc.sourceforge.net v 1.56  T=11.0 s (160.0 files/s, 19893.3 lines/s)</h2>
+
+<h2>Language                     files          blank        comment           code</h2>
+
+<p>Ruby                          1548          31995          31994         145742
+CSS                             37            126            367           4093
+YAML                           116            221            336           1867
+Javascript                      40            189            514            999
+HTML                            17             30              3            298
+SQL                              1              6              0             43</p>
+
+<h2>CoffeeScript                     1              0              3              0</h2>
+
+<h2>SUM:                          1760          32567          33217         153042</h2>
+
+<p>```</p>
+
+<p>如果說想要知道 Rails 3.2.7 和 Rails 3.2.8 之間程式碼的行數差異，可以到 Github 直接下載整個專案，連解壓縮都不用就可以直接進行比對，計算結果會詳細列出有多少相同、多少被修改、多少是新增的、多少被移除掉的程式碼：</p>
+
+<p>```
+$ cloc --diff rails-v3.2.7.tar.gz rails-v3.2.8.tar.gz</p>
+
+<pre><code>2286 text files.
+2286 text files.s
+1066 files ignored.                                         
+</code></pre>
+
+<h2>http://cloc.sourceforge.net v 1.56  T=50.0 s (0.0 files/s, 0.0 lines/s)</h2>
+
+<h2>Language                     files          blank        comment           code</h2>
+
+<p>HTML
+ same                           17              0              3            298
+ modified                        0              0              0              0
+ added                           0              0              0              0
+ removed                         0              0              0              0
+SQL
+ same                            1              0              0             43
+ modified                        0              0              0              0
+ added                           0              0              0              0
+ removed                         0              0              0              0
+Javascript
+ same                           40              0            514            999
+ modified                        0              0              0              0
+ added                           0              0              0              0
+ removed                         0              0              0              0
+CoffeeScript
+ same                            1              0              3              0
+ modified                        0              0              0              0
+ added                           0              0              0              0
+ removed                         0              0              0              0
+CSS
+ same                           37              0            367           4093
+ modified                        0              0              0              0
+ added                           0              0              0              0
+ removed                         0              0              0              0
+YAML
+ same                          116              0            336           1867
+ modified                        0              0              0              0
+ added                           0              0              0              0
+ removed                         0              0              0              0
+Ruby
+ same                         1501              0          31943         145562
+ modified                       47              0              7            124
+ added                           0              6             44             56</p>
+
+<h2> removed                         0             43             36            246</h2>
+
+<p>SUM:
+ same                         1713              0          33166         152862
+ modified                       47              0              7            124
+ added                           0              6             44             56</p>
+
+<h2> removed                         0             43             36            246</h2>
+
+<p>```</p>
+
+<p>更多的玩法可以參考官方文件：<a href="http://cloc.sourceforge.net/#Options">CLOC Options</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[2012 我的 Mac 軟體工具箱]]></title>
+    <link href="http://blog.chh.tw/posts/wo-de-mac-ruan-ti-gong-ju-xiang/"/>
+    <updated>2012-10-03T22:27:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/wo-de-mac-ruan-ti-gong-ju-xiang</id>
+    <content type="html"><![CDATA[<p>一年前剛開始用 Mac 滿一個月時寫過一篇類似「<a href="https://www.google.com/search?hl=zh-TW&amp;site=&amp;source=hp&amp;q=%E7%82%BA%E4%BB%80%E9%BA%BC%E6%88%91%E7%94%A8+Mac&amp;btnG=%E6%90%9C%E5%B0%8B&amp;oq=&amp;gs_l=">為什麼我用 Mac</a>」的文章，其實內容的七成是軟體清單，不過換了部落格文章沒跟著帶過來，那就算了。而上個月剛過 Macbook Air 一年的保固，剛好提醒我該寫寫一些東西。</p>
+
+<p>這篇文章在 2013 年以前還是會繼續更新，我就先列出幾個比較實用的軟體：</p>
+
+<h2>程式開發</h2>
+
+<ul>
+<li><a href="http://kapeli.com/dash/">Dash</a>：可以很方便地查詢 API 文件，也可以用來管理 code snippets；雖然是免費的，可是使用一段時間後沒有付費購買，查看文件的介面會被塗鴉成粉紅色，用是可以用啦，只是很醜……；（2012.11.26 更新：這軟體好用是好用，但是作者為了讓使用者付費真是無所不用其極，手法實在讓人不是很舒服，儘管我還是在上個月底購買正版了。:p）</li>
+<li><a href="http://growl.info/">Growl</a>：這個歸類在程式開發工具？對，因為我裝這個就是為了自動化執行 RSpec 測試，然後直接把測試結果輸出成「通知」的形式，有空我再來寫教學文；</li>
+<li><a href="http://www.iterm2.com/#/section/home">iTerm 2</a>：終端機軟體，可以開分頁和切割視窗區塊，也有很多小細節設定；（2012.11.26 更新：<a href="/posts/oh-my-zsh/">OH MY ZSHELL!</a>）</li>
+<li><a href="http://www.sourcetreeapp.com/">SourceTree</a>：原本只是拿來看圖形介面的 Git log 用，後來發現用裡面的 Git Flow 功能也超級方便，更棒的他是免費的；</li>
+<li><a href="http://www.sublimetext.com/2">Sublime Text 2</a>：我曾寫了<a href="/posts/sublime-text-2-the-best-editor-in-2012/">一篇專文</a>來介紹這個編輯器；</li>
+</ul>
+
+
+<h2>雲端空間</h2>
+
+<ul>
+<li><a href="http://getcloudapp.com/">CloudApp</a>：臨時傳檔很方便，丟上去馬上分享；</li>
+<li><a href="https://www.dropbox.com/">Dropbox</a>：這應該不用再介紹了，大家都在用的；</li>
+</ul>
+
+
+<h2>文字處理</h2>
+
+<ul>
+<li><a href="http://www.iawriter.com/">iA Writer</a>：超級具有設計感的文字編輯器，使用 Markdown 語法，簡潔、優雅的外觀可以讓人專注在文字上面，而不被功能所影響；</li>
+<li><a href="http://mouapp.com/">Mou</a>：這也是使用 Markdown 語法，功能非常豐富，整合特定的部落格平台直接發佈文章，還有其他細微但是超級方便的功能；</li>
+</ul>
+
+
+<h2>圖像處理</h2>
+
+<ul>
+<li><a href="http://www.haozhaopian.com/mac/">Great Photo</a>：包含 HDR 合成、濾鏡與景深效果等等效果，簡單容易使用，以免費的來說已經很不錯了；</li>
+<li><a href="http://itunes.apple.com/gb/app/jpegmini-lite/id525742250?mt=12">JPEGmini Lite</a>：壓縮 JPEG 檔案，看名字有 Lite 就可以猜到有分免費版本和付費的 Pro 版本，對我來說 Lite 就夠用了；</li>
+<li><a href="https://itunes.apple.com/us/app/sip/id507257563?mt=12">Sip</a>：汲取螢幕畫面上像素的顏色，支援各種描述色彩格式；</li>
+</ul>
+
+
+<h2>瀏覽器</h2>
+
+<ul>
+<li><a href="https://www.google.com/intl/zh-TW/chrome/browser/">Google Chrome</a>：介面好看、功能很多、性能很強，儘管外掛裝多了會把拖累整體速度，但是平均起來還是最佳的瀏覽器。我還會同時安裝 <a href="https://tools.google.com/dlpage/chromesxs">Google Chrome Canary</a> 版本，來測試最新的開發技術；</li>
+<li>Safari：因為沒裝 Flash、沒裝外掛，通常在沒有接電源時使用，打開使用者代理程式上網，感覺這樣非常省電；</li>
+</ul>
+
+
+<h2>社交通訊</h2>
+
+<ul>
+<li><a href="http://adium.im/">Adium</a>：集合主流、非主流的社交服務在同一個軟體上，例如：Google Talk、MSN、Facebook、Twitter 等等，這樣就不必開一堆軟體；</li>
+<li><a href="http://www.cobookapp.com/">Cobook</a>：替代 OS X 內建的通訊錄軟體，可以整合社群網站例如 Facebook 或是 Twitter 等等，直接把好友匯入通訊錄<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，然後直接跟 Google 通訊錄同步，這樣我的 Android 手機也可以用；:)</li>
+<li><a href="http://tapbots.com/blog/news/tweetbot-for-mac-beta-sort-of">Tweetbot</a>：目前還在測試階段，而且因為 Twitter 限制 API 的政策，目前可能已經無法下載。以前我會推薦 Twitter 官方的 app，但是用過 Tweetbot 之後再也回不去了；</li>
+</ul>
+
+
+<h2>影音軟體</h2>
+
+<ul>
+<li>iTunes：家喻戶曉我想應該不必介紹；</li>
+<li><a href="http://mplayerx.org/">MPlayerX</a>：支援的檔案格式多、優雅的無框介面設計、可以支援手勢縮放視窗大小等等，外接螢幕時啟用全螢幕模式不會吃掉第二個螢幕；</li>
+</ul>
+
+
+<h2>實用工具</h2>
+
+<ul>
+<li><a href="http://www.alfredapp.com/">Alfred</a>：Spotlight 替代品，更有彈性地添加各種客製化功能；</li>
+<li><a href="http://www.freemacsoft.net/appcleaner/">AppCleaner</a>：協助乾淨地移除 Mac 上的軟體；</li>
+<li><a href="http://bjango.com/mac/istatmenus/">iStats Menu 3</a>：系統資訊 Dashboard 顯示在 Menu bar 上，很 geek 的東西；:p</li>
+<li><a href="http://manytricks.com/moom/">Moom</a>：適合大螢幕或是多螢幕使用，可以很方便的切割視窗大小，有效利用視窗空間；</li>
+<li><a href="https://itunes.apple.com/us/app/the-unarchiver/id425424353?mt=12">The Unarchiver</a>：解壓縮的軟體，簡單好用；</li>
+<li><a href="http://manytricks.com/timesink/">Time Sink</a>：統計 Mac 上各個軟體的使用時間，如果要統計網頁的使用時間可以用 <a href="https://chrome.google.com/webstore/detail/timestats/ejifodhjoeeenihgfpjijjmpomaphmah">timeStats</a> 這個擴充套件（Chrome only）；</li>
+<li><a href="http://www.trankynam.com/xtrafinder/">XtraFinder</a>：Finder 的加強版，免費的！</li>
+<li><a href="http://tw.media.yahoo.com/keykey/instruction_mac.php">Yahoo! 輸入法</a>：除了那個一點通很頭痛，其他都很好<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>；</li>
+</ul>
+
+
+<p><div class="footnotes">
+	<ol>
+		<li id='fn:1'>目前 Facebook 好像限制了一些 API 導致無法存取很詳細的資料，好險我在 API 改版前就把好友的資料全都匯出來了。XD <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>關掉 OS X 的一點通可以參考：<a href="http://blog.buginception.com/blog/2012/02/29/disable-yahoo-keykey-onekey-on-mac">[OSX]關閉Yahoo!輸入法的一點通服務</a> <a href='#fnref:2' rev='footnote'>↩</a></li>
+	</ol>
+</div>
+</p>
+]]></content>
+  </entry>
+  
+</feed>

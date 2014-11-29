@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Node 樣版引擎評估：Jade、Handlebars - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="短文版 用 jade。 長文版 因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。 活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的： TJ 早期樣版引擎代表作 ejs
+以及 TJ 後來的 jade &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="Node 樣版引擎評估：Jade、Handlebars" /><meta itemprop="name" content="Node 樣版引擎評估：Jade、Handlebars" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars/" />
+<meta property="og:description" content="短文版 用 jade。 長文版 因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。 活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的： TJ 早期樣版引擎代表作 ejs
+以及 TJ 後來的 jade &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2014-11-29 01:38:00 +0800" />
+
+<meta property="article:section" content="Programing" />
+<meta itemprop="description" content="短文版 用 jade。 長文版 因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。 活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的： TJ 早期樣版引擎代表作 ejs
+以及 TJ 後來的 jade &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Node 樣版引擎評估：Jade、Handlebars</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-29T01:38:00+08:00" pubdate data-updated="true">Nov 29<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="https://lh3.googleusercontent.com/-aa-cbFoMPDs/VHi1FfBlM-I/AAAAAAAAIJM/T6wEE0RlEtQ/w640-h201-no/Screen%2BShot%2B2014-11-29%2Bat%2B1.44.09%2BAM.png" alt="" /></p>
+
+<h2>短文版</h2>
+
+<p>用 jade。</p>
+
+<h2>長文版</h2>
+
+<p>因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。</p>
+
+<p>活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的：</p>
+
+<ul>
+<li><a href="https://github.com/tj">TJ</a> 早期樣版引擎代表作 <a href="https://github.com/tj/ejs/">ejs</a></li>
+<li>以及 TJ 後來的 <a href="https://github.com/jadejs/jade">jade</a></li>
+<li>還有 <a href="https://github.com/wycats">wycats</a>（<a href="http://yehudakatz.com/">Yehuda Katz</a>）的 <a href="https://github.com/wycats/handlebars.js">handlebars</a></li>
+</ul>
+
+
+<p>TJ 當初設計 <a href="http://expressjs.com/">Express</a> 承襲 Ruby micro-framework <a href="http://www.sinatrarb.com/">Sinatra</a> 的設計理念，ejs 好像是因應而生（？），從 ejs 語法上面可以看到非常多 Ruby 樣版引擎 ERb 的影子，對我來說是最「友善」的。不過 TJ 另創 jade 樣版引擎加上投奔 Go 世界以後，ejs 的活躍程度越來越低，從今年 5 月之後就再也沒有更新過了。</p>
+
+<p>我向來都會先以「社群活躍度」來評量一個程式專案計畫可靠度，jade 貢獻者在 Github 上成立 <a href="https://github.com/jadejs">jadejs</a> 組織來維護專案，長久來看蠻可靠的。而 handlebars 在 Github 上也廣受 Javascript 開發者歡迎，所以最後我就拿這兩套樣版引擎來比較，以下是值得提出來講的部分。</p>
+
+<p>（再強調一次好了：語法設計、擴充性、使用彈性是我比較在意的項目）</p>
+
+<!-- more -->
+
+
+<h3>Layouts</h3>
+
+<p>寫過 Rails 後就很喜歡那種把不同 controller actions 的 view，跟 layouts 拆得乾乾淨淨的做法。這點 handlebars 可以做到，也是我最喜歡的一點，jade 必須在每一個 view 裡面寫上重複的 code，來表示外層的 layout：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='jade'><span class='line'><span class="nt">extends</span> layout
+</span><span class='line'>
+</span><span class='line'><span class="nt">block</span> content
+</span><span class='line'>  <span class="nt">h1</span><span class="p">=</span> <span class="n">post</span><span class="o">.</span><span class="n">title</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把內容的部分宣告成 block，然後套進 layout 裏去。這也不是大缺點啦，block 寫法可以讓 view 不同區塊使用上更有彈性，但這就很考驗 block 的拆分功力了，不然真的會很容易寫出大量讓人崩潰的縮進層級。</p>
+
+<h3>Partials</h3>
+
+<p>版型上共用的部分一定會拆出來到同個檔案去維護，例如 header、footer、sidebar 之類的，handlebars 要做到這點繞得也太大圈：得先告訴 handlebars 的實例（instance）某個目錄放著我要的 partials 檔案，例如有個 <code>header.hbs</code> partial 放在 <code>/views/partials</code> 目錄下，然後要在 app 主要程式中寫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">hbs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;hbs&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">hbs</span><span class="p">.</span><span class="nx">registerPartial</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;/views/partials&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>才能在 view 裡面帶入 header 這個 partial：<code>{{&gt; header}}</code>。這樣讓檔案的組織非常缺乏彈性，如果 partials 不是在同個地方而是多個目錄，這樣光是找到檔案就很直覺。</p>
+
+<h3>條件判斷</h3>
+
+<p>這個是壓死駱駝最後一根稻草，handlebars 沒有辦法用很簡單的條件判斷式，內建的 <code>#if</code> helper 根本不是拿來寫「條件判斷」的，當初掃描完文件後一定會很自然地寫下 <code>{{#if query === 'list'}}</code>，這樣是不行的喔！</p>
+
+<p><code>#if</code> 頂多拿來判斷物件裡面有東西還是沒東西而已，如果真要寫個「條件判斷」一樣要拆去寫 helper，不管你的是多簡單的判斷。</p>
+
+<h3>結論</h3>
+
+<p>當初 wycats 寫 handlebars 時主要是為了解決前端樣版引擎的問題，所以可以發現很多 server-side 應用的場景 handlebars 都不適用。jade 是 TJ 寫給 Express 用的，讓我最不適應的地方是像 <a href="http://haml.info/">HAML</a> 那樣「縮進崇拜主義」簡化的語法我實在不敢恭維，但顯然目前沒有比「不習慣」更好的理由來阻止我用它，因為 jade 其他面向提供的 solution 確實都能解決問題。</p>
+
+<p>結論就是用 jade！</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-29T01:38:00+08:00" pubdate data-updated="true">Nov 29<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programing/'>Programing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars/" data-via="" data-counturl="http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/mongodb-odm-mongoose/" title="Previous Post: MongoDB 的 ODM：mongoose 簡單介紹">&laquo; MongoDB 的 ODM：mongoose 簡單介紹</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars/';
+        var disqus_url = 'http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

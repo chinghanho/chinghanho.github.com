@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>終端機必備的多工良伴：tmux - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。 從官網上的描述，tmux 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/tmux-terminal-multiplexer/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="終端機必備的多工良伴：tmux" /><meta itemprop="name" content="終端機必備的多工良伴：tmux" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/tmux-terminal-multiplexer/" />
+<meta property="og:description" content="每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。 從官網上的描述，tmux 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2013-04-09 17:11:00 +0800" />
+
+<meta property="article:section" content="Programing" />
+<meta itemprop="description" content="每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。 從官網上的描述，tmux 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">終端機必備的多工良伴：tmux</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-09T17:11:00+08:00" pubdate data-updated="true">Apr 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。</p>
+
+<p>從官網上的描述，<a href="http://tmux.sourceforge.net/">tmux</a> 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh 登入到遠端主機也不會斷掉，此外還可以在同個視窗下切割區塊，如下圖（<a href="http://www.psteiner.com/2012/05/tmux-for-ruby-on-rails.html">圖片來源</a>）：</p>
+
+<p><img src="http://lh5.googleusercontent.com/-Z0XpVHmJ-ks/UWO-JgwbszI/AAAAAAAAF_M/QdewyOkH1xw/s690/rumble.png" alt="tmux-demo" /></p>
+
+<p>右邊開 Vim 寫程式，左上角跑 RSpec 測試，同時左下角開 Rails server 看 log，神奇的是這些狀態可以保存起來，不需要的時候可以藏到背景去，可是用 Sublime Text 2 就沒這麼理想，害我有種想改用 Vim 的衝動。</p>
+
+<!-- more -->
+
+
+<h2>在 OS X 上使用 Homebrew 安裝 tmux</h2>
+
+<p>首先要安裝 <a href="http://brew.sh/index_zh-tw.html">Homebrew</a>，沒有安裝過的話只要在終端機執行這一行指示即可：</p>
+
+<pre><code>ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+</code></pre>
+
+<p>儘管剛剛才安裝 Homebrew 但是還是要先更新一下再安裝程式：</p>
+
+<pre><code>brew update
+brew install tmux
+</code></pre>
+
+<h2>tmux 運作方式</h2>
+
+<p>2013.04.19 更新：Youtube 上 <a href="http://www.youtube.com/watch?v=wKEGA8oEWXw">tmux Quick Start</a> 這部影片介紹非常清楚，值得一看。</p>
+
+<p>從 SuperUser 看到的<a href="http://superuser.com/questions/398735/difference-between-tmux-and-shell-split-options-on-iterm2">答案</a>，如果關閉終端機掛載在上面的 shells 也會跟著被刪除，結構就像是這樣：</p>
+
+<pre><code>iterm2
+  +---- shell
+  +---- shell
+  +---- shell
+</code></pre>
+
+<p>tmux 採用 client-server 的 model，每一個 session 作為一個 client。透過 tmux 仍然會保持所有 shells 繼續運作，即便把整個終端機都關閉，因此可以之後重新將他們重新掛載上去，這也是為什麼在 tmux 下用 ssh 登入遠端主機不會斷線的原因：</p>
+
+<pre><code>iterm2
+  +---- tmux
+          +---- shell
+          +---- shell
+          +---- shell
+</code></pre>
+
+<h2>tmux 基本用法</h2>
+
+<p>直接在終端機執行 <code>tmux</code> 會開啟第一個 client，可以執行 <code>tmux ls</code> 查看有哪些 client，如果沒有任何 client 可以用，tmux 會自動建立一個。執行 tmux 後終端機底部會顯示一條狀態欄：</p>
+
+<p><img src="http://lh5.googleusercontent.com/-eG1xoULfnn0/UWPNebkAeDI/AAAAAAAAF_c/m3RIih2HklI/s690/tmux.png" alt="tmux" /></p>
+
+<p>tmux 預設的操作要加上 <kbd>Ctrl-b</kbd> 功能鍵；tmux 也有類似 Vim 的指令模式，快捷鍵 <kbd>Ctrl-b</kbd> 後按 <code>:</code> 可以執行指令。以下是一些基本、常用的功能：</p>
+
+<ul>
+<li><kbd>Ctrl-b</kbd> + <kbd>c</kbd>：建立新的視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>d</kbd>：卸載目前的 client；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>l</kbd>：與先前選擇的視窗間切換；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>n</kbd>：移動到下個視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>p</kbd>：移動到上個視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>&amp;</kbd>：刪除目前的視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>,</kbd>：重新命名目前的視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>%</kbd>：將目前的視窗分離到兩個區塊；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>q</kbd>：顯示各分割區塊的號碼（用來切換到不同的區塊）</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>o</kbd>：切換到下個區塊；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>?</kbd>：列出所有快捷鍵的說明；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>w</kbd>：列出目前 clinet 的視窗，可以用數字鍵切換；</li>
+</ul>
+
+
+<p>要將目前視窗切割多個區塊，快捷鍵如下：</p>
+
+<ul>
+<li><kbd>Ctrl-b</kbd> + <kbd>%</kbd>：垂直分離視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <code>:split-window</code>：水平分離視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>o</kbd>：移往下一個區塊；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>q</kbd>：顯示區塊的數字代號，當數字顯示時使用數字鍵移往該區塊；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>{</kbd>：將目前的區塊移往左邊；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>}</kbd>：將目前的區塊移往右邊；</li>
+</ul>
+
+
+<h2>個人設定</h2>
+
+<p>切割面板區塊的快捷鍵好像有點難記，可以在根目錄下建立 <em>~/.tmux.conf</em> 檔案，定義自己容易記憶的快捷鍵：</p>
+
+<pre><code>unbind %
+bind | split-window -h
+bind – split-window -v
+</code></pre>
+
+<p><kbd>Ctrl-b</kbd> 距離太遠也很難按，先前有用 GNU screen 的人會將它改成 <kbd>Ctrl-a</kbd>，可是這會和某些快捷鍵衝突，所以我把它改成 <kbd>Ctrl-f</kbd>：</p>
+
+<pre><code>set -g prefix C-f
+unbind C-b
+bind C-f send-prefix
+</code></pre>
+
+<p>我的 .tmux.conf 檔案放在我 Github 上的 <a href="https://github.com/chinghanho/.dotfiles/blob/master/.tmux.conf">.dotfiles</a> 裡，有興趣可以去看看，這裡附上最後我修改的成果圖，加上原本 <a href="http://blog.chh.tw/posts/oh-my-zsh/">oh-my-zsh</a> 修改結果，整個變得超級花俏啊 XD（點圖可放大）：</p>
+
+<p><a href="https://lh5.googleusercontent.com/-zmNq9I6M8wY/UWQHQAdk1BI/AAAAAAAAF_s/ejDrVE8N_4M/s1788/tmux-final.png"><img src="https://lh5.googleusercontent.com/-zmNq9I6M8wY/UWQHQAdk1BI/AAAAAAAAF_s/ejDrVE8N_4M/s690/tmux-final.png" alt="tmux-final" /></a></p>
+
+<p>底下的 status bar 是抄 <a href="https://github.com/zolrath/wemux">wemux</a> 作者的設定，我覺得非常漂亮。最後推薦這兩個連結的文章，介紹非常詳細：</p>
+
+<ul>
+<li><a href="http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/">TMUX – The Terminal Multiplexer (Part 1)</a></li>
+<li><a href="http://blog.hawkhost.com/2010/07/02/tmux-%E2%80%93-the-terminal-multiplexer-part-2/">TMUX – The Terminal Multiplexer (Part 2)</a></li>
+</ul>
+
+
+<h2>可以與 iTerm2 整合</h2>
+
+<p>iTerm2 <a href="https://code.google.com/p/iterm2/wiki/TmuxIntegration">wiki 頁面</a>上有教怎麼跟 tmux 整合，看了一下說要下載一些東西，然後還要編譯過才能用，可是我發現我直接輸入 <code>tmux -CC</code> 就可以用了，不清楚發生什麼事。</p>
+
+<p>跟 iTerm2 整合的好處是可以用 iTerm2 的分頁和切割區塊功能取代 tmux 那些一堆的指令，可是我試用的結果發現很多不方便的地方，所以我還是用原本 tmux 切割區塊的方式。</p>
+
+<h2>已知問題</h2>
+
+<p>目前發現有兩個問題。</p>
+
+<p>在 tmux 下無法使用系統 <code>pbcopy</code> 等複製貼上的指令，在 <a href="http://robots.thoughtbot.com/post/19398560514/how-to-copy-and-paste-with-tmux-on-mac-os-x">thoughtbot</a> 網站上找到解決方法：</p>
+
+<pre><code>brew install reattach-to-user-namespace
+</code></pre>
+
+<p>然後在 <em>.tmux.conf</em> 檔案裡加上以下這行設定：</p>
+
+<pre><code>set-option -g default-command "reattach-to-user-namespace -l zsh"
+</code></pre>
+
+<p>還有個問題是 <code>git commit</code> 我預設用的是 Sublime Text 2 編輯器，可是編輯提交訊息後會卡住不動，也就是 <code>subl -w</code> 無法返回，目前無解。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-09T17:11:00+08:00" pubdate data-updated="true">Apr 9<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programing/'>Programing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/tmux-terminal-multiplexer/" data-via="" data-counturl="http://blog.chh.tw/posts/tmux-terminal-multiplexer/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/vim-plugins-manager-pathogen/" title="Previous Post: Vim 補丁管理器：Pathogen">&laquo; Vim 補丁管理器：Pathogen</a>
+      
+      
+        <a class="basic-alignment right" href="/posts/git-submodule/" title="Next Post: Git Submodule 用法筆記">Git Submodule 用法筆記 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/tmux-terminal-multiplexer/';
+        var disqus_url = 'http://blog.chh.tw/posts/tmux-terminal-multiplexer/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

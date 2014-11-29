@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範 - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。 （本文的例子用的是 SCSS 語法） &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範" /><meta itemprop="name" content="劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/" />
+<meta property="og:description" content="真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。 （本文的例子用的是 SCSS 語法） &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2013-08-05 10:40:00 +0800" />
+
+<meta property="article:section" content="Programing" />
+<meta itemprop="description" content="真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。 （本文的例子用的是 SCSS 語法） &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-05T10:40:00+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。</p>
+
+<p>（本文的例子用的是 SCSS 語法）</p>
+
+<!-- more -->
+
+
+<h2>OOCSS</h2>
+
+<p>OOCSS 不是什麼新技術，只是一種撰寫 CSS 的設計模式，或者可以說是一種「道德規範」，大致上我覺得重點只有兩個：</p>
+
+<ul>
+<li><a href="#html-dependency">減少對 HTML 結構的依賴</a></li>
+<li><a href="#reuse-classes">增加 CSS class 重複性的使用</a></li>
+</ul>
+
+
+<p><a name="html-dependency"></a></p>
+
+<h3>減少對 HTML 結構的依賴</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">&quot;nav--main&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/nav&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一般的導航欄寫法，結構應該會像上面的 HTML 範例一樣，如果要對那些 <code>&lt;a&gt;</code> 標籤定義樣式，CSS 的寫法可能寫成 <code>.nav--main ul li a {}</code>，這種寫法先不管效能上的問題，可以看出來過度地依賴元素標籤的結構，有可能之後 HTML 結構改變，這個 CSS 就必須跟著重構，造成維護上多餘的成本。</p>
+
+<p>若從這個例子來考量，原則上 <code>&lt;a&gt;</code> 都一定會接在 <code>&lt;li&gt;</code> 標籤的後面，一個 <code>&lt;li&gt;</code> 只會有一個 <code>&lt;a&gt;</code>，通常不會獨立存在，那就可以寫成 <code>.nav--main a {}</code>，會是比較好的寫法，甚至是直接給 <code>&lt;a&gt;</code> 加上 class <code>nav--main_item</code>。後者是 OOCSS 所提倡的用法。</p>
+
+<p>這樣的寫法，一來效能理論上比較好（我沒辦法驗證），二來層次比較單純。</p>
+
+<p><a name="reuse-classes"></a></p>
+
+<h3>增加 CSS class 的重複使用</h3>
+
+<p>在 OOCSS 的觀念中，強調重複使用 class，而應該避免使用 id 作為 CSS 的選擇器。這種想法就是像 <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">OOP</a> 盡量抽離重複的程式碼，例如以下這個例子，這是兩種按鈕的 CSS 樣式屬性：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.button</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">display</span><span class="o">:</span> <span class="no">inline</span><span class="o">-</span><span class="no">block</span><span class="p">;</span>
+</span><span class='line'>  <span class="na">padding</span><span class="o">:</span> <span class="mi">6</span><span class="kt">px</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">100</span><span class="kt">%</span><span class="o">,</span> <span class="mi">100</span><span class="kt">%</span><span class="o">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">&amp;</span><span class="nc">.button-default</span> <span class="p">{</span> <span class="na">background</span><span class="o">:</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">180</span><span class="o">,</span> <span class="mi">1</span><span class="kt">%</span><span class="o">,</span> <span class="mi">28</span><span class="kt">%</span><span class="o">,</span> <span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">&amp;</span><span class="nc">.button-primary</span> <span class="p">{</span> <span class="na">background</span><span class="o">:</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">208</span><span class="o">,</span> <span class="mi">56</span><span class="kt">%</span><span class="o">,</span> <span class="mi">53</span><span class="kt">%</span><span class="o">,</span> <span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的 CSS 將兩種不同樣式的 button，抽離出重複的部份，並且定義在同個 class 上。因此，要使用這樣的樣式，HTML 的寫法可能長這個樣子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;button button-default&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;button button-primary&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>先用 <code>button</code> 宣告此為一個按鈕的樣式，再用 <code>button-default</code> 或 <code>button-primary</code> 作為按鈕底色的區別。這麼做可以維護成本變得比較低，例如：想要改網站上所有按鈕的大小，就只要修改 <code>.button</code> 的 <code>padding</code> 而已。</p>
+
+<h2>SMACSS</h2>
+
+<p>我對 SMACSS 的理解還不是很深入，或許把 <a href="http://smacss.com/">Scalable and Modular Architecture for CSS</a> 看完後會有更深一曾的理解。目前對 SMACSS 的概念僅限於它對 CSS 不同的業務邏輯所做的劃分方式：</p>
+
+<p>但我認為原本的設計不是很妥當，因此我自己做了一些改良：</p>
+
+<ul>
+<li><a href="#base">Base</a></li>
+<li><a href="#layout">Layout</a></li>
+<li><a href="#module">Module</a></li>
+<li><a href="#partial">Partial</a></li>
+<li><a href="#state">State</a></li>
+<li><a href="#theme">Theme</a></li>
+</ul>
+
+
+<p><a name="base"></a></p>
+
+<h3>Base</h3>
+
+<p>Base 就是設定標籤元素的預設值，例如瀏覽器的 reset 可以寫在這裡，如果用的是 Compass，只要 <code>@include global-reset</code> 即可。這裡只會對標籤元素本身做設定，不會出現任何 class 或 id，但是可以有屬性選擇器或是偽類：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nt">html</span> <span class="p">{}</span>
+</span><span class='line'><span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">text</span><span class="o">]</span> <span class="p">{}</span>
+</span><span class='line'><span class="nt">a</span><span class="nd">:hover</span> <span class="p">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a name="layout"></a></p>
+
+<h3>Layout</h3>
+
+<p>Layout 是指整個網站的「大架構」的外觀，而非 <code>.button</code> 這種小元件的 class。網站通常會有一些主要的大區塊，可能是 header 或 footer，Layout 就是用來定義這些「大架構」的 CSS。如果有做 Responsive Web Design 或是用 Grid System，也是把規則寫在 Layout 這裡。</p>
+
+<p>以下這是個範例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nn">#header</span> <span class="p">{</span> <span class="na">margin</span><span class="o">:</span> <span class="mi">30</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'><span class="nn">#articles-wrapper</span> <span class="p">{</span> <span class="nc">......</span><span class="o">;</span> <span class="p">}</span>
+</span><span class='line'><span class="nc">.sidebar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">&amp;</span><span class="nc">.sidebar--right</span> <span class="p">{</span> <span class="nc">......</span><span class="o">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">&amp;</span><span class="nc">.sidebar-left</span> <span class="p">{</span> <span class="nc">......</span><span class="o">;</span> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通常只有一個選擇器，一個 id、或一個 class。</p>
+
+<p><a name="module"></a></p>
+
+<h3>Module</h3>
+
+<p>原本的 SMACSS 對 Module 的設計我覺得不是很好，所以我硬是將 Module 拆分出一個 <a href="#partial">Partial</a>。</p>
+
+<p>這裡的 Module 顧名思義，就是可以在其他地方被重複使用，如果要找更明確的例子，我想就像 Twitter Bootstrap 的 <a href="http://getbootstrap.com/2.3.2/components.html">Components</a> 一樣，或者像前面 OOCSS 所舉例的 <code>.button</code> 這種會被重複使用的元件模組。</p>
+
+<p>模組不需要用任何的 prefix，因為 Module 就是設計來可以重複應用在不同的 page 上。</p>
+
+<h3>Partial</h3>
+
+<p><a name="partial"></a></p>
+
+<p>Partial 跟 Latout 不同，也跟 Module 不同，他比 Layout 的範圍小，可能是 header 底下的某個子元素。他不像 Module，他是特定單一領域下特別的設定。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.nav--main</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nt">a</span> <span class="p">{</span> <span class="nc">......</span><span class="o">;</span> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通常會將 Partial 的名稱加在子 class 作為 prefix，例如 <code>.nav--main</code> 底下的 <code>.nav--main_item</code>。至於為什麼要用這麼奇怪的命名方式？這等等在 <a href="#bem">CSS 規範</a>部分會說明介紹。</p>
+
+<p><a name="state"></a></p>
+
+<h3>State</h3>
+
+<p>State 負責定義元素不同的狀態下，所呈現的樣式。但是並非指一個元素的 <code>:hover</code> 或 <code>:active</code> 下的狀態。舉例來說，一個導航欄分頁，目前所在頁面的分頁需要加上 <code>.active</code> 的屬性表示目前位置是在這個分頁，HTML 會長這樣：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">&quot;nav--main&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;active&quot;</span><span class="nt">&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/nav&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>因此可以替 <code>.nav--main</code> 增加 <code>.active</code> 這樣的子 class：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.nav--main</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// others…;</span>
+</span><span class='line'>  <span class="nc">.active</span> <span class="p">{</span>
+</span><span class='line'>    <span class="na">background</span><span class="o">:</span> <span class="nf">darken</span><span class="p">(</span><span class="nv">$background-color</span><span class="o">,</span> <span class="mi">16</span><span class="kt">%</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>有時候為了讓閱讀更貼近語義，會用比較友善的命名方式，以此段的範例來說，<code>.is-active</code> 就比 <code>.active</code> 來得好讀。</p>
+
+<p><a name="theme"></a></p>
+
+<h3>Theme</h3>
+
+<p>Theme 是畫面上所有「主視覺」的定義，例如 <code>border-color</code>、<code>background-image</code> 或是 <code>font-family</code> 等相關的 Typography 設定。為什麼說是「主視覺」？因為有些元件模組仍然是留在 Module 去定義，Theme 就像 Layout 一樣負責「大架構」上的視覺樣式。</p>
+
+<h2>CSS 規範</h2>
+
+<p>這裡整理的是我覺得一定要知道的，其他還有很多規範可以轉到文末的參考資源連結，那篇文章有介紹更多的細節。</p>
+
+<p><a name="bem"></a></p>
+
+<h3>BEM</h3>
+
+<p>BEM 即 Block、Element、Modifier 的縮寫，這是一種 class 的命名技巧。如果整個 project 只有自己一個人做，那當然是不太可能出現 class 重複的問題，但是如果同時多個 F2E 一起寫同個部分的 CSS，就很容易出現共用 class 的問題，因此有了 BEM 這樣的命名技巧。</p>
+
+<p>將 Block 區塊作為起始開頭，像前面 SMACSS 介紹的 Partial 就可以拿來作為 Block 的 prefix 名稱；Element 則是 Block 下的元素；Modifier 則是這個元素的屬性。</p>
+
+<p>不同 Block 和 Element 用 <code>__</code> 兩個底線區隔開來，不同的 Modifier 則用 <code>--</code> 兩個 dash 區隔。至於 <code>-</code> 一個 dash 則表示這個 class 不依賴任何 Block 或 Element，是個獨立的存在，例如：<code>.page-container</code> 或 <code>.article-wrapper</code>。</p>
+
+<p>這裡有個範例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.sidebar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nc">.sidebar--left__section</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nc">.sidebar--left__section--header</span> <span class="p">{}</span>
+</span><span class='line'>    <span class="nc">.sidebar--left__section--footer</span> <span class="p">{}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Javascript Hook</h3>
+
+<p>透過 CSS class 來作為 Javascript 選取 DOM 節點的方式，就是 Javascript Hook。用 jQuery 可以常常看到這樣的寫法：<code>$('.nav--main a')</code>，可是當 CSS 跟 Javascript 攪在一起反而造成兩邊維護上的不便，當改了 CSS 時 Javascript 也要跟著改。</p>
+
+<p>所以用 HTML 的屬性去選取 DOM 節點會更好，如果非要用 CSS 的 class 那也可以多寫一個 <code>js-</code> 的 prefix，以表示這個節點有被 Javascript 使用，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav--main__item  js-nav--main__item&quot;</span><span class="nt">&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav--main__item  js-nav--main__item&quot;</span><span class="nt">&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav--main__item  js-nav--main__item&quot;</span><span class="nt">&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>PS. HTML 裡兩個 class 之間用兩個空格，會比一個空格看起來好閱讀。</p>
+
+<h3>合理的選擇器</h3>
+
+<blockquote><p>class 無所謂是否語意化的問題；你應該關注它們是否合理，不要刻意強調 class 名稱要符合語意，而要注重使用的合理性與未來性。</p></blockquote>
+
+<p>有時候為了表示更明確，在使用 CSS 的選擇器時，要表示某的 class 是搭配某個標籤元素使用，會寫成這樣：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">ol</span><span class="nc">.breadcrumb</span><span class="p">{}</span>
+</span><span class='line'><span class="nt">p</span><span class="nc">.intro</span><span class="p">{}</span>
+</span><span class='line'><span class="nt">ul</span><span class="nc">.image-thumbs</span><span class="p">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但是上面這個寫法效能不是很好，同樣的目的但可以減少多餘的修飾，試試改用下面這種寫法，將標籤名稱用註解標示起來，維護上有相同的效果，但是瀏覽器處理的速度會比較快：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="c">/*ol*/</span><span class="nc">.breadcrumb</span><span class="p">{}</span>
+</span><span class='line'><span class="c">/*p*/</span><span class="nc">.intro</span><span class="p">{}</span>
+</span><span class='line'><span class="c">/*ul*/</span><span class="nc">.image-thumbs</span><span class="p">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>參考資源</h2>
+
+<ul>
+<li><a href="https://github.com/doggy8088/CSS-Guidelines">撰寫可管理、可維護的 CSS 高階技巧</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-05T10:40:00+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programing/'>Programing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/" data-via="" data-counturl="http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/my-password-algorithm/" title="Previous Post: 每個人都應該有一套自己的密碼演算法">&laquo; 每個人都應該有一套自己的密碼演算法</a>
+      
+      
+        <a class="basic-alignment right" href="/posts/node-http-vs-connect-vs-express/" title="Next Post: Node.js 的 http vs Connect vs Express">Node.js 的 http vs Connect vs Express &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/';
+        var disqus_url = 'http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

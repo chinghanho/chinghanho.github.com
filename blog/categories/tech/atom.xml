@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tech | @ChingHanHo]]></title>
+  <link href="http://blog.chh.tw/blog/categories/tech/atom.xml" rel="self"/>
+  <link href="http://blog.chh.tw/"/>
+  <updated>2014-11-29T07:12:09+08:00</updated>
+  <id>http://blog.chh.tw/</id>
+  <author>
+    <name><![CDATA[Ching-Han Ho]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[每個人都應該有一套自己的密碼演算法]]></title>
+    <link href="http://blog.chh.tw/posts/my-password-algorithm/"/>
+    <updated>2013-06-29T16:06:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/my-password-algorithm</id>
+    <content type="html"><![CDATA[<p><img src="https://lh4.googleusercontent.com/-XJ2BlPNnueY/Uc7GM1tq0bI/AAAAAAAAGgM/EDQev1B22wU/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202013-06-29%2520%25E4%25B8%258B%25E5%258D%25887.32.00.png" alt="the-matrix" /></p>
+
+<p>最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。</p>
+
+<p>在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的，但是在<del>室友</del>駭客面前、或是網站管理員面前，它是透明毫無隱藏的，所以在這前提下就不應該把每個網站全部設同個密碼，因為駭客可以拿這套帳號密碼去登入其他網站。</p>
+
+<h2>密碼演算法</h2>
+
+<p>但是每個網站密碼都不一樣怎麼記得住？所以需要一套「演算法」，以後只需要記憶這套算法，而不是去記密碼。「演算法」聽起來好像很神奇，其實只是一套組合的方法，隨便舉例：</p>
+
+<blockquote><p>網站分級變數 + 常數 + 網站辨識代號 = 密碼</p></blockquote>
+
+<p>以下來分別說明這些東西是什麼。</p>
+
+<!-- more -->
+
+
+<h3>網站分級變數</h3>
+
+<p>網站分級是指依照網站的重要性分類，並且替每個級別設定不同的密碼。最核心的網站通常是信箱服務，例如 Google、Yahoo，你應該替他們設定一個獨立的密碼，與那些亂七八糟的小網站區隔開來。</p>
+
+<p>那應該拿什麼來當變數？我的建議是，你可以選你最愛顏色的 16 進位色碼（如果你偏愛 HSL 也行…… :p），或是圓周率小數點後的第 108 位數到 116 位數（前提是你得背起來 XDD），又或者是一句名言每個字的開頭第一個字母，例如「<em>Why join the navy if you can be a pirate</em>」變成「<em>Wjtniycbap</em>」。</p>
+
+<p>將網站依照重要性分成三種等級，並且每種等級分配一種變數：</p>
+
+<ul>
+<li>核心（Google...）：<em>Wjtniycbap</em></li>
+<li>次等（Evernote...）：<em>bion</em></li>
+<li>下等（亂七八糟論壇...）：<em>wwantm</em></li>
+</ul>
+
+
+<p>太多不好記？寫下來也沒關係，反正別人猜不到你的算法，給他看也沒關係，只要別在紙上寫「這是密碼」就好了。不過，用不著分類太多，三種級別其實也不難記。</p>
+
+<h3>常數</h3>
+
+<p>這是一組夾雜在密碼裡不會改變的常數，主要目的是增加密碼整體的複雜度。最好是數字跟英文的混合，甚至大小寫混合都可以。綜合上一個變數，現在密碼變成了：</p>
+
+<ul>
+<li>核心（Google...）：<em>Wjtniycbap</em> + <em>0rz</em></li>
+<li>次等（Evernote...）：<em>bion</em> + <em>0rz</em></li>
+<li>下等（亂七八糟論壇...）：<em>wwantm</em> + <em>0rz</em></li>
+</ul>
+
+
+<h3>網站辨識代號</h3>
+
+<p>這是這個網站的獨有特徵，可以是這個網站 domain 名稱的變體，例如 Google 的偶數字母：oge；或是該字母在 26 個字母當中的索引位置，o 是第 15 個字母、g 是第 7 個、e 是第 5 個，合起來就是 1575。</p>
+
+<p>最後，我們的密碼就變成了這樣：</p>
+
+<ul>
+<li>核心（Google...）：<em>Wjtniycbap0rz</em> + <em>oge</em></li>
+<li>次等（Evernote...）：<em>bion0rz</em> + <em>vro</em></li>
+<li>下等（亂七八糟論壇...）：<em>wwantm0rz</em> + <em>xxx</em></li>
+</ul>
+
+
+<p>這樣就能產生每個網站都不一樣的密碼，而且不同級別的網站也不會彼此影響到。密碼不是背起來的，而是推理出來的。很酷！也很宅，對吧？</p>
+
+<h3>還有些事情必須知道</h3>
+
+<ul>
+<li>正妹說會經常換密碼的男人最性感，你可以定期更改「網站分級變數」這個部分，或是修改整套算法。</li>
+<li>網站分級不是依你常去的網站來劃分（我知道你常去那種網站，但你也要知道那種網站一定會偷你的密碼），而是這個網站不可被攻破的重要性來區別。</li>
+<li>越重要的核心服務建議啟用多一點的認證機制，例如 Google、Facebook 都有提供手機簡訊的登入認證機制，請一定要啟用它。</li>
+<li>可以變化的不是只有密碼，不同網站當然也可以使用不同的帳號。如果有些網站是「只使用一次」性質的網站，可以多多利用 <a href="http://10minutemail.com/">10 Minute Mail</a> 這個服務。</li>
+<li>依賴算法其實也有些缺點，例如網路銀行的密碼通常會硬性規定要 8 個字元，迫使我必須要另外想一個特例的密碼給網路銀行，下場就是我從來記不住我網路銀行的密碼是什麼。:p</li>
+</ul>
+
+
+<h2>關於密碼管理工具</h2>
+
+<p>儘管現在很多人喜歡用 <a href="http://keepass.info/">KeePass</a> 和 <a href="http://lastpass.com/">LastPass</a> 這類的軟體，但我始終不是很信任這類軟體，也不喜歡用。況且……人類發明了機器，並且替機器上了鎖，卻又用了另外一台機器來管理這把鎖，然後又替這台機器上了另外一把鎖，還真是有趣？要是這把鎖掉了，那就真的全面失控了啊！</p>
+
+<p>再說……連<a href="http://youtu.be/VRCUpXLguHM?t=36m6s">駭客都說不敢用</a>了，你敢用嗎？XDD</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[OS X 與 Windows 切換應用程式的介面體驗]]></title>
+    <link href="http://blog.chh.tw/posts/osx-windows-switch-applications-ux/"/>
+    <updated>2013-06-10T15:39:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/osx-windows-switch-applications-ux</id>
+    <content type="html"><![CDATA[<p>用了好一陣子 OS X 回頭去用 Windows，發現有好多不習慣，除了主要的功能鍵 <kbd>Ctrl</kbd> 跑到鍵盤邊緣去了（OS X 主要功能鍵 <kbd>Command</kbd> 就在空白鍵旁邊比較近），手指頭常常按錯之外，最近在整理硬碟資料夾的時候又被一個小小的切換視窗功能給煩到。</p>
+
+<p>常用電腦的人一定都很熟悉 Ctrl + Tab 這個功能，可以快速在不同視窗之間切換，可是在 Windows 下當我使用這個功能時，給我的介面是這樣的：</p>
+
+<p><img src="https://lh5.googleusercontent.com/-izHKKLQ5a8Q/UbWDPvs5uiI/AAAAAAAAGY4/FiR5NnVj9Ys/s592/switch-windows.png" alt="windows-switching-windows" /></p>
+
+<p>主要是一個視窗縮圖，和一個小小的應用程式 icon 塞在右下角，辨識度非常地差，我很難一眼就快速認出哪個視窗是我要切換的應用程式。再來看看 OS X 切換視窗的介面：</p>
+
+<!-- more -->
+
+
+<p><img src="https://lh3.googleusercontent.com/-DDB7DNKyzHU/UbWDQdjQICI/AAAAAAAAGZM/uPy8c1vtHug/s690/osx-switch-apps.png" alt="osx-switching-windows" /></p>
+
+<p>清楚的應用程式 icon 辨別度非常的強，我一眼就能看出哪個應用程式是我想要切換過去的。這裡也能說明一個應用程式的 icon 設計也是很重要，不需要特別的華麗只需要留下足夠的印象，讓人很容易辨識。</p>
+
+<p>順便分享一下我的 Chrome 常用書籤長這樣，也是靠清楚的 icon 來做為辨識：</p>
+
+<p><img src="https://lh6.googleusercontent.com/-lsfa98IeCCA/UbWLW0EBq8I/AAAAAAAAGZ4/foancUbzS2M/s690/chrome-bookmarks.jpg" alt="chrome-bookmarks" /></p>
+
+<p>但是我在整理 Windows 那台電腦硬碟時，遇到最惱人的狀況其實是這個，同一個應用程式都是長得差不多的縮圖：</p>
+
+<p><img src="https://lh6.googleusercontent.com/-7iT_R82qZL4/UbWDPgCeZ7I/AAAAAAAAGZE/NT9pARWEpBU/s690/switch-windows-2.png" alt="windows-switching-windows-2" /></p>
+
+<p>這樣我完全不知道到底該切到哪一個視窗，而 Windows 下好像也沒有類似 <kbd>Command</kbd> + <kbd>`</kbd> 的功能。如果是 OS X 下，還可以用 Mission Control 或是 Expose 等方式，方便地在不同視窗之間做選擇，這部份 Windows 的介面體驗就做得讓人很難受。</p>
+
+<p>好在我現在只是要整理資料夾，以前我有玩過不少檔案總管的視窗管理軟體，可是介面都做得很宅（不友善）。OS X 上我現在用的是 <a href="http://www.trankynam.com/xtrafinder/">XtraFinder</a> 這套模擬 Chrome 的標籤介面，看起來相當簡潔，外觀長這樣：</p>
+
+<p><img src="https://lh5.googleusercontent.com/-7IbTgHfR58s/UbWGHC3jXwI/AAAAAAAAGZc/RbgfKBfGgGM/s690/osx-xfinder.png" alt="osx-xfinder" /></p>
+
+<p>所以我也想要在 Windows 上，找一個相似風格的視窗管理軟體，後來找到了 <a href="http://cn.ejie.me/">Clover 3</a> 用起來還不錯，還有類似書籤的功能，可惜我覺得有點雞肋就是了，外觀長這樣：</p>
+
+<p><img src="https://lh6.googleusercontent.com/-K5h38CcBicI/UbWDPuGCQsI/AAAAAAAAGZA/8MybmGE3WCM/s690/cover-3.PNG" alt="windows-cover-3" /></p>
+
+<p>題外話，我現在已經漸漸不太用 <kbd>Command</kbd> + <kbd>Tab</kbd> 的方式切換應用程式，而是改用 <a href="http://www.alfredapp.com/">Alfred</a> 這套軟體直接輸入應用程式名稱關鍵字來切換，因為有時候程式開得太多，一直 <kbd>Tab</kbd>、<kbd>Tab</kbd>、<kbd>Tab</kbd> 也是很煩的。XD</p>
+
+<p>過幾天，有空來寫一篇介紹一些 mouseless 操作電腦的方法好了。:)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Google 搜尋加密有兩種]]></title>
+    <link href="http://blog.chh.tw/posts/https-www-google-com-vs-https-encrypted-google-com/"/>
+    <updated>2013-03-22T13:53:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/https-www-google-com-vs-https-encrypted-google-com</id>
+    <content type="html"><![CDATA[<p>剛剛看 <a href="http://www.businessinsider.com/google-products-youve-never-heard-of-2013-3#encryptedgooglecom-is-a-more-secure-way-to-search-for-things-encrypted-uses-secure-sockets-layer-ssl-which-is-the-same-security-that-banks-use-online-11">Business Insider</a> 提到了 Google 的 <a href="https://encrypted.google.com/">encrypted.google.com</a> 這個網址，記得在 Google 還沒有對已登入用戶全面預設用 <a href="http://en.wikipedia.org/wiki/HTTP_Secure">HTTPS</a> 連線以前，<em>encrypted.google.com</em> 是專門用來使用 HTTPS 的網址，也就是當連線到 <em>https://www.google.com</em> 時會被自動跳轉到 <em>https://encrypted.google.com</em>。</p>
+
+<p>既然現在 Google 對於已登入的用戶已經預設用 HTTPS 連線，那這個東西還留著幹嘛？所以<a href="http://security.stackexchange.com/questions/32367/what-is-the-difference-between-https-google-com-and-https-encrypted-google-c">問一下 Google 找答案</a>，原來 <em>encrypted.google.com</em> 另有其他特異功能，兩者之間的差異，主要在於點擊廣告與搜尋結果時，處理 <a href="https://zh.wikipedia.org/wiki/HTTP%E5%8F%82%E7%85%A7%E4%BD%8D%E5%9D%80">HTTP 參照位址</a>的方式不同。</p>
+
+<!-- more -->
+
+
+<h3>點擊一個廣告</h3>
+
+<ul>
+<li><p><em>https://www.google.com</em>：Google 將會把你帶到一個 HTTP 的重新導向頁面，在那裡他們會把你的搜尋字串塞進參照資訊裡去。</p></li>
+<li><p><em>https://encrypted.google.com</em>：如果這個廣告主用的是 HTTP，Google 不會讓他們知道你的查詢字串是什麼。而如果廣告主用的是 HTTPS，他們將會如常地收集到你的參照資訊（包括查詢字串）。</p></li>
+</ul>
+
+
+<h3>點擊一般的搜尋結果</h3>
+
+<ul>
+<li><p><em>https://google.com</em>：除果網站使用 HTTP 連線，Google 將會把你帶到 HTTP 的重新導向頁面，但是不會把你的搜尋字串給塞進參照資訊裡面。他們只會告訴網站你是從 Google 來的。如果你的網站使用 HTTPS 連線，便可以正常地搜集到參照資訊。</p></li>
+<li><p><em>https://encrypted.google.com</em>：如果你點擊的網站使用 HTTP 連線，Google 既不會告訴它查詢字串是什麼，也不會告訴它你是哪裡來的。如果該網站使用 HTTPS 連線，它則會正常地收到參照資訊。</p></li>
+</ul>
+
+
+<p>所以我的 blog 從搜尋引擎來的訪客中，用關鍵字去查有 74% 都是「not provided」大概就是這個原因。如果這篇答案的結果是正確的，採用 HTTPS 連線加密的網站便可以正確地搜集到帶有查詢字串的參照資料，那網站採用 HTTPS 將會變成最基本的條件。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[寫在 Google Reader 死後]]></title>
+    <link href="http://blog.chh.tw/posts/after-google-reader-dead/"/>
+    <updated>2013-03-16T00:02:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/after-google-reader-dead</id>
+    <content type="html"><![CDATA[<p>昨天最熱門的消息就是 <a href="http://googlereader.blogspot.tw/2013/03/powering-down-google-reader.html">Google 宣布 Reader 的死亡</a>（GR 的官方部落格上次更新竟然是兩年前），判刑日定在今年 7 月 1 日，RIP。文章的意思是，在執行死刑之前，使用者可以用 <a href="https://www.google.com/takeout/?pli=1#custom:reader">Google Takeout</a> 把資料帶走，然後就趕快滾吧！雲端服務大概就是這麼回事吧，煙消雲散時<a href="https://news.ycombinator.com/item?id=5371725">使用者哭喊地再悲再慘</a>也沒用，只能把行李打包打包逃到下一個隨時可能散掉的雲。</p>
+
+<p>翻了一下統計資訊，我從 2010 年 4 月 10 日開始使用 Google Reader，直到今天將近三年的時間，總共閱讀過 70,194 個項目，平均起來每天至少瀏覽過 70 篇文章。這並不是很多，因為我的閱讀習慣早已經改變，不再依賴 RSS，以前早中晚都會習慣開 Google Reader 看新聞，現在幾乎只有一天一次、兩天一次，或者更少，頻率降低許多。</p>
+
+<p>現在我的主要資訊來源有以下這幾個：</p>
+
+<!-- more -->
+
+
+<h3>Twitter</h3>
+
+<p>自從開始使用 <a href="https://twitter.com/">Twitter</a> 後就愛上了 Twitter 這種訂閱資訊流的方式。自己挑選資訊策展人，然後從極短的網摘和大量的連結，讓我能夠很快地找到我想看的內容。不論是 Google Reader 已死、RSS 已死也好，總之從 Twitter 上取得資訊是我最喜歡的途徑。</p>
+
+<h3>Hacker News</h3>
+
+<p><a href="http://news.ycombinator.com/">Hacker News</a> 是矽谷知名創投設立的網站，<a href="http://www.inside.com.tw/2011/02/15/what-you-should-subscribe-hacker-news-provided-by-y-combinator">Inside 曾經有寫過專文</a>介紹它，儘管近來有素質每況愈下的感覺，但是上面的資訊大部分都仍然很有可看性，所以我現在每天還是都會去看看置頂的新聞有哪些。</p>
+
+<h3>Prismatic</h3>
+
+<p>我很喜歡 <a href="http://www.zite.com/">Zite</a> 這個資訊策展服務，可是我只想要在電腦上瀏覽使用，而 Zite 似乎沒打算做 Web 版，所以我選擇了 <a href="http://getprismatic.com/">Prismatic</a> 作為了 Zite 替代品。Prismatic 會依照個人的主題偏好，提供客製化的資訊流，目前用起來很滿意。</p>
+
+<p><img src="http://lh3.googleusercontent.com/--vfXlScj0-s/UUNEW_s885I/AAAAAAAAF7A/cesErfD2F-k/s686/google-reader-versus-google-plus.jpg" alt="google-reader-versus-google-plus" /></p>
+
+<p>話說回來，Google 把 Reader 關掉讓我感到有點訝異，雖然這個消息在小道上已經傳很久，但是也沒想到會是這樣子收場。如果按 <a href="http://www.techbang.com/posts/12585-former-product-manager-brian-shih-explains-why-google-reader-to-step-down-everything-is-google">T 客邦這篇文章</a>寫的那樣，說是 Google+ 的原因，這樣的說法更讓人難以接受，從種種跡象來看 Google+ 完全沒有替代 Reader 的能力，Google 怎麼敢就這樣下決定？好歹這份市場也不算小，就這樣拱手讓給別人實在很可惜。</p>
+
+<p>我目前把訂閱的清單暫時轉移到 <a href="http://blog.feedly.com/2013/03/14/google-reader/">Feedly</a> 去，或許哪天心血來潮還是會去翻翻看有什麼東西可以挖。</p>
+
+<p>2013.03.20 更新：Feedly 的套件需要存取所有網站資料的授權，因為它會在每個網站上嵌入一個小小的按鈕方便分享，而要使用 Feedly 似乎一定得裝他們的套件，實在太不乾淨，所以我決定不用了。</p>
+
+<p>2013.03.21 更新：在 <a href="http://www.feedly.com/home#preferences/mini%20toolbar">Feedly 的偏好設定頁面</a> 可以關掉那顆 mini 按鈕，感謝網友的告知。雖然還是不喜歡看個 RSS 也要授權那麼多東西，不過我打算還是用一陣子觀察看看。</p>
+
+<p><img src="http://lh4.googleusercontent.com/-nCh6xqkpDYQ/UUMzsAes5NI/AAAAAAAAF6s/uTRxBGGa4JU/s578/removing-google-reader.png" alt="removing-google-reader" /></p>
+
+<p>最後，跟 Google Reader 說再見的時候到了，謝謝你曾經提供這麼棒的服務來製造我的資訊焦慮，讓我一度以為你是那麼不可或缺，但又同時讓我理解到你並不是那麼地重要。</p>
+
+<p>Google Reader，快點從我的導航欄上消失吧！</p>
+
+<p>（突然想到我的 blog 目前只有提供 RSS 一種 feed 途徑……Orz）</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Opera 產品全面改用 WebKit 引擎]]></title>
+    <link href="http://blog.chh.tw/posts/opera-move-to-webkit/"/>
+    <updated>2013-02-14T08:40:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/opera-move-to-webkit</id>
+    <content type="html"><![CDATA[<p><img src="http://lh3.googleusercontent.com/-81Na2LPt3oY/URwrpztPvcI/AAAAAAAAF0I/nW6cpHKy0xQ/s690/installed-browsers.png" alt="installed-browsers" /></p>
+
+<p>大約在一個月前就有看到 <a href="http://www.pocket-lint.com/news/49375/opera-ice-new-webkit-browser">Opera 要改用 WebKit rendering 引擎</a>的消息，所以昨天看到 <a href="http://my.opera.com/ODIN/blog/300-million-users-and-move-to-webkit">Opera 開發團隊發佈的新聞</a>其實沒有太驚訝，反而是看到<a href="http://news.ycombinator.com/item?id=5211953">鄉民們激動的表現</a>讓我有點意外。</p>
+
+<p>要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit 引擎說實在跟我沒有太大的關係，對於網站開發有沒有影響我也不知道，因為在我練功的路上目前都沒有碰到太多跟瀏覽器前端有關的部份，要說直接的影響大概就是寫 CSS 可以少個 prefix 吧！可是我寫 CSS 都是用 <a href="https://github.com/chriseppstein/compass">Compass</a> 這個武裝神器，本來就沒有在寫 prefix 啊。XD</p>
+
+<p>我最喜歡的瀏覽器是 Google Chrome，可是有時會因為不同的需求或是開發需要，我電腦裡同時安裝了各家瀏覽器，包括 Safari、Firefox 和 Opera 等等。裝 Firefox 是因為要用到某些特別的 add-ons；而 Opera 則是 UI 用得不是很習慣所以不喜歡，裝起來只是純粹開發測試用。現在 Opera 改用 WebKit 後突然發現好像已經可以移除它了齁！:p</p>
+
+<p>跟我一樣的人應該也不少，Opera 改用 WebKit 應該多多少少會影響到市佔率，可是我想其實應該不會減少太多，因為「一般使用者」本來就沒有在乎 Opera 用的是哪一套 rendering 引擎，重點還是在 UI 的設計跟整體效能讓使用者滿不滿意。我對 Opera 沒有什麼偏見，真的只是純粹用不慣而已。</p>
+
+<p>Opera 放棄 Presto 後市場上就只剩下 WebKit、Gecko 和 Trident 三個主要的 rendering 引擎，也許以後會常見到「最佳瀏覽效果請使用 WebKit-base 瀏覽器」這樣的標語出現在網頁的尾部，也可能讓 WebKit 推向成為下一個「IE 世代」，誰知道呢？即便到真的有那麼一天，我相信以現在 web 的發展程度，一定會出現一個替代品讓堅持開放信仰的人們能夠有個地方去。</p>
+]]></content>
+  </entry>
+  
+</feed>

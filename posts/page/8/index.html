@@ -1,0 +1,813 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>@ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="原本老爸用自由門還可以翻出來到 Facebook 上貼些吃吃喝喝的照片，可是最近 GFW 又在搞怪，自由門也不太有效，所以老爸就問我能不能幫他架個 VPN 網路，剛好最近在練習 Rails deploy 玩到 Amazon AWS 雲端服務，所以想說乾脆開個 instance 來架看看。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/page/8/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/page/8/" />
+<meta property="og:description" content="原本老爸用自由門還可以翻出來到 Facebook 上貼些吃吃喝喝的照片，可是最近 GFW 又在搞怪，自由門也不太有效，所以老爸就問我能不能幫他架個 VPN 網路，剛好最近在練習 Rails deploy 玩到 Amazon AWS 雲端服務，所以想說乾脆開個 instance 來架看看。 &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+
+
+
+<meta itemprop="description" content="原本老爸用自由門還可以翻出來到 Facebook 上貼些吃吃喝喝的照片，可是最近 GFW 又在搞怪，自由門也不太有效，所以老爸就問我能不能幫他架個 VPN 網路，剛好最近在練習 Rails deploy 玩到 Amazon AWS 雲端服務，所以想說乾脆開個 instance 來架看看。 &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/setting-up-a-vpn-server-on-amazon-ec2/">三秒鐘在 Amazon EC2 上架好 VPN-server</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-05T08:52:00+08:00" pubdate data-updated="true">Nov 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原本老爸用<a href="http://us.dongtaiwang.com/?lang=cn">自由門</a>還可以翻出來到 Facebook 上貼些吃吃喝喝的照片，可是最近 GFW 又在搞怪，自由門也不太有效，所以老爸就問我能不能幫他架個 VPN 網路，剛好最近在練習 <a href="http://blog.whiteball.tw/posts/deply-rails-app-on-ec2/">Rails deploy</a> 玩到 Amazon AWS 雲端服務，所以想說乾脆開個 instance 來架看看。</p>
+
+<p>上網查了一下資料發現已經有人把整個流程寫成執行檔，只要先用 <code>wget</code> 把檔案抓到本機裡執行就搞定了，步驟超級簡單。首先有幾個前置作業：</p>
+
+<ul>
+<li>開一台 Amazon AMI 32 位元的 instance</li>
+<li>Security Groups 防火牆設定要打開 port 1723 給 VPN 連線用（當然別忘了 SSH 用的 port 22）</li>
+</ul>
+
+
+<p>然後用 <code>wget</code> 把執行檔抓到本機執行：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget https://raw.github.com/gist/999866/4fa28f39890fa4244ebeb82ea4e097e75756b582/pptpd.sh
+</span><span class='line'>sudo sh pptpd.sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安裝完成後，會輸出 VPN 帳號跟密碼在最後一行，把它複製起來收好，或是抄起來，接下來就可以到電腦上設定 VPN 了。如果要增加用户，就编辑 /etc/ppp/chap-secrets 這個檔案，自己添加用戶名稱和密碼即可。</p>
+
+<p>請注意 Free Tier 上下傳每個月限制是 15GB 免費，超過就要付錢了。15 GB 很多嗎？像我每天上網的流量可能都是超過 7、8 GB，當然是因為我會連到一些多媒體網站上去，如果用不到 VPN 來連記得把它關掉，有沒有回到撥接時代的感覺？XD</p>
+
+<p>參考資料：</p>
+
+<ul>
+<li><a href="http://passtest.net/2010/11/amazon-aws-ec2-vpn-vps-2/">Amazon EC2上一键安装配置PPTP VPN服务</a></li>
+<li><a href="http://www.mac52ipod.cn/post/set-vpn-on-apple-mac-os-x.php">Mac技巧之苹果电脑Mac OS X系统下设置VPN翻墙上真正互联网的教程</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/deply-rails-app-on-ec2/">如何佈署 Rails 應用程式到 Amazon EC2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-02T08:39:00+08:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>上禮拜練習佈署 Rails 到 <a href="http://aws.amazon.com/ec2/">Amazon EC2</a> 伺服器上，也理解了一下如何透過 SSH 操作遠端 server，很多原理還不是很懂，大部分只是得過且過，碰到問題就用別人的解決方案，目前是能讓機器動起來就好。</p>
+
+<p>如果哪天能夠不再只是按照別人的食譜來架設，能夠依照自己需求去調整，我想應該就是跨越了新手入門的級別了吧！</p>
+
+<h2>申請 Amazon AWS 帳號</h2>
+
+<p>對於新手而言使用 PaaS 的 <a href="http://www.heroku.com/">Heroku</a> 比較方便，不過 AWS 給的是更豐富的彈性。</p>
+
+<p>申請 Amazon AWS 需要信用卡帳號，新註冊的使用者可以有 12 個月的<a href="http://aws.amazon.com/free/">免費方案</a>，適合初學者練習用。這部份可以參考<a href="http://blog.soft.idv.tw/?p=824">阿正老師</a>寫的教學，整個申請流程和選擇機器的步驟，都有詳細的說明。而這篇文章用的作業系統環境是 Ubuntu 12.04 LTS 這個版本。</p>
+
+<p>如果機器準備好了，應該會得到一個金鑰檔案（.pem）和一組 IP，這個時候就可以開終端機用 SSH 跟剛剛選好 server 連線：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh -i YOUR_NAME.pem ubuntu@IP位址
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>等等會用到以下幾個工具，需要逐一安裝到伺服器上：</p>
+
+<ul>
+<li>RVM</li>
+<li>Nginx</li>
+<li>Passenger</li>
+</ul>
+
+
+<h2>調整 Ubuntu 環境設定</h2>
+
+<p>在安裝其他軟體之前，現對系統進行更新，確保軟體清單都是最新的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get upgrade <span class="c">#對系統進行升級</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>修改系統時間，選擇到台北的時區，可以用 <code>date</code> 指令來確認時間有沒有正確：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo dpkg-reconfigure tzdata
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install ntp
+</span><span class='line'><span class="nv">$ </span>sudo ntpdate ntp.ubuntu.com <span class="c"># Update time</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果平常有偏好用 alias 可以這個時候先設定好，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;alias ls=&#39;ls -l&#39;&quot;</span> &gt;&gt; ~/.bash_aliases
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;alias sudo=&#39;sudo env PATH=$PATH&#39;&quot;</span> &gt;&gt; ~/.bash_aliases
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>RVM</h2>
+
+<p>有時候我們會需要同時安裝多個 Ruby 版本在機器上，所以需要一套版本控制系統來切換，這裡用的是 RVM（Ruby Version Manager）<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>curl -L https://get.rvm.io | sudo bash -s stable <span class="c"># 用 curl 指令安裝 RVM</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> /etc/profile.d/rvm.sh <span class="c"># 啟用 RVM</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把 RVM 安裝好以後輸入 <code>rvm requirements</code> 查看需要哪些 dependencies，例如我要安裝標準的 Ruby MRI 版本<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>，那就需要安裝以下這些套件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion pkg-config
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>現在網路這麼方便，隨時可以在網路上找到最新的文件，所以沒有必要把文件下載到本機裡，以下這個指令可以預設不要下載 gem 的文件說明檔案：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;gem: --no-ri --no-rdoc&#39;</span>  &gt;&gt; ~/.gemrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>RVM 安裝 Ruby 前面要用 <code>rvmsudo</code>，因為 <code>sudo</code> 不會包含 RVM 的環境變數，這個步驟需要 compile 可能會花比較久的時間；安裝好以後安裝 Rails 套件，然後建立一個 app 來測試看看：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvmsudo rvm install 1.9.3 --default --with-openssl-dir<span class="o">=</span><span class="nv">$HOME</span>/.rvm/usr
+</span><span class='line'><span class="nv">$ </span>gem list <span class="c"># 查看有哪些 Gems，主要是確保安裝成功</span>
+</span><span class='line'><span class="nv">$ </span>rvmsudo gem install rails
+</span><span class='line'><span class="nv">$ </span>rails -v <span class="c"># 確認 Rails 安裝成功</span>
+</span><span class='line'><span class="nv">$ </span>rails new firstapp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ubuntu 預設沒有 JavaScript 的直譯器，需要在 Gemfile 中解開這行註解，然後重新 <code>bundle install</code>：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;therubyracer&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這個時候已經可以打開 server，執行 <code>rails server</code> 啟動 WEBrick server<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>。在 Amazon EC2 Management Console 後台的 Security Groups 打開 3000 port，連到 Amazon 給的 Public 域名，順利的話應該可以看到 Rails 的初始畫面。</p>
+
+<h2>Nginx + Phusion Passenger</h2>
+
+<p>要先把 Passenger 的 gem 安裝起來：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvmsudo gem install passenger
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後再安裝 Nginx 的 Passenger 模組：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvmsudo passenger-install-nginx-module
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這時會先檢查軟體需要的 dependencies，如果找不到也不用擔心，會出現說明指導該怎麼做，例如我遇到這個軟體沒有安裝：</p>
+
+<pre><code>* To install Curl development headers with SSL support:
+  Please run apt-get install libcurl4-openssl-dev or libcurl4-gnutls-dev, whichever you prefer.
+</code></pre>
+
+<p>那就按照指示把它裝起來就好了，然後重新執行一次安裝模組的指令繼續安裝 Nginx：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install libcurl4-openssl-dev
+</span><span class='line'><span class="nv">$ </span>rvmsudo passenger-install-nginx-module
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果軟體需要的 dependencies 都安裝好了以後，會詢問是要自動下載安裝，還是自訂安裝：</p>
+
+<pre><code>Automatically download and install Nginx?
+
+Nginx doesn't support loadable modules such as some other web servers do,
+so in order to install Nginx with Passenger support, it must be recompiled.
+
+Do you want this installer to download, compile and install Nginx for you?
+
+ 1. Yes: download, compile and install Nginx for me. (recommended)
+The easiest way to get started. A stock Nginx 1.2.3 with Passenger
+support, but with no other additional third party modules, will be
+installed for you to a directory of your choice.
+
+ 2. No: I want to customize my Nginx installation. (for advanced users)
+Choose this if you want to compile Nginx with more third party modules
+besides Passenger, or if you need to pass additional options to Nginx's
+'configure' script. This installer will  1) ask you for the location of
+the Nginx source code,  2) run the 'configure' script according to your
+instructions, and  3) run 'make install'.
+
+Whichever you choose, if you already have an existing Nginx configuration file,
+then it will be preserved.
+
+Enter your choice (1 or 2) or press Ctrl-C to abort: 1
+</code></pre>
+
+<p>因為沒有特別的需求，所以選擇 <code>1</code> 完整安裝，詢問安裝路徑時，就用預設的即可。接下來等待 Nginx 編譯完成，這可能會花不少時間，可以去 <a href="http://news.ycombinator.com/">Hacker News</a> 先看個新聞。</p>
+
+<p>這裡我參考了 <a href="http://chloerei.com/2012/08/05/rails-deploy-guides-1-base-deploy/">@chloerei</a> 的作法，新增 Nginx 伺服器啟動腳本，事實上我不曉得這腳本是怎麼運作的，這也就是我前言講的，目前功力太弱只能照著別人的食譜作為解決方案：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/init.d
+</span><span class='line'><span class="nv">$ </span>sudo wget https://raw.github.com/chloerei/nginx-init-ubuntu-passenger/master/nginx
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d nginx defaults
+</span><span class='line'><span class="nv">$ </span>sudo chmod +x nginx
+</span><span class='line'><span class="nv">$ </span>sudo service nginx start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣以後可以用 <code>sudo service nginx [start|stop|restart]</code> 方式來管理伺服器了，變得比較方便一些。</p>
+
+<p>修改 /opt/nginx/conf/nginx.conf 文件設定，裡面看起來很多東西，但是重點只有以下這幾個：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>http {
+</span><span class='line'>  ...
+</span><span class='line'>  passenger_root /usr/local/rvm/gems/ruby-1.9.3-p286/gems/passenger-3.0.17;
+</span><span class='line'>  passenger_ruby /usr/local/rvm/wrappers/ruby-1.9.3-p286/ruby;
+</span><span class='line'>  ...
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>server {
+</span><span class='line'>  listen 80;
+</span><span class='line'>  server_name www.yourhost.com;
+</span><span class='line'>  root /somewhere/public;   # &lt;--- be sure to point to 'public'!
+</span><span class='line'>  passenger_enabled on;
+</span><span class='line'>  }</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>passenger_root</code> 和 <code>passenger_ruby</code> 讓 Nginx 可以找到 Passenger 執行路徑；<code>server_name</code> 是網域名稱，<code>root</code> 指向 Rails app 下的 /public 目錄（!important）。</p>
+
+<p>如果在 nginx.conf 檔案中有 <code>location /</code> 這段程式碼，把它註解掉，因為這樣可能會導致你看到 403 Forbidden。最後只要在 EC2 後台開啟 80 port，作法跟前面測試 Rails app 一樣，應該就可以正常連上了。</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>當然也有其他選擇，例如 <a href="https://github.com/sstephenson/rbenv">rbenv</a> 是相較下較輕量的 Ruby 版本控制系統。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>以 C 語言實作的官方版本，通常稱為 CRuby 或是 MRI，意思是 Matz&#8217;s Ruby Interpreter。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>WEBrick 是用 Ruby 實作的簡單 HTTP server，開發的時候很好用，可是拿來當 production server 就會不敷使用。 <a href='#fnref:3' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/rails-rumble-top-ten-winners-what-gems-used/">Rails Rumble 贏家們都用哪些 Gems</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-24T08:27:00+08:00" pubdate data-updated="true">Oct 24<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh5.googleusercontent.com/-qvZPDwZ2xTQ/UIdKILEJtOI/AAAAAAAAEWI/Jzwy2lzNIKc/s720/rails-rumble-logo-large.png" alt="" /></p>
+
+<p>Rails Rumble 是國外相當有名的 Hackathon 大賽，是一場考驗 hacker 們的<del>爆肝力</del>體力和智力的「遊戲」，必須 48 小時之內用 Ruby on Rails 或是其他 Rack-based 的 Ruby 框架寫出一個「最小可行性產品<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>」。</p>
+
+<p>48 小時內能完成什麼網站？<a href="http://railsrumble.com/entries/winners">Rails Rumble</a> 網站上列出了今年 2012 贏得大賽的前十名作品，例如第一名的 <a href="http://grumpy-cat.r12.railsrumble.com/">findthin.gs</a> 可以找出電視影集和電影的線上資源，讓你選擇網路上直接收看或是線下購買回家。</p>
+
+<p>Rails 開發網站果然很快很強大，也仰賴 Ruby 語言的「<a href="http://en.wikipedia.org/wiki/Glue_language">膠水</a>」特性，利用「工具箱哲學」可以用很多簡單的小工具，快速拼裝起來一個成品。剛剛看到 <a href="http://www.dwellable.com/blog/Rails-Rumble-Winners-Gem-Teardown">Dwellable</a> 部落格寫了一篇文章，訪問 top 10 的參賽者，挖出他們的 Gemfile 窺探他們到底用了哪些 Gems 來「組裝」網站。感覺挺有趣的，所以我就順手翻譯了一下我看得懂的部分。</p>
+
+<h2>前端技術</h2>
+
+<p><img src="http://lh4.googleusercontent.com/-Y7Dm1PZ_Yjc/UIdDEnDyirI/AAAAAAAAEVQ/s5gfmI5TIZw/s642/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-10-24%2520%25E4%25B8%258A%25E5%258D%25889.21.33.png" alt="" /></p>
+
+<ul>
+<li><a href="http://jquery.com/">jQuery</a>：每個團隊都用到了 jQuery 這套輕量的 JavaScript 函式庫；</li>
+<li><a href="http://coffeescript.org/">CoffeeScript</a>：9 個，顯然大家都不喜歡單純的 JavaScript；</li>
+<li><a href="http://twitter.github.com/bootstrap/">Bootstrap</a>：6 個團隊採用這套由 Twitter 所維護的開源框架，對於不擅長前端的後端開發者而言，這真的非常好用；</li>
+<li><a href="http://sass-lang.com/">Sass</a>：9 個，Sass / SCSS 讓 CSS 寫起來更友善，而且更容易維護，尤其是當上了 Compass 後威力更強大；</li>
+<li><a href="http://haml.info/">HAML</a> / <a href="http://slim-lang.com/">Slim</a>：有 5 個團隊採用 HAML，有 3 個團隊採用 Slim，比起 HAML 來說 Slim 感覺是更輕量的引擎<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>；</li>
+</ul>
+
+
+<h2>後端技術</h2>
+
+<h3>資料庫</h3>
+
+<p><img src="http://lh4.googleusercontent.com/-Ak4RSlmv_04/UIdDEk1el2I/AAAAAAAAEVI/Zu78v5jhAH0/s635/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-10-24%2520%25E4%25B8%258A%25E5%258D%25889.21.54.png" alt="" /></p>
+
+<p>近年來 MongoDB<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup> 很火紅，還是只有在 Rails 圈內（？）。不過常被詬病的大數據處理的性能，我沒用過所以我也不曉得，但是在小數據的處理上我想大概沒什麼太大爭議，在這種 Hackathon 場合上用起來應該也是很適合的。</p>
+
+<p>在 Top 10 團隊當中，有 5 組採用 MySQL 資料庫，其他有 3 組採用 MongoDB，另外兩組用的是 Postgres。而其中有 5 組團隊採用了 Redis 這套開源的緩存資料庫系統。</p>
+
+<h3>測試</h3>
+
+<p><img src="http://lh3.googleusercontent.com/-5Yx1TxaXPCI/UIdDE3KMwOI/AAAAAAAAEVM/oQgMay8odFE/s630/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-10-24%2520%25E4%25B8%258A%25E5%258D%25889.22.05.png" alt="" /></p>
+
+<p>其中有 6 個團隊使用 RSpec 來寫測試，雖然他們也有用到其他測試相關的 gems，不過這裡提到的是最主要的。讓我感到訝異的是在 Hackathon 這麼短的時間內，他們竟然還有時間來寫測試？不曉得覆蓋率多少就是了。當然，也有團隊是完全不寫測試的。:p</p>
+
+<h2>佈署策略</h2>
+
+<p><a href="https://github.com/capistrano/capistrano">Capistrano</a> 看來還是最多人用的，有 7 個團隊用它來佈署應用程式，其中有個團隊使用的是 <a href="https://github.com/nadarei/mina">Mina</a>。在記憶體快取方面，有 2 個團隊用了 <a href="https://github.com/mperham/dalli">Dalli</a> 這套軟體，其他的團隊或許沒有用或者是用 Redis 來替代。</p>
+
+<h3>第三方服務</h3>
+
+<p>大量應用第三方網站的服務來「組裝」是一種趨勢，尤其對於網站的初期來說<sup id='fnref:4'><a href='#fn:4' rel='footnote'>4</a></sup>。比方說寄信這檔事好了，寄給一個人或是寄給十個人很簡單，但是如果今天要一次寄出幾千封 eDM 就是一門專業學問了，專業的還是讓給專業的去搞吧。而 Rails Rumble 比賽中就有 2 個團隊採用 <a href="http://mailchimp.com/">MailChimp</a> 來處理這方面的問題。</p>
+
+<p>此外，有 3 個團隊使用了 <a href="http://pusher.com/">Pusher</a> 這個服務來 host 即時訊息系統。</p>
+
+<h3>認證系統</h3>
+
+<p><img src="http://lh3.googleusercontent.com/-Gc6_Zwxm2Jw/UIdDFzvUbeI/AAAAAAAAEVw/4Nw_BVpJ2gc/s607/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-10-24%2520%25E4%25B8%258A%25E5%258D%25889.22.39.png" alt="" /></p>
+
+<p>大多數的團隊使用的是富具盛名的 <a href="https://github.com/plataformatec/devise">Devise</a>，也有少數幾個團隊用的是「純」<a href="https://github.com/intridea/omniauth">OmniAuth</a>。大多數的開發者都會把 OmniAuth 直接整合進 Devise。</p>
+
+<h2>該來用看看的 Gems</h2>
+
+<ul>
+<li><a href="https://github.com/pry/pry">Pry</a>：irb 的替代品，當然不是單單「替代」這麼簡單，能替代當然是因為它非常強大的 debug 功能，Rails Rumble top 10 團隊中就有 6 個團隊使用它；</li>
+<li><a href="https://github.com/vmg/redcarpet">Redcarpet</a>：<a href="http://markdown.tw/">Markdown</a> 語法的解析器，也是我常用的 gem 之一；</li>
+<li><a href="https://github.com/josh/useragent">UserAgent</a>：用來解析 HTTP user agent，可以判斷你是用什麼裝置來上網的；</li>
+<li><a href="https://github.com/javan/whenever">Whenever</a>：用 Ruby 產生例行性的工作，我之前寫推文演算法用的是 <a href="https://github.com/jmettraux/rufus-scheduler">rufus-scheduler</a> 這套；</li>
+<li><a href="https://github.com/jeremyw/stamp">Stamp</a>：用友善的時間表示法來表示日期，替代原本 <code>%m</code> 這種不曉得是 month 還是 minute 的格式。</li>
+</ul>
+
+
+<h2>後記</h2>
+
+<p>Hackthon 好像很好玩，不過以我現在的實力去參加，恐怕是被碾假的吧。前幾天才剛結束 Yahoo! Hack Day，最後獲勝者是 <a href="http://tw.polydice.com/2012/10/22/yahoo-open-hack-day-2012-get-your-ideas-into-action-appvengers/">Polydice</a> 報名的兩個隊伍，結果兩個隊伍全得獎了。XD</p>
+
+<p>而前幾個禮拜 Facebook 也來台灣舉辦 Facebook World Hack，台灣相當強的 Rails 高手 XDite 贏得最後的大獎，也在她的部落格分享<a href="http://blog.xdite.net/posts/2012/10/20/how-to-win-hackthon/">獲勝心得</a>，其中我覺得相當有參考價值的是：</p>
+
+<blockquote><p>評審希望得獎的題目是 valuable 的。搞笑、諷刺、主題模糊的題目，一定不會得獎。（我在 2009 的比賽跟一群大神等級的朋友合作做了一個精美的搞笑網站「<a href="http://wp.xdite.net/?p=1472">我是專家</a>」，但是……我們沒有得獎）</p></blockquote>
+
+<p>看到這裡再去瞄一下 <a href="http://railsrumble.com/entries/winners">Rails Rumble 前十名</a>，都是非常有實用性的網站。所以下次如果要去參加 Hackathon 比賽，我想選好題目是非常重要的。</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'><a href="http://www.books.com.tw/exep/prod/booksfile.php?item=0010547374" alt="精實創業">精實創業</a>所提倡的一種概念，產品或服務不需要等到「完美」才推出，只要「堪用」能夠滿足使用者需求就夠了。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'><a href="https://github.com/klaustopher/hamlerbslim" alt="hamlerbslim">Github</a> 上有人用 <a href="http://httpd.apache.org/docs/2.2/programs/ab.html">Apache Benchmark</a> 做了一個實驗，測試 ERb、HAML、Slim 這三套樣板處理引擎的性能，有興趣可以參考看看。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>值得提一下的是最近 <a href="https://education.10gen.com/" alt="10gen">10Gen</a> 在線上開課，可以上免費的 MongoDB 專業課程。 <a href='#fnref:3' rev='footnote'>↩</a></li><li id='fn:4'>例如國內的 <a href="http://www.inside.com.tw/2012/01/30/icook-cloud-service" alt="icook-cloud-service">iCook</a> 就用了非常多的網路服務來「組裝」。 <a href='#fnref:4' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/tweetbot-for-mac-20-dollars-a-good-software-worth/">Tweetbot for Mac $20：一個好軟體應該值多少錢</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-19T19:43:00+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em>TL;DR</em></p>
+
+<h2>第一次買軟體的經驗</h2>
+
+<p>記得我第一次花錢買「軟體」是在國小的時候，拿著存了幾個月的零用錢去偷買最新上市的戰地風雲，那價格好像是 1,000 多元左右，結果回家被老媽臭罵一頓，更慘的是，這遊戲後來玩不超過 50 次，Oops！真是虧爆了。:p</p>
+
+<p>不過當一下阿 Q 換個精神勝利的方式想想，如果用次數來平均計算的話，1,000 除以 50，這遊戲玩一次的成本大約 20 多塊錢，大概跟一杯半糖去冰的綠茶差不多。咦？這樣好像其實也不貴齁，反正遊戲現在已經變成一片廢光碟、清茶也變成一泡尿，通通不見了，可是「爽度」都有了。</p>
+
+<p>所以我開始想，平常老掛在嘴邊咒罵萬惡的 M$，一套作業系統賣 3,000、4,000 塊錢到底算貴還是不貴？現代人得了每天不用電腦會死的病，一年 365 天用個 300 次應該不算太多，平均成本算起來比綠茶還便宜，而且用越久越划算，簡直就賺翻了嘛！</p>
+
+<p>既然如此，怎麼還有人不願意買便宜到爆的 Windows 呢？顯然人們評估軟體的價值不是總共用了幾次。</p>
+
+<h2>免費試用 + 小額付費</h2>
+
+<p>事實上，我寧可花 20 元在一年內喝掉 200 杯綠茶，也不願意一次花 4,000 元買一套 Windows<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>。因為 20 元我可以隨時停掉不買，也許我喝到第 50 杯就膩了、煩了、倦了，然後改買其他飲料，但 Windows 不能用了兩個月還要求退一半費用。</p>
+
+<p>這樣講還是很怪，因為綠茶跟 Windows 本來就是牛馬不相及，而且如果是一杯 4,000 元的綠茶跟一套 4,000 元的 Windows，我會選哪一個？我兩個都不要，因為我既不要一套 4,000 元的 Windows 更不想要一杯 4,000 元的綠茶。</p>
+
+<p>說到底仍然是價格，更重要的是對於商品的期望值，我原本就已經對於「綠茶」有所預期，認為我買了這杯飲料應該可以得到什麼樣的「體驗」，即使以前我沒買過某家的綠茶，就算非常難喝，我還是有可能會買，可是 Menu 上如果有杯名叫「霸王菊花叉燒飲」<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>的新產品，我多半就不會輕易嘗試。</p>
+
+<p>軟體因為沒有基本的預期，儘管你知道那是個代辦事項軟體，可是不曉得能不能符合需要，也不知道可以得到什麼樣的「體驗」，就跟那杯「霸王菊花叉燒飲」一樣，即使附上樣品圖片我仍然會猶豫。</p>
+
+<p>如果這個時候店員遞上一小杯試喝，然後告訴你這是個好東西，而且很便宜的，經過嘗試後覺得好像真得很不賴，就很容易衝動買下去了。目前這可能是讓使用者掏錢買軟體最好的模式：免費試用（Lite &amp; Pro）、小額付費。看看那些在 iTunes App Store 和 Mac App Store 裡的那些軟體。</p>
+
+<h2>奇妙的軟體生態</h2>
+
+<p>說是讓使用者掏錢買軟體最好的模式，但未必是對軟體開發者最好的模式。這句話聽起來有點矛盾，使用者掏錢給開發者應該是好事才對。但是在這個模式底下軟體價格被壓到剩下一、兩塊（美元）錢，使用者還擁有「永久保固」。</p>
+
+<p>嗯……他花了兩塊錢買了你的軟體，請你用一輩子去照顧它。把手指頭拿出來數，怎麼數都不划算。媽呀！才兩塊？如果是那些隨便做一做的爛軟體，這樣剛好可以加速淘汰，可是對於那些真正用心的好軟體，這種小額支付一點也不公平。</p>
+
+<p>當然軟體也可以賣很貴，只是整個軟體生態瀰漫著一種廉價的氣息，只要比別人多賣幾塊錢就會引起眾人側目，像是昨天剛發佈的 <a href="http://tapbots.com/blog/news/tweetbot-mac/">Tweetbot for Mac</a>，售價 20 美元被一堆人嫌太貴。有人嫌其實也是好事，代表他們在乎這個產品。</p>
+
+<p>我很高興看到 Tweetbot for Mac 賣 20 美元，這是完全合理的報價。可以說 Tapbot 也同樣採用了免費試用的方法，但是他們沒有跟小額付費這種詭異的氛圍妥協。一個好軟體不只能夠解決真正的問題，也能符合使用者的需求，並且被正確的價格所支持。</p>
+
+<h2>後記</h2>
+
+<p>原本只是要稍微寫一下 Tweetbot for Mac 發佈正式版，結果寫成這篇亂七八糟又臭又長的文章，又好像沒寫什麼重點。XD</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>真的不是要針對 Windows 啦，只是上面舉例用到它，所以只好一直抓它來打。:p <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>虛構出來的，沒這種東西。 <a href='#fnref:2' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/enhancements-to-shell-productivity/">幾個加強 Shell 生產力的用法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-18T09:42:00+08:00" pubdate data-updated="true">Oct 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>PS. 以下環境為 OS X，我不確定其他平台是否可用相同的方式。</p>
+
+<h2>從指令的歷史紀錄自動補全</h2>
+
+<p>剛看到「<a href="http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity">9 Enhancements to Shell and Vim Productivity</a>」這篇文章，學到一個新招就是 <code>⌃ + r</code> 可以用搜尋的方式，自動找出歷史記錄裡的指令，例如我蠻虛榮的喜歡用 <code>awk</code> 統計自己輸入過的指令次數<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，以前都是用複製貼上的方式，現在透過 <code>⌃ + r</code> 只要輸入 <code>awk</code> 馬上就找到了。</p>
+
+<h2>跳字移動</h2>
+
+<p>另外，最近終於找出如何在 <a href="http://www.iterm2.com/">iTerm 2</a> 底下跳字移動了，所謂跳字移動就是在單字之間移動 cursor，而不是一個字母慢慢走。在 OS X 下，一般文字編輯器都是壓著 <code>⌥ + ←</code> 和 <code>⌥ + →</code>，可是 iTerm 2 下會觸發到其他的快捷鍵，所以要來修改一下。</p>
+
+<p>方法就是打開偏好設定面板，在 Profile > Key 標籤頁下修改 <code>⌥ + ←</code> 和 <code>⌥ + →</code> 這兩個快捷鍵設定，分別改成 Action 為 Send Escape Sequence、Esc + b 以及 Action 為 Send Escape Sequence、Esc + f，這樣一來就跟平常慣用的方式一樣了。</p>
+
+<p><del>目前我還在找尋該怎麼在 iTerm 2 底下用 <code>⌥ + ⌫</code> 來跳字刪除單字，如果找到方法會再補上來。</del></p>
+
+<p>2012.10.19 更新：<code>⌥ + ⌫</code> 的方法跟上面差不多，快捷鍵設好後 Action 為 Send Escape Sequence、Esc + 007f，這裡的 007f 要用 Unicode 16 進位輸入。</p>
+
+<h2>善用 alias 縮寫</h2>
+
+<p>這有優點也有缺點，優點是可以少打很多字，缺點是換了別台電腦會突然發現自己不會下指令了。XD</p>
+
+<p>用法是在主機根目錄下的 .bash_profile（原本如果沒有這個檔案就自己手動建立一個）裡加上 <code>alias</code> 指令，例如要改變目錄位置回到上一層，一般用法是這樣：</p>
+
+<pre><code>cd ..
+cd ../..
+</code></pre>
+
+<p>在 .bash_profile 裡加上：</p>
+
+<pre><code>alias ..="cd .."
+alias ...="cd ../.."
+</code></pre>
+
+<p>之後只要用 <code>..</code> 就可回到上一層目錄，用 <code>…</code> 回到上上一層目錄，可以參考看看我備份在 <a href="https://github.com/chinghanho/.dotfiles/blob/master/.aliases">Github</a> 上的設定。不過 alias 不要用得太兇，其實只要設定幾個常用到的就好，弄太多到時候一方面可能記不住，有時還可能跟其他指令衝突到，需要自己衡量一下。</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>這條指令我放在 <a href="https://gist.github.com/3280141" alt="gist" target="_blank">Gist</a> 上，有興趣可以玩玩看，別忘了把結果回覆在這篇文章的留言上哦。XD <a href='#fnref:1' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/page/9/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/page/7/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

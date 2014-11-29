@@ -1,0 +1,727 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>@ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="Rails 的資料庫設定都放在 config/database.yml 這個檔案裡面，包含伺服器位置、管理員帳號以及密碼等等的重要資訊，所以是不能放進版本控制系統中的。因此，除了要從版本控制系統中移除 database.yml，或者改製成樣板，也要告訴 git 停止追蹤檔案： $ git mv &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/page/5/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/page/5/" />
+<meta property="og:description" content="Rails 的資料庫設定都放在 config/database.yml 這個檔案裡面，包含伺服器位置、管理員帳號以及密碼等等的重要資訊，所以是不能放進版本控制系統中的。因此，除了要從版本控制系統中移除 database.yml，或者改製成樣板，也要告訴 git 停止追蹤檔案： $ git mv &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+
+
+
+<meta itemprop="description" content="Rails 的資料庫設定都放在 config/database.yml 這個檔案裡面，包含伺服器位置、管理員帳號以及密碼等等的重要資訊，所以是不能放進版本控制系統中的。因此，除了要從版本控制系統中移除 database.yml，或者改製成樣板，也要告訴 git 停止追蹤檔案： $ git mv &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/rails-database-yml-management/">Rails 的 database.yml 安全管理</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-01T12:06:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Rails 的資料庫設定都放在 config/database.yml 這個檔案裡面，包含伺服器位置、管理員帳號以及密碼等等的重要資訊，所以是不能放進版本控制系統中的。因此，除了要從版本控制系統中移除 database.yml，或者改製成樣板，也要告訴 git 停止追蹤檔案：</p>
+
+<pre><code>$ git mv config/database.yml config/database.yml.example
+$ echo "config/database.yml" &gt;&gt; .gitignore
+</code></pre>
+
+<p>那在使用 Capistrano 自動化佈署時，就需要另外將這個檔案另外上傳到伺服器去，這裡以 EC2 為例，透過憑證連上伺服器，把本地檔案丟到上面去：</p>
+
+<pre><code>$ scp -i path_to_cer.pem config/database.yml user_name@my_server.com:~/path_to_rails_app/shared/config/database.yml
+</code></pre>
+
+<p>最後在 config/deploy.rb 寫一個腳本，自動用 symlink 覆蓋上去就好了，以下是個範例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># in RAILS_ROOT/config/deploy.rb:</span>
+</span><span class='line'><span class="n">after</span> <span class="s1">&#39;deploy:update_code&#39;</span><span class="p">,</span> <span class="s1">&#39;deploy:symlink_db&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">namespace</span> <span class="ss">:deploy</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">desc</span> <span class="s2">&quot;Symlinks the database.yml&quot;</span>
+</span><span class='line'>  <span class="n">task</span> <span class="ss">:symlink_db</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:app</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">run</span> <span class="s2">&quot;ln -nfs </span><span class="si">#{</span><span class="n">deploy_to</span><span class="si">}</span><span class="s2">/shared/config/database.yml </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/config/database.yml&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/rails-4-mass-assignment/">Rails 4 Mass Assignment</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-30T16:07:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://lh3.googleusercontent.com/-hgXyfwvn2go/UN_3CJlzFMI/AAAAAAAAFhg/GiaBdbUll8k/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-30%2520%25E4%25B8%258B%25E5%258D%25884.09.42.png" alt="github-hacked" /></p>
+
+<p>前陣子爆發的 <a href="https://github.com/rails/rails/commit/b83965785db1eec019edf1fc272b1aa393e6dc57">Github Hacked</a> 事件，就是因為沒有在 model 裡面正確設定 <code>attr_accessible</code> 或 <code>attr_protected</code> 過濾屬性，所造成的 Mass Assignment 漏洞。可是在 model 裡面寫 <code>attr_accessible</code> 來過濾傳進來的參數，這樣的動作很不太對勁……</p>
+
+<p>我想 Github 的開發者多是 hacker 級的高手，不致於犯這麼初級的錯誤。MVC 架構中 model 單純用來進行資料庫相關的動作，controller 才是負責所有邏輯部份，包括 client input、output，所以 Github 肯定是把過濾機制寫在 controller 裡面（像 37signals 就是這麼做的）。但是不管怎麼樣，最後漏洞還是出現了。:p</p>
+
+<p>DHH 也在 <a href="https://twitter.com/dhh/status/176465643107909632">Twitter</a> 上說過：</p>
+
+<blockquote><p>The right place to guard against these issues is in the controller, not the model. AR&#8217;s attr_accessible is the wrong way about it.</p></blockquote>
+
+<p>所以處理 Mass Assignment 的程式碼，應該要放在 controller 而不是 model，所有從 client 傳來的資料，都應該要在 controller 先行處理，對此 DHH 也提供了 <a href="http://37signals.com/">37Signals</a> 的解決方案，亮點在那個 <code>slice</code>：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="no">Post</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">update</span>
+</span><span class='line'>    <span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">update_attributes!</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">post_params</span>
+</span><span class='line'>      <span class="n">params</span><span class="o">[</span><span class="ss">:post</span><span class="o">].</span><span class="n">slice</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:content</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>基於上述的這些種種原因，所以到了 Rails 4 就把原本 <code>attr_accessor</code> 的工作拉到 controller 裡來做。以下是 <a href="https://twitter.com/spastorino">Santiago Pastorino</a> 寫的範例，原本 Rails 3.2 的寫法是：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># app/models/user.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">attr_accessible</span> <span class="ss">:username</span><span class="p">,</span> <span class="ss">:password</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># app/controllers/users_controller.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">UsersControlelr</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create!</span> <span class="n">params</span><span class="o">[</span><span class="ss">:user</span><span class="o">]</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="vi">@user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>到了 Rails 4 的寫法改為以下，亮點在那個 <code>permit</code>：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># app/models/user.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># app/controllers/users_controller.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">UsersControlelr</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create!</span> <span class="n">params</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:username</span><span class="p">,</span> <span class="ss">:password</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="vi">@user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這個方法其實就跟 DHH 提供的那個解法非常類似，在 actions 裡面決定哪些屬性是可以通過的，所以也可以把參數寫到 <code>private</code> 下方：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># app/controllers/users_controller.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">UsersControlelr</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create!</span> <span class="n">user_params</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="vi">@user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">user_params</span>
+</span><span class='line'>      <span class="n">params</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:username</span><span class="p">,</span> <span class="ss">:password</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣一來就可以決定哪些參數在通過 <code>create</code> 這個 action 的時候會被過濾掉，而且不會影響到其他的 actions，在維護上我想應該也會相較容易一些。</p>
+
+<p>升級版本的過渡期間，如果想要使用舊寫法的可以安裝 <a href="https://github.com/rails/protected_attributes">protected_attributes</a> 這個 gem，就可以繼續使用 <code>attr_accessible</code> 和 <code>attr_protected</code>；而想要嘗鮮使用新寫法，則可以安裝 <a href="https://github.com/rails/strong_parameters">strong_parameters</a> 這個 gem，然後修改以下設定：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># config/application.rb</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">active_record</span><span class="o">.</span><span class="n">whitelist_attributes</span> <span class="o">=</span> <span class="kp">false</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># app/models/**.rb</span>
+</span><span class='line'><span class="kp">include</span> <span class="ss">ActiveModel</span><span class="p">:</span><span class="ss">:ForbiddenAttributesProtection</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最後修改所有 controllers 的參數寫法，參考上面 Santiago Pastorino 寫的 <code>user_params</code> 例子。等到 Rails 4 正式發佈時，只要把 application.rb 和 models 做的修改復原回來，還有把 strong_parameters 從 Gemfile 踢出去就完成了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/better-way-to-watch-rails-log-rails-panel/">查看 Rails Log 更好用的工具：rails_panel</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-26T18:59:00+08:00" pubdate data-updated="true">Dec 26<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天早上 <a href="https://twitter.com/fxn">Xavier Noria</a> 轉推 <a href="http://www.rubyflow.com/">RubyFlow</a> 一則 <a href="https://twitter.com/rubyflow/status/283689153747644417">tweet</a>，看到這個有趣的工具，能用更友善的介面來顯示 <code>rails server</code> 下的 log 資訊，這東西就是 <a href="https://github.com/dejan/rails_panel">rails_panel</a>。</p>
+
+<p>安裝方式很容易，先在 Google Chrome Store 上下載 <a href="https://chrome.google.com/webstore/detail/railspanel/gjpfobpafnhjhbajcjgccbbdofdckggg">rails_panel</a> 這個擴充套件，再把 <a href="http://rubygems.org/gems/meta_request">meta_request</a> 這個 gem 加進 Gemfile，<code>bundle install</code> 後重啟伺服器，然後開 Chrome 的開發者面板就可以看到新的標籤頁。</p>
+
+<p>使用前：</p>
+
+<p><img src="http://lh6.googleusercontent.com/-sQP75CibCDg/UNrWZy9ID9I/AAAAAAAAFf8/w0WgsGmo2RQ/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-26%2520%25E4%25B8%258B%25E5%258D%25886.19.47.png" alt="rails-server-log" /></p>
+
+<p>使用後：</p>
+
+<p><img src="http://lh4.googleusercontent.com/-JUS4VoFaWwE/UNrNeRUEqkI/AAAAAAAAFfo/k69Phmixw8Q/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-26%2520%25E4%25B8%258B%25E5%258D%25885.59.32.png" alt="rails-panel" /></p>
+
+<p>超級清楚！我不曉得其他人都用什麼方式檢視 log，不過這目前是我用過最好的工具，對於查看 view render、資料庫拉資料的時間以及傳遞的參數內容都非常方便，推薦！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/mandarin-phonetic-symbols-and-han-han-yu-pin-yin/">注音符號與漢語拼音</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-25T10:41:00+08:00" pubdate data-updated="true">Dec 25<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近如果只是打少少幾個字，例如使用 Google 搜尋的時候，我都會刻意切換到漢語拼音輸入法來練習；如果是打一整篇文章，我還是會用注音輸入法，畢竟是從小用到大用的東西，已經非常習慣了，每分鐘至少可以打 80 字以上。</p>
+
+<p>哪個工具效率高，我通常就會選擇那一個，對我目前而言注音符號絕對效率比較高，但隨著使用的時間久了，我發現注音符號有兩個缺點：</p>
+
+<ol>
+<li>手指在鍵盤上的移動距離太遠：注音符號整整比英文字母多了十幾個字，因此就多了整整一排鍵盤的空間，偏偏最遠的那排都是常用的東西（聲調之類的），當輸入注音的時候，會發現浪費很多時間在移動手指頭，打久了會感覺很累、很沒有效率；</li>
+<li>學習成本相對較高：學習成本高不是指注音很難學，而是注音符號全世界只有台灣一個國家在用，如果以「投資報酬率」來算實在沒有漢語拼音來得經濟實惠，因為學漢語拼音還可以順便學英文（？）；</li>
+</ol>
+
+
+<p>不過注音符號確實精準地解決了讀音問題，而且徹頭徹尾是用「中國人」自己的智慧<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，而不是用「外國人」的字來解決「中國人」的問題，這在民族主義作祟的某種程度上，會讓人感到有點自豪吧（？）；可能也是因為這樣，台灣人講起話來感覺比較大陸人標準（自以為）。:p</p>
+
+<p>其實中文最快、最有效率的輸入法應該是倉頡或嘸蝦米，可是學習這兩套輸入法的門檻過高，以我已經會注音符號和一點點破英文來說，注音及漢語拼音相較下更適合我才對；就像很多「資深」programmer 都會催眠新手說 vim、emacs 多好用，結果害新手一進來就掉入大坑。</p>
+
+<p>現在許多漢語拼音輸入法都支援不帶聲調的寫法，這有優點也有缺點，在「<a href="http://taiwan.chtsai.org/2012/08/22/yunduan_guge_pinyin_shurufa/">雲端谷歌拼音輸入法</a>」這篇文章的作者蔡志浩寫得相當清楚，這也就是為什麼我要學著使用漢語拼音的原因：</p>
+
+<blockquote><p>漢語拼音不帶調整句輸入有顯著的好處。你的手指只需要在字母區域移動，不需要經常移動較長的距離到數字列。當然也有些缺點，例如有些音節的鍵數可能要比注音多一點（例如「chuang」與「ㄔㄨㄤ」）。但如果你習慣英打就會發現注音輸入法手指經常移動到數字列所增加的時間是減少的按鍵次數補不回來的。這也是為什麼二十四年前的第一代行列輸入法原本要用使用四十個鍵（包括最上面的數字列），過了沒幾年就改成現在的三十鍵版本了。</p></blockquote>
+
+<p>另一方面，現在有的網站會用中文作為 URL 來提升 SEO，例如<a href="http://blog.xdite.net/posts/2011/10/25/yahoo-seo-url/">悲劇的 Yahoo! 新聞</a><sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>，可是中文塞在 URL 裡面會造成幾個問題：</p>
+
+<ol>
+<li>URL 過長：中文經過轉碼後變成一大串的字符，這在分享網址的時候會變得很難看，而且正因為太長，反而降低了 SEO 的效果；</li>
+<li>中英文混雜：URL 裡面夾雜中文和英文，對於搜尋引擎的檢索會變得比較困難；</li>
+<li>搜尋引擎支援度不足：有的搜尋引擎還沒辦法檢索中文的 URL；</li>
+</ol>
+
+
+<p>所以目前使用中文 URL 的人還是很少，大部分的人會將中文<a href="https://github.com/flyerhzm/chinese_permalink">用程式翻譯成英文</a>，或者是改用漢語拼音，這樣也有利於搜尋引擎檢索關鍵字。</p>
+
+<p>在大陸主流用的是漢語拼音，所以百度搜尋引擎對於漢語拼音的支援度，就比 Google 表現得更好：</p>
+
+<p><img src="http://lh3.googleusercontent.com/-QsSZc-5QqOw/UNkRKV3EiSI/AAAAAAAAFfU/B5qiRpFOw8k/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-25%2520%25E4%25B8%258A%25E5%258D%258810.35.37.png" alt="hanyu-search" /></p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>可以參考維基百科<a href="http://zh.wikipedia.org/wiki/%E6%B3%A8%E9%9F%B3%E7%AC%A6%E8%99%9F">注音符號</a>的條目。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>這可能是因為 Yahoo! 英文站就是把關鍵字塞在數字前，所以才造成中文站的悲劇。 <a href='#fnref:2' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/rails-length-size-count/">Rails 的 Length、size、count 差別</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-22T12:26:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Ruby</h2>
+
+<p>在 Ruby 中對於陣列而言 <code>length</code> 和 <code>size</code> 是一樣的，<code>count</code> 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">count</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此外，效能上 count 會比較差一點：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s2">&quot;benchmark&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">CYCLES</span> <span class="o">=</span> <span class="mi">10_000_000</span>
+</span><span class='line'><span class="n">array</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">10</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span> <span class="o">&lt;&lt;</span> <span class="nb">rand</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bmbm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[count]</span><span class="p">)</span>  <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">count</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[size]</span><span class="p">)</span>   <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">size</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[length]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">length</span> <span class="p">}}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Rehearsal ------------------------------------------</span>
+</span><span class='line'><span class="c1"># count    2.790000   0.000000   2.790000 (  2.796578)</span>
+</span><span class='line'><span class="c1"># size     1.860000   0.000000   1.860000 (  1.860494)</span>
+</span><span class='line'><span class="c1"># length   1.900000   0.010000   1.910000 (  1.908549)</span>
+</span><span class='line'><span class="c1"># --------------------------------- total: 6.560000sec</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#              user     system      total        real</span>
+</span><span class='line'><span class="c1"># count    2.820000   0.000000   2.820000 (  2.827195)</span>
+</span><span class='line'><span class="c1"># size     1.890000   0.000000   1.890000 (  1.893677)</span>
+</span><span class='line'><span class="c1"># length   1.940000   0.000000   1.940000 (  1.950517)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Rails</h2>
+
+<p>在 Rails 的 ActiveRecord 中有不一樣的操作方式，使用 <code>length</code> 會從資料庫撈出資料，在記憶體裡面去計數：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">length</span>
+</span><span class='line'><span class="no">Topic</span> <span class="no">Load</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="n">*</span> <span class="no">FROM</span> <span class="s2">&quot;topics&quot;</span> <span class="no">WHERE</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="s2">&quot;user_id&quot;</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看到了嗎？把 user 底下的 topics 全部拉出來，只是為了去數他，瘋了！其實 SQL 已經提供很好的語法可以有效地計算欄位裡的數量，在 Rails 中只要用 <code>count</code> 就可以呼叫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">count</span>
+</span><span class='line'><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">3</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="no">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="no">FROM</span> <span class="s2">&quot;topics&quot;</span> <span class="no">WHERE</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="s2">&quot;user_id&quot;</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是這有個問題，這個指令每下一次就會向資料庫操作一次，如果已經讀過的話，沒必要老在那拉扯資料庫，所以這時候可以用 <code>size</code> 方法，這會先檢查有沒有讀過，讀過的話就用 <code>length</code> 返回長度，如果沒讀過就用 <code>count</code>。</p>
+
+<p>順便參考一下<a href="https://github.com/rails/rails/blob/4657dba60eebc0d7cea11ffd18aa70d7a3d00e45/activerecord/lib/active_record/relation.rb#L201">原始碼</a>這樣寫的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Returns size of the records.</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">size</span>
+</span><span class='line'>  <span class="n">loaded?</span> <span class="p">?</span> <span class="vi">@records</span><span class="o">.</span><span class="n">length</span> <span class="p">:</span> <span class="n">count</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>One more thing…</h2>
+
+<p>如果在 model 中加上一個 topics_count 欄位，counter_cache 會讓 <code>size</code> 自動去參考這個欄位的值，這樣也能有效提昇效能。</p>
+
+<p>參考 RailsCasts 的 <a href="http://railscasts.com/episodes/23-counter-cache-column">#23 Counter Cache Column</a>。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/page/6/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/page/4/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

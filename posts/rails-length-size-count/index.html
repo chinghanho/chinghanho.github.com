@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Rails 的 length、size、count 差別 - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
+[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/rails-length-size-count/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="Rails 的 length、size、count 差別" /><meta itemprop="name" content="Rails 的 length、size、count 差別" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/rails-length-size-count/" />
+<meta property="og:description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
+[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2012-12-22 12:26:00 +0800" />
+
+<meta property="article:section" content="Programing" />
+<meta itemprop="description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
+[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Rails 的 Length、size、count 差別</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-22T12:26:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Ruby</h2>
+
+<p>在 Ruby 中對於陣列而言 <code>length</code> 和 <code>size</code> 是一樣的，<code>count</code> 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">count</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此外，效能上 count 會比較差一點：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s2">&quot;benchmark&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">CYCLES</span> <span class="o">=</span> <span class="mi">10_000_000</span>
+</span><span class='line'><span class="n">array</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">10</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span> <span class="o">&lt;&lt;</span> <span class="nb">rand</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bmbm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[count]</span><span class="p">)</span>  <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">count</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[size]</span><span class="p">)</span>   <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">size</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[length]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">length</span> <span class="p">}}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Rehearsal ------------------------------------------</span>
+</span><span class='line'><span class="c1"># count    2.790000   0.000000   2.790000 (  2.796578)</span>
+</span><span class='line'><span class="c1"># size     1.860000   0.000000   1.860000 (  1.860494)</span>
+</span><span class='line'><span class="c1"># length   1.900000   0.010000   1.910000 (  1.908549)</span>
+</span><span class='line'><span class="c1"># --------------------------------- total: 6.560000sec</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#              user     system      total        real</span>
+</span><span class='line'><span class="c1"># count    2.820000   0.000000   2.820000 (  2.827195)</span>
+</span><span class='line'><span class="c1"># size     1.890000   0.000000   1.890000 (  1.893677)</span>
+</span><span class='line'><span class="c1"># length   1.940000   0.000000   1.940000 (  1.950517)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Rails</h2>
+
+<p>在 Rails 的 ActiveRecord 中有不一樣的操作方式，使用 <code>length</code> 會從資料庫撈出資料，在記憶體裡面去計數：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">length</span>
+</span><span class='line'><span class="no">Topic</span> <span class="no">Load</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="n">*</span> <span class="no">FROM</span> <span class="s2">&quot;topics&quot;</span> <span class="no">WHERE</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="s2">&quot;user_id&quot;</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看到了嗎？把 user 底下的 topics 全部拉出來，只是為了去數他，瘋了！其實 SQL 已經提供很好的語法可以有效地計算欄位裡的數量，在 Rails 中只要用 <code>count</code> 就可以呼叫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">count</span>
+</span><span class='line'><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">3</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="no">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="no">FROM</span> <span class="s2">&quot;topics&quot;</span> <span class="no">WHERE</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="s2">&quot;user_id&quot;</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是這有個問題，這個指令每下一次就會向資料庫操作一次，如果已經讀過的話，沒必要老在那拉扯資料庫，所以這時候可以用 <code>size</code> 方法，這會先檢查有沒有讀過，讀過的話就用 <code>length</code> 返回長度，如果沒讀過就用 <code>count</code>。</p>
+
+<p>順便參考一下<a href="https://github.com/rails/rails/blob/4657dba60eebc0d7cea11ffd18aa70d7a3d00e45/activerecord/lib/active_record/relation.rb#L201">原始碼</a>這樣寫的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Returns size of the records.</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">size</span>
+</span><span class='line'>  <span class="n">loaded?</span> <span class="p">?</span> <span class="vi">@records</span><span class="o">.</span><span class="n">length</span> <span class="p">:</span> <span class="n">count</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>One more thing…</h2>
+
+<p>如果在 model 中加上一個 topics_count 欄位，counter_cache 會讓 <code>size</code> 自動去參考這個欄位的值，這樣也能有效提昇效能。</p>
+
+<p>參考 RailsCasts 的 <a href="http://railscasts.com/episodes/23-counter-cache-column">#23 Counter Cache Column</a>。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-22T12:26:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programing/'>Programing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/rails-length-size-count/" data-via="" data-counturl="http://blog.chh.tw/posts/rails-length-size-count/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/2012-memory-and-experience/" title="Previous Post: 2012 記憶與經驗">&laquo; 2012 記憶與經驗</a>
+      
+      
+        <a class="basic-alignment right" href="/posts/mandarin-phonetic-symbols-and-han-han-yu-pin-yin/" title="Next Post: 注音符號與漢語拼音">注音符號與漢語拼音 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/rails-length-size-count/';
+        var disqus_url = 'http://blog.chh.tw/posts/rails-length-size-count/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

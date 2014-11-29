@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>@ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="隨著 iPhone 5 的發表，NFC 這個東西被討論的越來越多，原本我不是很在乎這東西的，所以一直沒去關注。後來被朋友一句「（iPhone）該有的都沒有」刺激了一下，所以想去瞭解一下為什麼 Apple 沒有這個「該有」卻沒有的 NFC。 回顧 NFC 的歷史，這項技術最早是在 2004 年由 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/page/10/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/page/10/" />
+<meta property="og:description" content="隨著 iPhone 5 的發表，NFC 這個東西被討論的越來越多，原本我不是很在乎這東西的，所以一直沒去關注。後來被朋友一句「（iPhone）該有的都沒有」刺激了一下，所以想去瞭解一下為什麼 Apple 沒有這個「該有」卻沒有的 NFC。 回顧 NFC 的歷史，這項技術最早是在 2004 年由 &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+
+
+
+<meta itemprop="description" content="隨著 iPhone 5 的發表，NFC 這個東西被討論的越來越多，原本我不是很在乎這東西的，所以一直沒去關注。後來被朋友一句「（iPhone）該有的都沒有」刺激了一下，所以想去瞭解一下為什麼 Apple 沒有這個「該有」卻沒有的 NFC。 回顧 NFC 的歷史，這項技術最早是在 2004 年由 &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/why-no-nfc-in-iphone-5/">Why No NFC in iPhone 5?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-18T12:26:00+08:00" pubdate data-updated="true">Sep 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>隨著 iPhone 5 的發表，NFC 這個東西被討論的越來越多，原本我不是很在乎這東西的，所以一直沒去關注。後來被朋友一句「（iPhone）該有的都沒有」刺激了一下，所以想去瞭解一下為什麼 Apple 沒有這個「該有」卻沒有的 NFC。</p>
+
+<p>回顧 NFC 的歷史，這項技術最早是在 2004 年由 Nokia、Phillips 和 Sony 共同推動的，而 Apple 則是 2008 年就開始著手將 NFC 與多項設備進行結合，並且申請專利<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，可是過了四年至今都已經 2012 年了卻仍然不見 Apple 有任何產品配備 NFC 技術，這中間發生了什麼問題？</p>
+
+<p>目前的瓶頸看來絕對不是技術問題，而是整個產業生態系的普及率造成的瓶頸，這中間涉及手機製造商、系統商、軟體商、金融機構、設備製造商以及店家，從上而下的全面支持。例如 Apple 把 NFC 跟手機和 iOS 整合後，然後要跟金融機構合作建立完善的金流系統，最後是說服店家必須採購設備來使用 NFC。</p>
+
+<p>從這樣的流程中大概可以看出幾個問題：</p>
+
+<ol>
+<li>跟哪一家金融機構合作？</li>
+<li>店家願不願意購買設備？</li>
+</ol>
+
+
+<p>NFC 等於是軟體與金流的整合，但是全球這麼多金融機構牽扯更多的利益糾葛，Apple 再怎麼神通廣大也很未必能搞定這個完全不同領域的複雜世界<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>；再來就是效益評估後有沒有辦法讓店家願意採購 NFC 的設備<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>，如果不夠普及那也是做了一個沒人用的功能，這顯然並不是 Apple 所樂見的。</p>
+
+<p>軟硬體整合向來是 Apple 訴求的核心，如果只推出了一個沒辦法妥善整合軟體與金流的 NFC，那其實就跟在 iPhone 背面掛一個信用卡功能的悠遊卡卡套一樣。</p>
+
+<p>所以我猜目前 Apple 是想先透過 Passbook 試試水溫，施以緩兵之計來爭取更多時間和談判空間來跟金融機構合作，如果 Passbook 使用狀況不錯，那麼跟金融機構的談判也會容易許多。畢竟 Apple 在 NFC 上投入了很多力氣，不應該就這樣石沈大海。</p>
+
+<p>而且 Phill Schiller 話也沒說死：</p>
+
+<blockquote><p>Passbook does the kinds of things customers need today.</p></blockquote>
+
+<p>總之，期待之後的發展。</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>在最近似乎有部分已經<a href="http://unwire.hk/2012/07/11/apple-nfc-patent-passed/apple/" alt="apple-nfc-patent-passed">通過專利申請</a>了。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>同樣的困境，其他的手機製造商也是會遇到。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>Apple 賺這麼多乾脆幫他們買好了。XD <a href='#fnref:3' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/the-advantage-of-the-16-9-display/">The Advantage of the 16:9 Display</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-15T10:02:00+08:00" pubdate data-updated="true">Sep 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近 iPhone 5 發表了，對於螢幕比例 16:9 的討論開始多了起來，其中主要的幾項優勢大致上應該不外乎以下這幾種，我稍微整理了一下，並且試圖理解一下這些說法：</p>
+
+<h3>最接近電影拍攝比例</h3>
+
+<p>其實這個說法站不住腳，因為實際上電影畫面的比例是<a href="http://zh.wikipedia.org/wiki/%E9%95%B7%E5%AF%AC%E6%AF%94_(%E5%BD%B1%E5%83%8F)">超過這個值</a>的，不過依然是個非常重要的比例，因為越來越多的 HDTV 節目、HD 攝影機以及帶有攝影功能的照相機，都是採用 16:9。</p>
+
+<h3>利於畫面的空間應用</h3>
+
+<p>Windows 7 內建將視窗拖移到畫面左右會自動分割，在 Mac 可以利用 <a href="http://manytricks.com/moom/">Moom</a> 這樣的軟體。以我自己的經驗，同時開啟文字編輯器和瀏覽器，這樣的畫面空間分割方式非常便利，而 16:9 是不是能將這點做到最好的體驗，我的態度是保留的。</p>
+
+<h3>利用率較高成本較低</h3>
+
+<p>切割面板的時候，16:9 是<a href="http://it.people.com.cn/BIG5/115811/115891/7658297.html">最不浪費成本的比例</a>，而且因為是寬螢幕，所以畫面的面積是最小的（也就是<a href="http://ideapit.net/?p=809">成本最低</a>），這一點其實才是至今成為主流的最主要原因，是成本與影片製作交互妥協下的產物，由這樣的原因就可以知道，這個比例並不是針對視覺最佳化的設計。</p>
+
+<h3>最接近黃金切割比例</h3>
+
+<p>與黃金切割比例（1.618）最接近的畫面比例其實是 16:10（1.6），目前可以看到大多數吹捧 16:9 的言論大多還是基於上一點的原因，而黃金切割比例這個說法是我看過最唬爛的。</p>
+
+<h2>個人感想</h2>
+
+<p>我認為 16:9 適合電視、電影這種大螢幕，而不是適合用在電腦螢幕，我第一次感受最明顯的就是在店裡同時看到 11 寸與 13 寸的 Macbook Air，變深深體會到 16:9 的螢幕在視覺的壓迫上是多麼的難受。</p>
+
+<p>即便很多人用電腦螢幕觀看 HD 的電影，但是對我而言電腦並不是這樣作為純粹的娛樂設備，以現在來說，更多時候（絕大多數）電腦是非常重要的生產力工具，所以影片是否能塞滿整個畫面並非我主要的考量。</p>
+
+<p>我也比較過同樣是 16:9 的 21.5 寸和 27 寸的 iMac，27 寸的 iMac 帶來的視覺體驗就比 21.5 寸的還要好，所以我最終還是認為，16:9 並不適合用在小螢幕上。</p>
+
+<p>（我不是 iOS app 的開發者，對於這次改變比例沒什麼感受，但是我非常喜歡原本 3.5 寸的 iPhone）</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/digital-is-not-forever/">Digital Is Not Forever</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-11T08:22:00+08:00" pubdate data-updated="true">Sep 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我一直相信唯有透過瞭解歷史，才能夠更明白當下與未來，而保存人類歷史的足跡是如此彌足珍貴，隨著時代不同，記錄的方法也有所不同。</p>
+
+<p>昨天我打開那台幾個月沒開的桌機，結果出現「Disk boot failure, insert system disk and press enter.」錯誤訊息，問題應該不大，大概重新確認一下硬碟接線和電源供應器，障礙就可以排除，只是也沒什麼要緊事，我也懶得拆機殼修理。</p>
+
+<p>這台桌機裡面存有我過去大學四年的一些回憶，不論是作業、報告還是任何多媒體。確切說起來可能是兩年，因為期間曾經重灌過。大部分經常使用的資料我已經放在 Dropbox 同步到我現在用的筆電，有些則沒有，事實上，還有些什麼資料我已經沒什麼印象了。</p>
+
+<p>曾經有幾次想要打開他的念頭，去回顧一下裡面有些什麼寶貝，可是因為桌機的螢幕被筆電給蠻橫地搶去，所以這台桌機放在我旁邊不到一條手臂的距離，數個月過去卻一直沒有動過它。</p>
+
+<p>現在，無法開機進入作業系統，結果我發現我突然有種「喔，這樣啊」的感覺，好像直接把硬碟換掉我也不會捨不得。如果，這不是一台電腦，而是一本本的摸得到的相簿、一張張的看得見的照片，我是不是還是一樣不想去碰它呢？</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/my-font-style-guide/">My Font Style Guide</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-10T11:20:00+08:00" pubdate data-updated="true">Sep 10<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>這裡的 font style 指的是我在電腦上打字的風格習慣，我想這部份受寫程式的影響非常深，如果你每天都要面對密密麻麻的 code，應該也會跟我一樣受不了骯髒的排版。但這份指南只是對我而言，或許不是每個人都喜歡。</p>
+
+<h2>該給機器人做的工作就不要跟它搶</h2>
+
+<p>跟麻瓜同學合作寫報告最痛苦的就是遇到「土法煉鋼」的排版方式，例如段落前面空兩格，他們就給你敲兩個空白鍵，要不就塞個跳位字元，不同人之間如果沒有統一風格就會發生報告看起來像是用複製貼上的（儘管可能真的是複製貼上的……）。</p>
+
+<p>看過最有趣的一次是，隔壁組的報告索引頁碼的方式竟然是人工比對，一經修改整份上百頁報告的索引就全毀了，還好我的出現即時解救了這群眾生（笑）。</p>
+
+<p>很多東西其實交給電腦幫你做就好了，包括項目清單、分頁符號、段落間隙等等，以及上述的兩個狀況，軟體本身就已經提供很棒的功能可以完成，不僅迅速而且維護容易。這種玩意手工沒比機器做的值錢，就別再堅持什麼了。</p>
+
+<h2>全形與半形間隔</h2>
+
+<p>講到這裡已經自己打臉了，因為上一段才說該交給機器做的事情，人類就不要去搶，可是為了保持全形與半形的間隔，我們的一般作法就是「土法煉鋼」在中間自己插入一個半形空白，事實上這不是好的解法，卻也相當無奈。</p>
+
+<h3>為什麼要保持間隔</h3>
+
+<p>一般我們會碰到幾種情況，一種是英文單字內部本身含有空白，像是：</p>
+
+<blockquote><p>新的iPod touch已經上市了。</p></blockquote>
+
+<p>看起很怪，一個完整的句子中間硬是被挖了一個洞，如果是這樣在英文單字旁邊各加上一個半形空格：</p>
+
+<blockquote><p>新的 iPod touch 已經上市了。</p></blockquote>
+
+<p>看起來則順眼多了，可是仍然不夠完美，因為這種半形空格的間距過大，整個句子節奏看起來不夠平滑，甚至有點跳針的感覺。另一種我們會碰到的情況是這樣：</p>
+
+<blockquote><p>清朝中國人的阿Q心態。</p></blockquote>
+
+<p>明明都是全形中文，中間放了一個半型英文，擾亂整個句子的節奏，如果在左右兩邊加上一個空白試試：</p>
+
+<blockquote><p>清朝中國人的阿 Q 心態。</p></blockquote>
+
+<p>這樣一樣犯了句子節奏不夠平滑的問題，甚至看起來更糟，所以我嘗試把英文改成全形，像是這樣：</p>
+
+<blockquote><p>清朝中國人的阿Ｑ心態。</p></blockquote>
+
+<p>看起來好多了，但是這樣一來破壞了字型本身，二來英文本來就是半形字母卻硬把它搞成全形，這種解法實在詭異到不行，所以最後我仍然主張在英文單字左右兩邊加上一個半形空格。</p>
+
+<h3>間隔的其他解法</h3>
+
+<p>目前 CSS 對於這種間隙有些屬性可以使用，例如調整英文單字用的 <code>word-spacing</code> 或是調整單獨字元用的 <code>letter-spacing</code> 可是對於中文的支援度有很多的瑕疵，根本就不堪使用。</p>
+
+<p>另一種方式是直接用 HTML 把英文字給標記起來，像是這樣：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>新的<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;blahblah&quot;</span><span class="nt">&gt;</span>iPhone touch<span class="nt">&lt;/span&gt;</span>已經上市。
+</span><span class='line'>清朝中國人的阿<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;blahblah&quot;</span><span class="nt">&gt;</span>Q<span class="nt">&lt;/span&gt;</span>心態。
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後再用 CSS 去針對這些英文字去做調節，這部分好像已經是 W3C HTML5 中文小組在著手改善的項目，期待未來能夠有更好的解法。我一直認為因為中英文本質的不同，對於文字間的間隔要求也各有不同，而我所做的只是盡可能滿足兩種文字的需求，讓它們能夠平滑的過渡。</p>
+
+<h2>標點符號</h2>
+
+<p>假設多數的人對於標點符號都是有意識的（或許吧），只是麻瓜們對於魔法實在太過於陌生，以致於想用卻又不知道怎麼用，這也不能怪他們，畢竟直到現今電腦對於中文字的呈現一直都不是很友好，打出正確的標點符號也不是這麼容易。</p>
+
+<p>不過我仍然試圖在這樣糟糕的環境下，堅持著我那一點的個性。</p>
+
+<p>中文字是全形字元，那中文的標點符號當然也是全形符號，不過有時候會參雜半形的英文字母，我習慣的寫法是，如果英文字母在全形的標點符號之間，因為中文標點符號已經留有適當的間隙，所以就不加空格，例如這樣：</p>
+
+<blockquote><p>正規表達式（Regular Expression）</p></blockquote>
+
+<p>另外還有些規則，如果該句子本身是主要是表達英文，那麼就該用英文標點符號，如果句子本身主要是表達中文，即使夾雜英文句子，仍然應該用中文的標點符號，例如：</p>
+
+<blockquote><p>蝙蝠俠電影的小丑有句經典台詞：「If you&#8217;re good at something, never do it for free.」</p></blockquote>
+
+<p>有些中文標點符號佔用不只一格，這點也要注意一下，例如正規的刪節號總共有六個點，可是並不是敲六個 <code>.</code> 就好了，而是由兩個 <code>…</code> 組成的。</p>
+
+<h2>英文大小寫</h2>
+
+<p>規範這個的好處是與其他人交流的時候至少不會有太大的不適，即便那個人對文字一點規範也沒有，至少他看你的文字不會吃力，自己看了也可以很愉快，最後有利的還是自己。</p>
+
+<ul>
+<li>HTML：這是 HyperText Markup Language 的縮寫所以全部大寫</li>
+<li>Google：企業專有名詞，所以第一個字大寫</li>
+<li>SCSS：雖是 Sass 第三個版本但有全新的名字為 Sassy CSS 的縮寫，所以全部大寫</li>
+<li>Ruby on Rails：一般簡稱 Rails 而不是 RoR</li>
+<li>Git：如果要表示指令應該用小寫的 <code>git</code>，Ruby 也是同理</li>
+<li>Gem：也可以全部小寫 gem，但是絕對不要全部大寫成 GEM</li>
+<li>LaTeX：如果弄不出那個奇怪的符號，至少大小寫也要正確</li>
+</ul>
+
+
+<p>一些特例，這是個人偏好：</p>
+
+<ul>
+<li>hTC</li>
+<li>nVIDIA</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/gossips-and-rumors-will-only-be-stopped-by-the-wise/">Gossips and Rumors Will Only Be Stopped by the Wise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-01T08:21:00+08:00" pubdate data-updated="true">Sep 1<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前幾天在 Twitter 上<a href="https://twitter.com/ChingHanHo/status/240756802273304576">分享一篇新聞</a><sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，雖然覺得是假的，可是基於好玩我就順手轉貼出去，現在回想起來好後悔，對於這個連自己都不相信的新聞，為什麼要轉貼？</p>
+
+<p>當看到第一個謠言可能不以為然，但是在多個場合重複看到同一個謠言，可能就會開始產生這個謠言已經被證實的錯覺，很多仇恨性言論就是這樣散佈的，例如台灣對於南韓的仇視，我覺得就從網路這種現象開始發酵的。</p>
+
+<p>看到新聞（或是任何消息）的當下或許心裡會有些立即性的情緒反應，不論是開心的、有趣或是憤怒的，會想要立刻加上一點註解然後分享出去，但是謠言之所以能夠傳播的主要兩個因素就是：</p>
+
+<ol>
+<li>看起來好像很真（不真就不叫謠言了）</li>
+<li>挑撥情緒反應（這樣才能達到共振的目的）</li>
+</ol>
+
+
+<p>所以當發現自己的反應符合上述兩項條件，應該馬上停下來好好省思這則新聞的可能性，可以透過重新下關鍵字搜尋所有新聞站的相關報導，或是在 <a href="http://topsy.com/">Topsy</a> 上進行社群網站的搜尋，這一來是可以看看別人是怎麼報導這件事情，還是別人都沒報導只有謠言來源獨家？二來可以看看別人是怎麼評斷這則消息，不要用自己偏激的想法去否定不同的意見。</p>
+
+<p> 以前我自己曾經寫過 <a href="../keiserens-nye-klaeder">The Emperor&#8217;s New Clothes</a> 這篇文章，卻還是犯了同樣的錯誤，代表自己對於媒體識讀仍然不夠嚴謹。</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>我不會刪除我已經發出去的訊息，因為那並不能解決任何事情。 <a href='#fnref:1' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/page/11/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/page/9/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

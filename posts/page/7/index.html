@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>@ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="2012.11.25 更新：新增一些內容。 Ruby on Rails 佈署方案五花八門，對於新手如我而言，看到一堆 Apache、Nginx、Mongrel、Phusion Passenger 和 Capistrano 這些名詞，可是一直搞不太清楚他們之間有什麼異同。 今天在 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/page/7/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/page/7/" />
+<meta property="og:description" content="2012.11.25 更新：新增一些內容。 Ruby on Rails 佈署方案五花八門，對於新手如我而言，看到一堆 Apache、Nginx、Mongrel、Phusion Passenger 和 Capistrano 這些名詞，可是一直搞不太清楚他們之間有什麼異同。 今天在 &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+
+
+
+<meta itemprop="description" content="2012.11.25 更新：新增一些內容。 Ruby on Rails 佈署方案五花八門，對於新手如我而言，看到一堆 Apache、Nginx、Mongrel、Phusion Passenger 和 Capistrano 這些名詞，可是一直搞不太清楚他們之間有什麼異同。 今天在 &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/ruby-on-rails-server-options/">Ruby on Rails 伺服器的選擇</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-18T07:35:00+08:00" pubdate data-updated="true">Nov 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2012.11.25 更新：新增一些內容。</p>
+
+<p>Ruby on Rails 佈署方案五花八門，對於新手如我而言，看到一堆 Apache、Nginx、Mongrel、Phusion Passenger 和 Capistrano 這些名詞，可是一直搞不太清楚他們之間有什麼異同。</p>
+
+<p>今天在 <a href="http://stackoverflow.com/">StackOverflow</a> 上搜尋，讓我找到這一篇文章「<a href="http://stackoverflow.com/questions/4113299/ruby-on-rails-server-options">Ruby on Rails Server Options</a>」，終於搞懂他們之間的差別，所以順手翻譯了一下，還有加上一些自己知道的東西。</p>
+
+<h2>Apache vs Nginx</h2>
+
+<p>Apache 和 Nginx 都是 web server，就是能吐出靜態檔案，或是吐一些動態內容（搭配適當的模組）給 client 的伺服器。目前最流行的是 Apache，功能相當的多也相當的齊全，相較下 Nginx 是小而美的輕量伺服器，但絕對不要誤會它是小眾玩具。</p>
+
+<p>Apache 和 Nginx 專注在處理 HTTP 的效能上，所以對於靜態檔案的吞吐都有卓越的表現。但是無法開箱即用（out-of-the-box），也就是沒辦法直接執行 Ruby、Python 或是 PHP 等等的其他語言，而要倚賴 FastCGI或是代理方式<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，讓其他的 application server 來處理。</p>
+
+<p>application server<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup> 是種能夠將 HTTP request 送到程式碼（也就是寫好的 Rails app）裡面去處理的 server，既然能處理 HTTP request，所以它當然也可以充當 web server 的角色，可是會這樣用的人不多，因為他並不是真的這麼擅長這件事，原因後面會講<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>。</p>
+
+<h2>Mongrel vs WEBrick</h2>
+
+<p>Mongrel 是一個 Ruby 的 application server，具體來說他能夠用來：</p>
+
+<ol>
+<li>在它自己的 process space 讀取 Rails app<sup id='fnref:4'><a href='#fn:4' rel='footnote'>4</a></sup>；</li>
+<li>建立 TCP socket 跟外面的世界（網際網路）保持通訊，隨時把收到的 HTTP request 傳送到 Rails app，反過來則是把 Rails app 回應的 HTTP response，透過 socket 丟回到 client；</li>
+</ol>
+
+
+<p>WEBrick 也是做類似的事情，不同的地方是：</p>
+
+<ol>
+<li>完全用 Ruby 寫的，Mongrel 則是 Ruby 跟 C 的混合體（HTTP 解析器是用 C 寫的，因為效能比較好<sup id='fnref:5'><a href='#fn:5' rel='footnote'>5</a></sup>）；</li>
+<li>WEBrick 速度很慢，而且不夠強壯，開發的時候用起來很方便（WEBrick 預設包含在 Ruby 裡，Mongrel 則是要另外安裝），可是挪到 production 上一下子就會被打死，而且已知有 memory leak 和 HTTP 解析等問題；</li>
+</ol>
+
+
+<p>還有其他常見的 Ruby application server，例如 <a href="http://unicorn.bogomips.org/">Unicorn</a> 和 <a href="http://code.macournoyer.com/thin/">Thin</a>，他們跟 Mongrel 很類似，但是都有自己的一些特點，可以在網路上找找別人寫的效能測試，來評估一下要用哪一種方案。</p>
+
+<h2>Mongrel</h2>
+
+<p>雖然 Mongrel 可以拿來做 web server 相同的事情，但是沒有人會直接這樣用，因為 Mongrel 本質上是個 Ruby application server，負責把 request 帶到 Ruby code 裡面處理，然後再把處理完的東西用 HTTP 丟出來，並沒有辦法同時處理多個 request，也不擅長處理效能上的問題。</p>
+
+<p>舉例來說，當碰上慢吞吞的用戶，不只發過來的 HTTP requests 很慢，就連接收也超級慢，這樣老實的 HTTP server 就會被這傢伙卡住動彈不得，非得等到把這項工作完成才能繼續處理下一個用戶。更糟的是如果遇到壞人故意把 socket 留在那裡不讀取 HTTP 的 response，這樣就會造成 Ruby 永遠沒辦法處理接下來的任何 requests。</p>
+
+<p>儘管 web app 可以有很多解法，但是專業的還是交給專業的去做，更好的方式就是將這些任務交給 web server，因為這本來就是他們擅長的核心商業邏輯。</p>
+
+<p>換句話說，當拜訪一個 Rails 網站絕對不會直接跟 Mongrel 接觸到，它總是放在 Apache 或是 Nginx 後面扮演 reverse proxy 的角色，這麼做有幾個原因：</p>
+
+<ul>
+<li>由於每個 Mongrel-served 的 Rails app 同時只能處理一個 request，如果想要一次多跑幾個，那就需要同時多 run 幾個 Mongrel instance，而每個 instance 都為同一個 Rails app 做牛做馬，這種架構稱為「Mongrel cluster（一堆雜種？XD）」。Apache 或是 Nginx 會自動分配 request 到不同的 instance 之間；</li>
+<li>儘管 Mongrel 也可以吐靜態檔案，可是它並不是特別擅長這檔事，專業的交給專業的來，Apache 和 Nginx 都可以做得比它更快更好，所以大部分的人都會讓後者來提供靜態檔案；</li>
+</ul>
+
+
+<p>如果因為 Rails app 中某個 bug 讓其中一個 instance 崩潰，那也只需要重新啟動那個 instance 就好。不過 Mongrel 則需要隨時監控，如果出問題要自己去重新啟動。</p>
+
+<h2>Phusion Passenger</h2>
+
+<p><a href="https://www.phusionpassenger.com/">Phusion Passenger</a> 也是一個 Ruby 的 application server，但是運作方式很不一樣，它直接整合到 Apache 或者 Nginx 裡，只需要編輯 web server 配置檔案，指定到 Rails app 的 public 目錄，就可以讓 Rails 動起來。</p>
+
+<p>因為 Phusion Passenger 是基於 Rack 實作的，所以可以與任何 Rack-base 的 Ruby 框架應用程式相容。而 Rails 從 3.0 版本開始已經完整兼容 Rack 介面，只有早期的版本還沒有全部相容，不過 Phusion Passenger 仍然可以支援先前 1.x 和 2.x 的版本。</p>
+
+<p>使用 Phusion Passenger 的好處就是不必生那麼多「雜種（Mongrel）」，而且還有很多優點：</p>
+
+<ul>
+<li>當網站突然忙碌起來的時候，Mongrel cluster 能夠處理的 process 數量是固定的，在這方面 Phusion Passenger 完全會自動調適，當網站不忙的時候 process 也會自動關閉節省系統資源的消耗；</li>
+<li>如果 Rails app 崩潰了，Phusion Passenger 很貼心地、很聰明地會自動啟動；</li>
+<li>除此之外，Phusion Passenger 是用 C++ 寫的，所以效能非常好，速度 very very 快。:p</li>
+</ul>
+
+
+<p>Phusion Passenger 原本的名字是 mod_rails，目的跟 mod_php 一樣，為了讓 Apache 或 Nginx 能夠執行 web app。如果遇到系統崩潰，也能噴出有用的錯誤訊息來修復系統。</p>
+
+<p>基於以上這些原因，Phusion Passenger 成為目前最受歡迎的 Ruby application server，之前寫過佈署的過程，可以參考「<a href="/posts/deply-rails-app-on-ec2/">如何佈署 Rails 應用程式到 Amazon EC2</a>」。</p>
+
+<p>Phusion Passenger 其實也可以跟 Mongrel 一樣，可以不需要 Apache 或是 Nginx 而拿來直接當 web server 用；在 Rails app 中下 <code>passenger start</code> 指令，它將會啟動一個 Phusion Passenger web server，直接透過 port 80 來使用。當然，Mogrel 在 HTTP 處理上的缺點它也同樣會有。</p>
+
+<h2>Capistrano</h2>
+
+<p><a href="https://github.com/capistrano/capistrano">Capistrano</a> 既不是 web server 也不是 application server，它是完全不同的東西。在把 Rails app 佈署到 application server 上之前，同樣會需要一些事前的準備工作，像是：</p>
+
+<ul>
+<li>上傳 Rails app 程式碼和檔案到伺服器；</li>
+<li>安裝 app 倚賴的 libraries；</li>
+<li>建立或是 migrating 資料庫；</li>
+<li>啟動或是終止應用程式倚賴的任何 daemon，例如 DalayedJob workers 等等之類的；</li>
+<li>讓 app 運作起來所需要的其他東西；</li>
+</ul>
+
+
+<p>Capistrano 是一個工具，負責用來處理上述這些事前的準備工作，可以先告訴 Capistrano 每一次佈署新版本的 app 有哪些指令需要執行，或是伺服器在哪裡，讓整個佈署流程自動化。</p>
+
+<p>這並不是佈署 Rails 過程中必要的工具，如果偏好一切 DIY，也可以全部自己動手來做，如果只是自己一個人那還沒什麼問題，可是如果專案是整個團隊在維護，或是機器很多的時候，難保所有人都能如預期好好地把 app deploy 到機器上去，所以這時候最好就用 Capistrano。</p>
+
+<h2>其他參考資料：</h2>
+
+<ul>
+<li><a href="http://www.modrails.com/documentation/Architectural%20overview.html">Phusion Passenger design &amp; architecture</a></li>
+<li><a href="http://guides.beanstalkapp.com/deployments/deploy-with-capistrano.html">Deploying with Capistrano</a></li>
+</ul>
+
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>所謂的代理方式就是，Apache 和 Nginx 就是說把收到的 HTTP request 轉送到另一台伺服器去處理，然後再把 HTTP response 轉送回 client。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>application server 透過各種通訊協議，例如 HTTP、FastCGI、SCGI、AJP 等等，來連接到 web server。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>應該這麼說，web server 和 application server 是一種概念上的區分，並沒有說一定是哪一種 server。 <a href='#fnref:3' rev='footnote'>↩</a></li><li id='fn:4'>這句話是直接照翻，我還不是很懂所謂的 process space 是指什麼。 <a href='#fnref:4' rev='footnote'>↩</a></li><li id='fn:5'>C 語言是一種低階語言，少了許多解譯的動作，所以速度會比較快。 <a href='#fnref:5' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/disable-os-x-dashboard/">關閉 OS X 雞肋的 Dashboard</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-17T06:36:00+08:00" pubdate data-updated="true">Nov 17<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>OS X 不知道在哪一個版本加進 Dashboard 這個功能，對我來說這東西一點用也沒有，如果把 widgets 挪到桌面上可能還方便一點，可是放到 Dashboard 上真的超級不方便。</p>
+
+<p>不過就算把 widgets 弄到桌面上，我還是不會用到這些工具，所以我決定把它整個給移除掉，因為開在背景這東西也是會消耗資源的。關閉的方法很簡單，在終端機中輸入：</p>
+
+<pre><code>defaults write com.apple.dashboard mcx-disabled -boolean YES
+killall Dock
+</code></pre>
+
+<p>第一條指令後面的 YES 換成 NO 的話，就是復原這個動作，不過記得，都要下 <code>killall Dock</code> 這個指令重新啟動 Dock 才會生效。</p>
+
+<p><img src="http://lh5.googleusercontent.com/-sPmI3eSBgYU/UKbA4bQtJOI/AAAAAAAAFXs/LAGQ9ySlNVI/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-17%2520%25E4%25B8%258A%25E5%258D%25886.37.49.png" alt="" /></p>
+
+<p>現在滑到 Mission Control 也不會出現 Dashboard 了，整個心情都變好，頭腦也變聰明，考試都考一百分。XD</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/disable-the-feature-that-dont-allow-time-machine-local-backups-in-mac-os-x-lion/">關閉 Time Machine 本機快照備份節省硬碟空間</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-16T06:49:00+08:00" pubdate data-updated="true">Nov 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://lh4.googleusercontent.com/-DdQoYkv3voo/UKVzqUZRQEI/AAAAAAAAFWw/XN5s9URR5OI/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-16%2520%25E4%25B8%258A%25E5%258D%25886.58.10.png" alt="os-x-disk-usage" /></p>
+
+<p>我的 Macbook Air 就一個硬碟一個磁區，所以硬碟快照備份在本機一點意義也沒有，因為一旦硬碟掛了，那連備份也一起跟著掛。而且總容量只有 128GB，備份的檔案就吃掉 7GB 了，所以我打算把這個本地備份的功能給關掉。</p>
+
+<p>此外，備份的意思就是要備份在不同的地方，備份在本機也是多此一舉。我通常會把一些常用但非「極機密」的資料，另外備份在 <a href="https://www.dropbox.com/">Dropbox</a> 上；也會定期（通常是十天做一次）外接硬碟，用 Time Machine 備份。</p>
+
+<p>所以本機的硬碟快照沒有保留的理由，刪掉的方法很容易，從終端機下指令把這個功能關閉，馬上就會多 7GB 的空間可以用。不過也可能會很危險，使用以下指令前先確保資料都已經另外備份到別的硬碟上。</p>
+
+<p>關閉本地快照這個功能：</p>
+
+<pre><code>sudo tmutil disablelocal
+</code></pre>
+
+<p>重新啟用本地快照功能：</p>
+
+<pre><code>sudo tmutil enablelocal
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/enable-filevault-before-using-mac/">使用 Mac 前務必先開啟 FileVault 2 功能</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-15T07:16:00+08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>硬碟是相當精密的硬體，運作原理說起來簡單，其實非常複雜，如果要科普解釋，我通常會把硬碟比喻成「油畫」，如果畫錯了或是要修改，並不是用橡皮擦擦掉，而是用顏料直接覆蓋。</p>
+
+<p>直接覆蓋就會有個問題，油畫可以用紅外線掃描來得知底層是什麼樣子，所以才會有人發現<a href="http://big5.xinhuanet.com/gate/big5/news.xinhuanet.com/tech/2007-10/24/content_6928914.htm">蒙娜麗莎原來是有眉毛的</a>。XD</p>
+
+<p>可是硬碟如果有重要資料，這就變成很大的問題了，尤其是 <a href="http://www.ithome.com.tw/itadm/article.php?c=66722&amp;s=1">SSD 更麻煩</a>，所以這也是為什麼業界硬碟如果損壞了，都是採用<a href="http://youtu.be/avP5d16wEp0?t=1m15s">物理銷燬</a>這種方式，例如 Google 的資料中心：</p>
+
+<p><img src="http://lh3.googleusercontent.com/-G0aVvazyu3I/UKQuYHiWVkI/AAAAAAAAFV4/0hR-0glZG-g/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-15%2520%25E4%25B8%258A%25E5%258D%25887.49.52.png" alt="google-destroy-hdd" /></p>
+
+<p>對於個人使用者而言，有時候用電腦不一定是「用到死」，也許中間會二手賣出，那也不大可能把硬碟砸爛再給對方，所以有一種方式就是啟用 FileVault 2 這個功能（Windows 上我記得好像也有類似的功能），替你的資料先行加密，這樣別人就算從廢棄電腦裡面讀出資料，也不會直接得到原始資料。</p>
+
+<p><img src="http://lh3.googleusercontent.com/-1FanB4n87e8/UKQwaYadieI/AAAAAAAAFWA/8bI5u6ok61c/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-15%2520%25E4%25B8%258A%25E5%258D%25887.59.13.png" alt="filevault-2" /></p>
+
+<p>這必須在剛拿到電腦存入任何個人資料之前，就先設定好。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/oh-my-zsh/">OH MY ZSHELL!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-14T11:22:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 <a href="http://mxcl.github.com/homebrew/">Homebrew</a> 安裝新版本，管理也會比較方便。</p>
+
+<p>2012.11.23 更新：今天換成一個從 <a href="https://github.com/agnoster">agnoster</a> fork 出來的<a href="https://gist.github.com/3751033">主題</a>，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 <a href="https://raw.github.com/chinghanho/.dotfiles/master/.oh-my-zsh/custom/chh.zsh-theme">Github</a> 上下載。要有這個效果必須使用這<a href="https://gist.github.com/1595572">三種特殊字型</a>；而我的終端機主題用的是 <a href="https://github.com/godfat">@godfat</a> 的 <a href="https://raw.github.com/godfat/dev-tool/master/.config/iterm/DarkIllumina.itermcolors">DarkIllumina</a>。</p>
+
+<p><img src="http://lh5.googleusercontent.com/-3kZx026TRBs/UK7yHhBcRSI/AAAAAAAAFYM/XPmrOwB_E60/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-23%2520%25E4%25B8%258A%25E5%258D%258811.48.07.png" alt="" /></p>
+
+<p>PS. 小叮嚀：背景不要用半透明的，對比要設到最小，這樣的顯示效果是最棒的。:)</p>
+
+<p>2012.11.15 更新：用了兩天，目前發現最大的問題就是 Zsh 啟動效能有點慢，每新開一個 session 都會花上快 2 秒鐘，不過還不致於影響到心情。:p</p>
+
+<hr />
+
+<p>原本對於 Bash 用起來也沒什麼不滿，只是稍嫌單調的配色讓人感到有點無聊而已，而昨天把 <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> 安裝起來後，一開始雖然對豐富的色彩感到新鮮，可是很快就疲勞了。</p>
+
+<p>不過 oh-my-zsh 還有超級強大的 auto-complete 功能，真的是很好玩的東西，敲一敲 tab 鍵就可以列出所有指令和說明，而且很多補丁和功能都已經有人幫你寫好了，所以我打算再玩一陣子看看。:p</p>
+
+<p>安裝方式也超級簡單，就用官方建議的自動安裝方法，只需要一條 <code>curl</code> 指令：</p>
+
+<pre><code>curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+</code></pre>
+
+<p>之前我的 Bash 調教起來也是有不錯的色彩區別，不過 oh-my-zsh 做的更極致，可以在 <a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Themes">Github</a> 上或是 <a href="http://zshthem.es/">zshthem.es</a> 上尋找喜歡的樣式，目前這是我用的主題「<a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/nebirhos.zsh-theme">nebirhos</a>」：</p>
+
+<p><img src="https://lh5.googleusercontent.com/-YC6ShHhxmrQ/UKMXilZfROI/AAAAAAAAFVk/KYdxbNA9gyY/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-14%2520%25E4%25B8%258A%25E5%258D%258811.40.03.png" alt="" /></p>
+
+<p>我不是很喜歡前面那個 username 的格式，可是我還沒研究過 Zsh 的語法怎麼寫，也不會改，看起來跟 Bash 好像完全不一樣，等有時間再來摸摸看。</p>
+
+<p>因為平常會有習慣做 <a href="http://en.wikipedia.org/wiki/Quantified_Self">quantified self</a> 的統計，包括用終端機輸入的指令（果然夠宅 XD），但是從 Bash 切到 Zsh 後記錄檔案就換成 .zsh_history 了，為了年底記錄所以先在這邊些把 Bash 用過指令統計導出來：</p>
+
+<pre><code> 1  1124  24.6006%    c
+ 2  985   21.5583%    git
+ 3  343   7.50711%    rails
+ 4  328   7.17881%    cd
+ 5  314   6.8724%     rspec
+ 6  257   5.62486%    la
+ 7  197   4.31167%    rake
+ 8  154   3.37054%    s
+ 9  109   2.38564%    ..
+10  95    2.07923%    rvm
+11  68    1.48829%    guard
+12  36    0.787919%   bundle
+13  29    0.634712%   ssh
+14  28    0.612826%   pry
+15  27    0.590939%   open
+16  26    0.569052%   middleman
+17  26    0.569052%   gem
+18  24    0.525279%   rm
+19  24    0.525279%   heroku
+20  23    0.503392%   nvm
+</code></pre>
+
+<p>看起來很少對吧？這是因為這份記錄只有不到二十天，原本 Bash 預設的歷史紀錄 size 很小，後來我才發現，所以我現在把它改成 1000000000 應該夠我用 10 年了！XD</p>
+
+<p>最後我整理了一下自己的 dotfiles，然後寫了一個 <a href="https://github.com/chinghanho/.dotfiles/blob/master/Rakefile">Rakefile</a> 腳本，以後如果換新機器，只要從 <a href="https://github.com/chinghanho/.dotfiles">Github</a> 上 clone 下來，執行 <code>rake install</code> 就完成了，超級方便的。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/page/8/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/page/6/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby 單引號、雙引號差別與效能測試 - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="Ruby 的單引號（'）跟雙引號（"）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+var = &quot;hello world &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="Ruby 單引號、雙引號差別與效能測試" /><meta itemprop="name" content="Ruby 單引號、雙引號差別與效能測試" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/" />
+<meta property="og:description" content="Ruby 的單引號（'）跟雙引號（"）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+var = &quot;hello world &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2012-12-08 14:32:00 +0800" />
+
+<meta property="article:section" content="Programing" />
+<meta itemprop="description" content="Ruby 的單引號（'）跟雙引號（"）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+var = &quot;hello world &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Ruby 單引號、雙引號差別與效能測試</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-08T14:32:00+08:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Ruby 的單引號（<code>'</code>）跟雙引號（<code>"</code>）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s1">&#39;hello world\nnew line&#39;</span>
+</span><span class='line'><span class="c1"># =&gt; hello world\nnew line</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;hello world</span><span class="se">\n</span><span class="s2">new line&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; hello world</span>
+</span><span class='line'><span class="c1"># =&gt; new line</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s1">&#39;#{var}&#39;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; #{var}</span>
+</span><span class='line'><span class="c1"># =&gt; hello world</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果兩個引號之間要插一個相同的引號，就要用不同風格的引號來包，否則就會噴出 SyntaxError 的錯誤，除非加一個 <code>\</code> 來轉義，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s1">&#39;This is David\&#39;s pen&#39;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;This is David&#39;s pen&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
+</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是這樣很麻煩，所以這時就會需要用到 <code>%q</code> 和 <code>%Q</code> 這個方法，前者等於單引號的用法，後者等於雙引號的用法（也可以直接寫成 <code>%{}</code>），例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="sx">%q{Hello world!\n This is David&#39;s pen}</span>
+</span><span class='line'><span class="c1"># =&gt; Hello world!\nThis is David&#39;s pen</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="sx">%Q{Hello world!</span><span class="se">\n</span><span class="sx"> This is David&#39;s pen}</span>
+</span><span class='line'><span class="c1"># =&gt; Hello world!</span>
+</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>單引號跟雙引號之間的差別大致上就這樣，那效能呢？我寫了一個腳本來測試兩者的速度差異，結果如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s2">&quot;benchmark&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">CYCLES</span> <span class="o">=</span> <span class="mi">10_000_000</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bmbm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&#39;hello world&#39;]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&quot;hello world&quot;]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span> <span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%q{hello world}]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%q{hello world}</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%Q{hello world}]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%Q{hello world}</span> <span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&#39;hello world&#39; + n.to_s]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span> <span class="o">+</span> <span class="mi">1</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&quot;hello world </span><span class="se">\#</span><span class="sx">{n}&quot;]</span><span class="p">)</span>    <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;hello world </span><span class="si">#{</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%q{hello world } + n.to_s]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%q{hello world }</span> <span class="o">+</span> <span class="mi">1</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%Q{hello world </span><span class="se">\#</span><span class="sx">{n}}]</span><span class="p">)</span>     <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%Q{hello world </span><span class="si">#{</span><span class="mi">1</span><span class="si">}</span><span class="sx">}</span> <span class="p">}}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># ruby-1.9.3-p327</span>
+</span><span class='line'><span class="c1"># Rehearsal -------------------------------------------------------------</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39;               4.100000   0.010000   4.110000 (  4.112255)</span>
+</span><span class='line'><span class="c1"># &quot;hello world&quot;               4.060000   0.000000   4.060000 (  4.069385)</span>
+</span><span class='line'><span class="c1"># %q{hello world}             4.090000   0.010000   4.100000 (  4.099501)</span>
+</span><span class='line'><span class="c1"># %Q{hello world}             4.090000   0.000000   4.090000 (  4.104130)</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39; + n.to_s     10.680000   0.020000  10.700000 ( 10.705543)</span>
+</span><span class='line'><span class="c1"># &quot;hello world #{n}&quot;          9.870000   0.010000   9.880000 (  9.895310)</span>
+</span><span class='line'><span class="c1"># %q{hello world } + n.to_s  10.710000   0.020000  10.730000 ( 10.744212)</span>
+</span><span class='line'><span class="c1"># %Q{hello world #{n}}        9.810000   0.010000   9.820000 (  9.832551)</span>
+</span><span class='line'><span class="c1"># --------------------------------------------------- total: 57.490000sec</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#                                 user     system      total        real</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39;               4.010000   0.010000   4.020000 (  4.018492)</span>
+</span><span class='line'><span class="c1"># &quot;hello world&quot;               4.010000   0.010000   4.020000 (  4.017989)</span>
+</span><span class='line'><span class="c1"># %q{hello world}             4.010000   0.000000   4.010000 (  4.021088)</span>
+</span><span class='line'><span class="c1"># %Q{hello world}             4.010000   0.010000   4.020000 (  4.019685)</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39; + n.to_s     10.700000   0.010000  10.710000 ( 10.730320)</span>
+</span><span class='line'><span class="c1"># &quot;hello world #{n}&quot;          9.860000   0.020000   9.880000 (  9.890101)</span>
+</span><span class='line'><span class="c1"># %q{hello world } + n.to_s  10.610000   0.010000  10.620000 ( 10.634330)</span>
+</span><span class='line'><span class="c1"># %Q{hello world #{n}}        9.860000   0.020000   9.880000 (  9.884285)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>得出兩個結果：</p>
+
+<ul>
+<li>字串插值的寫法會比用 <code>+</code> 拼接的效能好（而且可讀性也比較高）；</li>
+<li>雙引號比單引號效能好；</li>
+</ul>
+
+
+<p>一般情況，我的習慣都是使用雙引號，個人覺得看起來也比較好看。:p</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-08T14:32:00+08:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programing/'>Programing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/" data-via="" data-counturl="http://blog.chh.tw/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/peter-norvig-talk-about-ai/" title="Previous Post: Google 研究總監 Peter Norvig 談人工智慧">&laquo; Google 研究總監 Peter Norvig 談人工智慧</a>
+      
+      
+        <a class="basic-alignment right" href="/posts/2012-memory-and-experience/" title="Next Post: 2012 記憶與經驗">2012 記憶與經驗 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/';
+        var disqus_url = 'http://blog.chh.tw/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

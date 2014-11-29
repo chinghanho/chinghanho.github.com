@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>每個人都應該有一套自己的密碼演算法 - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。 在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/my-password-algorithm/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="每個人都應該有一套自己的密碼演算法" /><meta itemprop="name" content="每個人都應該有一套自己的密碼演算法" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/my-password-algorithm/" />
+<meta property="og:description" content="最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。 在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的， &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2013-06-29 16:06:00 +0800" />
+
+<meta property="article:section" content="Tech" />
+<meta itemprop="description" content="最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。 在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的， &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">每個人都應該有一套自己的密碼演算法</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-29T16:06:00+08:00" pubdate data-updated="true">Jun 29<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="https://lh4.googleusercontent.com/-XJ2BlPNnueY/Uc7GM1tq0bI/AAAAAAAAGgM/EDQev1B22wU/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202013-06-29%2520%25E4%25B8%258B%25E5%258D%25887.32.00.png" alt="the-matrix" /></p>
+
+<p>最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。</p>
+
+<p>在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的，但是在<del>室友</del>駭客面前、或是網站管理員面前，它是透明毫無隱藏的，所以在這前提下就不應該把每個網站全部設同個密碼，因為駭客可以拿這套帳號密碼去登入其他網站。</p>
+
+<h2>密碼演算法</h2>
+
+<p>但是每個網站密碼都不一樣怎麼記得住？所以需要一套「演算法」，以後只需要記憶這套算法，而不是去記密碼。「演算法」聽起來好像很神奇，其實只是一套組合的方法，隨便舉例：</p>
+
+<blockquote><p>網站分級變數 + 常數 + 網站辨識代號 = 密碼</p></blockquote>
+
+<p>以下來分別說明這些東西是什麼。</p>
+
+<!-- more -->
+
+
+<h3>網站分級變數</h3>
+
+<p>網站分級是指依照網站的重要性分類，並且替每個級別設定不同的密碼。最核心的網站通常是信箱服務，例如 Google、Yahoo，你應該替他們設定一個獨立的密碼，與那些亂七八糟的小網站區隔開來。</p>
+
+<p>那應該拿什麼來當變數？我的建議是，你可以選你最愛顏色的 16 進位色碼（如果你偏愛 HSL 也行…… :p），或是圓周率小數點後的第 108 位數到 116 位數（前提是你得背起來 XDD），又或者是一句名言每個字的開頭第一個字母，例如「<em>Why join the navy if you can be a pirate</em>」變成「<em>Wjtniycbap</em>」。</p>
+
+<p>將網站依照重要性分成三種等級，並且每種等級分配一種變數：</p>
+
+<ul>
+<li>核心（Google&#8230;）：<em>Wjtniycbap</em></li>
+<li>次等（Evernote&#8230;）：<em>bion</em></li>
+<li>下等（亂七八糟論壇&#8230;）：<em>wwantm</em></li>
+</ul>
+
+
+<p>太多不好記？寫下來也沒關係，反正別人猜不到你的算法，給他看也沒關係，只要別在紙上寫「這是密碼」就好了。不過，用不著分類太多，三種級別其實也不難記。</p>
+
+<h3>常數</h3>
+
+<p>這是一組夾雜在密碼裡不會改變的常數，主要目的是增加密碼整體的複雜度。最好是數字跟英文的混合，甚至大小寫混合都可以。綜合上一個變數，現在密碼變成了：</p>
+
+<ul>
+<li>核心（Google&#8230;）：<em>Wjtniycbap</em> + <em>0rz</em></li>
+<li>次等（Evernote&#8230;）：<em>bion</em> + <em>0rz</em></li>
+<li>下等（亂七八糟論壇&#8230;）：<em>wwantm</em> + <em>0rz</em></li>
+</ul>
+
+
+<h3>網站辨識代號</h3>
+
+<p>這是這個網站的獨有特徵，可以是這個網站 domain 名稱的變體，例如 Google 的偶數字母：oge；或是該字母在 26 個字母當中的索引位置，o 是第 15 個字母、g 是第 7 個、e 是第 5 個，合起來就是 1575。</p>
+
+<p>最後，我們的密碼就變成了這樣：</p>
+
+<ul>
+<li>核心（Google&#8230;）：<em>Wjtniycbap0rz</em> + <em>oge</em></li>
+<li>次等（Evernote&#8230;）：<em>bion0rz</em> + <em>vro</em></li>
+<li>下等（亂七八糟論壇&#8230;）：<em>wwantm0rz</em> + <em>xxx</em></li>
+</ul>
+
+
+<p>這樣就能產生每個網站都不一樣的密碼，而且不同級別的網站也不會彼此影響到。密碼不是背起來的，而是推理出來的。很酷！也很宅，對吧？</p>
+
+<h3>還有些事情必須知道</h3>
+
+<ul>
+<li>正妹說會經常換密碼的男人最性感，你可以定期更改「網站分級變數」這個部分，或是修改整套算法。</li>
+<li>網站分級不是依你常去的網站來劃分（我知道你常去那種網站，但你也要知道那種網站一定會偷你的密碼），而是這個網站不可被攻破的重要性來區別。</li>
+<li>越重要的核心服務建議啟用多一點的認證機制，例如 Google、Facebook 都有提供手機簡訊的登入認證機制，請一定要啟用它。</li>
+<li>可以變化的不是只有密碼，不同網站當然也可以使用不同的帳號。如果有些網站是「只使用一次」性質的網站，可以多多利用 <a href="http://10minutemail.com/">10 Minute Mail</a> 這個服務。</li>
+<li>依賴算法其實也有些缺點，例如網路銀行的密碼通常會硬性規定要 8 個字元，迫使我必須要另外想一個特例的密碼給網路銀行，下場就是我從來記不住我網路銀行的密碼是什麼。:p</li>
+</ul>
+
+
+<h2>關於密碼管理工具</h2>
+
+<p>儘管現在很多人喜歡用 <a href="http://keepass.info/">KeePass</a> 和 <a href="http://lastpass.com/">LastPass</a> 這類的軟體，但我始終不是很信任這類軟體，也不喜歡用。況且……人類發明了機器，並且替機器上了鎖，卻又用了另外一台機器來管理這把鎖，然後又替這台機器上了另外一把鎖，還真是有趣？要是這把鎖掉了，那就真的全面失控了啊！</p>
+
+<p>再說……連<a href="http://youtu.be/VRCUpXLguHM?t=36m6s">駭客都說不敢用</a>了，你敢用嗎？XDD</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-29T16:06:00+08:00" pubdate data-updated="true">Jun 29<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>Tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/my-password-algorithm/" data-via="" data-counturl="http://blog.chh.tw/posts/my-password-algorithm/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/osx-windows-switch-applications-ux/" title="Previous Post: OS X 與 Windows 切換應用程式的介面體驗">&laquo; OS X 與 Windows 切換應用程式的介面體驗</a>
+      
+      
+        <a class="basic-alignment right" href="/posts/oocss-smacss-and-css-guidelines/" title="Next Post: 劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範">劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/my-password-algorithm/';
+        var disqus_url = 'http://blog.chh.tw/posts/my-password-algorithm/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

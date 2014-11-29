@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Opera 產品全面改用 WebKit 引擎 - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="大約在一個月前就有看到 Opera 要改用 WebKit rendering 引擎的消息，所以昨天看到 Opera 開發團隊發佈的新聞其實沒有太驚訝，反而是看到鄉民們激動的表現讓我有點意外。 要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/opera-move-to-webkit/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="Opera 產品全面改用 WebKit 引擎" /><meta itemprop="name" content="Opera 產品全面改用 WebKit 引擎" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/opera-move-to-webkit/" />
+<meta property="og:description" content="大約在一個月前就有看到 Opera 要改用 WebKit rendering 引擎的消息，所以昨天看到 Opera 開發團隊發佈的新聞其實沒有太驚訝，反而是看到鄉民們激動的表現讓我有點意外。 要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2013-02-14 08:40:00 +0800" />
+
+<meta property="article:section" content="Tech" />
+<meta itemprop="description" content="大約在一個月前就有看到 Opera 要改用 WebKit rendering 引擎的消息，所以昨天看到 Opera 開發團隊發佈的新聞其實沒有太驚訝，反而是看到鄉民們激動的表現讓我有點意外。 要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Opera 產品全面改用 WebKit 引擎</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-14T08:40:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="http://lh3.googleusercontent.com/-81Na2LPt3oY/URwrpztPvcI/AAAAAAAAF0I/nW6cpHKy0xQ/s690/installed-browsers.png" alt="installed-browsers" /></p>
+
+<p>大約在一個月前就有看到 <a href="http://www.pocket-lint.com/news/49375/opera-ice-new-webkit-browser">Opera 要改用 WebKit rendering 引擎</a>的消息，所以昨天看到 <a href="http://my.opera.com/ODIN/blog/300-million-users-and-move-to-webkit">Opera 開發團隊發佈的新聞</a>其實沒有太驚訝，反而是看到<a href="http://news.ycombinator.com/item?id=5211953">鄉民們激動的表現</a>讓我有點意外。</p>
+
+<p>要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit 引擎說實在跟我沒有太大的關係，對於網站開發有沒有影響我也不知道，因為在我練功的路上目前都沒有碰到太多跟瀏覽器前端有關的部份，要說直接的影響大概就是寫 CSS 可以少個 prefix 吧！可是我寫 CSS 都是用 <a href="https://github.com/chriseppstein/compass">Compass</a> 這個武裝神器，本來就沒有在寫 prefix 啊。XD</p>
+
+<p>我最喜歡的瀏覽器是 Google Chrome，可是有時會因為不同的需求或是開發需要，我電腦裡同時安裝了各家瀏覽器，包括 Safari、Firefox 和 Opera 等等。裝 Firefox 是因為要用到某些特別的 add-ons；而 Opera 則是 UI 用得不是很習慣所以不喜歡，裝起來只是純粹開發測試用。現在 Opera 改用 WebKit 後突然發現好像已經可以移除它了齁！:p</p>
+
+<p>跟我一樣的人應該也不少，Opera 改用 WebKit 應該多多少少會影響到市佔率，可是我想其實應該不會減少太多，因為「一般使用者」本來就沒有在乎 Opera 用的是哪一套 rendering 引擎，重點還是在 UI 的設計跟整體效能讓使用者滿不滿意。我對 Opera 沒有什麼偏見，真的只是純粹用不慣而已。</p>
+
+<p>Opera 放棄 Presto 後市場上就只剩下 WebKit、Gecko 和 Trident 三個主要的 rendering 引擎，也許以後會常見到「最佳瀏覽效果請使用 WebKit-base 瀏覽器」這樣的標語出現在網頁的尾部，也可能讓 WebKit 推向成為下一個「IE 世代」，誰知道呢？即便到真的有那麼一天，我相信以現在 web 的發展程度，一定會出現一個替代品讓堅持開放信仰的人們能夠有個地方去。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-14T08:40:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>Tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/opera-move-to-webkit/" data-via="" data-counturl="http://blog.chh.tw/posts/opera-move-to-webkit/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/ruby-metaclass-eigenclass/" title="Previous Post: 關於 Ruby class 他們沒告訴你的真相：MetaClass">&laquo; 關於 Ruby class 他們沒告訴你的真相：MetaClass</a>
+      
+      
+        <a class="basic-alignment right" href="/posts/after-google-reader-dead/" title="Next Post: 寫在 Google Reader 死後">寫在 Google Reader 死後 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/opera-move-to-webkit/';
+        var disqus_url = 'http://blog.chh.tw/posts/opera-move-to-webkit/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>@ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="短文版 用 jade。 長文版 因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。 活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的： TJ 早期樣版引擎代表作 ejs
+以及 TJ 後來的 jade &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/" />
+<meta property="og:description" content="短文版 用 jade。 長文版 因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。 活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的： TJ 早期樣版引擎代表作 ejs
+以及 TJ 後來的 jade &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+
+
+
+<meta itemprop="description" content="短文版 用 jade。 長文版 因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。 活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的： TJ 早期樣版引擎代表作 ejs
+以及 TJ 後來的 jade &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/node-template-engine-jade-vs-handlebars/">Node 樣版引擎評估：Jade、Handlebars</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-29T01:38:00+08:00" pubdate data-updated="true">Nov 29<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh3.googleusercontent.com/-aa-cbFoMPDs/VHi1FfBlM-I/AAAAAAAAIJM/T6wEE0RlEtQ/w640-h201-no/Screen%2BShot%2B2014-11-29%2Bat%2B1.44.09%2BAM.png" alt="" /></p>
+
+<h2>短文版</h2>
+
+<p>用 jade。</p>
+
+<h2>長文版</h2>
+
+<p>因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。</p>
+
+<p>活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的：</p>
+
+<ul>
+<li><a href="https://github.com/tj">TJ</a> 早期樣版引擎代表作 <a href="https://github.com/tj/ejs/">ejs</a></li>
+<li>以及 TJ 後來的 <a href="https://github.com/jadejs/jade">jade</a></li>
+<li>還有 <a href="https://github.com/wycats">wycats</a>（<a href="http://yehudakatz.com/">Yehuda Katz</a>）的 <a href="https://github.com/wycats/handlebars.js">handlebars</a></li>
+</ul>
+
+
+<p>TJ 當初設計 <a href="http://expressjs.com/">Express</a> 承襲 Ruby micro-framework <a href="http://www.sinatrarb.com/">Sinatra</a> 的設計理念，ejs 好像是因應而生（？），從 ejs 語法上面可以看到非常多 Ruby 樣版引擎 ERb 的影子，對我來說是最「友善」的。不過 TJ 另創 jade 樣版引擎加上投奔 Go 世界以後，ejs 的活躍程度越來越低，從今年 5 月之後就再也沒有更新過了。</p>
+
+<p>我向來都會先以「社群活躍度」來評量一個程式專案計畫可靠度，jade 貢獻者在 Github 上成立 <a href="https://github.com/jadejs">jadejs</a> 組織來維護專案，長久來看蠻可靠的。而 handlebars 在 Github 上也廣受 Javascript 開發者歡迎，所以最後我就拿這兩套樣版引擎來比較，以下是值得提出來講的部分。</p>
+
+<p>（再強調一次好了：語法設計、擴充性、使用彈性是我比較在意的項目）</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/node-template-engine-jade-vs-handlebars/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/mongodb-odm-mongoose/">MongoDB 的 ODM：mongoose 簡單介紹</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-06T11:11:00+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh3.googleusercontent.com/-Tdo_5cAPDnk/UilIbkRmleI/AAAAAAAAGqQ/vh6dM2gZvV4/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-06+%25E4%25B8%258A%25E5%258D%258811.12.48.png" alt="mongoose" /></p>
+
+<p><a href="http://mongoosejs.com/">mongoose</a> 是一套給 Node.js 用的 MongoDB ODM，跟常聽到的 ORM 不同的地方只是一些<a href="http://stackoverflow.com/questions/12261866/what-is-the-difference-between-an-orm-and-an-odm">技術名詞定義上的把戲</a>，其實是差不多的意思。</p>
+
+<p>透過 mongoose 可以用包裝過的、更高階的、更直覺的 API 語法，以及模擬 SQL 資料庫 schema-based 的方式，來操作 MongoDB 資料庫。以下是個官方文件給的簡單範例，先建立了一個叫做 Cat 的 Model，<code>model</code> 的第二個參數就是建立 schema 的所在：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">Cat</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Cat&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="nb">String</span> <span class="p">}</span>
+</span><span class='line'><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">kitty</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Zildjian&#39;</span> <span class="p">});</span>
+</span><span class='line'><span class="nx">kitty</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="c1">// ...</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;meow&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/mongodb-odm-mongoose/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/node-http-vs-connect-vs-express/">Node.js 的 Http vs Connect vs Express</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-05T02:17:00+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh5.googleusercontent.com/-mk_3GdVqmSI/Uid55DfCYHI/AAAAAAAAGp4/3mW_vcrS63Q/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-05+%25E4%25B8%258A%25E5%258D%25882.19.28.png" alt="node-express" /></p>
+
+<p>這篇應該是我第一篇寫有關 <a href="http://nodejs.org/">Node.js</a> 的文章，未來應該會開始多寫一些有關 Javascript 的東西。這次主題要來聊聊 Node.js 的 http 模組，跟知名的 Connect 和 Express 之間的關係，如果上網去問，有人會回說就像是 Ruby 的 <a href="http://rack.github.io/">Rack</a> 一樣，但是具體到底是什麼東西呢？</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/node-http-vs-connect-vs-express/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/oocss-smacss-and-css-guidelines/">劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-05T10:40:00+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。</p>
+
+<p>（本文的例子用的是 SCSS 語法）</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/oocss-smacss-and-css-guidelines/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/my-password-algorithm/">每個人都應該有一套自己的密碼演算法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-29T16:06:00+08:00" pubdate data-updated="true">Jun 29<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh4.googleusercontent.com/-XJ2BlPNnueY/Uc7GM1tq0bI/AAAAAAAAGgM/EDQev1B22wU/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202013-06-29%2520%25E4%25B8%258B%25E5%258D%25887.32.00.png" alt="the-matrix" /></p>
+
+<p>最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。</p>
+
+<p>在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的，但是在<del>室友</del>駭客面前、或是網站管理員面前，它是透明毫無隱藏的，所以在這前提下就不應該把每個網站全部設同個密碼，因為駭客可以拿這套帳號密碼去登入其他網站。</p>
+
+<h2>密碼演算法</h2>
+
+<p>但是每個網站密碼都不一樣怎麼記得住？所以需要一套「演算法」，以後只需要記憶這套算法，而不是去記密碼。「演算法」聽起來好像很神奇，其實只是一套組合的方法，隨便舉例：</p>
+
+<blockquote><p>網站分級變數 + 常數 + 網站辨識代號 = 密碼</p></blockquote>
+
+<p>以下來分別說明這些東西是什麼。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/my-password-algorithm/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/page/2/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Programing | @ChingHanHo]]></title>
+  <link href="http://blog.chh.tw/blog/categories/programing/atom.xml" rel="self"/>
+  <link href="http://blog.chh.tw/"/>
+  <updated>2014-11-29T07:12:09+08:00</updated>
+  <id>http://blog.chh.tw/</id>
+  <author>
+    <name><![CDATA[Ching-Han Ho]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Node 樣版引擎評估：Jade、Handlebars]]></title>
+    <link href="http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars/"/>
+    <updated>2014-11-29T01:38:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/-aa-cbFoMPDs/VHi1FfBlM-I/AAAAAAAAIJM/T6wEE0RlEtQ/w640-h201-no/Screen%2BShot%2B2014-11-29%2Bat%2B1.44.09%2BAM.png" alt="" /></p>
+
+<h2>短文版</h2>
+
+<p>用 jade。</p>
+
+<h2>長文版</h2>
+
+<p>因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。</p>
+
+<p>活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的：</p>
+
+<ul>
+<li><a href="https://github.com/tj">TJ</a> 早期樣版引擎代表作 <a href="https://github.com/tj/ejs/">ejs</a></li>
+<li>以及 TJ 後來的 <a href="https://github.com/jadejs/jade">jade</a></li>
+<li>還有 <a href="https://github.com/wycats">wycats</a>（<a href="http://yehudakatz.com/">Yehuda Katz</a>）的 <a href="https://github.com/wycats/handlebars.js">handlebars</a></li>
+</ul>
+
+
+<p>TJ 當初設計 <a href="http://expressjs.com/">Express</a> 承襲 Ruby micro-framework <a href="http://www.sinatrarb.com/">Sinatra</a> 的設計理念，ejs 好像是因應而生（？），從 ejs 語法上面可以看到非常多 Ruby 樣版引擎 ERb 的影子，對我來說是最「友善」的。不過 TJ 另創 jade 樣版引擎加上投奔 Go 世界以後，ejs 的活躍程度越來越低，從今年 5 月之後就再也沒有更新過了。</p>
+
+<p>我向來都會先以「社群活躍度」來評量一個程式專案計畫可靠度，jade 貢獻者在 Github 上成立 <a href="https://github.com/jadejs">jadejs</a> 組織來維護專案，長久來看蠻可靠的。而 handlebars 在 Github 上也廣受 Javascript 開發者歡迎，所以最後我就拿這兩套樣版引擎來比較，以下是值得提出來講的部分。</p>
+
+<p>（再強調一次好了：語法設計、擴充性、使用彈性是我比較在意的項目）</p>
+
+<!-- more -->
+
+
+<h3>Layouts</h3>
+
+<p>寫過 Rails 後就很喜歡那種把不同 controller actions 的 view，跟 layouts 拆得乾乾淨淨的做法。這點 handlebars 可以做到，也是我最喜歡的一點，jade 必須在每一個 view 裡面寫上重複的 code，來表示外層的 layout：</p>
+
+<p>``` jade
+extends layout</p>
+
+<p>block content
+  h1= post.title
+```</p>
+
+<p>把內容的部分宣告成 block，然後套進 layout 裏去。這也不是大缺點啦，block 寫法可以讓 view 不同區塊使用上更有彈性，但這就很考驗 block 的拆分功力了，不然真的會很容易寫出大量讓人崩潰的縮進層級。</p>
+
+<h3>Partials</h3>
+
+<p>版型上共用的部分一定會拆出來到同個檔案去維護，例如 header、footer、sidebar 之類的，handlebars 要做到這點繞得也太大圈：得先告訴 handlebars 的實例（instance）某個目錄放著我要的 partials 檔案，例如有個 <code>header.hbs</code> partial 放在 <code>/views/partials</code> 目錄下，然後要在 app 主要程式中寫：</p>
+
+<p><code>js
+var hbs = require('hbs');
+hbs.registerPartial(__dirname, '/views/partials');
+</code></p>
+
+<p>才能在 view 裡面帶入 header 這個 partial：<code>{{&gt; header}}</code>。這樣讓檔案的組織非常缺乏彈性，如果 partials 不是在同個地方而是多個目錄，這樣光是找到檔案就很直覺。</p>
+
+<h3>條件判斷</h3>
+
+<p>這個是壓死駱駝最後一根稻草，handlebars 沒有辦法用很簡單的條件判斷式，內建的 <code>#if</code> helper 根本不是拿來寫「條件判斷」的，當初掃描完文件後一定會很自然地寫下 <code>{{#if query === 'list'}}</code>，這樣是不行的喔！</p>
+
+<p><code>#if</code> 頂多拿來判斷物件裡面有東西還是沒東西而已，如果真要寫個「條件判斷」一樣要拆去寫 helper，不管你的是多簡單的判斷。</p>
+
+<h3>結論</h3>
+
+<p>當初 wycats 寫 handlebars 時主要是為了解決前端樣版引擎的問題，所以可以發現很多 server-side 應用的場景 handlebars 都不適用。jade 是 TJ 寫給 Express 用的，讓我最不適應的地方是像 <a href="http://haml.info/">HAML</a> 那樣「縮進崇拜主義」簡化的語法我實在不敢恭維，但顯然目前沒有比「不習慣」更好的理由來阻止我用它，因為 jade 其他面向提供的 solution 確實都能解決問題。</p>
+
+<p>結論就是用 jade！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MongoDB 的 ODM：mongoose 簡單介紹]]></title>
+    <link href="http://blog.chh.tw/posts/mongodb-odm-mongoose/"/>
+    <updated>2013-09-06T11:11:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/mongodb-odm-mongoose</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/-Tdo_5cAPDnk/UilIbkRmleI/AAAAAAAAGqQ/vh6dM2gZvV4/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-06+%25E4%25B8%258A%25E5%258D%258811.12.48.png" alt="mongoose" /></p>
+
+<p><a href="http://mongoosejs.com/">mongoose</a> 是一套給 Node.js 用的 MongoDB ODM，跟常聽到的 ORM 不同的地方只是一些<a href="http://stackoverflow.com/questions/12261866/what-is-the-difference-between-an-orm-and-an-odm">技術名詞定義上的把戲</a>，其實是差不多的意思。</p>
+
+<p>透過 mongoose 可以用包裝過的、更高階的、更直覺的 API 語法，以及模擬 SQL 資料庫 schema-based 的方式，來操作 MongoDB 資料庫。以下是個官方文件給的簡單範例，先建立了一個叫做 Cat 的 Model，<code>model</code> 的第二個參數就是建立 schema 的所在：</p>
+
+<p>``` js
+var Cat = mongoose.model('Cat',
+  { name: String }
+);</p>
+
+<p>var kitty = new Cat({ name: 'Zildjian' });
+kitty.save(function (err) {
+  if (err) // ...
+  console.log('meow');
+});
+```</p>
+
+<!-- more -->
+
+
+<h2>與 MongoDB 建立連線</h2>
+
+<p>這裡繼續沿用上一篇文章「<a href="/posts/node-http-vs-connect-vs-express/">Node.js 的 Http vs Connect vs Express</a>」的例子，先把上一篇文章的範例程式碼複製過來，檔案名稱命名為 <em>server.js</em>，下指令執行 <code>node server.js</code> 這樣可以得到一台簡單的伺服器：</p>
+
+<p>``` js
+var express = require('express')
+  , app     = express()</p>
+
+<p>app.use(express.cookieParser())</p>
+
+<p>app.get('/', function(req, res) {
+  console.log(req.cookies)
+  res.send('hello')
+})</p>
+
+<p>app.listen('4000')
+```</p>
+
+<p>打開瀏覽器訪問 <a href="http://localhost:4000">http://localhost:4000</a> 應該可以看到「hello」的文字，從 console 應該也能看到有關 cookies 的資訊（有可能只是一個空的物件）。</p>
+
+<p>再來就是把 mongoose 給 requrie 進來，然後讓它跟 MongoDB 嘗試建立連線，連線的 URL 協議一定要用 <code>mongodb://</code> 這個 prefix：</p>
+
+<p><code>js
+var mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost/test')
+</code></p>
+
+<h2>mongoose 的兩個概念：Schema 與 Model</h2>
+
+<p>MongoDB 是以 documents 為基礎，在 SQL 資料庫稱為 table 的東西，在 NoSQL 裡稱為 collection。當然，這又是一種名詞定義上的把戲，實質上大同小異。</p>
+
+<h3>Schema</h3>
+
+<p>mongoose 的 Schema 概念就是用 schema-based 的方式，定義一個 collection 的組成結構，用程式碼描述會這樣子寫：</p>
+
+<p>``` js
+var Schema = mongoose.Schema
+var UserSchema = new Schema(
+  {</p>
+
+<pre><code>name:      { type: String },
+login:     { type: String, unique: true },
+email:     { type: String, unique: true },
+create_at: { type: Date, default: Date.now },
+update_at: { type: Date, default: Date.now }
+</code></pre>
+
+<p>  }
+)
+```</p>
+
+<p>因為 MongoDB 是 schema-less 相當有彈性，所以如果上面這個 schema 某些「欄位」沒有賦值，那麼在 MongoDB 裡就不會有那個「欄位」。說「欄位」是 SQL 的思維，可是我覺得這樣講會比較好理解。</p>
+
+<h3>Model</h3>
+
+<p>而 mongoose 的 Model 概念，則是對一個 collection 結構定義與操作方法的集合，也就是用 Schema 定義了一個 collection 的結構，加上其他對這個 collection 的驗證設定、操作方法等等，便構成了一個 Model。</p>
+
+<p>結合剛剛的 schema 範例，可以再加上一些驗證跟操作的方法：</p>
+
+<p>``` js
+UserSchema.pre('save', function(next) {
+  // do something...
+})</p>
+
+<p>UserSchema.statics = {</p>
+
+<p>  getUserByLogin: function(login, callback) {</p>
+
+<pre><code>this.findOne({ login: login })
+  .exec(callback)
+</code></pre>
+
+<p>  }</p>
+
+<p>}
+```</p>
+
+<p>最後將這個 Schema 定義到一個叫做 User 的 model：</p>
+
+<pre><code>mongoose.model('User', UserSchema)
+</code></pre>
+
+<p>當要使用這個 model 只要用 <code>mongoose.model()</code> 將 model 讀出來，便可以對他進行操作了：</p>
+
+<p>``` js
+var User = mongoose.model('User')</p>
+
+<p>User.getUserByLogin(login, function(err, user) {
+  // here we have a user...
+})
+```</p>
+
+<h2>為什麼 Schema-less 的資料庫需要 Schema-based？</h2>
+
+<p>不過這就很奇怪了，NoSQL 的 MongoDB 本身就是 schema-less 的資料庫，結果用 mongoose 還要去刻意模擬成 schema-based，這樣的思路是什麼？</p>
+
+<p>其實這是對 NoSQL 的 schema-less 的誤解，schema-less 並不代表 no-schema。在應用當中還是需要一個 schema 來代表 model，而 schema-less 只是代表一種彈性的模式。</p>
+
+<p>否則的話，會需要在很多地方寫髒亂的判斷條件，像是這樣的東西：</p>
+
+<p><code>js
+if (cat.name) {
+  console.log(cat.name)  // I got a name
+}
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Node.js 的 http vs Connect vs Express]]></title>
+    <link href="http://blog.chh.tw/posts/node-http-vs-connect-vs-express/"/>
+    <updated>2013-09-05T02:17:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/node-http-vs-connect-vs-express</id>
+    <content type="html"><![CDATA[<p><img src="https://lh5.googleusercontent.com/-mk_3GdVqmSI/Uid55DfCYHI/AAAAAAAAGp4/3mW_vcrS63Q/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-05+%25E4%25B8%258A%25E5%258D%25882.19.28.png" alt="node-express" /></p>
+
+<p>這篇應該是我第一篇寫有關 <a href="http://nodejs.org/">Node.js</a> 的文章，未來應該會開始多寫一些有關 Javascript 的東西。這次主題要來聊聊 Node.js 的 http 模組，跟知名的 Connect 和 Express 之間的關係，如果上網去問，有人會回說就像是 Ruby 的 <a href="http://rack.github.io/">Rack</a> 一樣，但是具體到底是什麼東西呢？</p>
+
+<!-- more -->
+
+
+<h2>http 模組</h2>
+
+<p>Node.js 自身就帶有一個叫做 http 的 <a href="http://nodejs.org/api/http.html">module</a>，可以呼叫 <code>http.createServe</code> 建立一個相當基本伺服器，具體用法會長得像是以下這個樣子，可以建立一份檔案命名為 <em>server.js</em> 來測試一下：</p>
+
+<p>``` js
+var http = require('http')</p>
+
+<p>http.createServer(function(req, res) {
+  res.writeHead(200)
+  res.end("hello world\n")
+}).listen(8000)
+```</p>
+
+<p>然後在終端機執行 <code>node server.js</code> 指令來啟動伺服器，因為程式碼裡面指定了 8000 port，所以當在瀏覽器裡打開 <a href="http://localhost:8000">http://localhost:8000</a> 看到「hello world」就代表成功了。</p>
+
+<h2>Connect</h2>
+
+<p>然而我需要更多的細節，例如讀取送來的 request 中的 cookies，因此 <a href="http://www.senchalabs.org/connect/">Connect</a> 這樣的 middleware 框架，便是用來輕鬆安插各種 middleware 來處理 request，透過 <code>connect.cookieParser()</code> 讓 <code>req</code> 物件多了一個 <code>cookies</code> 屬性：</p>
+
+<p>``` js
+var http    = require('http')
+  , connect = require('connect')</p>
+
+<p>var app = connect()
+  .use(connect.cookieParser())
+  .use(function(req, res) {</p>
+
+<pre><code>console.log(req.cookies);
+res.end('hello');
+</code></pre>
+
+<p>  })</p>
+
+<p>http.createServer(app).listen(8000)
+```</p>
+
+<p>但是 Connect 充其量只是提供了安插 middleware 的 API，其他像是 route、view rendering 等工作，就會需要靠 Express 這套框架了。</p>
+
+<h2>Express</h2>
+
+<p><a href="http://expressjs.com/">Express</a> 其實就是延伸自 Connect 的加強版，所有 Connect 的 API 在 Express 裡都可以使用，並且提供了更多實用的 functions，一次解決所有問題。</p>
+
+<p>將剛剛寫的程式碼修改成以下的範例，其中 <code>get</code> 這個 function 就是 HTTP 的動詞，有了這樣的 API 便能很輕鬆地策劃路由了：</p>
+
+<p>``` js
+var express = require('express')
+  , app     = express()</p>
+
+<p>app.use(express.cookieParser())</p>
+
+<p>app.get('/', function(req, res) {
+  console.log(req.cookies)
+  res.send('hello')
+})</p>
+
+<p>app.listen('4000')
+```</p>
+
+<p>一言以蔽之，http 之於 Connect，就如 Connect 之於 Express。</p>
+
+<h3>參考資料</h3>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/5284340/what-is-node-js-connect-express-and-middleware">What is Node.js' Connect, Express and “middleware”?</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範]]></title>
+    <link href="http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/"/>
+    <updated>2013-08-05T10:40:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines</id>
+    <content type="html"><![CDATA[<p>真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。</p>
+
+<p>（本文的例子用的是 SCSS 語法）</p>
+
+<!-- more -->
+
+
+<h2>OOCSS</h2>
+
+<p>OOCSS 不是什麼新技術，只是一種撰寫 CSS 的設計模式，或者可以說是一種「道德規範」，大致上我覺得重點只有兩個：</p>
+
+<ul>
+<li><a href="#html-dependency">減少對 HTML 結構的依賴</a></li>
+<li><a href="#reuse-classes">增加 CSS class 重複性的使用</a></li>
+</ul>
+
+
+<p><a name="html-dependency"></a></p>
+
+<h3>減少對 HTML 結構的依賴</h3>
+
+<p>``` html
+<nav class="nav--main">
+  <ul></p>
+
+<pre><code>&lt;li&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
+</code></pre>
+
+<p>  </ul>
+</nav>
+```</p>
+
+<p>一般的導航欄寫法，結構應該會像上面的 HTML 範例一樣，如果要對那些 <code>&lt;a&gt;</code> 標籤定義樣式，CSS 的寫法可能寫成 <code>.nav--main ul li a {}</code>，這種寫法先不管效能上的問題，可以看出來過度地依賴元素標籤的結構，有可能之後 HTML 結構改變，這個 CSS 就必須跟著重構，造成維護上多餘的成本。</p>
+
+<p>若從這個例子來考量，原則上 <code>&lt;a&gt;</code> 都一定會接在 <code>&lt;li&gt;</code> 標籤的後面，一個 <code>&lt;li&gt;</code> 只會有一個 <code>&lt;a&gt;</code>，通常不會獨立存在，那就可以寫成 <code>.nav--main a {}</code>，會是比較好的寫法，甚至是直接給 <code>&lt;a&gt;</code> 加上 class <code>nav--main_item</code>。後者是 OOCSS 所提倡的用法。</p>
+
+<p>這樣的寫法，一來效能理論上比較好（我沒辦法驗證），二來層次比較單純。</p>
+
+<p><a name="reuse-classes"></a></p>
+
+<h3>增加 CSS class 的重複使用</h3>
+
+<p>在 OOCSS 的觀念中，強調重複使用 class，而應該避免使用 id 作為 CSS 的選擇器。這種想法就是像 <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">OOP</a> 盡量抽離重複的程式碼，例如以下這個例子，這是兩種按鈕的 CSS 樣式屬性：</p>
+
+<p><code>scss
+.button {
+  display: inline-block;
+  padding: 6px 12px;
+  color: hsla(0, 100%, 100%, 1);
+  &amp;.button-default { background: hsla(180, 1%, 28%, 1); }
+  &amp;.button-primary { background: hsla(208, 56%, 53%, 1); }
+}
+</code></p>
+
+<p>上面的 CSS 將兩種不同樣式的 button，抽離出重複的部份，並且定義在同個 class 上。因此，要使用這樣的樣式，HTML 的寫法可能長這個樣子：</p>
+
+<p><code>html
+&lt;a class="button button-default"&gt;
+&lt;a class="button button-primary"&gt;
+</code></p>
+
+<p>先用 <code>button</code> 宣告此為一個按鈕的樣式，再用 <code>button-default</code> 或 <code>button-primary</code> 作為按鈕底色的區別。這麼做可以維護成本變得比較低，例如：想要改網站上所有按鈕的大小，就只要修改 <code>.button</code> 的 <code>padding</code> 而已。</p>
+
+<h2>SMACSS</h2>
+
+<p>我對 SMACSS 的理解還不是很深入，或許把 <a href="http://smacss.com/">Scalable and Modular Architecture for CSS</a> 看完後會有更深一曾的理解。目前對 SMACSS 的概念僅限於它對 CSS 不同的業務邏輯所做的劃分方式：</p>
+
+<p>但我認為原本的設計不是很妥當，因此我自己做了一些改良：</p>
+
+<ul>
+<li><a href="#base">Base</a></li>
+<li><a href="#layout">Layout</a></li>
+<li><a href="#module">Module</a></li>
+<li><a href="#partial">Partial</a></li>
+<li><a href="#state">State</a></li>
+<li><a href="#theme">Theme</a></li>
+</ul>
+
+
+<p><a name="base"></a></p>
+
+<h3>Base</h3>
+
+<p>Base 就是設定標籤元素的預設值，例如瀏覽器的 reset 可以寫在這裡，如果用的是 Compass，只要 <code>@include global-reset</code> 即可。這裡只會對標籤元素本身做設定，不會出現任何 class 或 id，但是可以有屬性選擇器或是偽類：</p>
+
+<p><code>scss
+html {}
+input[type=text] {}
+a:hover {}
+</code></p>
+
+<p><a name="layout"></a></p>
+
+<h3>Layout</h3>
+
+<p>Layout 是指整個網站的「大架構」的外觀，而非 <code>.button</code> 這種小元件的 class。網站通常會有一些主要的大區塊，可能是 header 或 footer，Layout 就是用來定義這些「大架構」的 CSS。如果有做 Responsive Web Design 或是用 Grid System，也是把規則寫在 Layout 這裡。</p>
+
+<p>以下這是個範例：</p>
+
+<p>``` scss</p>
+
+<h1>header { margin: 30px 0; }</h1>
+
+<h1>articles-wrapper { ......; }</h1>
+
+<p>.sidebar {
+  &amp;.sidebar--right { ......; }
+  &amp;.sidebar-left { ......; }
+}
+```</p>
+
+<p>通常只有一個選擇器，一個 id、或一個 class。</p>
+
+<p><a name="module"></a></p>
+
+<h3>Module</h3>
+
+<p>原本的 SMACSS 對 Module 的設計我覺得不是很好，所以我硬是將 Module 拆分出一個 <a href="#partial">Partial</a>。</p>
+
+<p>這裡的 Module 顧名思義，就是可以在其他地方被重複使用，如果要找更明確的例子，我想就像 Twitter Bootstrap 的 <a href="http://getbootstrap.com/2.3.2/components.html">Components</a> 一樣，或者像前面 OOCSS 所舉例的 <code>.button</code> 這種會被重複使用的元件模組。</p>
+
+<p>模組不需要用任何的 prefix，因為 Module 就是設計來可以重複應用在不同的 page 上。</p>
+
+<h3>Partial</h3>
+
+<p><a name="partial"></a></p>
+
+<p>Partial 跟 Latout 不同，也跟 Module 不同，他比 Layout 的範圍小，可能是 header 底下的某個子元素。他不像 Module，他是特定單一領域下特別的設定。</p>
+
+<p><code>scss
+.nav--main {
+  a { ......; }
+}
+</code></p>
+
+<p>通常會將 Partial 的名稱加在子 class 作為 prefix，例如 <code>.nav--main</code> 底下的 <code>.nav--main_item</code>。至於為什麼要用這麼奇怪的命名方式？這等等在 <a href="#bem">CSS 規範</a>部分會說明介紹。</p>
+
+<p><a name="state"></a></p>
+
+<h3>State</h3>
+
+<p>State 負責定義元素不同的狀態下，所呈現的樣式。但是並非指一個元素的 <code>:hover</code> 或 <code>:active</code> 下的狀態。舉例來說，一個導航欄分頁，目前所在頁面的分頁需要加上 <code>.active</code> 的屬性表示目前位置是在這個分頁，HTML 會長這樣：</p>
+
+<p>``` html
+<nav class="nav--main">
+  <ul></p>
+
+<pre><code>&lt;li&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
+&lt;li class="active"&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
+</code></pre>
+
+<p>  </ul>
+</nav>
+```</p>
+
+<p>因此可以替 <code>.nav--main</code> 增加 <code>.active</code> 這樣的子 class：</p>
+
+<p>``` scss
+.nav--main {
+  // others…;
+  .active {</p>
+
+<pre><code>background: darken($background-color, 16%);
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>有時候為了讓閱讀更貼近語義，會用比較友善的命名方式，以此段的範例來說，<code>.is-active</code> 就比 <code>.active</code> 來得好讀。</p>
+
+<p><a name="theme"></a></p>
+
+<h3>Theme</h3>
+
+<p>Theme 是畫面上所有「主視覺」的定義，例如 <code>border-color</code>、<code>background-image</code> 或是 <code>font-family</code> 等相關的 Typography 設定。為什麼說是「主視覺」？因為有些元件模組仍然是留在 Module 去定義，Theme 就像 Layout 一樣負責「大架構」上的視覺樣式。</p>
+
+<h2>CSS 規範</h2>
+
+<p>這裡整理的是我覺得一定要知道的，其他還有很多規範可以轉到文末的參考資源連結，那篇文章有介紹更多的細節。</p>
+
+<p><a name="bem"></a></p>
+
+<h3>BEM</h3>
+
+<p>BEM 即 Block、Element、Modifier 的縮寫，這是一種 class 的命名技巧。如果整個 project 只有自己一個人做，那當然是不太可能出現 class 重複的問題，但是如果同時多個 F2E 一起寫同個部分的 CSS，就很容易出現共用 class 的問題，因此有了 BEM 這樣的命名技巧。</p>
+
+<p>將 Block 區塊作為起始開頭，像前面 SMACSS 介紹的 Partial 就可以拿來作為 Block 的 prefix 名稱；Element 則是 Block 下的元素；Modifier 則是這個元素的屬性。</p>
+
+<p>不同 Block 和 Element 用 <code>__</code> 兩個底線區隔開來，不同的 Modifier 則用 <code>--</code> 兩個 dash 區隔。至於 <code>-</code> 一個 dash 則表示這個 class 不依賴任何 Block 或 Element，是個獨立的存在，例如：<code>.page-container</code> 或 <code>.article-wrapper</code>。</p>
+
+<p>這裡有個範例：</p>
+
+<p>``` scss
+.sidebar {
+  .sidebar--left__section {</p>
+
+<pre><code>.sidebar--left__section--header {}
+.sidebar--left__section--footer {}
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<h3>Javascript Hook</h3>
+
+<p>透過 CSS class 來作為 Javascript 選取 DOM 節點的方式，就是 Javascript Hook。用 jQuery 可以常常看到這樣的寫法：<code>$('.nav--main a')</code>，可是當 CSS 跟 Javascript 攪在一起反而造成兩邊維護上的不便，當改了 CSS 時 Javascript 也要跟著改。</p>
+
+<p>所以用 HTML 的屬性去選取 DOM 節點會更好，如果非要用 CSS 的 class 那也可以多寫一個 <code>js-</code> 的 prefix，以表示這個節點有被 Javascript 使用，例如：</p>
+
+<p><code>html
+&lt;li class="nav--main__item  js-nav--main__item"&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
+&lt;li class="nav--main__item  js-nav--main__item"&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
+&lt;li class="nav--main__item  js-nav--main__item"&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
+</code></p>
+
+<p>PS. HTML 裡兩個 class 之間用兩個空格，會比一個空格看起來好閱讀。</p>
+
+<h3>合理的選擇器</h3>
+
+<blockquote><p>class 無所謂是否語意化的問題；你應該關注它們是否合理，不要刻意強調 class 名稱要符合語意，而要注重使用的合理性與未來性。</p></blockquote>
+
+<p>有時候為了表示更明確，在使用 CSS 的選擇器時，要表示某的 class 是搭配某個標籤元素使用，會寫成這樣：</p>
+
+<p><code>css
+ol.breadcrumb{}
+p.intro{}
+ul.image-thumbs{}
+</code></p>
+
+<p>但是上面這個寫法效能不是很好，同樣的目的但可以減少多餘的修飾，試試改用下面這種寫法，將標籤名稱用註解標示起來，維護上有相同的效果，但是瀏覽器處理的速度會比較快：</p>
+
+<p><code>css
+/*ol*/.breadcrumb{}
+/*p*/.intro{}
+/*ul*/.image-thumbs{}
+</code></p>
+
+<h2>參考資源</h2>
+
+<ul>
+<li><a href="https://github.com/doggy8088/CSS-Guidelines">撰寫可管理、可維護的 CSS 高階技巧</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[更好用的 Vim 外掛管理工具：Vundle]]></title>
+    <link href="http://blog.chh.tw/posts/vim-vundle/"/>
+    <updated>2013-05-25T16:38:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/vim-vundle</id>
+    <content type="html"><![CDATA[<p><img src="https://lh4.googleusercontent.com/-_0FBYCCvjPU/UaB5LuYVrWI/AAAAAAAAGXY/ewSOLLQ8_xU/s690/vim-vundle.png" alt="vim-vundle" /></p>
+
+<p>先前曾經寫過怎麼使用 <a href="/posts/vim-plugins-manager-pathogen/">Pathogen</a> 管理 Vim 的外掛，Git 的 submodule 用久了開始覺得很不方便，有時候只是要測試一下新玩具，用完就刪掉，可是<a href="/posts/git-submodule/">前後要操作的指令</a>至少超過四個，實在有夠麻煩。</p>
+
+<p>正打算來寫個 script 自動化過程，但這種東西怎麼可能沒人寫過，於是上網找了一下，被我發現 <a href="https://github.com/gmarik/vundle">Vundle</a> 這個管理工具，看完 README 後馬上就把 Pathogen 刪掉了，然後寫了這篇文章。XD</p>
+
+<!-- more -->
+
+
+<h2>Vundle 的優點</h2>
+
+<ul>
+<li>可以保持 git repo 的簡潔</li>
+<li>讓安裝/更新/刪除外掛更方便</li>
+</ul>
+
+
+<p>需要參考的話，可以看我放在 <a href="https://github.com/chinghanho/.dotfiles/blob/4c53d90d3e1efffb3fdc1ebc44bdac1781154b19/.vimrc#L1-L39">Github 上的 <em>.vimrc</em></a> 範例。</p>
+
+<h3>保持 git repo 的簡潔</h3>
+
+<p>透過 Vundle 管理外掛我不再需要讓 git 追蹤 <em>.vim/bundle/</em> 目錄，甚至連 Vundle 本身也不用追蹤，只要在 <em>.vimrc</em> 裡這樣寫：</p>
+
+<p><code>vim
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+  echo "Installing Vundle.."
+  echo ""
+  silent !mkdir -p ~/.vim/bundle
+  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+  let iCanHazVundle=0
+endif
+</code></p>
+
+<p>這樣一來，啟動 Vim 的時候就會自動去檢查 Vundle 安裝了沒，因此可以在 <em>.gitignore</em> 裡把 <em>bundle</em> 目錄直接忽略掉，不用再拖著一坨外掛跟著跑了。XD</p>
+
+<h3>安裝/更新/刪除外掛更方便</h3>
+
+<p>安裝、更新外掛是同一條指令，在 <em>.vimrc</em> 裡加上外掛的 Github 的作者名和 repo 名稱，像這樣：</p>
+
+<p><code>vim
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'Townk/vim-autoclose'
+Bundle 'kien/ctrlp.vim'
+</code></p>
+
+<p>然後下指令 <code>:BundleInstall</code>，Vundle 會去搜尋對應的 repo，如果已經下載過便會檢查有沒有更新。要移除也很簡單，只要把該外掛那行刪掉或是註解掉，重新下一次指令就行了。</p>
+
+<p>Vim 的外掛腳本基本上都可以在 <a href="http://vim-scripts.org/vim/scripts.html">vim-scripts.org</a> 搜尋到，如果沒有 host 在 Github 上也可以直接輸入該外掛的名稱，例如這樣：</p>
+
+<p><code>vim
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+</code></p>
+
+<p>若是該外掛放在別的 git 主機上，也可以丟 git URL，Vundle 會很聰明地判斷該去哪裡抓：</p>
+
+<p><code>vim
+Bundle 'git://git.wincent.com/command-t.git'
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

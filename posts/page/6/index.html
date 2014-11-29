@@ -1,0 +1,776 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>@ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="記憶是瑣碎的片刻，經驗是記憶的連續。大多數的片刻無法保存，而我只是試著去挽留那一小部分。 分析自己每天使用電腦的紀錄這個行為看起來有點宅，可是作為一個離不開電腦的 developer，這件事突然變得有點意義，所以我開始整理一些軟體從電腦上記錄下來的 log，在「是芥末日」前回顧一下。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/page/6/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/page/6/" />
+<meta property="og:description" content="記憶是瑣碎的片刻，經驗是記憶的連續。大多數的片刻無法保存，而我只是試著去挽留那一小部分。 分析自己每天使用電腦的紀錄這個行為看起來有點宅，可是作為一個離不開電腦的 developer，這件事突然變得有點意義，所以我開始整理一些軟體從電腦上記錄下來的 log，在「是芥末日」前回顧一下。 &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+
+
+
+<meta itemprop="description" content="記憶是瑣碎的片刻，經驗是記憶的連續。大多數的片刻無法保存，而我只是試著去挽留那一小部分。 分析自己每天使用電腦的紀錄這個行為看起來有點宅，可是作為一個離不開電腦的 developer，這件事突然變得有點意義，所以我開始整理一些軟體從電腦上記錄下來的 log，在「是芥末日」前回顧一下。 &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/2012-memory-and-experience/">2012 記憶與經驗</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-19T10:34:00+08:00" pubdate data-updated="true">Dec 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://lh6.googleusercontent.com/-gkI64YAyaWA/UNFcUPI0QxI/AAAAAAAAFdg/sNhmiaFCwfw/s690/2012-12-13%252016.36.49.jpg" alt="taoyuan" /></p>
+
+<blockquote><p>記憶是瑣碎的片刻，經驗是記憶的連續。大多數的片刻無法保存，而我只是試著去挽留那一小部分。</p></blockquote>
+
+<p>分析自己每天使用電腦的紀錄這個行為看起來有點宅，可是作為一個離不開電腦的 developer，這件事突然變得有點意義，所以我開始整理一些軟體從電腦上記錄下來的 log，在「是芥末日」前回顧一下。</p>
+
+<h2>軟體使用時間統計</h2>
+
+<p>下面這張圖表列出的是各個軟體的使用時間，紀錄起點是上個月的 16 日，一直記錄到剛剛，也就是今天 12 月 19 日，前後總共記錄了大約一個月又三天，不過這套軟體<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup> 很吃 CPU 效能，至少會減少 Macbook Air 一個小時的續航力，所以到今天為止以後我不會再用這個軟體了。</p>
+
+<p><img src="http://lh3.googleusercontent.com/-jwYmsPpQN9A/UNEhpAbh9SI/AAAAAAAAFbU/RYCd-3ia7Ik/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%25889.52.47.png" alt="time-sink" /></p>
+
+<p>灰色的 bar 是軟體被啟動的時間，淺紫色是軟體被使用者 focus 的時間長度；Finder 就像 Windows 的 explorer.exe 一樣無法關閉，所以可以看到從頭到尾都是啟動的狀態，可是真正有用到的時間卻很少。:p</p>
+
+<p>也可以推知記錄時間總共是 30 幾天，使用電腦的時間就有 15 天，扣掉每天吃飯睡覺我幾乎張開眼睛就是在用電腦，這點可能需要好好檢討一下，花了很多時間在用電腦，可是學習效率並沒有想像中的高……</p>
+
+<p>最常用的軟體是 Google Chrome，打開電腦百分之九十的時間是打開瀏覽器上網，或許也間接證明了 <a href="https://www.youtube.com/watch?v=0QRO3gKj3qw">Google Chrome OS</a> 的理念是可行的？不過我開瀏覽器很多時候不是「上網」，而是開本機的伺服器在 coding。</p>
+
+<p>如果要算花在寫程式的時間，Sublime Text 2 跟 iTerm 2 應該可以合併起來一起計算，但是實際動手寫 code 還是要以使用 Sublime Text 2 時間為主，很明顯實際動手寫的時間還是太少，這可能也是造成學習效率低的原因。</p>
+
+<p>此外，看到 <a href="http://tapbots.com/software/tweetbot/">Tweetbot</a> 使用率這麼高，感覺非常有趣，因為我把 Google Chrome 的歷史紀錄撈出來看，<a href="twitter.com">twitter.com</a> 訪問率連前十名都沒有，果然 <a href="http://mashable.com/2012/08/16/twitter-api-big-changes/">Twitter 想盡辦法要搞死第三方 client</a> 不是沒有原因的。XD</p>
+
+<p>而 iTunes 也算是最常用的軟體之一，因為都開在 background 默默地讓他放音樂，所以會有看起來好像很不常用的假象。</p>
+
+<h2>Google Chrome 歷史紀錄統計</h2>
+
+<p>以下所有的圖表都是從 Google Chrome 過去三個月的歷史紀錄挖出來製作的，這三個月總共對 48652 個 URLs 訪問過 97787 次，三個月來就是每天平均訪問 1085 次，不禁都懷疑真有這麼多嗎？XD</p>
+
+<p><img src="http://lh6.googleusercontent.com/-KlYqZMNihhM/UNEhnkqeDUI/AAAAAAAAFbc/PsM84spnLmk/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%258810.01.50.png" alt="" /></p>
+
+<p>這張圖是過去過去三個月每天訪問過的網站數量，剛看到的時候很訝異 10 月 16 日那天發生什麼事，怎麼凸出一根刺在那邊？後來發現原來是 <a href="http://xkcd.com/">xkcd</a> 那張神圖「<a href="http://xkcd-map.rent-a-geek.de/">Click and Drag</a>」的關係啦<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>。:p</p>
+
+<p><img src="http://lh6.googleusercontent.com/-gBtUmrdiYy4/UNEhnmiOTiI/AAAAAAAAFa8/UkIW7oQqUfc/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%258810.02.44.png" alt="" /></p>
+
+<p>這張圖顯示的是都是哪些時間在上網，換句話說也就是我的作息時間，大概可以看出來每天平均睡 6 個小時，不過以後會試著把整個時間軸往前挪兩個小時。</p>
+
+<p><img src="http://lh3.googleusercontent.com/-lTR8tvcPTtQ/UNEho16qbwI/AAAAAAAAFbM/E4zMOR4bU08/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%25889.57.10.png" alt="" /></p>
+
+<p>Google Chrome 處理特定的訪問會有不同的分類，統計我的歷史紀錄後，得出我訪問的連結中主要有這幾種類別：</p>
+
+<ul>
+<li>link：從其他網頁上點擊連結，所到達的頁面；</li>
+<li>reload：不論是重新整理、重開已關閉的分頁等等都屬此類；</li>
+<li>auto_bookmark：應該是指 Google Chrome UI 上點擊的連結，例如書籤列；</li>
+<li>typed：直接從網址列上輸入網址；</li>
+<li>generated：選擇頁面上的文字，然後用右鍵從選單裡選擇搜尋或是開啟該網址；</li>
+<li>auto_toplevel<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>：從其他軟體開啟的網址<sup id='fnref:4'><a href='#fn:4' rel='footnote'>4</a></sup>，或是指起始頁面；</li>
+</ul>
+
+
+<p>雖然常用的網站我會存在書籤裡，可是有時候直接在網址列裡打網址比較快。</p>
+
+<p>11 月底的時候我用了 <a href="https://chrome.google.com/webstore/detail/timestats/ejifodhjoeeenihgfpjijjmpomaphmah">timeStats</a> 這個擴充套件，針對每個網站的停留時間做記錄：</p>
+
+<p><img src="http://lh6.googleusercontent.com/-lzaqBUnWJLs/UNFOyfWT1_I/AAAAAAAAFck/q1df4Oy1SzM/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25881.17.46.png" alt="" /></p>
+
+<p>第一名 127.0.0.1 是因為開本機的伺服器寫程式的關係，佔了最多時間，這樣子很好；第二名 Vimeo 可能是因為前陣子常在上面看一些國外的 talk，不小心停留的時間就超過了 Youtube 了；第三名竟然是 Facebook，可是我明明去 Twitter 比 Facebook 多啊（因為都用 Tweetbot 上 Twitter）。XD</p>
+
+<h2>個人 Google 搜尋使用統計</h2>
+
+<p>Google 最近在搞個人活動報表，把搜尋統計功能也一起弄到裡面去，結果顯示的資訊反而變少、更難用。就目前能找到的資料，可以得到從去年 11 月底到現在，進行過 Google 搜尋的次數總共大約是 25860 次，每個月平均搜尋 1990 次。</p>
+
+<p>如果用網路上謠傳 <a href="http://news.cnet.com/8301-11128_3-10140142-54.html">Google 搜尋一次會排放 7 公克的碳</a>來計算的話，那這一年來我就用 Google 排放了 181 公斤的碳了！好可怕！XD</p>
+
+<h2>部落格流量統計</h2>
+
+<p>小站在 6 月 15 日前多多少少還有一些穩定的流量，砍掉重練後就一直沒有起色，RSS 訂閱人數只有恢復到之前的三分之一，最近換了域名又是新的一次損傷。這半年來我一直在實驗不在社群網站上分享部落格連結，看看會有多少人連進來，六個月過去了成效看起來真的很慘啊。XD</p>
+
+<p><img src="http://lh3.googleusercontent.com/-VlR3vwfk2ME/UNFk1tYftEI/AAAAAAAAFeI/Ppa8tkNHKCc/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.53.53.png" alt="" /></p>
+
+<p>部落格的 PV 只有 4433，UV 只有 908 人，也就是說每一位訪客至少訪問了 4.88 個頁面。同時網站的跳出率是 63.71%，看來我的標題還不夠殺人，所以感覺跳出率還不算太高嘛。:p</p>
+
+<p><img src="http://lh6.googleusercontent.com/-8CznJnn7Oug/UNFpcuSmmOI/AAAAAAAAFec/LoXKL3e5_ic/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25883.14.35.png" alt="" /></p>
+
+<p>令我蠻訝異的是訪問我部落格的訪客，Mac 用戶竟然高達了 41.76%，即使從次要維度去篩選掉一些可能是我自己訪問的紀錄，也還是有超過 36%。可能是因為寫了一些關於 Ruby 的技術文章，引來了相同生態圈的讀者。</p>
+
+<p><img src="http://lh6.googleusercontent.com/-QgTIODhkcLg/UNFr_M0YFqI/AAAAAAAAFew/l5r1xG1-1N0/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25883.25.24.png" alt="" /></p>
+
+<p>訪客的地理位置絕大多數都是台灣、香港跟大陸來的，除亞太地區外，最多來源的是美國，前三名分別是 California、Texas 跟 Maryland 這三個地方。</p>
+
+<h2>Foursquare 台北市足跡</h2>
+
+<p><img class="center" src="http://lh4.googleusercontent.com/-mDo7GGwJFvY/UNFW_7tziwI/AAAAAAAAFc4/Jvt3ewvAb8M/s640/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25881.55.22.png"></p>
+
+<p>把 Foursquare 的歷史足跡用 <a href="http://www.wheredoyougo.net/">Where Do You Go</a> export 到 Google Map 上來看，我最常活動的幾個區域是仁愛圓環、台北車站、信義區跟內湖 Costco，看來台北市很多地方我都沒去過啊……Orz</p>
+
+<h2>iTunes 音樂排行</h2>
+
+<p><img src="http://lh4.googleusercontent.com/-_utNzfVzeok/UNFatFCONxI/AAAAAAAAFdM/frv12MhD2hw/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.11.26.png" alt="itunes" /></p>
+
+<p>用 iTunes 聽音樂是 10 月底<a href="http://photos.chh.tw/post/34282965017/earpods">換了耳機</a>才開始比較常聽（因為聲音變清楚了 XD），最常聽的前五首歌竟然全都被 Jason Mraz 包了！</p>
+
+<h2>Alfred 使用統計</h2>
+
+<p><img src="http://lh5.googleusercontent.com/-UFsv7dnYrng/UNFdzzAAC4I/AAAAAAAAFd0/27E1jUnFzOo/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.24.59.png" alt="alfred" /></p>
+
+<p>原本我的 Alfred 是從 Mac App Store 上安裝的，可是該版本無法使用 <a href="http://www.alfredapp.com/powerpack/">PowerPack</a>，所以 12 月 2 日我就改從 Alfred 官網上下載另外一個版本，所以統計發生了一點問題，實際上起始時間應該是 2012 年 2 月 19 日才對，總共使用 6384 次，平均每天使用 21 次。</p>
+
+<p>我覺得 Alfred 提供這個功能真不錯，可以讓使用者透過量化的數據，了解到自己對這個軟體的依賴性。</p>
+
+<h2>終端機指令使用統計</h2>
+
+<p>上個月使用 Bash 的統計放在「<a href="/posts/oh-my-zsh/">OH MY ZSHELL!</a>」，以下是這個月來使用 Zsh 的統計：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 1  1057  21.7356%    c
+</span><span class='line'> 2  686   14.1065%    git
+</span><span class='line'> 3  552   11.351%     cd
+</span><span class='line'> 4  384   7.89636%    lsa
+</span><span class='line'> 5  183   3.76311%    stt
+</span><span class='line'> 6  172   3.53691%    rails
+</span><span class='line'> 7  161   3.31071%    pry
+</span><span class='line'> 8  144   2.96114%    ..
+</span><span class='line'> 9  131   2.69381%    rvm
+</span><span class='line'>10  121   2.48818%    rake
+</span><span class='line'>11  110   2.26198%    ls
+</span><span class='line'>12  100   2.05634%    clear
+</span><span class='line'>13  77    1.58338%    which
+</span><span class='line'>14  67    1.37775%    curl
+</span><span class='line'>15  61    1.25437%    open
+</span><span class='line'>16  43    0.884228%   brew
+</span><span class='line'>17  40    0.822538%   ruby
+</span><span class='line'>18  40    0.822538%   rm
+</span><span class='line'>19  37    0.760847%   bundle
+</span><span class='line'>20  37    0.760847%   blog</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中使用 <code>clear</code> 這個指令的比例竟然高達 24%，這個是強迫症嗎？:p</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'><a href="http://manytricks.com/timesink/" alt="time-sink" target="_blank">Time Sink</a> 是 <a href="http://manytricks.com/" alt="many-tricks" target="_blank">Many Tricks</a> 公司出的產品，他們家最有名的應該是 <a href="http://manytricks.com/moom/" alt="moom" target="_blank">Moom</a> 這套視窗大小的控制軟體吧。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>這張神圖可以分割成 2592 個 2048px x 2048px 的圖，我不曉得他背後用的技術原理，不過顯然這造成了大量的訪問 request。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>現在 Google Chrome 的 API 好像用的是 start_page 這個名稱。 <a href='#fnref:3' rev='footnote'>↩</a></li><li id='fn:4'>比如說從 Tweetbot、Alfred 打開的網址，所以這類的網址以 <a href="http://t.co/" alt="t-co" target="_blank">t.co</a> 等居多。 <a href='#fnref:4' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/">Ruby 單引號、雙引號差別與效能測試</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-08T14:32:00+08:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ruby 的單引號（<code>'</code>）跟雙引號（<code>"</code>）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s1">&#39;hello world\nnew line&#39;</span>
+</span><span class='line'><span class="c1"># =&gt; hello world\nnew line</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;hello world</span><span class="se">\n</span><span class="s2">new line&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; hello world</span>
+</span><span class='line'><span class="c1"># =&gt; new line</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s1">&#39;#{var}&#39;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; #{var}</span>
+</span><span class='line'><span class="c1"># =&gt; hello world</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果兩個引號之間要插一個相同的引號，就要用不同風格的引號來包，否則就會噴出 SyntaxError 的錯誤，除非加一個 <code>\</code> 來轉義，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s1">&#39;This is David\&#39;s pen&#39;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;This is David&#39;s pen&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
+</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是這樣很麻煩，所以這時就會需要用到 <code>%q</code> 和 <code>%Q</code> 這個方法，前者等於單引號的用法，後者等於雙引號的用法（也可以直接寫成 <code>%{}</code>），例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="sx">%q{Hello world!\n This is David&#39;s pen}</span>
+</span><span class='line'><span class="c1"># =&gt; Hello world!\nThis is David&#39;s pen</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="sx">%Q{Hello world!</span><span class="se">\n</span><span class="sx"> This is David&#39;s pen}</span>
+</span><span class='line'><span class="c1"># =&gt; Hello world!</span>
+</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>單引號跟雙引號之間的差別大致上就這樣，那效能呢？我寫了一個腳本來測試兩者的速度差異，結果如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s2">&quot;benchmark&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">CYCLES</span> <span class="o">=</span> <span class="mi">10_000_000</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bmbm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&#39;hello world&#39;]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&quot;hello world&quot;]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span> <span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%q{hello world}]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%q{hello world}</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%Q{hello world}]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%Q{hello world}</span> <span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&#39;hello world&#39; + n.to_s]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span> <span class="o">+</span> <span class="mi">1</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&quot;hello world </span><span class="se">\#</span><span class="sx">{n}&quot;]</span><span class="p">)</span>    <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;hello world </span><span class="si">#{</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%q{hello world } + n.to_s]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%q{hello world }</span> <span class="o">+</span> <span class="mi">1</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%Q{hello world </span><span class="se">\#</span><span class="sx">{n}}]</span><span class="p">)</span>     <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%Q{hello world </span><span class="si">#{</span><span class="mi">1</span><span class="si">}</span><span class="sx">}</span> <span class="p">}}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># ruby-1.9.3-p327</span>
+</span><span class='line'><span class="c1"># Rehearsal -------------------------------------------------------------</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39;               4.100000   0.010000   4.110000 (  4.112255)</span>
+</span><span class='line'><span class="c1"># &quot;hello world&quot;               4.060000   0.000000   4.060000 (  4.069385)</span>
+</span><span class='line'><span class="c1"># %q{hello world}             4.090000   0.010000   4.100000 (  4.099501)</span>
+</span><span class='line'><span class="c1"># %Q{hello world}             4.090000   0.000000   4.090000 (  4.104130)</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39; + n.to_s     10.680000   0.020000  10.700000 ( 10.705543)</span>
+</span><span class='line'><span class="c1"># &quot;hello world #{n}&quot;          9.870000   0.010000   9.880000 (  9.895310)</span>
+</span><span class='line'><span class="c1"># %q{hello world } + n.to_s  10.710000   0.020000  10.730000 ( 10.744212)</span>
+</span><span class='line'><span class="c1"># %Q{hello world #{n}}        9.810000   0.010000   9.820000 (  9.832551)</span>
+</span><span class='line'><span class="c1"># --------------------------------------------------- total: 57.490000sec</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#                                 user     system      total        real</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39;               4.010000   0.010000   4.020000 (  4.018492)</span>
+</span><span class='line'><span class="c1"># &quot;hello world&quot;               4.010000   0.010000   4.020000 (  4.017989)</span>
+</span><span class='line'><span class="c1"># %q{hello world}             4.010000   0.000000   4.010000 (  4.021088)</span>
+</span><span class='line'><span class="c1"># %Q{hello world}             4.010000   0.010000   4.020000 (  4.019685)</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39; + n.to_s     10.700000   0.010000  10.710000 ( 10.730320)</span>
+</span><span class='line'><span class="c1"># &quot;hello world #{n}&quot;          9.860000   0.020000   9.880000 (  9.890101)</span>
+</span><span class='line'><span class="c1"># %q{hello world } + n.to_s  10.610000   0.010000  10.620000 ( 10.634330)</span>
+</span><span class='line'><span class="c1"># %Q{hello world #{n}}        9.860000   0.020000   9.880000 (  9.884285)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>得出兩個結果：</p>
+
+<ul>
+<li>字串插值的寫法會比用 <code>+</code> 拼接的效能好（而且可讀性也比較高）；</li>
+<li>雙引號比單引號效能好；</li>
+</ul>
+
+
+<p>一般情況，我的習慣都是使用雙引號，個人覺得看起來也比較好看。:p</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/peter-norvig-talk-about-ai/">Google 研究總監 Peter Norvig 談人工智慧</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-28T00:59:00+08:00" pubdate data-updated="true">Nov 28<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://en.wikipedia.org/wiki/Peter_Norvig">Peter Norvig</a> 是 Google 的研究總監，似乎就是那個專門製造「沒用」產品的那個部門的主管，但是他所做的工作是全世界最尖端的科技，例如人工智慧。最近他<a href="http://www.guardian.co.uk/technology/2012/nov/23/google-peter-norvig-interview-best-job">接受了英國 The Guardian 採訪</a>，提到一些我很感興趣的內容：</p>
+
+<blockquote><p>This idea that intelligence is the one thing that amplifies itself indefinitely, I guess is what I&#8217;m resistant to. Intelligence can let you solve harder problems, but some problems are just resistant, and you get to a point that being smarter isn&#8217;t going to help you at all, and I think a lot of our problems are like that. Like in politics - it&#8217;s not like we&#8217;re saying that if only we had a politician who was slightly smarter all our problems would go away.</p></blockquote>
+
+<p>那些對於人工智慧無限擴張的輿論，Peter Norvig 表示對這種看法不以為然，他認為人工智慧是用來解決更困難的問題，從以前到現在科技雖然在進步，但是問題就像政治，並不是說今天的執政者無法解決問題，換個更聰明的執政者就一定有辦法。</p>
+
+<p>曾經看到有朋友們討論這個話題，這裡引用一下該位朋友的老弟說的話：</p>
+
+<blockquote><p>AI 到頭來他們還是程式，他們所有一切都是分析計算邏輯判斷。如果說到時 AI 出來了，人類被攻擊也不是不可能，因為差別就在她們都是問題分析邏輯判斷出來做的選擇，而唯一讓我們成為人的，唯一程式寫不出來的，就是道德，而有道德的人都會戰爭了，何況是一堆程式碼的東西。</p></blockquote>
+
+<p>看起來有點幼稚（我是指人類被攻擊那句話，有點像電影看太多的後遺症。:p），但應該不難讀懂內容背後要表達的「思想」，對此我寧可相信那是對未來過分的想像。而該採訪報導中也提到了：</p>
+
+<blockquote><p>Even so, he sympathises with the late John McCarthy, who worked on artificial intelligence for more than 50 years and even late in his life (he died in 2011) dismissed the Singularity robustly as &#8220;nonsense&#8221;.</p></blockquote>
+
+<p>被稱為人工智慧之父的 <a href="http://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)">John McCarthy</a>，也是 <a href="http://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a> 程式語言的發明者，認為<a href="http://zh.wikipedia.org/zh-hant/%E5%A5%87%E7%82%B9%E8%BF%AB%E8%BF%91#2045:.E5.A5.87.E9.BB.9E">奇點</a>這種看法根本就是「鬼扯」。未來充滿著不確定性，與其杞人憂天、庸人自擾，我想像我這樣的人，最重要的還是專注在解決眼前的問題上面。</p>
+
+<p>最後重複使用昨天文章「<a href="/posts/automatically/">電腦自動化的可靠性</a>」的結尾來做結論：</p>
+
+<blockquote><p>電腦自動化很方便，很多時候它其實比人更可靠，而我們應該要重新去思考那些真正重要的事情，或許那並不包括電腦自動化這件事。</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/automatically/">電腦自動化的可靠性</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-26T21:09:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://lh4.googleusercontent.com/-o6yYk2tMzN8/ULNgfhVSOqI/AAAAAAAAFYw/7dDPvi695dk/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-26%2520%25E4%25B8%258B%25E5%258D%25886.28.53.png" alt="" /></p>
+
+<p>電腦自動化是這麼回事，沒出事沒感覺，出點事哪管可能只是千萬之一，就好像不可容忍的災難。誰叫他是電腦，天生就沒有容錯空間，如果人們能夠把對待電腦嚴苛的要求，拿到政治和法律上，我想那才是真正的救贖吧？（笑）</p>
+
+<p>儘管電腦有時候會有些 bug<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，不過它的可靠性和效率超過人類已經是顯而易見的，因為我們的生活中早就已經充滿了 <a href="http://en.wikipedia.org/wiki/Programmable_logic_controller">PLC</a> 的東西，尤其是重要的基礎設施，包括工廠、食品加工、製藥、核能發電廠、捷運系統、金融系統、航空系統、國防系統等等，映入眼簾的一切都是電腦控制，全部都是仰賴電腦。</p>
+
+<p>前幾個禮拜有親戚在台北往基隆路上被拍到超速，好心跟親朋好友們提醒該路段要小心，老媽就說 TOYOTA 的車有定速系統，一開始就把速度設定好就不怕會超速了，不過另外有位親戚對於這種定速系統倒是相當不以為然，認為永遠<a href="http://www.mobile01.com/topicdetail.php?f=260&amp;t=2481108&amp;last=32457665">不該相信這種電子設備</a>。</p>
+
+<p>這其實也沒有錯，如果哪天電腦不行了，當機、中毒、短路、掛掉、爆炸，總是必須要準備好退路，讓這些電腦停擺的同時，讓整個社會能夠繼續運作，不致於因為發生 <a href="http://en.wikipedia.org/wiki/Blue_Screen_of_Death">BSoD</a> 就讓全世界陷入黑暗，或者是因為出現……新接龍？</p>
+
+<p><img src="http://lh6.googleusercontent.com/-hi6uzTZrI1g/ULNbJiNE97I/AAAAAAAAFYg/hkzPj1BXQ58/s690/579179_4751139094694_1381059163_n.jpg" alt="" /></p>
+
+<p>事實上很多時候根本搞不清楚真相，常常會陷入一種<a href="http://blog.chh.tw/posts/keiserens-nye-klaeder/">專家說的都是對的</a>的迷思，就像要等到日本核電廠爆掉了才能喚醒人們對於高科技的幻覺，甚至於加入積極反核的行列，可是在那之前核能專家們總是對大眾諄諄教誨核能是多麼地安全。</p>
+
+<p>扯開一下話題，前陣子被討論得沸沸湯湯的社會議題：廢死。到底應該寧殺一百也不肯錯放一人？還是寧放一百也不肯錯殺一人？前者可能變成的是政府濫權的武器，後者伸張人權後可能反而造成更多的傷害。我的看法很簡單，就是：</p>
+
+<blockquote><p>有沒有承擔後果的能力？</p></blockquote>
+
+<p>過年玩鞭炮要很小心，弄得不好可能炸傷自己也會炸傷旁邊的人，我可能基於自信和自負會去玩一下，可是如果這串鞭炮一不小心就會轟爛半顆地球，那我得坦承自己完全沒有承擔這種後果的能力，那我就不會去玩鞭炮<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>。</p>
+
+<p>電腦自動化很方便，很多時候它其實比人更可靠<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>，而我們應該要重新去思考那些真正重要的事情，或許那並不包括電腦自動化這件事。</p>
+
+<p>照片來源：<a href="http://www.youtube.com/watch?v=IojqOMWTgv8">The Matrix</a>、<a href="https://www.facebook.com/photo.php?fbid=4751139094694&amp;set=a.1249077985355.39557.1181623619">Facebook</a></p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>其實大多數的 bug 也都是人為造成的。:p <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>事實上我根本不敢玩鞭炮。XD <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>以 Ruby on Rails Deployment 為例，這就是為什麼要用 <a href="/posts/ruby-on-rails-server-options/">Capistrano</a> 自動化佈署的原因。:) <a href='#fnref:3' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/new-domain-chh-tw/">註冊了新域名 CHH.tw</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-20T16:36:00+08:00" pubdate data-updated="true">Nov 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原本的 whiteball.tw 這個月底到期，趁著最近有個活動促銷，趕快買了一個 .tw 結尾的 CHH.tw，沒意外的話以後應該是不會再改了。今天下午花了一點時間，把 CloudFlare 上的 record 設定全部搬家，順便刪除一些已經沒用的網址。</p>
+
+<p>為什麼網址要取 CHH？當然因為這是個人網站，我的名字 Ching-Han Ho 縮寫就是 CHH，另一方面因為我的偶像 David Heinemeier Hansson<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup> 縮寫是 DHH 的關係，兩個字很像啊。XD</p>
+
+<p>2012.11.21 更新：今天 DHH 在 <a href="https://twitter.com/dhh/status/271209790674464768">Twitter</a> 上報喜說他兒子出生了，叫做 Colt Heinemeier Hansson！XD</p>
+
+<p>反正本站一直以來都是「微流量」，就算不做 <a href="http://blog.longwin.com.tw/2009/10/http-status-redirect-301-302-diff-2009/">HTTP 301 導向</a>其實也沒什麼差啦，所以不想多花時間寫腳本，只是到 Google 和 Bing 的站長工具去上傳了一下新網址的網站地圖，還有把一些平常在追流量的分析工具改一下設定。</p>
+
+<p>然後又演練一次把新網址跟 Google App 結合，這次花的時間只有十分鐘超快，果然熟能生巧。以後就可以到處用 @chh.tw 的信箱，多麼帥氣啊。:p</p>
+
+<p>在這邊分享一個 Gmail 的小技巧，有時候在外面用信箱註冊怕信箱被該網站賣給 spammer，這個雖然沒辦法預防，但是可以知道信箱是被誰傳出去的，因為一般的網站是不會對信箱進行字串處理，所以可以在信箱加上 <code>+</code> 符號，後面接著註冊的網站名稱，例如：</p>
+
+<p>example+fb@chh.tw</p>
+
+<p>這樣郵件還是會寄到 example@chh.tw 這個信箱，但我們可以知道這是從 fb 這個網站寄來的，如果你收到垃圾信件，你就知道你的信箱是誰給你洩漏出去的了。現在新的<a href="http://www.techbang.com/posts/10878-law-of-personal-data-protection-of-the-interests-of-you-and-me-on-several-networks-of-common-funding-legal-issues-pchome-201-science-and-technology">個資法</a>這麼兇，用這招去告死對方吧！XD</p>
+
+<p>再見了，Whiteball！:)</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>David Heinemeier Hansson 是 Ruby on Rails 框架的發明者，是我景仰的 hacker 之一。 <a href='#fnref:1' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/page/7/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/page/5/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

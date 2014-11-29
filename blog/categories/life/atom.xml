@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Life | @ChingHanHo]]></title>
+  <link href="http://blog.chh.tw/blog/categories/life/atom.xml" rel="self"/>
+  <link href="http://blog.chh.tw/"/>
+  <updated>2014-11-29T07:12:09+08:00</updated>
+  <id>http://blog.chh.tw/</id>
+  <author>
+    <name><![CDATA[Ching-Han Ho]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[2012 記憶與經驗]]></title>
+    <link href="http://blog.chh.tw/posts/2012-memory-and-experience/"/>
+    <updated>2012-12-19T10:34:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/2012-memory-and-experience</id>
+    <content type="html"><![CDATA[<p><img src="http://lh6.googleusercontent.com/-gkI64YAyaWA/UNFcUPI0QxI/AAAAAAAAFdg/sNhmiaFCwfw/s690/2012-12-13%252016.36.49.jpg" alt="taoyuan" /></p>
+
+<blockquote><p>記憶是瑣碎的片刻，經驗是記憶的連續。大多數的片刻無法保存，而我只是試著去挽留那一小部分。</p></blockquote>
+
+<p>分析自己每天使用電腦的紀錄這個行為看起來有點宅，可是作為一個離不開電腦的 developer，這件事突然變得有點意義，所以我開始整理一些軟體從電腦上記錄下來的 log，在「是芥末日」前回顧一下。</p>
+
+<h2>軟體使用時間統計</h2>
+
+<p>下面這張圖表列出的是各個軟體的使用時間，紀錄起點是上個月的 16 日，一直記錄到剛剛，也就是今天 12 月 19 日，前後總共記錄了大約一個月又三天，不過這套軟體<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup> 很吃 CPU 效能，至少會減少 Macbook Air 一個小時的續航力，所以到今天為止以後我不會再用這個軟體了。</p>
+
+<p><img src="http://lh3.googleusercontent.com/-jwYmsPpQN9A/UNEhpAbh9SI/AAAAAAAAFbU/RYCd-3ia7Ik/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%25889.52.47.png" alt="time-sink" /></p>
+
+<p>灰色的 bar 是軟體被啟動的時間，淺紫色是軟體被使用者 focus 的時間長度；Finder 就像 Windows 的 explorer.exe 一樣無法關閉，所以可以看到從頭到尾都是啟動的狀態，可是真正有用到的時間卻很少。:p</p>
+
+<p>也可以推知記錄時間總共是 30 幾天，使用電腦的時間就有 15 天，扣掉每天吃飯睡覺我幾乎張開眼睛就是在用電腦，這點可能需要好好檢討一下，花了很多時間在用電腦，可是學習效率並沒有想像中的高……</p>
+
+<p>最常用的軟體是 Google Chrome，打開電腦百分之九十的時間是打開瀏覽器上網，或許也間接證明了 <a href="https://www.youtube.com/watch?v=0QRO3gKj3qw">Google Chrome OS</a> 的理念是可行的？不過我開瀏覽器很多時候不是「上網」，而是開本機的伺服器在 coding。</p>
+
+<p>如果要算花在寫程式的時間，Sublime Text 2 跟 iTerm 2 應該可以合併起來一起計算，但是實際動手寫 code 還是要以使用 Sublime Text 2 時間為主，很明顯實際動手寫的時間還是太少，這可能也是造成學習效率低的原因。</p>
+
+<p>此外，看到 <a href="http://tapbots.com/software/tweetbot/">Tweetbot</a> 使用率這麼高，感覺非常有趣，因為我把 Google Chrome 的歷史紀錄撈出來看，<a href="twitter.com">twitter.com</a> 訪問率連前十名都沒有，果然 <a href="http://mashable.com/2012/08/16/twitter-api-big-changes/">Twitter 想盡辦法要搞死第三方 client</a> 不是沒有原因的。XD</p>
+
+<p>而 iTunes 也算是最常用的軟體之一，因為都開在 background 默默地讓他放音樂，所以會有看起來好像很不常用的假象。</p>
+
+<h2>Google Chrome 歷史紀錄統計</h2>
+
+<p>以下所有的圖表都是從 Google Chrome 過去三個月的歷史紀錄挖出來製作的，這三個月總共對 48652 個 URLs 訪問過 97787 次，三個月來就是每天平均訪問 1085 次，不禁都懷疑真有這麼多嗎？XD</p>
+
+<p><img src="http://lh6.googleusercontent.com/-KlYqZMNihhM/UNEhnkqeDUI/AAAAAAAAFbc/PsM84spnLmk/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%258810.01.50.png" alt="" /></p>
+
+<p>這張圖是過去過去三個月每天訪問過的網站數量，剛看到的時候很訝異 10 月 16 日那天發生什麼事，怎麼凸出一根刺在那邊？後來發現原來是 <a href="http://xkcd.com/">xkcd</a> 那張神圖「<a href="http://xkcd-map.rent-a-geek.de/">Click and Drag</a>」的關係啦<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>。:p</p>
+
+<p><img src="http://lh6.googleusercontent.com/-gBtUmrdiYy4/UNEhnmiOTiI/AAAAAAAAFa8/UkIW7oQqUfc/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%258810.02.44.png" alt="" /></p>
+
+<p>這張圖顯示的是都是哪些時間在上網，換句話說也就是我的作息時間，大概可以看出來每天平均睡 6 個小時，不過以後會試著把整個時間軸往前挪兩個小時。</p>
+
+<p><img src="http://lh3.googleusercontent.com/-lTR8tvcPTtQ/UNEho16qbwI/AAAAAAAAFbM/E4zMOR4bU08/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%25889.57.10.png" alt="" /></p>
+
+<p>Google Chrome 處理特定的訪問會有不同的分類，統計我的歷史紀錄後，得出我訪問的連結中主要有這幾種類別：</p>
+
+<ul>
+<li>link：從其他網頁上點擊連結，所到達的頁面；</li>
+<li>reload：不論是重新整理、重開已關閉的分頁等等都屬此類；</li>
+<li>auto_bookmark：應該是指 Google Chrome UI 上點擊的連結，例如書籤列；</li>
+<li>typed：直接從網址列上輸入網址；</li>
+<li>generated：選擇頁面上的文字，然後用右鍵從選單裡選擇搜尋或是開啟該網址；</li>
+<li>auto_toplevel<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>：從其他軟體開啟的網址<sup id='fnref:4'><a href='#fn:4' rel='footnote'>4</a></sup>，或是指起始頁面；</li>
+</ul>
+
+
+<p>雖然常用的網站我會存在書籤裡，可是有時候直接在網址列裡打網址比較快。</p>
+
+<p>11 月底的時候我用了 <a href="https://chrome.google.com/webstore/detail/timestats/ejifodhjoeeenihgfpjijjmpomaphmah">timeStats</a> 這個擴充套件，針對每個網站的停留時間做記錄：</p>
+
+<p><img src="http://lh6.googleusercontent.com/-lzaqBUnWJLs/UNFOyfWT1_I/AAAAAAAAFck/q1df4Oy1SzM/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25881.17.46.png" alt="" /></p>
+
+<p>第一名 127.0.0.1 是因為開本機的伺服器寫程式的關係，佔了最多時間，這樣子很好；第二名 Vimeo 可能是因為前陣子常在上面看一些國外的 talk，不小心停留的時間就超過了 Youtube 了；第三名竟然是 Facebook，可是我明明去 Twitter 比 Facebook 多啊（因為都用 Tweetbot 上 Twitter）。XD</p>
+
+<h2>個人 Google 搜尋使用統計</h2>
+
+<p>Google 最近在搞個人活動報表，把搜尋統計功能也一起弄到裡面去，結果顯示的資訊反而變少、更難用。就目前能找到的資料，可以得到從去年 11 月底到現在，進行過 Google 搜尋的次數總共大約是 25860 次，每個月平均搜尋 1990 次。</p>
+
+<p>如果用網路上謠傳 <a href="http://news.cnet.com/8301-11128_3-10140142-54.html">Google 搜尋一次會排放 7 公克的碳</a>來計算的話，那這一年來我就用 Google 排放了 181 公斤的碳了！好可怕！XD</p>
+
+<h2>部落格流量統計</h2>
+
+<p>小站在 6 月 15 日前多多少少還有一些穩定的流量，砍掉重練後就一直沒有起色，RSS 訂閱人數只有恢復到之前的三分之一，最近換了域名又是新的一次損傷。這半年來我一直在實驗不在社群網站上分享部落格連結，看看會有多少人連進來，六個月過去了成效看起來真的很慘啊。XD</p>
+
+<p><img src="http://lh3.googleusercontent.com/-VlR3vwfk2ME/UNFk1tYftEI/AAAAAAAAFeI/Ppa8tkNHKCc/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.53.53.png" alt="" /></p>
+
+<p>部落格的 PV 只有 4433，UV 只有 908 人，也就是說每一位訪客至少訪問了 4.88 個頁面。同時網站的跳出率是 63.71%，看來我的標題還不夠殺人，所以感覺跳出率還不算太高嘛。:p</p>
+
+<p><img src="http://lh6.googleusercontent.com/-8CznJnn7Oug/UNFpcuSmmOI/AAAAAAAAFec/LoXKL3e5_ic/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25883.14.35.png" alt="" /></p>
+
+<p>令我蠻訝異的是訪問我部落格的訪客，Mac 用戶竟然高達了 41.76%，即使從次要維度去篩選掉一些可能是我自己訪問的紀錄，也還是有超過 36%。可能是因為寫了一些關於 Ruby 的技術文章，引來了相同生態圈的讀者。</p>
+
+<p><img src="http://lh6.googleusercontent.com/-QgTIODhkcLg/UNFr_M0YFqI/AAAAAAAAFew/l5r1xG1-1N0/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25883.25.24.png" alt="" /></p>
+
+<p>訪客的地理位置絕大多數都是台灣、香港跟大陸來的，除亞太地區外，最多來源的是美國，前三名分別是 California、Texas 跟 Maryland 這三個地方。</p>
+
+<h2>Foursquare 台北市足跡</h2>
+
+<p><img class="center" src="http://lh4.googleusercontent.com/-mDo7GGwJFvY/UNFW_7tziwI/AAAAAAAAFc4/Jvt3ewvAb8M/s640/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25881.55.22.png"></p>
+
+<p>把 Foursquare 的歷史足跡用 <a href="http://www.wheredoyougo.net/">Where Do You Go</a> export 到 Google Map 上來看，我最常活動的幾個區域是仁愛圓環、台北車站、信義區跟內湖 Costco，看來台北市很多地方我都沒去過啊……Orz</p>
+
+<h2>iTunes 音樂排行</h2>
+
+<p><img src="http://lh4.googleusercontent.com/-_utNzfVzeok/UNFatFCONxI/AAAAAAAAFdM/frv12MhD2hw/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.11.26.png" alt="itunes" /></p>
+
+<p>用 iTunes 聽音樂是 10 月底<a href="http://photos.chh.tw/post/34282965017/earpods">換了耳機</a>才開始比較常聽（因為聲音變清楚了 XD），最常聽的前五首歌竟然全都被 Jason Mraz 包了！</p>
+
+<h2>Alfred 使用統計</h2>
+
+<p><img src="http://lh5.googleusercontent.com/-UFsv7dnYrng/UNFdzzAAC4I/AAAAAAAAFd0/27E1jUnFzOo/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.24.59.png" alt="alfred" /></p>
+
+<p>原本我的 Alfred 是從 Mac App Store 上安裝的，可是該版本無法使用 <a href="http://www.alfredapp.com/powerpack/">PowerPack</a>，所以 12 月 2 日我就改從 Alfred 官網上下載另外一個版本，所以統計發生了一點問題，實際上起始時間應該是 2012 年 2 月 19 日才對，總共使用 6384 次，平均每天使用 21 次。</p>
+
+<p>我覺得 Alfred 提供這個功能真不錯，可以讓使用者透過量化的數據，了解到自己對這個軟體的依賴性。</p>
+
+<h2>終端機指令使用統計</h2>
+
+<p>上個月使用 Bash 的統計放在「<a href="/posts/oh-my-zsh/">OH MY ZSHELL!</a>」，以下是這個月來使用 Zsh 的統計：</p>
+
+<p><code>
+ 1  1057  21.7356%    c
+ 2  686   14.1065%    git
+ 3  552   11.351%     cd
+ 4  384   7.89636%    lsa
+ 5  183   3.76311%    stt
+ 6  172   3.53691%    rails
+ 7  161   3.31071%    pry
+ 8  144   2.96114%    ..
+ 9  131   2.69381%    rvm
+10  121   2.48818%    rake
+11  110   2.26198%    ls
+12  100   2.05634%    clear
+13  77    1.58338%    which
+14  67    1.37775%    curl
+15  61    1.25437%    open
+16  43    0.884228%   brew
+17  40    0.822538%   ruby
+18  40    0.822538%   rm
+19  37    0.760847%   bundle
+20  37    0.760847%   blog
+</code></p>
+
+<p>其中使用 <code>clear</code> 這個指令的比例竟然高達 24%，這個是強迫症嗎？:p</p>
+
+<p><div class="footnotes">
+	<ol>
+		<li id='fn:1'><a href="http://manytricks.com/timesink/" alt="time-sink" target="_blank">Time Sink</a> 是 <a href="http://manytricks.com/" alt="many-tricks" target="_blank">Many Tricks</a> 公司出的產品，他們家最有名的應該是 <a href="http://manytricks.com/moom/" alt="moom" target="_blank">Moom</a> 這套視窗大小的控制軟體吧。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>這張神圖可以分割成 2592 個 2048px x 2048px 的圖，我不曉得他背後用的技術原理，不過顯然這造成了大量的訪問 request。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>現在 Google Chrome 的 API 好像用的是 start_page 這個名稱。 <a href='#fnref:3' rev='footnote'>↩</a></li><li id='fn:4'>比如說從 Tweetbot、Alfred 打開的網址，所以這類的網址以 <a href="http://t.co/" alt="t-co" target="_blank">t.co</a> 等居多。 <a href='#fnref:4' rev='footnote'>↩</a></li>
+	</ol>
+</div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[註冊了新域名 CHH.tw]]></title>
+    <link href="http://blog.chh.tw/posts/new-domain-chh-tw/"/>
+    <updated>2012-11-20T16:36:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/new-domain-chh-tw</id>
+    <content type="html"><![CDATA[<p>原本的 whiteball.tw 這個月底到期，趁著最近有個活動促銷，趕快買了一個 .tw 結尾的 CHH.tw，沒意外的話以後應該是不會再改了。今天下午花了一點時間，把 CloudFlare 上的 record 設定全部搬家，順便刪除一些已經沒用的網址。</p>
+
+<p>為什麼網址要取 CHH？當然因為這是個人網站，我的名字 Ching-Han Ho 縮寫就是 CHH，另一方面因為我的偶像 David Heinemeier Hansson<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup> 縮寫是 DHH 的關係，兩個字很像啊。XD</p>
+
+<p>2012.11.21 更新：今天 DHH 在 <a href="https://twitter.com/dhh/status/271209790674464768">Twitter</a> 上報喜說他兒子出生了，叫做 Colt Heinemeier Hansson！XD</p>
+
+<p>反正本站一直以來都是「微流量」，就算不做 <a href="http://blog.longwin.com.tw/2009/10/http-status-redirect-301-302-diff-2009/">HTTP 301 導向</a>其實也沒什麼差啦，所以不想多花時間寫腳本，只是到 Google 和 Bing 的站長工具去上傳了一下新網址的網站地圖，還有把一些平常在追流量的分析工具改一下設定。</p>
+
+<p>然後又演練一次把新網址跟 Google App 結合，這次花的時間只有十分鐘超快，果然熟能生巧。以後就可以到處用 @chh.tw 的信箱，多麼帥氣啊。:p</p>
+
+<p>在這邊分享一個 Gmail 的小技巧，有時候在外面用信箱註冊怕信箱被該網站賣給 spammer，這個雖然沒辦法預防，但是可以知道信箱是被誰傳出去的，因為一般的網站是不會對信箱進行字串處理，所以可以在信箱加上 <code>+</code> 符號，後面接著註冊的網站名稱，例如：</p>
+
+<p>example+fb@chh.tw</p>
+
+<p>這樣郵件還是會寄到 example@chh.tw 這個信箱，但我們可以知道這是從 fb 這個網站寄來的，如果你收到垃圾信件，你就知道你的信箱是誰給你洩漏出去的了。現在新的<a href="http://www.techbang.com/posts/10878-law-of-personal-data-protection-of-the-interests-of-you-and-me-on-several-networks-of-common-funding-legal-issues-pchome-201-science-and-technology">個資法</a>這麼兇，用這招去告死對方吧！XD</p>
+
+<p>再見了，Whiteball！:)</p>
+
+<p><div class="footnotes">
+	<ol>
+		<li id='fn:1'>David Heinemeier Hansson 是 Ruby on Rails 框架的發明者，是我景仰的 hacker 之一。 <a href='#fnref:1' rev='footnote'>↩</a></li>
+	</ol>
+</div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Digital Is Not Forever]]></title>
+    <link href="http://blog.chh.tw/posts/digital-is-not-forever/"/>
+    <updated>2012-09-11T08:22:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/digital-is-not-forever</id>
+    <content type="html"><![CDATA[<p>我一直相信唯有透過瞭解歷史，才能夠更明白當下與未來，而保存人類歷史的足跡是如此彌足珍貴，隨著時代不同，記錄的方法也有所不同。</p>
+
+<p>昨天我打開那台幾個月沒開的桌機，結果出現「Disk boot failure, insert system disk and press enter.」錯誤訊息，問題應該不大，大概重新確認一下硬碟接線和電源供應器，障礙就可以排除，只是也沒什麼要緊事，我也懶得拆機殼修理。</p>
+
+<p>這台桌機裡面存有我過去大學四年的一些回憶，不論是作業、報告還是任何多媒體。確切說起來可能是兩年，因為期間曾經重灌過。大部分經常使用的資料我已經放在 Dropbox 同步到我現在用的筆電，有些則沒有，事實上，還有些什麼資料我已經沒什麼印象了。</p>
+
+<p>曾經有幾次想要打開他的念頭，去回顧一下裡面有些什麼寶貝，可是因為桌機的螢幕被筆電給蠻橫地搶去，所以這台桌機放在我旁邊不到一條手臂的距離，數個月過去卻一直沒有動過它。</p>
+
+<p>現在，無法開機進入作業系統，結果我發現我突然有種「喔，這樣啊」的感覺，好像直接把硬碟換掉我也不會捨不得。如果，這不是一台電腦，而是一本本的摸得到的相簿、一張張的看得見的照片，我是不是還是一樣不想去碰它呢？</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Gossips And Rumors Will Only Be Stopped By The Wise]]></title>
+    <link href="http://blog.chh.tw/posts/gossips-and-rumors-will-only-be-stopped-by-the-wise/"/>
+    <updated>2012-09-01T08:21:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/gossips-and-rumors-will-only-be-stopped-by-the-wise</id>
+    <content type="html"><![CDATA[<p>前幾天在 Twitter 上<a href="https://twitter.com/ChingHanHo/status/240756802273304576">分享一篇新聞</a><sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，雖然覺得是假的，可是基於好玩我就順手轉貼出去，現在回想起來好後悔，對於這個連自己都不相信的新聞，為什麼要轉貼？</p>
+
+<p>當看到第一個謠言可能不以為然，但是在多個場合重複看到同一個謠言，可能就會開始產生這個謠言已經被證實的錯覺，很多仇恨性言論就是這樣散佈的，例如台灣對於南韓的仇視，我覺得就從網路這種現象開始發酵的。</p>
+
+<p>看到新聞（或是任何消息）的當下或許心裡會有些立即性的情緒反應，不論是開心的、有趣或是憤怒的，會想要立刻加上一點註解然後分享出去，但是謠言之所以能夠傳播的主要兩個因素就是：</p>
+
+<ol>
+<li>看起來好像很真（不真就不叫謠言了）</li>
+<li>挑撥情緒反應（這樣才能達到共振的目的）</li>
+</ol>
+
+
+<p>所以當發現自己的反應符合上述兩項條件，應該馬上停下來好好省思這則新聞的可能性，可以透過重新下關鍵字搜尋所有新聞站的相關報導，或是在 <a href="http://topsy.com/">Topsy</a> 上進行社群網站的搜尋，這一來是可以看看別人是怎麼報導這件事情，還是別人都沒報導只有謠言來源獨家？二來可以看看別人是怎麼評斷這則消息，不要用自己偏激的想法去否定不同的意見。</p>
+
+<p> 以前我自己曾經寫過 <a href="../keiserens-nye-klaeder">The Emperor's New Clothes</a> 這篇文章，卻還是犯了同樣的錯誤，代表自己對於媒體識讀仍然不夠嚴謹。</p>
+
+<p><div class="footnotes">
+	<ol>
+		<li id='fn:1'>我不會刪除我已經發出去的訊息，因為那並不能解決任何事情。 <a href='#fnref:1' rev='footnote'>↩</a></li>
+	</ol>
+</div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[My Thoughts On Piracy (2)]]></title>
+    <link href="http://blog.chh.tw/posts/my-thoughts-on-piracy-2/"/>
+    <updated>2012-08-24T13:55:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/my-thoughts-on-piracy-2</id>
+    <content type="html"><![CDATA[<p>盜版這個詞本身就有負面涵義，如果沒有版權又何來盜版之有？顯然這是以先有版權為前提，原本應該是能夠保障原創者的作品不受到侵犯，能夠讓原創者得以在健康的環境下自由創新。實際情況卻好像不是那麼一回事。</p>
+
+<p>或許網路真的來得太快了，大部分的傳統內容原創者碰到時都措手不及，選擇拿把大鎖將自己的東西都鎖起來，深怕被別人白白觸碰。</p>
+
+<p>Ubisoft 推出「刺客教條 2」這套遊戲的時候，採用一套新的 DRM 反盜版技術，使用者進行遊戲時必須保持在線上，一旦斷線就必須等待重新驗證才能繼續，玩個遊戲這麼辛苦當然引起許多正版使用者極度不滿，花錢卻還要受罪，造成更多消費者不願意購買正版，最後 Ubisoft 也決定<a href="http://fudzilla.com/games/item/21394-ubisoft-retreats-on-annoying-drm">放棄這套加密程序</a>。</p>
+
+<p>EA 推出模擬遊戲「孢子」時也上了 DRM 系統，結果因此造成消耗系統資源拖垮遊戲體驗，而且一套序號只能使用 3 次，超過就無法在執行安裝，對於正版使用者同樣是折磨，<a href="http://torrentfreak.com/spore-most-pirated-game-ever-thanks-to-drm-080913/">逼使更多的人尋求盜版</a>，最後 EA 也針對這些措施道歉，並且關閉了所有 DRM 驗證系統。</p>
+
+<p>版權是保護創作者不受到不正當的侵犯，其實在保護自己心血的同時，沒有必要將愛好你作品的人視為敵人，別忘記他們也是音樂、電影、遊戲愛好者，這固不能成為使用盜版合理化的理由，但也無法成為版權限制合理化的解釋。當然也有些人壓根不在乎。</p>
+
+<p>2001 年 Napster 沒有真正死亡，它顛覆未來人們使用數位音樂的方式，引進新技術提供很受歡迎的解決方案，但是很多傳統產業的人們只看到這項技術帶來的損失，他們感到害怕，就像蜀犬吠日一樣驚慌；有些人則看到了契機，開發了小而輕便的 MP3 播放器，整合線上購買正版音樂的服務平台，如今也<a href="http://www.engadget.com/2011/10/04/apple-16-billion-itunes-songs-downloaded-300-million-ipods-sol/">搞出還不賴的成績</a>，關鍵的是他們擁抱盜版的方式。</p>
+
+<p>擁抱盜版絕對不是說支持盜版、使用盜版，而是瞭解人們使用盜版的方式、動機，接受這種方式帶來的改變，提供對應的解決方案與商業模式。版權仍然有其存在的意義，保護創作人的方式，應該要從接受網路帶來的自由傳播進行改變。</p>
+
+<h3>2012.08.30 UPDATE：</h3>
+
+<p>還真巧，遊戲開發商 Spry Fox 的 CCO Daniel Cook 在 <a href="https://plus.google.com/105363132599081141035/posts/JGhkvuRvBVj">Google+</a> 上發表了一篇名為「Thoughts on Piracy」的文章，明明是我先寫的啊！XD 他認為盜版並不是罪大惡極的行為，相反地，他江這種現象視為一個機會，有可能是遊戲開發商拓展獲利的良好途徑。</p>
+]]></content>
+  </entry>
+  
+</feed>

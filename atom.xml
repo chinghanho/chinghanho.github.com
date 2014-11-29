@@ -1,0 +1,2006 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[@ChingHanHo]]></title>
+  <link href="http://blog.chh.tw/atom.xml" rel="self"/>
+  <link href="http://blog.chh.tw/"/>
+  <updated>2014-11-29T07:12:09+08:00</updated>
+  <id>http://blog.chh.tw/</id>
+  <author>
+    <name><![CDATA[Ching-Han Ho]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Node 樣版引擎評估：Jade、Handlebars]]></title>
+    <link href="http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars/"/>
+    <updated>2014-11-29T01:38:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/-aa-cbFoMPDs/VHi1FfBlM-I/AAAAAAAAIJM/T6wEE0RlEtQ/w640-h201-no/Screen%2BShot%2B2014-11-29%2Bat%2B1.44.09%2BAM.png" alt="" /></p>
+
+<h2>短文版</h2>
+
+<p>用 jade。</p>
+
+<h2>長文版</h2>
+
+<p>因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。</p>
+
+<p>活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的：</p>
+
+<ul>
+<li><a href="https://github.com/tj">TJ</a> 早期樣版引擎代表作 <a href="https://github.com/tj/ejs/">ejs</a></li>
+<li>以及 TJ 後來的 <a href="https://github.com/jadejs/jade">jade</a></li>
+<li>還有 <a href="https://github.com/wycats">wycats</a>（<a href="http://yehudakatz.com/">Yehuda Katz</a>）的 <a href="https://github.com/wycats/handlebars.js">handlebars</a></li>
+</ul>
+
+
+<p>TJ 當初設計 <a href="http://expressjs.com/">Express</a> 承襲 Ruby micro-framework <a href="http://www.sinatrarb.com/">Sinatra</a> 的設計理念，ejs 好像是因應而生（？），從 ejs 語法上面可以看到非常多 Ruby 樣版引擎 ERb 的影子，對我來說是最「友善」的。不過 TJ 另創 jade 樣版引擎加上投奔 Go 世界以後，ejs 的活躍程度越來越低，從今年 5 月之後就再也沒有更新過了。</p>
+
+<p>我向來都會先以「社群活躍度」來評量一個程式專案計畫可靠度，jade 貢獻者在 Github 上成立 <a href="https://github.com/jadejs">jadejs</a> 組織來維護專案，長久來看蠻可靠的。而 handlebars 在 Github 上也廣受 Javascript 開發者歡迎，所以最後我就拿這兩套樣版引擎來比較，以下是值得提出來講的部分。</p>
+
+<p>（再強調一次好了：語法設計、擴充性、使用彈性是我比較在意的項目）</p>
+
+<!-- more -->
+
+
+<h3>Layouts</h3>
+
+<p>寫過 Rails 後就很喜歡那種把不同 controller actions 的 view，跟 layouts 拆得乾乾淨淨的做法。這點 handlebars 可以做到，也是我最喜歡的一點，jade 必須在每一個 view 裡面寫上重複的 code，來表示外層的 layout：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='jade'><span class='line'><span class="nt">extends</span> layout
+</span><span class='line'>
+</span><span class='line'><span class="nt">block</span> content
+</span><span class='line'>  <span class="nt">h1</span><span class="p">=</span> <span class="n">post</span><span class="o">.</span><span class="n">title</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把內容的部分宣告成 block，然後套進 layout 裏去。這也不是大缺點啦，block 寫法可以讓 view 不同區塊使用上更有彈性，但這就很考驗 block 的拆分功力了，不然真的會很容易寫出大量讓人崩潰的縮進層級。</p>
+
+<h3>Partials</h3>
+
+<p>版型上共用的部分一定會拆出來到同個檔案去維護，例如 header、footer、sidebar 之類的，handlebars 要做到這點繞得也太大圈：得先告訴 handlebars 的實例（instance）某個目錄放著我要的 partials 檔案，例如有個 <code>header.hbs</code> partial 放在 <code>/views/partials</code> 目錄下，然後要在 app 主要程式中寫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">hbs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;hbs&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">hbs</span><span class="p">.</span><span class="nx">registerPartial</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;/views/partials&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>才能在 view 裡面帶入 header 這個 partial：<code>{{&gt; header}}</code>。這樣讓檔案的組織非常缺乏彈性，如果 partials 不是在同個地方而是多個目錄，這樣光是找到檔案就很直覺。</p>
+
+<h3>條件判斷</h3>
+
+<p>這個是壓死駱駝最後一根稻草，handlebars 沒有辦法用很簡單的條件判斷式，內建的 <code>#if</code> helper 根本不是拿來寫「條件判斷」的，當初掃描完文件後一定會很自然地寫下 <code>{{#if query === 'list'}}</code>，這樣是不行的喔！</p>
+
+<p><code>#if</code> 頂多拿來判斷物件裡面有東西還是沒東西而已，如果真要寫個「條件判斷」一樣要拆去寫 helper，不管你的是多簡單的判斷。</p>
+
+<h3>結論</h3>
+
+<p>當初 wycats 寫 handlebars 時主要是為了解決前端樣版引擎的問題，所以可以發現很多 server-side 應用的場景 handlebars 都不適用。jade 是 TJ 寫給 Express 用的，讓我最不適應的地方是像 <a href="http://haml.info/">HAML</a> 那樣「縮進崇拜主義」簡化的語法我實在不敢恭維，但顯然目前沒有比「不習慣」更好的理由來阻止我用它，因為 jade 其他面向提供的 solution 確實都能解決問題。</p>
+
+<p>結論就是用 jade！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MongoDB 的 ODM：mongoose 簡單介紹]]></title>
+    <link href="http://blog.chh.tw/posts/mongodb-odm-mongoose/"/>
+    <updated>2013-09-06T11:11:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/mongodb-odm-mongoose</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/-Tdo_5cAPDnk/UilIbkRmleI/AAAAAAAAGqQ/vh6dM2gZvV4/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-06+%25E4%25B8%258A%25E5%258D%258811.12.48.png" alt="mongoose" /></p>
+
+<p><a href="http://mongoosejs.com/">mongoose</a> 是一套給 Node.js 用的 MongoDB ODM，跟常聽到的 ORM 不同的地方只是一些<a href="http://stackoverflow.com/questions/12261866/what-is-the-difference-between-an-orm-and-an-odm">技術名詞定義上的把戲</a>，其實是差不多的意思。</p>
+
+<p>透過 mongoose 可以用包裝過的、更高階的、更直覺的 API 語法，以及模擬 SQL 資料庫 schema-based 的方式，來操作 MongoDB 資料庫。以下是個官方文件給的簡單範例，先建立了一個叫做 Cat 的 Model，<code>model</code> 的第二個參數就是建立 schema 的所在：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">Cat</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Cat&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="nb">String</span> <span class="p">}</span>
+</span><span class='line'><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">kitty</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Zildjian&#39;</span> <span class="p">});</span>
+</span><span class='line'><span class="nx">kitty</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="c1">// ...</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;meow&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<h2>與 MongoDB 建立連線</h2>
+
+<p>這裡繼續沿用上一篇文章「<a href="http://blog.chh.tw/posts/node-http-vs-connect-vs-express/">Node.js 的 Http vs Connect vs Express</a>」的例子，先把上一篇文章的範例程式碼複製過來，檔案名稱命名為 <em>server.js</em>，下指令執行 <code>node server.js</code> 這樣可以得到一台簡單的伺服器：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">,</span> <span class="nx">app</span>     <span class="o">=</span> <span class="nx">express</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">cookieParser</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">cookies</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="s1">&#39;4000&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>打開瀏覽器訪問 <a href="http://localhost:4000">http://localhost:4000</a> 應該可以看到「hello」的文字，從 console 應該也能看到有關 cookies 的資訊（有可能只是一個空的物件）。</p>
+
+<p>再來就是把 mongoose 給 requrie 進來，然後讓它跟 MongoDB 嘗試建立連線，連線的 URL 協議一定要用 <code>mongodb://</code> 這個 prefix：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;mongodb://localhost/test&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>mongoose 的兩個概念：Schema 與 Model</h2>
+
+<p>MongoDB 是以 documents 為基礎，在 SQL 資料庫稱為 table 的東西，在 NoSQL 裡稱為 collection。當然，這又是一種名詞定義上的把戲，實質上大同小異。</p>
+
+<h3>Schema</h3>
+
+<p>mongoose 的 Schema 概念就是用 schema-based 的方式，定義一個 collection 的組成結構，用程式碼描述會這樣子寫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">UserSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">(</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span>      <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span> <span class="p">},</span>
+</span><span class='line'>    <span class="nx">login</span><span class="o">:</span>     <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">unique</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span>
+</span><span class='line'>    <span class="nx">email</span><span class="o">:</span>     <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">unique</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span>
+</span><span class='line'>    <span class="nx">create_at</span><span class="o">:</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="nb">Date</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span> <span class="p">},</span>
+</span><span class='line'>    <span class="nx">update_at</span><span class="o">:</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="nb">Date</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span> <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>因為 MongoDB 是 schema-less 相當有彈性，所以如果上面這個 schema 某些「欄位」沒有賦值，那麼在 MongoDB 裡就不會有那個「欄位」。說「欄位」是 SQL 的思維，可是我覺得這樣講會比較好理解。</p>
+
+<h3>Model</h3>
+
+<p>而 mongoose 的 Model 概念，則是對一個 collection 結構定義與操作方法的集合，也就是用 Schema 定義了一個 collection 的結構，加上其他對這個 collection 的驗證設定、操作方法等等，便構成了一個 Model。</p>
+
+<p>結合剛剛的 schema 範例，可以再加上一些驗證跟操作的方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">UserSchema</span><span class="p">.</span><span class="nx">pre</span><span class="p">(</span><span class="s1">&#39;save&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// do something...</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">UserSchema</span><span class="p">.</span><span class="nx">statics</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">getUserByLogin</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">login</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span> <span class="nx">login</span><span class="o">:</span> <span class="nx">login</span> <span class="p">})</span>
+</span><span class='line'>      <span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最後將這個 Schema 定義到一個叫做 User 的 model：</p>
+
+<pre><code>mongoose.model('User', UserSchema)
+</code></pre>
+
+<p>當要使用這個 model 只要用 <code>mongoose.model()</code> 將 model 讀出來，便可以對他進行操作了：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">User</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">User</span><span class="p">.</span><span class="nx">getUserByLogin</span><span class="p">(</span><span class="nx">login</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// here we have a user...</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>為什麼 Schema-less 的資料庫需要 Schema-based？</h2>
+
+<p>不過這就很奇怪了，NoSQL 的 MongoDB 本身就是 schema-less 的資料庫，結果用 mongoose 還要去刻意模擬成 schema-based，這樣的思路是什麼？</p>
+
+<p>其實這是對 NoSQL 的 schema-less 的誤解，schema-less 並不代表 no-schema。在應用當中還是需要一個 schema 來代表 model，而 schema-less 只是代表一種彈性的模式。</p>
+
+<p>否則的話，會需要在很多地方寫髒亂的判斷條件，像是這樣的東西：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>  <span class="c1">// I got a name</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Node.js 的 http vs Connect vs Express]]></title>
+    <link href="http://blog.chh.tw/posts/node-http-vs-connect-vs-express/"/>
+    <updated>2013-09-05T02:17:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/node-http-vs-connect-vs-express</id>
+    <content type="html"><![CDATA[<p><img src="https://lh5.googleusercontent.com/-mk_3GdVqmSI/Uid55DfCYHI/AAAAAAAAGp4/3mW_vcrS63Q/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-05+%25E4%25B8%258A%25E5%258D%25882.19.28.png" alt="node-express" /></p>
+
+<p>這篇應該是我第一篇寫有關 <a href="http://nodejs.org/">Node.js</a> 的文章，未來應該會開始多寫一些有關 Javascript 的東西。這次主題要來聊聊 Node.js 的 http 模組，跟知名的 Connect 和 Express 之間的關係，如果上網去問，有人會回說就像是 Ruby 的 <a href="http://rack.github.io/">Rack</a> 一樣，但是具體到底是什麼東西呢？</p>
+
+<!-- more -->
+
+
+<h2>http 模組</h2>
+
+<p>Node.js 自身就帶有一個叫做 http 的 <a href="http://nodejs.org/api/http.html">module</a>，可以呼叫 <code>http.createServe</code> 建立一個相當基本伺服器，具體用法會長得像是以下這個樣子，可以建立一份檔案命名為 <em>server.js</em> 來測試一下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s2">&quot;hello world\n&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後在終端機執行 <code>node server.js</code> 指令來啟動伺服器，因為程式碼裡面指定了 8000 port，所以當在瀏覽器裡打開 <a href="http://localhost:8000">http://localhost:8000</a> 看到「hello world」就代表成功了。</p>
+
+<h2>Connect</h2>
+
+<p>然而我需要更多的細節，例如讀取送來的 request 中的 cookies，因此 <a href="http://www.senchalabs.org/connect/">Connect</a> 這樣的 middleware 框架，便是用來輕鬆安插各種 middleware 來處理 request，透過 <code>connect.cookieParser()</code> 讓 <code>req</code> 物件多了一個 <code>cookies</code> 屬性：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">http</span>    <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">,</span> <span class="nx">connect</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">connect</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">connect</span><span class="p">.</span><span class="nx">cookieParser</span><span class="p">())</span>
+</span><span class='line'>  <span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">cookies</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但是 Connect 充其量只是提供了安插 middleware 的 API，其他像是 route、view rendering 等工作，就會需要靠 Express 這套框架了。</p>
+
+<h2>Express</h2>
+
+<p><a href="http://expressjs.com/">Express</a> 其實就是延伸自 Connect 的加強版，所有 Connect 的 API 在 Express 裡都可以使用，並且提供了更多實用的 functions，一次解決所有問題。</p>
+
+<p>將剛剛寫的程式碼修改成以下的範例，其中 <code>get</code> 這個 function 就是 HTTP 的動詞，有了這樣的 API 便能很輕鬆地策劃路由了：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">,</span> <span class="nx">app</span>     <span class="o">=</span> <span class="nx">express</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">cookieParser</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">cookies</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="s1">&#39;4000&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一言以蔽之，http 之於 Connect，就如 Connect 之於 Express。</p>
+
+<h3>參考資料</h3>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/5284340/what-is-node-js-connect-express-and-middleware">What is Node.js&#8217; Connect, Express and “middleware”?</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範]]></title>
+    <link href="http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/"/>
+    <updated>2013-08-05T10:40:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines</id>
+    <content type="html"><![CDATA[<p>真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。</p>
+
+<p>（本文的例子用的是 SCSS 語法）</p>
+
+<!-- more -->
+
+
+<h2>OOCSS</h2>
+
+<p>OOCSS 不是什麼新技術，只是一種撰寫 CSS 的設計模式，或者可以說是一種「道德規範」，大致上我覺得重點只有兩個：</p>
+
+<ul>
+<li><a href="#html-dependency">減少對 HTML 結構的依賴</a></li>
+<li><a href="#reuse-classes">增加 CSS class 重複性的使用</a></li>
+</ul>
+
+
+<p><a name="html-dependency"></a></p>
+
+<h3>減少對 HTML 結構的依賴</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">&quot;nav--main&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/nav&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一般的導航欄寫法，結構應該會像上面的 HTML 範例一樣，如果要對那些 <code>&lt;a&gt;</code> 標籤定義樣式，CSS 的寫法可能寫成 <code>.nav--main ul li a {}</code>，這種寫法先不管效能上的問題，可以看出來過度地依賴元素標籤的結構，有可能之後 HTML 結構改變，這個 CSS 就必須跟著重構，造成維護上多餘的成本。</p>
+
+<p>若從這個例子來考量，原則上 <code>&lt;a&gt;</code> 都一定會接在 <code>&lt;li&gt;</code> 標籤的後面，一個 <code>&lt;li&gt;</code> 只會有一個 <code>&lt;a&gt;</code>，通常不會獨立存在，那就可以寫成 <code>.nav--main a {}</code>，會是比較好的寫法，甚至是直接給 <code>&lt;a&gt;</code> 加上 class <code>nav--main_item</code>。後者是 OOCSS 所提倡的用法。</p>
+
+<p>這樣的寫法，一來效能理論上比較好（我沒辦法驗證），二來層次比較單純。</p>
+
+<p><a name="reuse-classes"></a></p>
+
+<h3>增加 CSS class 的重複使用</h3>
+
+<p>在 OOCSS 的觀念中，強調重複使用 class，而應該避免使用 id 作為 CSS 的選擇器。這種想法就是像 <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">OOP</a> 盡量抽離重複的程式碼，例如以下這個例子，這是兩種按鈕的 CSS 樣式屬性：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.button</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">display</span><span class="o">:</span> <span class="no">inline</span><span class="o">-</span><span class="no">block</span><span class="p">;</span>
+</span><span class='line'>  <span class="na">padding</span><span class="o">:</span> <span class="mi">6</span><span class="kt">px</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+</span><span class='line'>  <span class="na">color</span><span class="o">:</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">100</span><span class="kt">%</span><span class="o">,</span> <span class="mi">100</span><span class="kt">%</span><span class="o">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">&amp;</span><span class="nc">.button-default</span> <span class="p">{</span> <span class="na">background</span><span class="o">:</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">180</span><span class="o">,</span> <span class="mi">1</span><span class="kt">%</span><span class="o">,</span> <span class="mi">28</span><span class="kt">%</span><span class="o">,</span> <span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">&amp;</span><span class="nc">.button-primary</span> <span class="p">{</span> <span class="na">background</span><span class="o">:</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">208</span><span class="o">,</span> <span class="mi">56</span><span class="kt">%</span><span class="o">,</span> <span class="mi">53</span><span class="kt">%</span><span class="o">,</span> <span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的 CSS 將兩種不同樣式的 button，抽離出重複的部份，並且定義在同個 class 上。因此，要使用這樣的樣式，HTML 的寫法可能長這個樣子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;button button-default&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;button button-primary&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>先用 <code>button</code> 宣告此為一個按鈕的樣式，再用 <code>button-default</code> 或 <code>button-primary</code> 作為按鈕底色的區別。這麼做可以維護成本變得比較低，例如：想要改網站上所有按鈕的大小，就只要修改 <code>.button</code> 的 <code>padding</code> 而已。</p>
+
+<h2>SMACSS</h2>
+
+<p>我對 SMACSS 的理解還不是很深入，或許把 <a href="http://smacss.com/">Scalable and Modular Architecture for CSS</a> 看完後會有更深一曾的理解。目前對 SMACSS 的概念僅限於它對 CSS 不同的業務邏輯所做的劃分方式：</p>
+
+<p>但我認為原本的設計不是很妥當，因此我自己做了一些改良：</p>
+
+<ul>
+<li><a href="#base">Base</a></li>
+<li><a href="#layout">Layout</a></li>
+<li><a href="#module">Module</a></li>
+<li><a href="#partial">Partial</a></li>
+<li><a href="#state">State</a></li>
+<li><a href="#theme">Theme</a></li>
+</ul>
+
+
+<p><a name="base"></a></p>
+
+<h3>Base</h3>
+
+<p>Base 就是設定標籤元素的預設值，例如瀏覽器的 reset 可以寫在這裡，如果用的是 Compass，只要 <code>@include global-reset</code> 即可。這裡只會對標籤元素本身做設定，不會出現任何 class 或 id，但是可以有屬性選擇器或是偽類：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nt">html</span> <span class="p">{}</span>
+</span><span class='line'><span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">text</span><span class="o">]</span> <span class="p">{}</span>
+</span><span class='line'><span class="nt">a</span><span class="nd">:hover</span> <span class="p">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a name="layout"></a></p>
+
+<h3>Layout</h3>
+
+<p>Layout 是指整個網站的「大架構」的外觀，而非 <code>.button</code> 這種小元件的 class。網站通常會有一些主要的大區塊，可能是 header 或 footer，Layout 就是用來定義這些「大架構」的 CSS。如果有做 Responsive Web Design 或是用 Grid System，也是把規則寫在 Layout 這裡。</p>
+
+<p>以下這是個範例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nn">#header</span> <span class="p">{</span> <span class="na">margin</span><span class="o">:</span> <span class="mi">30</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'><span class="nn">#articles-wrapper</span> <span class="p">{</span> <span class="nc">......</span><span class="o">;</span> <span class="p">}</span>
+</span><span class='line'><span class="nc">.sidebar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">&amp;</span><span class="nc">.sidebar--right</span> <span class="p">{</span> <span class="nc">......</span><span class="o">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">&amp;</span><span class="nc">.sidebar-left</span> <span class="p">{</span> <span class="nc">......</span><span class="o">;</span> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通常只有一個選擇器，一個 id、或一個 class。</p>
+
+<p><a name="module"></a></p>
+
+<h3>Module</h3>
+
+<p>原本的 SMACSS 對 Module 的設計我覺得不是很好，所以我硬是將 Module 拆分出一個 <a href="#partial">Partial</a>。</p>
+
+<p>這裡的 Module 顧名思義，就是可以在其他地方被重複使用，如果要找更明確的例子，我想就像 Twitter Bootstrap 的 <a href="http://getbootstrap.com/2.3.2/components.html">Components</a> 一樣，或者像前面 OOCSS 所舉例的 <code>.button</code> 這種會被重複使用的元件模組。</p>
+
+<p>模組不需要用任何的 prefix，因為 Module 就是設計來可以重複應用在不同的 page 上。</p>
+
+<h3>Partial</h3>
+
+<p><a name="partial"></a></p>
+
+<p>Partial 跟 Latout 不同，也跟 Module 不同，他比 Layout 的範圍小，可能是 header 底下的某個子元素。他不像 Module，他是特定單一領域下特別的設定。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.nav--main</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nt">a</span> <span class="p">{</span> <span class="nc">......</span><span class="o">;</span> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通常會將 Partial 的名稱加在子 class 作為 prefix，例如 <code>.nav--main</code> 底下的 <code>.nav--main_item</code>。至於為什麼要用這麼奇怪的命名方式？這等等在 <a href="#bem">CSS 規範</a>部分會說明介紹。</p>
+
+<p><a name="state"></a></p>
+
+<h3>State</h3>
+
+<p>State 負責定義元素不同的狀態下，所呈現的樣式。但是並非指一個元素的 <code>:hover</code> 或 <code>:active</code> 下的狀態。舉例來說，一個導航欄分頁，目前所在頁面的分頁需要加上 <code>.active</code> 的屬性表示目前位置是在這個分頁，HTML 會長這樣：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">&quot;nav--main&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;active&quot;</span><span class="nt">&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;li&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/nav&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>因此可以替 <code>.nav--main</code> 增加 <code>.active</code> 這樣的子 class：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.nav--main</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// others…;</span>
+</span><span class='line'>  <span class="nc">.active</span> <span class="p">{</span>
+</span><span class='line'>    <span class="na">background</span><span class="o">:</span> <span class="nf">darken</span><span class="p">(</span><span class="nv">$background-color</span><span class="o">,</span> <span class="mi">16</span><span class="kt">%</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>有時候為了讓閱讀更貼近語義，會用比較友善的命名方式，以此段的範例來說，<code>.is-active</code> 就比 <code>.active</code> 來得好讀。</p>
+
+<p><a name="theme"></a></p>
+
+<h3>Theme</h3>
+
+<p>Theme 是畫面上所有「主視覺」的定義，例如 <code>border-color</code>、<code>background-image</code> 或是 <code>font-family</code> 等相關的 Typography 設定。為什麼說是「主視覺」？因為有些元件模組仍然是留在 Module 去定義，Theme 就像 Layout 一樣負責「大架構」上的視覺樣式。</p>
+
+<h2>CSS 規範</h2>
+
+<p>這裡整理的是我覺得一定要知道的，其他還有很多規範可以轉到文末的參考資源連結，那篇文章有介紹更多的細節。</p>
+
+<p><a name="bem"></a></p>
+
+<h3>BEM</h3>
+
+<p>BEM 即 Block、Element、Modifier 的縮寫，這是一種 class 的命名技巧。如果整個 project 只有自己一個人做，那當然是不太可能出現 class 重複的問題，但是如果同時多個 F2E 一起寫同個部分的 CSS，就很容易出現共用 class 的問題，因此有了 BEM 這樣的命名技巧。</p>
+
+<p>將 Block 區塊作為起始開頭，像前面 SMACSS 介紹的 Partial 就可以拿來作為 Block 的 prefix 名稱；Element 則是 Block 下的元素；Modifier 則是這個元素的屬性。</p>
+
+<p>不同 Block 和 Element 用 <code>__</code> 兩個底線區隔開來，不同的 Modifier 則用 <code>--</code> 兩個 dash 區隔。至於 <code>-</code> 一個 dash 則表示這個 class 不依賴任何 Block 或 Element，是個獨立的存在，例如：<code>.page-container</code> 或 <code>.article-wrapper</code>。</p>
+
+<p>這裡有個範例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.sidebar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nc">.sidebar--left__section</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nc">.sidebar--left__section--header</span> <span class="p">{}</span>
+</span><span class='line'>    <span class="nc">.sidebar--left__section--footer</span> <span class="p">{}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Javascript Hook</h3>
+
+<p>透過 CSS class 來作為 Javascript 選取 DOM 節點的方式，就是 Javascript Hook。用 jQuery 可以常常看到這樣的寫法：<code>$('.nav--main a')</code>，可是當 CSS 跟 Javascript 攪在一起反而造成兩邊維護上的不便，當改了 CSS 時 Javascript 也要跟著改。</p>
+
+<p>所以用 HTML 的屬性去選取 DOM 節點會更好，如果非要用 CSS 的 class 那也可以多寫一個 <code>js-</code> 的 prefix，以表示這個節點有被 Javascript 使用，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav--main__item  js-nav--main__item&quot;</span><span class="nt">&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav--main__item  js-nav--main__item&quot;</span><span class="nt">&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav--main__item  js-nav--main__item&quot;</span><span class="nt">&gt;&lt;a&gt;</span>.........<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>PS. HTML 裡兩個 class 之間用兩個空格，會比一個空格看起來好閱讀。</p>
+
+<h3>合理的選擇器</h3>
+
+<blockquote><p>class 無所謂是否語意化的問題；你應該關注它們是否合理，不要刻意強調 class 名稱要符合語意，而要注重使用的合理性與未來性。</p></blockquote>
+
+<p>有時候為了表示更明確，在使用 CSS 的選擇器時，要表示某的 class 是搭配某個標籤元素使用，會寫成這樣：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">ol</span><span class="nc">.breadcrumb</span><span class="p">{}</span>
+</span><span class='line'><span class="nt">p</span><span class="nc">.intro</span><span class="p">{}</span>
+</span><span class='line'><span class="nt">ul</span><span class="nc">.image-thumbs</span><span class="p">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但是上面這個寫法效能不是很好，同樣的目的但可以減少多餘的修飾，試試改用下面這種寫法，將標籤名稱用註解標示起來，維護上有相同的效果，但是瀏覽器處理的速度會比較快：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="c">/*ol*/</span><span class="nc">.breadcrumb</span><span class="p">{}</span>
+</span><span class='line'><span class="c">/*p*/</span><span class="nc">.intro</span><span class="p">{}</span>
+</span><span class='line'><span class="c">/*ul*/</span><span class="nc">.image-thumbs</span><span class="p">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>參考資源</h2>
+
+<ul>
+<li><a href="https://github.com/doggy8088/CSS-Guidelines">撰寫可管理、可維護的 CSS 高階技巧</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[每個人都應該有一套自己的密碼演算法]]></title>
+    <link href="http://blog.chh.tw/posts/my-password-algorithm/"/>
+    <updated>2013-06-29T16:06:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/my-password-algorithm</id>
+    <content type="html"><![CDATA[<p><img src="https://lh4.googleusercontent.com/-XJ2BlPNnueY/Uc7GM1tq0bI/AAAAAAAAGgM/EDQev1B22wU/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202013-06-29%2520%25E4%25B8%258B%25E5%258D%25887.32.00.png" alt="the-matrix" /></p>
+
+<p>最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。</p>
+
+<p>在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的，但是在<del>室友</del>駭客面前、或是網站管理員面前，它是透明毫無隱藏的，所以在這前提下就不應該把每個網站全部設同個密碼，因為駭客可以拿這套帳號密碼去登入其他網站。</p>
+
+<h2>密碼演算法</h2>
+
+<p>但是每個網站密碼都不一樣怎麼記得住？所以需要一套「演算法」，以後只需要記憶這套算法，而不是去記密碼。「演算法」聽起來好像很神奇，其實只是一套組合的方法，隨便舉例：</p>
+
+<blockquote><p>網站分級變數 + 常數 + 網站辨識代號 = 密碼</p></blockquote>
+
+<p>以下來分別說明這些東西是什麼。</p>
+
+<!-- more -->
+
+
+<h3>網站分級變數</h3>
+
+<p>網站分級是指依照網站的重要性分類，並且替每個級別設定不同的密碼。最核心的網站通常是信箱服務，例如 Google、Yahoo，你應該替他們設定一個獨立的密碼，與那些亂七八糟的小網站區隔開來。</p>
+
+<p>那應該拿什麼來當變數？我的建議是，你可以選你最愛顏色的 16 進位色碼（如果你偏愛 HSL 也行…… :p），或是圓周率小數點後的第 108 位數到 116 位數（前提是你得背起來 XDD），又或者是一句名言每個字的開頭第一個字母，例如「<em>Why join the navy if you can be a pirate</em>」變成「<em>Wjtniycbap</em>」。</p>
+
+<p>將網站依照重要性分成三種等級，並且每種等級分配一種變數：</p>
+
+<ul>
+<li>核心（Google&#8230;）：<em>Wjtniycbap</em></li>
+<li>次等（Evernote&#8230;）：<em>bion</em></li>
+<li>下等（亂七八糟論壇&#8230;）：<em>wwantm</em></li>
+</ul>
+
+
+<p>太多不好記？寫下來也沒關係，反正別人猜不到你的算法，給他看也沒關係，只要別在紙上寫「這是密碼」就好了。不過，用不著分類太多，三種級別其實也不難記。</p>
+
+<h3>常數</h3>
+
+<p>這是一組夾雜在密碼裡不會改變的常數，主要目的是增加密碼整體的複雜度。最好是數字跟英文的混合，甚至大小寫混合都可以。綜合上一個變數，現在密碼變成了：</p>
+
+<ul>
+<li>核心（Google&#8230;）：<em>Wjtniycbap</em> + <em>0rz</em></li>
+<li>次等（Evernote&#8230;）：<em>bion</em> + <em>0rz</em></li>
+<li>下等（亂七八糟論壇&#8230;）：<em>wwantm</em> + <em>0rz</em></li>
+</ul>
+
+
+<h3>網站辨識代號</h3>
+
+<p>這是這個網站的獨有特徵，可以是這個網站 domain 名稱的變體，例如 Google 的偶數字母：oge；或是該字母在 26 個字母當中的索引位置，o 是第 15 個字母、g 是第 7 個、e 是第 5 個，合起來就是 1575。</p>
+
+<p>最後，我們的密碼就變成了這樣：</p>
+
+<ul>
+<li>核心（Google&#8230;）：<em>Wjtniycbap0rz</em> + <em>oge</em></li>
+<li>次等（Evernote&#8230;）：<em>bion0rz</em> + <em>vro</em></li>
+<li>下等（亂七八糟論壇&#8230;）：<em>wwantm0rz</em> + <em>xxx</em></li>
+</ul>
+
+
+<p>這樣就能產生每個網站都不一樣的密碼，而且不同級別的網站也不會彼此影響到。密碼不是背起來的，而是推理出來的。很酷！也很宅，對吧？</p>
+
+<h3>還有些事情必須知道</h3>
+
+<ul>
+<li>正妹說會經常換密碼的男人最性感，你可以定期更改「網站分級變數」這個部分，或是修改整套算法。</li>
+<li>網站分級不是依你常去的網站來劃分（我知道你常去那種網站，但你也要知道那種網站一定會偷你的密碼），而是這個網站不可被攻破的重要性來區別。</li>
+<li>越重要的核心服務建議啟用多一點的認證機制，例如 Google、Facebook 都有提供手機簡訊的登入認證機制，請一定要啟用它。</li>
+<li>可以變化的不是只有密碼，不同網站當然也可以使用不同的帳號。如果有些網站是「只使用一次」性質的網站，可以多多利用 <a href="http://10minutemail.com/">10 Minute Mail</a> 這個服務。</li>
+<li>依賴算法其實也有些缺點，例如網路銀行的密碼通常會硬性規定要 8 個字元，迫使我必須要另外想一個特例的密碼給網路銀行，下場就是我從來記不住我網路銀行的密碼是什麼。:p</li>
+</ul>
+
+
+<h2>關於密碼管理工具</h2>
+
+<p>儘管現在很多人喜歡用 <a href="http://keepass.info/">KeePass</a> 和 <a href="http://lastpass.com/">LastPass</a> 這類的軟體，但我始終不是很信任這類軟體，也不喜歡用。況且……人類發明了機器，並且替機器上了鎖，卻又用了另外一台機器來管理這把鎖，然後又替這台機器上了另外一把鎖，還真是有趣？要是這把鎖掉了，那就真的全面失控了啊！</p>
+
+<p>再說……連<a href="http://youtu.be/VRCUpXLguHM?t=36m6s">駭客都說不敢用</a>了，你敢用嗎？XDD</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[OS X 與 Windows 切換應用程式的介面體驗]]></title>
+    <link href="http://blog.chh.tw/posts/osx-windows-switch-applications-ux/"/>
+    <updated>2013-06-10T15:39:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/osx-windows-switch-applications-ux</id>
+    <content type="html"><![CDATA[<p>用了好一陣子 OS X 回頭去用 Windows，發現有好多不習慣，除了主要的功能鍵 <kbd>Ctrl</kbd> 跑到鍵盤邊緣去了（OS X 主要功能鍵 <kbd>Command</kbd> 就在空白鍵旁邊比較近），手指頭常常按錯之外，最近在整理硬碟資料夾的時候又被一個小小的切換視窗功能給煩到。</p>
+
+<p>常用電腦的人一定都很熟悉 Ctrl + Tab 這個功能，可以快速在不同視窗之間切換，可是在 Windows 下當我使用這個功能時，給我的介面是這樣的：</p>
+
+<p><img src="https://lh5.googleusercontent.com/-izHKKLQ5a8Q/UbWDPvs5uiI/AAAAAAAAGY4/FiR5NnVj9Ys/s592/switch-windows.png" alt="windows-switching-windows" /></p>
+
+<p>主要是一個視窗縮圖，和一個小小的應用程式 icon 塞在右下角，辨識度非常地差，我很難一眼就快速認出哪個視窗是我要切換的應用程式。再來看看 OS X 切換視窗的介面：</p>
+
+<!-- more -->
+
+
+<p><img src="https://lh3.googleusercontent.com/-DDB7DNKyzHU/UbWDQdjQICI/AAAAAAAAGZM/uPy8c1vtHug/s690/osx-switch-apps.png" alt="osx-switching-windows" /></p>
+
+<p>清楚的應用程式 icon 辨別度非常的強，我一眼就能看出哪個應用程式是我想要切換過去的。這裡也能說明一個應用程式的 icon 設計也是很重要，不需要特別的華麗只需要留下足夠的印象，讓人很容易辨識。</p>
+
+<p>順便分享一下我的 Chrome 常用書籤長這樣，也是靠清楚的 icon 來做為辨識：</p>
+
+<p><img src="https://lh6.googleusercontent.com/-lsfa98IeCCA/UbWLW0EBq8I/AAAAAAAAGZ4/foancUbzS2M/s690/chrome-bookmarks.jpg" alt="chrome-bookmarks" /></p>
+
+<p>但是我在整理 Windows 那台電腦硬碟時，遇到最惱人的狀況其實是這個，同一個應用程式都是長得差不多的縮圖：</p>
+
+<p><img src="https://lh6.googleusercontent.com/-7iT_R82qZL4/UbWDPgCeZ7I/AAAAAAAAGZE/NT9pARWEpBU/s690/switch-windows-2.png" alt="windows-switching-windows-2" /></p>
+
+<p>這樣我完全不知道到底該切到哪一個視窗，而 Windows 下好像也沒有類似 <kbd>Command</kbd> + <kbd>`</kbd> 的功能。如果是 OS X 下，還可以用 Mission Control 或是 Expose 等方式，方便地在不同視窗之間做選擇，這部份 Windows 的介面體驗就做得讓人很難受。</p>
+
+<p>好在我現在只是要整理資料夾，以前我有玩過不少檔案總管的視窗管理軟體，可是介面都做得很宅（不友善）。OS X 上我現在用的是 <a href="http://www.trankynam.com/xtrafinder/">XtraFinder</a> 這套模擬 Chrome 的標籤介面，看起來相當簡潔，外觀長這樣：</p>
+
+<p><img src="https://lh5.googleusercontent.com/-7IbTgHfR58s/UbWGHC3jXwI/AAAAAAAAGZc/RbgfKBfGgGM/s690/osx-xfinder.png" alt="osx-xfinder" /></p>
+
+<p>所以我也想要在 Windows 上，找一個相似風格的視窗管理軟體，後來找到了 <a href="http://cn.ejie.me/">Clover 3</a> 用起來還不錯，還有類似書籤的功能，可惜我覺得有點雞肋就是了，外觀長這樣：</p>
+
+<p><img src="https://lh6.googleusercontent.com/-K5h38CcBicI/UbWDPuGCQsI/AAAAAAAAGZA/8MybmGE3WCM/s690/cover-3.PNG" alt="windows-cover-3" /></p>
+
+<p>題外話，我現在已經漸漸不太用 <kbd>Command</kbd> + <kbd>Tab</kbd> 的方式切換應用程式，而是改用 <a href="http://www.alfredapp.com/">Alfred</a> 這套軟體直接輸入應用程式名稱關鍵字來切換，因為有時候程式開得太多，一直 <kbd>Tab</kbd>、<kbd>Tab</kbd>、<kbd>Tab</kbd> 也是很煩的。XD</p>
+
+<p>過幾天，有空來寫一篇介紹一些 mouseless 操作電腦的方法好了。:)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[更好用的 Vim 外掛管理工具：Vundle]]></title>
+    <link href="http://blog.chh.tw/posts/vim-vundle/"/>
+    <updated>2013-05-25T16:38:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/vim-vundle</id>
+    <content type="html"><![CDATA[<p><img src="https://lh4.googleusercontent.com/-_0FBYCCvjPU/UaB5LuYVrWI/AAAAAAAAGXY/ewSOLLQ8_xU/s690/vim-vundle.png" alt="vim-vundle" /></p>
+
+<p>先前曾經寫過怎麼使用 <a href="http://blog.chh.tw/posts/vim-plugins-manager-pathogen/">Pathogen</a> 管理 Vim 的外掛，Git 的 submodule 用久了開始覺得很不方便，有時候只是要測試一下新玩具，用完就刪掉，可是<a href="http://blog.chh.tw/posts/git-submodule/">前後要操作的指令</a>至少超過四個，實在有夠麻煩。</p>
+
+<p>正打算來寫個 script 自動化過程，但這種東西怎麼可能沒人寫過，於是上網找了一下，被我發現 <a href="https://github.com/gmarik/vundle">Vundle</a> 這個管理工具，看完 README 後馬上就把 Pathogen 刪掉了，然後寫了這篇文章。XD</p>
+
+<!-- more -->
+
+
+<h2>Vundle 的優點</h2>
+
+<ul>
+<li>可以保持 git repo 的簡潔</li>
+<li>讓安裝/更新/刪除外掛更方便</li>
+</ul>
+
+
+<p>需要參考的話，可以看我放在 <a href="https://github.com/chinghanho/.dotfiles/blob/4c53d90d3e1efffb3fdc1ebc44bdac1781154b19/.vimrc#L1-L39">Github 上的 <em>.vimrc</em></a> 範例。</p>
+
+<h3>保持 git repo 的簡潔</h3>
+
+<p>透過 Vundle 管理外掛我不再需要讓 git 追蹤 <em>.vim/bundle/</em> 目錄，甚至連 Vundle 本身也不用追蹤，只要在 <em>.vimrc</em> 裡這樣寫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">let</span> iCanHazVundle<span class="p">=</span><span class="m">1</span>
+</span><span class='line'><span class="k">let</span> vundle_readme<span class="p">=</span>expand<span class="p">(</span><span class="s1">&#39;~/.vim/bundle/vundle/README.md&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">if</span> <span class="p">!</span>filereadable<span class="p">(</span>vundle_readme<span class="p">)</span>
+</span><span class='line'>  echo <span class="s2">&quot;Installing Vundle..&quot;</span>
+</span><span class='line'>  echo <span class="s2">&quot;&quot;</span>
+</span><span class='line'>  <span class="k">silent</span> <span class="p">!</span><span class="k">mkdir</span> <span class="p">-</span><span class="k">p</span> <span class="p">~</span><span class="sr">/.vim/</span>bundle
+</span><span class='line'>  <span class="k">silent</span> <span class="p">!</span>git clone https:<span class="sr">//</span>github.<span class="k">com</span><span class="sr">/gmarik/</span>vundle <span class="p">~</span><span class="sr">/.vim/</span>bundle/vundle
+</span><span class='line'>  <span class="k">let</span> iCanHazVundle<span class="p">=</span><span class="m">0</span>
+</span><span class='line'><span class="k">endif</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣一來，啟動 Vim 的時候就會自動去檢查 Vundle 安裝了沒，因此可以在 <em>.gitignore</em> 裡把 <em>bundle</em> 目錄直接忽略掉，不用再拖著一坨外掛跟著跑了。XD</p>
+
+<h3>安裝/更新/刪除外掛更方便</h3>
+
+<p>安裝、更新外掛是同一條指令，在 <em>.vimrc</em> 裡加上外掛的 Github 的作者名和 repo 名稱，像這樣：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'>Bundle <span class="s1">&#39;Lokaltog/vim-easymotion&#39;</span>
+</span><span class='line'>Bundle <span class="s1">&#39;Lokaltog/vim-powerline&#39;</span>
+</span><span class='line'>Bundle <span class="s1">&#39;airblade/vim-gitgutter&#39;</span>
+</span><span class='line'>Bundle <span class="s1">&#39;Townk/vim-autoclose&#39;</span>
+</span><span class='line'>Bundle <span class="s1">&#39;kien/ctrlp.vim&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後下指令 <code>:BundleInstall</code>，Vundle 會去搜尋對應的 repo，如果已經下載過便會檢查有沒有更新。要移除也很簡單，只要把該外掛那行刪掉或是註解掉，重新下一次指令就行了。</p>
+
+<p>Vim 的外掛腳本基本上都可以在 <a href="http://vim-scripts.org/vim/scripts.html">vim-scripts.org</a> 搜尋到，如果沒有 host 在 Github 上也可以直接輸入該外掛的名稱，例如這樣：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'>Bundle <span class="s1">&#39;L9&#39;</span>
+</span><span class='line'>Bundle <span class="s1">&#39;FuzzyFinder&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>若是該外掛放在別的 git 主機上，也可以丟 git URL，Vundle 會很聰明地判斷該去哪裡抓：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'>Bundle <span class="s1">&#39;git://git.wincent.com/command-t.git&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git Submodule 用法筆記]]></title>
+    <link href="http://blog.chh.tw/posts/git-submodule/"/>
+    <updated>2013-04-11T12:57:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/git-submodule</id>
+    <content type="html"><![CDATA[<p><img class="center" src="https://lh3.googleusercontent.com/-FDLtETH15RA/UWZCV-K5HvI/AAAAAAAAF_8/_V4T3qnbxGQ/s512/submodule-screen.png" title="'git-submodule'" ></p>
+
+<p>早上整理 <a href="https://github.com/chinghanho/.dotfiles">.dotfiles</a> 因為對 Git 的 submodule 指令不熟悉弄得灰頭土臉，最後把整個目錄砍掉重新 clone 回來，結果發現 submodule 裡面的目錄都是空的，才知道原來 Git 不會自動去抓 submodule 的 repo，還要另外加一些指令。</p>
+
+<p>這些指令因為不會很常用（吧？），最近是因為在摸索 <a href="http://blog.chh.tw/posts/vim-plugins-manager-pathogen/">Vim 的補丁管理</a>才開始碰到 git submodule 問題，如果不寫可能後天就忘光了，所以我把今天碰到的問題整理記錄下來。</p>
+
+<!-- more -->
+
+
+<h3>新增 submodule</h3>
+
+<pre><code>git submodule add git://github.com/majutsushi/tagbar.git .vim/bundle/tagbar
+</code></pre>
+
+<p>如果這個 repo 先前沒有用過 submodule 那麼 Git 會在目錄下建立一個叫做 <em>.gitmodules</em> 的目錄，這裡記錄了 remote repo 的 URL 和這個 submodule 在此專案的路徑。</p>
+
+<p>執行此命令後 submodule 和 <em>.gitmodules</em> 會自動 staged，這個時候可以 commit 和 push。</p>
+
+<h3>更新 submodule</h3>
+
+<p>個別 repo 更新比較麻煩，必須到個別的目錄底下執行 <code>git pull</code> 去拉 upstream 的程式碼，可是這樣會比較安全；若要一次全部更新所有的 submodule 可以用這 <code>foreach</code> 指令：</p>
+
+<pre><code>git submodule foreach --recursive git pull origin master
+</code></pre>
+
+<h3>刪除 submodule</h3>
+
+<p>本以為會有像是 <code>git submodule rm</code> 這樣的指令，結果竟然沒有，必須辛苦地一個一個手動移除，不知道不實作這個指令的考量是什麼，希望未來的版本能把它加上去。</p>
+
+<p>移除 submodule 有以下幾個步驟要做，先把 submodule 目錄從版本控制系統移除：</p>
+
+<pre><code>git rm --cached /path/to/files
+rm -rf /path/to/files
+</code></pre>
+
+<p>再來是修改 <em>.gitmodules</em>，把不用的 submodule 刪掉，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'> [submodule &quot;.vim/bundle/vim-gitgutter&quot;]
+</span><span class='line'>   path = .vim/bundle/vim-gitgutter
+</span><span class='line'>   url = git://github.com/airblade/vim-gitgutter.git
+</span><span class='line'><span class="gd">-[submodule &quot;.vim/bundle/vim-autoclose&quot;]</span>
+</span><span class='line'><span class="gd">-  path = .vim/bundle/vim-autoclose</span>
+</span><span class='line'><span class="gd">-  url = git://github.com/Townk/vim-autoclose.git</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>還沒完喔！還要修改 <em>.git/config</em> 的內容，跟 <em>.gitmodules</em> 一樣，把需要移除的 submodule 刪掉，最後再 commit。</p>
+
+<h3>clone 時把 submodule 一起抓下來</h3>
+
+<p>執行 <code>git clone</code> 時 Git 不會自動把 submodule 一起 clone 過來，必須加上 <code>--recursive</code> 遞歸參數，這樣可以連帶 submodule 的 submodule 通通一起抓下來：</p>
+
+<pre><code>git clone --recursive git@github.com:chinghanho/.dotfiles.git
+</code></pre>
+
+<p>如果已經抓下來才發現 submodule 是空的，可以用以下指令去抓，<code>init</code> 會在 _.git/config` 下註冊 remote repo 的 URL 和 local path：</p>
+
+<pre><code>git submodule init
+git submodule update --recursive
+</code></pre>
+
+<p>或是合併成一行 <code>git submodule update --init --recursive</code> 也可以，如果 upstream 有人改過 <em>.gitmodules</em>，那 local 端好像也是用這個方法 update。</p>
+
+<h2>指令解釋</h2>
+
+<ul>
+<li><code>git submodule init</code>：根據 <em>.gitmodules</em> 的名稱和 URL，將這些資訊註冊到 <em>.git/config</em> 內，可是把 <em>.gitmodules</em> 內不用的 submodule 移除，使用這個指令並沒辦法自動刪除 <em>.git/config</em> 的相關內容，必須手動刪除；</li>
+<li><code>git submodule update</code>：根據已註冊（也就是 <em>.git/config</em> ）的 submodule 進行更新，例如 clone 遺失的 submodule，也就是上一段講的方法，所以執行這個指令前最好加上 <code>--init</code>；</li>
+<li><code>git submodule sync</code>：如果 submodule 的 remote URL 有變動，可以在 <em>.gitmodules</em> 修正 URL，然後執行這個指令，便會將 submodule 的 remote URL 更正。</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[終端機必備的多工良伴：tmux]]></title>
+    <link href="http://blog.chh.tw/posts/tmux-terminal-multiplexer/"/>
+    <updated>2013-04-09T17:11:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/tmux-terminal-multiplexer</id>
+    <content type="html"><![CDATA[<p>每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。</p>
+
+<p>從官網上的描述，<a href="http://tmux.sourceforge.net/">tmux</a> 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh 登入到遠端主機也不會斷掉，此外還可以在同個視窗下切割區塊，如下圖（<a href="http://www.psteiner.com/2012/05/tmux-for-ruby-on-rails.html">圖片來源</a>）：</p>
+
+<p><img src="http://lh5.googleusercontent.com/-Z0XpVHmJ-ks/UWO-JgwbszI/AAAAAAAAF_M/QdewyOkH1xw/s690/rumble.png" alt="tmux-demo" /></p>
+
+<p>右邊開 Vim 寫程式，左上角跑 RSpec 測試，同時左下角開 Rails server 看 log，神奇的是這些狀態可以保存起來，不需要的時候可以藏到背景去，可是用 Sublime Text 2 就沒這麼理想，害我有種想改用 Vim 的衝動。</p>
+
+<!-- more -->
+
+
+<h2>在 OS X 上使用 Homebrew 安裝 tmux</h2>
+
+<p>首先要安裝 <a href="http://brew.sh/index_zh-tw.html">Homebrew</a>，沒有安裝過的話只要在終端機執行這一行指示即可：</p>
+
+<pre><code>ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+</code></pre>
+
+<p>儘管剛剛才安裝 Homebrew 但是還是要先更新一下再安裝程式：</p>
+
+<pre><code>brew update
+brew install tmux
+</code></pre>
+
+<h2>tmux 運作方式</h2>
+
+<p>2013.04.19 更新：Youtube 上 <a href="http://www.youtube.com/watch?v=wKEGA8oEWXw">tmux Quick Start</a> 這部影片介紹非常清楚，值得一看。</p>
+
+<p>從 SuperUser 看到的<a href="http://superuser.com/questions/398735/difference-between-tmux-and-shell-split-options-on-iterm2">答案</a>，如果關閉終端機掛載在上面的 shells 也會跟著被刪除，結構就像是這樣：</p>
+
+<pre><code>iterm2
+  +---- shell
+  +---- shell
+  +---- shell
+</code></pre>
+
+<p>tmux 採用 client-server 的 model，每一個 session 作為一個 client。透過 tmux 仍然會保持所有 shells 繼續運作，即便把整個終端機都關閉，因此可以之後重新將他們重新掛載上去，這也是為什麼在 tmux 下用 ssh 登入遠端主機不會斷線的原因：</p>
+
+<pre><code>iterm2
+  +---- tmux
+          +---- shell
+          +---- shell
+          +---- shell
+</code></pre>
+
+<h2>tmux 基本用法</h2>
+
+<p>直接在終端機執行 <code>tmux</code> 會開啟第一個 client，可以執行 <code>tmux ls</code> 查看有哪些 client，如果沒有任何 client 可以用，tmux 會自動建立一個。執行 tmux 後終端機底部會顯示一條狀態欄：</p>
+
+<p><img src="http://lh5.googleusercontent.com/-eG1xoULfnn0/UWPNebkAeDI/AAAAAAAAF_c/m3RIih2HklI/s690/tmux.png" alt="tmux" /></p>
+
+<p>tmux 預設的操作要加上 <kbd>Ctrl-b</kbd> 功能鍵；tmux 也有類似 Vim 的指令模式，快捷鍵 <kbd>Ctrl-b</kbd> 後按 <code>:</code> 可以執行指令。以下是一些基本、常用的功能：</p>
+
+<ul>
+<li><kbd>Ctrl-b</kbd> + <kbd>c</kbd>：建立新的視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>d</kbd>：卸載目前的 client；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>l</kbd>：與先前選擇的視窗間切換；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>n</kbd>：移動到下個視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>p</kbd>：移動到上個視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>&amp;</kbd>：刪除目前的視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>,</kbd>：重新命名目前的視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>%</kbd>：將目前的視窗分離到兩個區塊；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>q</kbd>：顯示各分割區塊的號碼（用來切換到不同的區塊）</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>o</kbd>：切換到下個區塊；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>?</kbd>：列出所有快捷鍵的說明；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>w</kbd>：列出目前 clinet 的視窗，可以用數字鍵切換；</li>
+</ul>
+
+
+<p>要將目前視窗切割多個區塊，快捷鍵如下：</p>
+
+<ul>
+<li><kbd>Ctrl-b</kbd> + <kbd>%</kbd>：垂直分離視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <code>:split-window</code>：水平分離視窗；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>o</kbd>：移往下一個區塊；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>q</kbd>：顯示區塊的數字代號，當數字顯示時使用數字鍵移往該區塊；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>{</kbd>：將目前的區塊移往左邊；</li>
+<li><kbd>Ctrl-b</kbd> + <kbd>}</kbd>：將目前的區塊移往右邊；</li>
+</ul>
+
+
+<h2>個人設定</h2>
+
+<p>切割面板區塊的快捷鍵好像有點難記，可以在根目錄下建立 <em>~/.tmux.conf</em> 檔案，定義自己容易記憶的快捷鍵：</p>
+
+<pre><code>unbind %
+bind | split-window -h
+bind – split-window -v
+</code></pre>
+
+<p><kbd>Ctrl-b</kbd> 距離太遠也很難按，先前有用 GNU screen 的人會將它改成 <kbd>Ctrl-a</kbd>，可是這會和某些快捷鍵衝突，所以我把它改成 <kbd>Ctrl-f</kbd>：</p>
+
+<pre><code>set -g prefix C-f
+unbind C-b
+bind C-f send-prefix
+</code></pre>
+
+<p>我的 .tmux.conf 檔案放在我 Github 上的 <a href="https://github.com/chinghanho/.dotfiles/blob/master/.tmux.conf">.dotfiles</a> 裡，有興趣可以去看看，這裡附上最後我修改的成果圖，加上原本 <a href="http://blog.chh.tw/posts/oh-my-zsh/">oh-my-zsh</a> 修改結果，整個變得超級花俏啊 XD（點圖可放大）：</p>
+
+<p><a href="https://lh5.googleusercontent.com/-zmNq9I6M8wY/UWQHQAdk1BI/AAAAAAAAF_s/ejDrVE8N_4M/s1788/tmux-final.png"><img src="https://lh5.googleusercontent.com/-zmNq9I6M8wY/UWQHQAdk1BI/AAAAAAAAF_s/ejDrVE8N_4M/s690/tmux-final.png" alt="tmux-final" /></a></p>
+
+<p>底下的 status bar 是抄 <a href="https://github.com/zolrath/wemux">wemux</a> 作者的設定，我覺得非常漂亮。最後推薦這兩個連結的文章，介紹非常詳細：</p>
+
+<ul>
+<li><a href="http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/">TMUX – The Terminal Multiplexer (Part 1)</a></li>
+<li><a href="http://blog.hawkhost.com/2010/07/02/tmux-%E2%80%93-the-terminal-multiplexer-part-2/">TMUX – The Terminal Multiplexer (Part 2)</a></li>
+</ul>
+
+
+<h2>可以與 iTerm2 整合</h2>
+
+<p>iTerm2 <a href="https://code.google.com/p/iterm2/wiki/TmuxIntegration">wiki 頁面</a>上有教怎麼跟 tmux 整合，看了一下說要下載一些東西，然後還要編譯過才能用，可是我發現我直接輸入 <code>tmux -CC</code> 就可以用了，不清楚發生什麼事。</p>
+
+<p>跟 iTerm2 整合的好處是可以用 iTerm2 的分頁和切割區塊功能取代 tmux 那些一堆的指令，可是我試用的結果發現很多不方便的地方，所以我還是用原本 tmux 切割區塊的方式。</p>
+
+<h2>已知問題</h2>
+
+<p>目前發現有兩個問題。</p>
+
+<p>在 tmux 下無法使用系統 <code>pbcopy</code> 等複製貼上的指令，在 <a href="http://robots.thoughtbot.com/post/19398560514/how-to-copy-and-paste-with-tmux-on-mac-os-x">thoughtbot</a> 網站上找到解決方法：</p>
+
+<pre><code>brew install reattach-to-user-namespace
+</code></pre>
+
+<p>然後在 <em>.tmux.conf</em> 檔案裡加上以下這行設定：</p>
+
+<pre><code>set-option -g default-command "reattach-to-user-namespace -l zsh"
+</code></pre>
+
+<p>還有個問題是 <code>git commit</code> 我預設用的是 Sublime Text 2 編輯器，可是編輯提交訊息後會卡住不動，也就是 <code>subl -w</code> 無法返回，目前無解。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vim 補丁管理器：Pathogen]]></title>
+    <link href="http://blog.chh.tw/posts/vim-plugins-manager-pathogen/"/>
+    <updated>2013-04-03T09:07:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/vim-plugins-manager-pathogen</id>
+    <content type="html"><![CDATA[<p><img src="https://lh5.googleusercontent.com/-8oZ4apnadkQ/UVuFq3nS-NI/AAAAAAAAF9A/oJi0DRBBXYk/s690/mvim-screenshot.png" alt="mvim-screenshot" /></p>
+
+<p>2013.04.12 更新：今天把 Command-T 移除掉換用 <a href="https://github.com/kien/ctrlp.vim">ctrlp</a>，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
+2013.05.25 更新：今天起改用 Vundle 來管理，可以參考我的新文章：「<a href="http://blog.chh.tw/posts/vim-vundle/">更好用的 Vim 外掛管理工具：Vundle</a>」</p>
+
+<h2>安裝 Pathogen</h2>
+
+<p>管理 Vim 補丁我用的是 <a href="https://github.com/tpope/vim-pathogen">Pathogen</a> 這套，可以讓所有補丁統一放在 <em>~/.vim/bundle</em> 下，每個補丁就是一個獨立的資料夾，想要移除就直接砍掉即可。安裝方法是將 <em>pathogen.vim</em> 腳本放在 <em>~/.vim/autoload</em> 目錄下，可以用以下指令完成：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir -p ~/.vim/autoload ~/.vim/bundle; \
+</span><span class='line'>curl -Sso ~/.vim/autoload/pathogen.vim \
+</span><span class='line'>    https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後將這行加進 <em>.vimrc</em> 裡，啟動 Vim 時便會自動讀取 <em>~/.vim/bundle</em> 下的補丁檔案：</p>
+
+<pre><code>" auto load all plugins in vim bundle
+execute pathogen#infect()
+</code></pre>
+
+<h2>安裝補丁</h2>
+
+<p>之後只要將下載的補丁資料夾拖進 <em>~/.vim/bundle</em> 裡面即可，不過我更偏愛使用 <a href="http://git-scm.com/">Git</a> 來管理。假設要安裝 <a href="https://github.com/wincent/Command-T">Command-T</a> 補丁，可以用 Git 的 submodule 指令完成：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/.vim
+</span><span class='line'>mkdir ~/.vim/bundle // if you have not yet created this directory
+</span><span class='line'>git submodule add https://github.com/wincent/Command-T.git bundle/command-t
+</span><span class='line'>git add .
+</span><span class='line'>git commit -m "install Command-T plugin as a submodule"</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- git submodule update --init -->
+
+
+<h2>更新補丁</h2>
+
+<p>使用 Git 安裝補丁的好處是可以自己動手 hack，也可以保持更新。對單一補丁更新只要變更所在目錄到該補丁的位置，然後 <code>git pull</code> 去拉 upstream 的最新程式碼：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/.vim/bundle/command-t
+</span><span class='line'>git pull origin master</span></code></pre></td></tr></table></div></figure>
+
+
+<p>要一次更新所有已安裝的補丁，則可以用 Git 的 <code>foreach</code> 指令來更新每個補丁的最新版本：</p>
+
+<pre><code>git submodule foreach git pull origin master
+</code></pre>
+
+<h2>後記</h2>
+
+<p>平常被 Sublime Text 的 Package Control 寵慣了，來用 Vim 感到非常的麻煩和不習慣，而且 Command-T 安裝後還要用 Ruby 跟 C 去編譯才能用，這到底是什麼鬼編輯器啦！XD</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Google 搜尋加密有兩種]]></title>
+    <link href="http://blog.chh.tw/posts/https-www-google-com-vs-https-encrypted-google-com/"/>
+    <updated>2013-03-22T13:53:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/https-www-google-com-vs-https-encrypted-google-com</id>
+    <content type="html"><![CDATA[<p>剛剛看 <a href="http://www.businessinsider.com/google-products-youve-never-heard-of-2013-3#encryptedgooglecom-is-a-more-secure-way-to-search-for-things-encrypted-uses-secure-sockets-layer-ssl-which-is-the-same-security-that-banks-use-online-11">Business Insider</a> 提到了 Google 的 <a href="https://encrypted.google.com/">encrypted.google.com</a> 這個網址，記得在 Google 還沒有對已登入用戶全面預設用 <a href="http://en.wikipedia.org/wiki/HTTP_Secure">HTTPS</a> 連線以前，<em>encrypted.google.com</em> 是專門用來使用 HTTPS 的網址，也就是當連線到 <em>https://www.google.com</em> 時會被自動跳轉到 <em>https://encrypted.google.com</em>。</p>
+
+<p>既然現在 Google 對於已登入的用戶已經預設用 HTTPS 連線，那這個東西還留著幹嘛？所以<a href="http://security.stackexchange.com/questions/32367/what-is-the-difference-between-https-google-com-and-https-encrypted-google-c">問一下 Google 找答案</a>，原來 <em>encrypted.google.com</em> 另有其他特異功能，兩者之間的差異，主要在於點擊廣告與搜尋結果時，處理 <a href="https://zh.wikipedia.org/wiki/HTTP%E5%8F%82%E7%85%A7%E4%BD%8D%E5%9D%80">HTTP 參照位址</a>的方式不同。</p>
+
+<!-- more -->
+
+
+<h3>點擊一個廣告</h3>
+
+<ul>
+<li><p><em>https://www.google.com</em>：Google 將會把你帶到一個 HTTP 的重新導向頁面，在那裡他們會把你的搜尋字串塞進參照資訊裡去。</p></li>
+<li><p><em>https://encrypted.google.com</em>：如果這個廣告主用的是 HTTP，Google 不會讓他們知道你的查詢字串是什麼。而如果廣告主用的是 HTTPS，他們將會如常地收集到你的參照資訊（包括查詢字串）。</p></li>
+</ul>
+
+
+<h3>點擊一般的搜尋結果</h3>
+
+<ul>
+<li><p><em>https://google.com</em>：除果網站使用 HTTP 連線，Google 將會把你帶到 HTTP 的重新導向頁面，但是不會把你的搜尋字串給塞進參照資訊裡面。他們只會告訴網站你是從 Google 來的。如果你的網站使用 HTTPS 連線，便可以正常地搜集到參照資訊。</p></li>
+<li><p><em>https://encrypted.google.com</em>：如果你點擊的網站使用 HTTP 連線，Google 既不會告訴它查詢字串是什麼，也不會告訴它你是哪裡來的。如果該網站使用 HTTPS 連線，它則會正常地收到參照資訊。</p></li>
+</ul>
+
+
+<p>所以我的 blog 從搜尋引擎來的訪客中，用關鍵字去查有 74% 都是「not provided」大概就是這個原因。如果這篇答案的結果是正確的，採用 HTTPS 連線加密的網站便可以正確地搜集到帶有查詢字串的參照資料，那網站採用 HTTPS 將會變成最基本的條件。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[寫在 Google Reader 死後]]></title>
+    <link href="http://blog.chh.tw/posts/after-google-reader-dead/"/>
+    <updated>2013-03-16T00:02:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/after-google-reader-dead</id>
+    <content type="html"><![CDATA[<p>昨天最熱門的消息就是 <a href="http://googlereader.blogspot.tw/2013/03/powering-down-google-reader.html">Google 宣布 Reader 的死亡</a>（GR 的官方部落格上次更新竟然是兩年前），判刑日定在今年 7 月 1 日，RIP。文章的意思是，在執行死刑之前，使用者可以用 <a href="https://www.google.com/takeout/?pli=1#custom:reader">Google Takeout</a> 把資料帶走，然後就趕快滾吧！雲端服務大概就是這麼回事吧，煙消雲散時<a href="https://news.ycombinator.com/item?id=5371725">使用者哭喊地再悲再慘</a>也沒用，只能把行李打包打包逃到下一個隨時可能散掉的雲。</p>
+
+<p>翻了一下統計資訊，我從 2010 年 4 月 10 日開始使用 Google Reader，直到今天將近三年的時間，總共閱讀過 70,194 個項目，平均起來每天至少瀏覽過 70 篇文章。這並不是很多，因為我的閱讀習慣早已經改變，不再依賴 RSS，以前早中晚都會習慣開 Google Reader 看新聞，現在幾乎只有一天一次、兩天一次，或者更少，頻率降低許多。</p>
+
+<p>現在我的主要資訊來源有以下這幾個：</p>
+
+<!-- more -->
+
+
+<h3>Twitter</h3>
+
+<p>自從開始使用 <a href="https://twitter.com/">Twitter</a> 後就愛上了 Twitter 這種訂閱資訊流的方式。自己挑選資訊策展人，然後從極短的網摘和大量的連結，讓我能夠很快地找到我想看的內容。不論是 Google Reader 已死、RSS 已死也好，總之從 Twitter 上取得資訊是我最喜歡的途徑。</p>
+
+<h3>Hacker News</h3>
+
+<p><a href="http://news.ycombinator.com/">Hacker News</a> 是矽谷知名創投設立的網站，<a href="http://www.inside.com.tw/2011/02/15/what-you-should-subscribe-hacker-news-provided-by-y-combinator">Inside 曾經有寫過專文</a>介紹它，儘管近來有素質每況愈下的感覺，但是上面的資訊大部分都仍然很有可看性，所以我現在每天還是都會去看看置頂的新聞有哪些。</p>
+
+<h3>Prismatic</h3>
+
+<p>我很喜歡 <a href="http://www.zite.com/">Zite</a> 這個資訊策展服務，可是我只想要在電腦上瀏覽使用，而 Zite 似乎沒打算做 Web 版，所以我選擇了 <a href="http://getprismatic.com/">Prismatic</a> 作為了 Zite 替代品。Prismatic 會依照個人的主題偏好，提供客製化的資訊流，目前用起來很滿意。</p>
+
+<p><img src="http://lh3.googleusercontent.com/--vfXlScj0-s/UUNEW_s885I/AAAAAAAAF7A/cesErfD2F-k/s686/google-reader-versus-google-plus.jpg" alt="google-reader-versus-google-plus" /></p>
+
+<p>話說回來，Google 把 Reader 關掉讓我感到有點訝異，雖然這個消息在小道上已經傳很久，但是也沒想到會是這樣子收場。如果按 <a href="http://www.techbang.com/posts/12585-former-product-manager-brian-shih-explains-why-google-reader-to-step-down-everything-is-google">T 客邦這篇文章</a>寫的那樣，說是 Google+ 的原因，這樣的說法更讓人難以接受，從種種跡象來看 Google+ 完全沒有替代 Reader 的能力，Google 怎麼敢就這樣下決定？好歹這份市場也不算小，就這樣拱手讓給別人實在很可惜。</p>
+
+<p>我目前把訂閱的清單暫時轉移到 <a href="http://blog.feedly.com/2013/03/14/google-reader/">Feedly</a> 去，或許哪天心血來潮還是會去翻翻看有什麼東西可以挖。</p>
+
+<p>2013.03.20 更新：Feedly 的套件需要存取所有網站資料的授權，因為它會在每個網站上嵌入一個小小的按鈕方便分享，而要使用 Feedly 似乎一定得裝他們的套件，實在太不乾淨，所以我決定不用了。</p>
+
+<p>2013.03.21 更新：在 <a href="http://www.feedly.com/home#preferences/mini%20toolbar">Feedly 的偏好設定頁面</a> 可以關掉那顆 mini 按鈕，感謝網友的告知。雖然還是不喜歡看個 RSS 也要授權那麼多東西，不過我打算還是用一陣子觀察看看。</p>
+
+<p><img src="http://lh4.googleusercontent.com/-nCh6xqkpDYQ/UUMzsAes5NI/AAAAAAAAF6s/uTRxBGGa4JU/s578/removing-google-reader.png" alt="removing-google-reader" /></p>
+
+<p>最後，跟 Google Reader 說再見的時候到了，謝謝你曾經提供這麼棒的服務來製造我的資訊焦慮，讓我一度以為你是那麼不可或缺，但又同時讓我理解到你並不是那麼地重要。</p>
+
+<p>Google Reader，快點從我的導航欄上消失吧！</p>
+
+<p>（突然想到我的 blog 目前只有提供 RSS 一種 feed 途徑……Orz）</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Opera 產品全面改用 WebKit 引擎]]></title>
+    <link href="http://blog.chh.tw/posts/opera-move-to-webkit/"/>
+    <updated>2013-02-14T08:40:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/opera-move-to-webkit</id>
+    <content type="html"><![CDATA[<p><img src="http://lh3.googleusercontent.com/-81Na2LPt3oY/URwrpztPvcI/AAAAAAAAF0I/nW6cpHKy0xQ/s690/installed-browsers.png" alt="installed-browsers" /></p>
+
+<p>大約在一個月前就有看到 <a href="http://www.pocket-lint.com/news/49375/opera-ice-new-webkit-browser">Opera 要改用 WebKit rendering 引擎</a>的消息，所以昨天看到 <a href="http://my.opera.com/ODIN/blog/300-million-users-and-move-to-webkit">Opera 開發團隊發佈的新聞</a>其實沒有太驚訝，反而是看到<a href="http://news.ycombinator.com/item?id=5211953">鄉民們激動的表現</a>讓我有點意外。</p>
+
+<p>要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit 引擎說實在跟我沒有太大的關係，對於網站開發有沒有影響我也不知道，因為在我練功的路上目前都沒有碰到太多跟瀏覽器前端有關的部份，要說直接的影響大概就是寫 CSS 可以少個 prefix 吧！可是我寫 CSS 都是用 <a href="https://github.com/chriseppstein/compass">Compass</a> 這個武裝神器，本來就沒有在寫 prefix 啊。XD</p>
+
+<p>我最喜歡的瀏覽器是 Google Chrome，可是有時會因為不同的需求或是開發需要，我電腦裡同時安裝了各家瀏覽器，包括 Safari、Firefox 和 Opera 等等。裝 Firefox 是因為要用到某些特別的 add-ons；而 Opera 則是 UI 用得不是很習慣所以不喜歡，裝起來只是純粹開發測試用。現在 Opera 改用 WebKit 後突然發現好像已經可以移除它了齁！:p</p>
+
+<p>跟我一樣的人應該也不少，Opera 改用 WebKit 應該多多少少會影響到市佔率，可是我想其實應該不會減少太多，因為「一般使用者」本來就沒有在乎 Opera 用的是哪一套 rendering 引擎，重點還是在 UI 的設計跟整體效能讓使用者滿不滿意。我對 Opera 沒有什麼偏見，真的只是純粹用不慣而已。</p>
+
+<p>Opera 放棄 Presto 後市場上就只剩下 WebKit、Gecko 和 Trident 三個主要的 rendering 引擎，也許以後會常見到「最佳瀏覽效果請使用 WebKit-base 瀏覽器」這樣的標語出現在網頁的尾部，也可能讓 WebKit 推向成為下一個「IE 世代」，誰知道呢？即便到真的有那麼一天，我相信以現在 web 的發展程度，一定會出現一個替代品讓堅持開放信仰的人們能夠有個地方去。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[關於 Ruby class 他們沒告訴你的真相：MetaClass]]></title>
+    <link href="http://blog.chh.tw/posts/ruby-metaclass-eigenclass/"/>
+    <updated>2013-01-17T20:19:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/ruby-metaclass-eigenclass</id>
+    <content type="html"><![CDATA[<h2>先從 Singleton Methods 講起</h2>
+
+<p>透過以下的 code 可以察覺，其實定義 singleton method 的方式跟定義實例方法（instance method）很像，就好像把某個 class 實例化後命名為大寫的 C，然後對這個實例定義方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># instance method</span>
+</span><span class='line'><span class="k">def</span> <span class="nc">c</span><span class="o">.</span><span class="nf">call_method</span>
+</span><span class='line'>  <span class="c1"># do something...</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># singleton method</span>
+</span><span class='line'><span class="k">def</span> <span class="nc">C</span><span class="o">.</span><span class="nf">call_method</span>
+</span><span class='line'>  <span class="c1"># do something...</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>為什麼舉這個例子呢？因為其實 singleton method 就是這樣創建的。</p>
+
+<p>在 Ruby 入門教學書籍上，幾乎每本書都說 class 是一種 Class，而 Class 的 superclass 是 Object，查找方法的路徑是這樣一層層往上找，但是他們沒有告訴我們，其實每一個 class 上面還有一個神祕的 class，就叫做 metaclass，而這個 metaclass 定義的實例方法就是該 class 的 singleton method。</p>
+
+<h2>再來說 MetaClass</h2>
+
+<p>metaclass 比較正規的稱呼是 eigenclass，會這樣叫可能是因為 Ruby 的歷史因素，metaclass 聽起來比較直覺所以我都習慣這樣用。而 metaclass 也是一種 Class，用我們比較熟悉的方法來理解的話，它就等於是以下這個例子的 <code>D</code> class：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">D</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">C</span> <span class="o">&lt;</span> <span class="n">D</span><span class="p">;</span> <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也因為這樣的繼承結構，我們才能在「實例化」的 <code>C</code> class 物件上，呼叫定義在 metaclass 內的實例方法。不過跟一般的類別繼承關係比較不同的是，每個 metaclass 都只屬於一個 class，它不能同時被多個 class 繼承。</p>
+
+<p>由於每個 class 都有個 metaclass，當建立一個 class 的時候，Ruby 會自動為這個 class 創建一個 metaclass；而 class 的 singleton method 是定義在這裡面的，所以可以說 metaclass 才是「真正的」class。</p>
+
+<p>Ruby 用一個特殊的語法來取得 metaclass，即使在不知道 metaclass 之前，應該都有過這個語法，只是可能不知道原理，那就是 <code>class &lt;&lt; self</code>，這裡的 <code>self</code> 可以替換成任何想要取得 metaclass 的物件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c_meta</span> <span class="o">=</span> <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="n">C</span>
+</span><span class='line'>  <span class="nb">self</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c_meta</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;Class:C&gt; 這就是 C class 的 metaclass</span>
+</span><span class='line'><span class="c1"># 而 C 只是 Class:C 的一個 instance</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c_meta</span><span class="o">.</span><span class="n">instance_methods</span>
+</span><span class='line'><span class="c1"># 這將會列出所有 C class 的 singleton method</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這是 Ruby 很抽象的部分，有時候光看文字解釋很難理解，又礙於篇幅我沒寫得特別詳細，只是就重點部分做一下筆記，提供記憶和回顧使用，如果是完全不熟悉 metaclass 的初學者，最好去看 <a href="http://pragprog.com/book/ppmetr/metaprogramming-ruby">Metaprogramming Ruby</a> 這本書，相信會有很大的收穫，更有效的作法，就是打開 irb 實際敲敲看。</p>
+
+<p>此外，關於 Ruby class 之間的繼承關係，可以參考這張 <a href="http://objectgraph.rubyforge.org/dotOG.html">RubyForge</a> 整理的圖表，畫得不算很好，但是可以清楚看出類別之間關係，對於學習也是個很好的教材。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby 的 Flat Scope 技巧]]></title>
+    <link href="http://blog.chh.tw/posts/ruby-flat-scope/"/>
+    <updated>2013-01-16T15:30:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/ruby-flat-scope</id>
+    <content type="html"><![CDATA[<p>2013.01.17 更新：為了簡化說明，本篇文章省略了類別變數（class variables）。</p>
+
+<p>Ruby 的變數分為全域變數（global variables）、實例變數（instance variables）跟本地變數（local variables），變數的生命週期會隨著 scope 的不同而有所不同，而這個 scope 就是程式碼執行的環境。</p>
+
+<p>在 Ruby 中決定 scope 範圍的分別是 <code>module</code>、<code>class</code> 和 <code>def</code>，也就是所謂的 Scope Gates，當 code 執行時每經過這三個「Gates」，某些變數可能就會隨著 scope 出現或是消失。</p>
+
+<h2>Flat Scope</h2>
+
+<p>以下是簡單的例子，我用 <code>v1</code>、<code>v2</code> 和 <code>v3</code> 分別表示不同 scope 的本地變數：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">v1</span> <span class="o">=</span> <span class="s2">&quot;This is v1 outside of class C.&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">C</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; NameError</span>
+</span><span class='line'>  <span class="n">v2</span> <span class="o">=</span> <span class="s2">&quot;This is v2 inside of class C.&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method</span>
+</span><span class='line'>    <span class="n">v3</span> <span class="o">=</span> <span class="s2">&quot;This is v3 inside of call_method of class C.&quot;</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; NameError</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="n">v2</span> <span class="c1"># =&gt; NameError</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="n">v3</span> <span class="c1"># =&gt; &quot;This is v3 inside of call_method of class C.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">v2</span> <span class="c1"># =&gt; &quot;This is v2 inside of class C.&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C.&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">C</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">call_method</span> <span class="c1"># =&gt; NameError</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>v1</code> 這個本地變數進不了 <code>C</code> class 的 scope，但是可以用 block 的方式傳給 <code>Class.new()</code>，這樣就不會通過「Gates」也就不會建立 scope，本地變數變得可以共用：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">v1</span> <span class="o">=</span> <span class="s2">&quot;This is v1 outside of class C.&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">C</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C.&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在 <code>C</code> class 裡 <code>v2</code> 這個本地變數也同樣進不了 <code>call_method</code> 這個 scope，因此可以用 <code>define_method</code> 來建立實例方法，避開使用 <code>def</code> 時的 Scope Gates，就能順利將本地變數傳進去：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span>
+</span><span class='line'>  <span class="n">v2</span> <span class="o">=</span> <span class="s2">&quot;This is v2 inside of class C.&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="n">v2</span> <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">C</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">call_method</span> <span class="c1"># =&gt; &quot;This is v2 inside of class C.&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果把這兩個方法串起來用，就會變成這樣，同個本地變數共用到底：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">v1</span> <span class="o">=</span> <span class="s2">&quot;This is v1 outside of class C&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">C</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>為什麼不用全域變數？</h2>
+
+<p>全域變數的確可以把所有的 scope 全部打平，或者是說它根本無視 scope 的存在。雖然聽起來好像是個不錯的解決方案，但這會造成維護上的困難，因為會不曉得到底程式的哪一個部分改變了全域變數，所以通常會盡量避免使用它。</p>
+
+<h2>為什麼不用實例變數？</h2>
+
+<p>實例變數可以讓不同的實例方法共用相同的變數，這個方法經常可以看到，應用相當廣泛，例如這個範例程式經常見到：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
+</span><span class='line'>    <span class="vi">@shared</span> <span class="o">=</span> <span class="s2">&quot;Hello world!&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_a</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="vi">@shared</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_b</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="vi">@shared</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_a</span> <span class="c1"># =&gt; Hello world!</span>
+</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_b</span> <span class="c1"># =&gt; Hello world!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是有時候我們並不想讓實例變數被外部取得，例如可以用 <code>c.instance_eval { puts @shared }</code> 挖出實例變數是什麼，這樣探詢別人的狀態，一般被認為不是好事，因為如果它想讓我們知道它的某個狀態，它應該會提供個函式讓我們來使用。所以如果不想讓別人知道這個物件（object）裡面有什麼，就可以使用剛剛介紹的方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span>
+</span><span class='line'>  <span class="n">shared</span> <span class="o">=</span> <span class="s2">&quot;Hello world!&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method_a</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="n">shared</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method_b</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="n">shared</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_a</span> <span class="c1"># =&gt; &quot;Hello world!&quot;</span>
+</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_b</span> <span class="c1"># =&gt; &quot;Hello world!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣一來就沒有人能夠挖出 <code>shared</code> 到底是什麼了，隱私保護地相當好，而這個技巧被稱為 Shared Scope。:)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby 的 Ghost Method 與 Dynamic Proxy 技巧]]></title>
+    <link href="http://blog.chh.tw/posts/ruby-ghost-method-and-dynamic-proxy/"/>
+    <updated>2013-01-15T12:04:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/ruby-ghost-method-and-dynamic-proxy</id>
+    <content type="html"><![CDATA[<p>昨天寫的 <a href="http://blog.chh.tw/posts/dynamic-method/">Dynamic Method</a> 是 code 在 runtime 時才動態產生方法，也就是說這個方法的確存在，只是在需要的時候才會建立，而且用 <code>respond_to?</code> 是可以驗證為 true 的；而 Ghost Method 則是像鬼一般的看不到，甚至用 <code>respond_to?</code> 也會返回 false 的，可是我們卻可以很神奇地呼叫它。</p>
+
+<h2>關鍵在 method_missing</h2>
+
+<p>凡事都有例外，當呼叫方法時如果找不到，Ruby 給了 <code>method_missing</code> 這個方法來解決找不到方法時的補救措施，而 Ghost Method 技巧的關鍵就在於給了接收者一個不存在的方法時，然後由 <code>method_missing</code> 來當補救網。這裡引用昨天的範例程式，假設有一個 <code>SourceData</code> class：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">SourceData</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@name</span>     <span class="o">=</span> <span class="nb">name</span>
+</span><span class='line'>    <span class="vi">@email</span>    <span class="o">=</span> <span class="n">email</span>
+</span><span class='line'>    <span class="vi">@location</span> <span class="o">=</span> <span class="n">location</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">get_name</span><span class="p">;</span>     <span class="vi">@name</span><span class="p">;</span>     <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">get_email</span><span class="p">;</span>    <span class="vi">@email</span><span class="p">;</span>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">get_location</span><span class="p">;</span> <span class="vi">@location</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後我想在 <code>User</code> class 裡用 Ghost Method 技巧來取得 <code>SourceData</code> 的實例變數，那就要建立一個 <code>method_missing</code> 方方法來捕捉所有不存在的方法，然後用 <code>send</code> 方法轉送出去，這又稱為 Dynamic Proxy，因為就像是代理人將方法傳送給另一個物件（object）：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_data</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@source_data</span> <span class="o">=</span> <span class="n">source_data</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@source_data</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="no">SourceData</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="s2">&quot;user@example.tw&quot;</span><span class="p">,</span> <span class="s2">&quot;Taiwan&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>     <span class="c1"># =&gt; chh</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>    <span class="c1"># =&gt; user@example.tw</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">location</span> <span class="c1"># =&gt; Taiwan</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>除 bug 可能比較困難</h2>
+
+<p>看起來好像很好用，可是會有個問題，因為這個方法本來就不存在，因此很容易造成一些奇怪的 bug，例如透過 <code>user.respond_to?(:name)</code> 來檢查方法存不存在時，返回的竟然會是 false！用起來卻沒問題。所以使用 <code>method_missing</code> 時也要修改 <code>respond_to?</code> 的查找方式，以免測試一直跑不過。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby 的 Dynamic Method 技巧]]></title>
+    <link href="http://blog.chh.tw/posts/dynamic-method/"/>
+    <updated>2013-01-14T18:37:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/dynamic-method</id>
+    <content type="html"><![CDATA[<p>這是繼上一篇 <a href="http://blog.chh.tw/posts/dynamic-dispatch/">Dynamic Dispatch</a> 寫的筆記，今天要分享的是 Dynamic Method 這個程式技巧。而 Dynamic Method 就是在程式 runtime 時，動態地定義方法，而不是事先寫好。</p>
+
+<p>直接舉例子比較容易理解，假設原本有個 <code>SourceData</code> class，可以從這裡透過像是 <code>get_name</code> 之類的實例方法（instance method）取得實例變數（instance variables）的值，它的 code 可能長得像這個樣子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">SourceData</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@name</span>     <span class="o">=</span> <span class="nb">name</span>
+</span><span class='line'>    <span class="vi">@email</span>    <span class="o">=</span> <span class="n">email</span>
+</span><span class='line'>    <span class="vi">@location</span> <span class="o">=</span> <span class="n">location</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">get_name</span><span class="p">;</span>     <span class="vi">@name</span><span class="p">;</span>     <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">get_email</span><span class="p">;</span>    <span class="vi">@email</span><span class="p">;</span>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">get_location</span><span class="p">;</span> <span class="vi">@location</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果我們想要從另外一個叫做 <code>User</code> 的 class，透過 <code>SourceData</code> 的實例方法來獲取它的實例變數，我們可能會這麼做：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_data</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@source_data</span> <span class="o">=</span> <span class="n">source_data</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">name</span><span class="p">;</span>     <span class="vi">@source_data</span><span class="o">.</span><span class="n">get_name</span><span class="p">;</span>     <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">email</span><span class="p">;</span>    <span class="vi">@source_data</span><span class="o">.</span><span class="n">get_email</span><span class="p">;</span>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">location</span><span class="p">;</span> <span class="vi">@source_data</span><span class="o">.</span><span class="n">get_location</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="no">SourceData</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="s2">&quot;user@example.tw&quot;</span><span class="p">,</span> <span class="s2">&quot;Taiwan&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>     <span class="c1"># =&gt; chh</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>    <span class="c1"># =&gt; user@example.tw</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">location</span> <span class="c1"># =&gt; Taiwan</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這會有個問題就是，當我們想要在 <code>SourceData</code> 塞入更多實例變數的時候，例如新增一個 <code>get_birthday</code> 實例方法，還要記得去 <code>User</code> class 去補上一條，這便違反了 <a href="http://en.wikipedia.org/wiki/Open/closed_principle">Open/closed principle</a>，而且也不符合 <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself">Don&#8217;t_repeat_yourself</a> 原則，這樣寫程式會變得非常沒有效率。</p>
+
+<p>假如當我在 <code>SourceData</code> class 加上新的 <code>get_*</code> 實例方法時，電腦會自動幫我把另外一部分的程式也寫好，那這個世界就太完美了。而仰賴 Ruby 的動態特性，真的就是可以這麼完美：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_data</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@source_data</span> <span class="o">=</span> <span class="n">source_data</span>
+</span><span class='line'>    <span class="vi">@source_data</span><span class="o">.</span><span class="n">methods</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="sr">/^get_(.*)$/</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="no">User</span><span class="o">.</span><span class="n">define_infos</span><span class="p">(</span><span class="vg">$1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">define_infos</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">define_method</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="vi">@source_data</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="no">SourceData</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="s2">&quot;user@example.tw&quot;</span><span class="p">,</span> <span class="s2">&quot;Taiwan&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>     <span class="c1"># =&gt; chh</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>    <span class="c1"># =&gt; user@example.tw</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">location</span> <span class="c1"># =&gt; Taiwan</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣寫的好處就是當程式需要延展、擴充的時候，我們不需要去動到其他的部分，可以專注在焦點本身，比較容易維護。這個時候不論 <code>SourceData</code> 新增多少個 <code>get_*</code> 實例方法時，都可以動態地在 <code>User</code> class 產生方法。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby 的 Dynamic Dispatch 技巧]]></title>
+    <link href="http://blog.chh.tw/posts/dynamic-dispatch/"/>
+    <updated>2013-01-13T22:41:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/dynamic-dispatch</id>
+    <content type="html"><![CDATA[<p>三天前開始看 <a href="http://pragprog.com/book/ppmetr/metaprogramming-ruby">Metaprogramming Ruby</a>，希望可以在這個禮拜把整本讀完。讀書要寫筆記，一方面整理思緒、一方面幫助記憶、一方面還能分享，而且這本是英文原文，畢竟不是中文母語，有些內容當下看懂了，可是揮發得很快，所以我決定寫點東西下來。</p>
+
+<h2>Dynamic Dispatch</h2>
+
+<p>如果 <code>the_object.call_method</code>，那麼這個 <code>the_object</code> 就稱為接收者。<a href="http://en.wikipedia.org/wiki/Dynamic_dispatch">Dynamic Dispatch</a> 是指依照接收者的物件類型，來決定呼叫的方法，這個技巧會非常需要用到 <code>send</code>。</p>
+
+<h2>Send 用法</h2>
+
+<p><code>send</code> 其實跟 <code>.</code> 一樣，不同的是他可以把方法當成參數，傳送給接收者使用，接收者可能是個 class，也可能是個實例（instance），例如一般的 Ruby code 會這樣子在 class 裡定義一個方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ClassC</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is a method in class C.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而我們可以透過以下的方法來呼叫這個 ClassC 的實例方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method</span>        <span class="c1"># =&gt; &quot;This is a method in class C.&quot;</span>
+</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:call_method</span><span class="p">)</span> <span class="c1"># =&gt; &quot;This is a method in class C.&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這裡把 <code>call_method</code> 當成 <code>send</code> 的參數（可以是 hash，也可以是 string），然後丟給接收者；既然方法可以被當成物件來丟，意思也就是可以把一些方法存起來成一個 array，然後依照不同需求的時候丟給接收者使用。</p>
+
+<p>舉例來說，當 <code>ClassC</code> 有很多的實例方法時，可以把它們存成一個 array，然後用 Dynamic Dispatch 技巧傳給接收者：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ClassC</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_a</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is method_a in class C.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_b</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is method_b in class C.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">methods</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">instance_methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span>
+</span><span class='line'><span class="nb">methods</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="nb">method</span><span class="o">|</span> <span class="n">c</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">method</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'><span class="c1"># =&gt; This is method_a in class C.</span>
+</span><span class='line'><span class="c1"># =&gt; This is method_b in class C.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>有時候我們只需要部分的方法，而不是全部，所以會加上一些過濾條件，只撈出自己需要的部分，這樣的行為又稱為 Pattern Dispatch，因為是基於某種 pattern 來篩選方法。</p>
+
+<p>以上就是 Dynamic Dispatch 的解釋，這個技巧經常可以在 Ruby 的 Test::Unit 標準庫裡看到，把 class 的實例方法（instance method）撈出來，然後一個一個代進測試程式碼裡面去跑。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[我對仿真設計介面的看法]]></title>
+    <link href="http://blog.chh.tw/posts/skeuomorphism/"/>
+    <updated>2013-01-10T10:21:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/skeuomorphism</id>
+    <content type="html"><![CDATA[<p><img src="http://lh5.googleusercontent.com/-VJMDa0tOOjE/UO4RTtHUqJI/AAAAAAAAFu8/_MU2WkKlTEw/s690/WAwzA.jpg" alt="itunes" /></p>
+
+<p>這篇文章在 iTunes 11 出來時就寫好，結果放在草稿夾裡一直忘記完成，今天因為看到了電腦玩物站長異塵行者對<a href="http://playpcesor.blogspot.com/2012/11/evernote-50-iphone-ipad.html">仿真設計的看法</a>（舊文章今天才看到），才想起來還沒有發佈；異塵行者認為：</p>
+
+<blockquote><p>雖然高雅擬真風格看起來舒適，但畢竟我們不是真在紙本筆記使用 Evernote，而是在台數位裝置上，對生產力工具來說簡潔數位化介面才是真正正道。</p></blockquote>
+
+<p>前幾個禮拜因為好奇去聽了幾堂<a href="https://www.coursera.org/course/hci">史丹佛大學人機互動課程</a>，得到幾個非常重要的觀念。華麗高雅的擬真風格並非單純的綴飾，更不是「贅飾」，事實上這種設計風格是有意義的。</p>
+
+<p>舉例來說，當第一次看到 <a href="https://itunes.apple.com/us/app/clear/id504544917">clear</a> 與 OS X Mountain Lion 內建的 <a href="http://appleinsider.com/articles/12/03/30/inside_os_x_108_mountain_lion_reminders_app_adds_geofence_location_alerts">Reminder</a> 時，不看「說明書」可能還不曉得 clear 是做什麼的；尤其對於不常使用數位工具的使用者，仿真設計是讓軟體能夠更貼近他們的生活，他們也許沒辦法立即掌握這個程式所有功能，但確實能夠降低防禦心理。</p>
+
+<p>我平常觀察那些不慣用電腦的使用者，他們在操作電腦時的動作，很多人會在第一步不知道該點擊什麼就停下來，因為「純數位化」的介面讓他們不知所措，進而增加心理挫折感，然後可能就不再使用這個軟體，這也就是為什麼要一開始就要降低使用者的防禦心理。</p>
+
+<p>仿真設計的介面目的不只是降低使用者防禦心理，目的也在能讓使用者用自己已經熟悉的方式，來透過這個軟體來解決問題。但是，畢竟軟體終究是軟體，是個虛擬的介面，並不是使用者「真正熟悉」的東西，因此要做好仿真設計相對下門檻變得非常高。</p>
+
+<p>會讓異塵行者感到「簡潔數位化介面才是真正正道」的原因，我想就是 Evernote 做了一個非常糟糕的仿真設計介面示範。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails 重大 SQL injection 安全漏洞其實沒這麼可怕]]></title>
+    <link href="http://blog.chh.tw/posts/rails-sql-injection-what-happened/"/>
+    <updated>2013-01-04T09:15:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/rails-sql-injection-what-happened</id>
+    <content type="html"><![CDATA[<p><img src="http://lh3.googleusercontent.com/-Ptn8b9s_OAM/UOYvBgxC29I/AAAAAAAAFj8/qaLFQuKm_L0/s666/exploits_of_a_mom.png" alt="xkcd" /></p>
+
+<p>2013.01.10 更新：前兩天 <a href="https://groups.google.com/forum/?fromgroups=#!topic/rubyonrails-security/61bkgvnSGTQ">Rails 又爆出新的漏洞</a>（有沒有這麼歡樂啊？XD），比本篇文章所講的嚴重一百萬倍，據說這漏洞是非常容易被搞，所以「一定」要更新到最新版本（目前的版本是 3.2.11、3.1.10、3.0.19 和 2.3.15 ）！不過目前我沒辦法重現這個 bug，也不清楚這次到底是不是「真有這麼可怕？」。:p</p>
+
+<p><a href="http://xkcd.com/327/">xkcd</a> 這張圖幽默地說明 SQL injection 的可怕，一位媽媽用 SQL 語法替自己小孩取名字，結果校方電腦沒有消毒資料就寫道資料庫去，結果整個資料庫就爆掉了，原來這小孩的名字其實是刪掉整個表格的語法。XD</p>
+
+<p>Rails 前兩天的<a href="http://weblog.rubyonrails.org/2013/1/2/Rails-3-2-10--3-1-9--and-3-0-18-have-been-released/">重大安全更新</a>，所有 3.x 的版本都有問題，引起鄉民激動的討論，我看了一下<a href="http://news.ycombinator.com/item?id=4999406">大家討論的內容</a>看不出什麼所以然來，也不曉得這次的 SQL 注射是怎麼辦到的，可能很多人跟我一樣都搞不清楚狀況，所以 <a href="http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts/">Phusion 部落格</a>發表了一篇文章來說明整件事情的原委，寫得相當清楚。</p>
+
+<p>現在我終於搞清楚這個 bug 是這麼回事……</p>
+
+<h2>動態 finder</h2>
+
+<p>Rails 透過 ActiveRecord 查詢資料庫，通常會用到像是 <code>User.find(params[:id])</code> 這樣的方法，依照參數給的值查詢 model 的主鍵（primary key），非常方便。此外，Rails 還有非常方便的動態 finder，可以依照資料庫欄位來尋找給予的參數，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">find_by_foo</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:foo</span><span class="o">]</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而這次 Rails 3.2.10（包括 3.1.9 和 3.0.18）所修補的這個 bug 就是發生在這個動態 finder。<code>find_by_*</code> 用來查詢指定的任何欄位，例如 User model 中有 name、email 這兩個欄位，那就可以這樣寫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:login</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_email</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>params[:name]</code> 和 <code>params[:email]</code> 是使用者 input 的參數，因此 cracker 就可能會用 <a href="http://en.wikipedia.org/wiki/SQL_injection">SQL 填字遊戲</a>注射髒東西進來。這麼簡單的原理 Rails 當然有保護措施，他們用<a href="http://blog.chh.tw/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/">單引號</a> <code>' '</code> 不轉義字元，例如以下這例子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; SELECT &quot;users&quot;.* FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;login&quot; = &#39;chh&#39; LIMIT 1</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="s2">&quot;chh&#39;; DROP TABLE USERS; --&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; SELECT &quot;users&quot;.* FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;name&quot; = &#39;chh&#39;&#39;; DROP TABLE USERS; --&#39; LIMIT 1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>cracker 想要把整個 User 表格都摘掉，不轉義的結果最後只會找不到東西，返回 nil，因為我們 login 欄位裡並沒有一個叫做「chh&#8217;; DROP TABLE USERS; &#8211;」的使用者。看起來好像沒事了，可是 ActiveRecord 的動態 finder 不只可以接受字串，如果有需要的話還可以自己定義 SQL 查詢條件，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="ss">:select</span> <span class="o">=&gt;</span> <span class="s2">&quot;id, login&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; User Load (0.3ms)  SELECT id, login FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;login&quot; = &#39;chh&#39; LIMIT 1</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;User id: 1, login: &quot;chh&quot;&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>只調出 id 跟 login 兩個欄位，也可以直接用 <code>:select</code>，儘管傳回來的會是 nil：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="ss">:select</span> <span class="o">=&gt;</span> <span class="s2">&quot;1; DROP TABLE users; --&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; SELECT 1; DROP TABLE users; -- FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;name&quot; IS NULL LIMIT 1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是這就有點問題了，由於 <code>User.find_by_login(params[:login])</code> 的 <code>params[:login]</code> 參數請求是會被 Rails 轉換成 hash 的，也就是說如果 cracker 用傳來的不是 string 而是有髒東西的 hash，那就會變成資安漏洞！例如以下的 URL：</p>
+
+<pre><code>/example-url?login[select]=whatever&amp;login[limit]=23
+</code></pre>
+
+<p>這個時候的 <code>params[:login]</code> 得到的就是一個 hash：<code>{ "select" =&gt; "whatever", "limit" =&gt; 23 }</code>。BUT！在 Ruby 當中 string 和 hash 是兩種不同的資料類型，雖然 Rails 中常常某些情況這兩種會混用，因為這是 ActiveSupport::HashWithIndifferentAccess 會自動轉換 hash 為 string ，以避免不必要的臭蟲滋生；<code>params[:login]</code> 也是如此。</p>
+
+<p>而如果 cracker 想要用這個方法搞我們的 Rails app，他就必須要讓 string <code>"select"</code> 變成 hash <code>:select</code>，這樣才有辦法注射，但這是不可能的，Rails 會把它轉成 string。</p>
+
+<h2>問題點</h2>
+
+<p>可是問題就發生在 <a href="https://github.com/binarylogic/authlogic">Authlogic</a> 這個 gem，他們透過很粗糙的方式向資料庫查詢 token：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_persistence_token</span><span class="p">(</span><span class="n">the_token</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這個 <code>the_token</code> 並沒有將 hash 轉為 string，因此暴露了漏洞讓 cracker 有機可趁，可是一定要透過 session data 這種認證方式，否則其他方法 <code>the_token</code> 都會變成 string。</p>
+
+<p>要破解這招要先準備這個 Rails 網站的 secret_token，該怎麼拿到呢？可以 <a href="https://www.google.com/search?q=inurl:secret_token+filetype%3Arb+site%3Agithub.com">google</a> 一下找到一堆 open source 專案的 secret_token，很多人佈署網站的時候都沒有重新 <code>rake secret</code>，而且就直接暴露到 Github 上去了。XD</p>
+
+<p>所以說這次的安全漏洞其實不會「瞬間」讓所有的 Rails app 都陷入危險狀態，甚至可以說，就算不更新好像也不會怎樣（？），除非網站用的是 open source ，也用到像 Authlogic 這種 gem，而且剛好又沒有重新產生新的 secret_token，才會有立即的危險。話說回來，這也不像是 Rails 本身的 bug，只是開發者會很容易不小心疏忽這個部份，所以 Rails 為了預防這種情況發生，才會補上這次的安全更新。</p>
+
+<h2>防禦方法</h2>
+
+<p>目前要補上這個漏洞有三種方法：</p>
+
+<ul>
+<li>更新 Rails 新版本，目前官方已經發出 patch，更新完以後什麼事情都不用做；:)</li>
+<li>在所有的 <code>find_by_*</code> 參數都加上過濾機制，例如 <code>find_by_login(params[:login].to_s)</code>，強制轉換成字串；</li>
+<li>如果使用 open source 的網站，記得執行 <code>rake secret</code> 重新產生 token；</li>
+</ul>
+
+
+<p>secret_token.rb 檔案的處理可以像 <a href="http://blog.chh.tw/posts/rails-database-yml-management/">database.yml</a> 一樣，製作成一個樣板，命名成 secret_token.rb.example，然後原本的檔案不列入版本控制，最後佈署時寫個腳本用 symlink 覆蓋過去；也可以參考<a href="https://github.com/gedankenstuecke/snpr/blob/master/config/initializers/secret_token.rb">這個作法</a>，在 Rails app 根目錄底下新建 secret_token 檔案專門拿來放 token，再引入到 secret_token.rb 去；或者也可以設在環境變數 <code>ENV</code> 裡。</p>
+
+<h2>One More Thing&#8230; About Rails 4 Dynamic Methods&#8230;</h2>
+
+<p>Rails 4 的動態 finder <a href="http://edgeguides.rubyonrails.org/4_0_release_notes.html#active-record-deprecations">改變了一些寫法</a>，除了 <code>find_by_*</code> 和 <code>find_by_*!</code> 這兩個之外，其他的全部都不能再用了：</p>
+
+<ul>
+<li><code>User.find_all_by_*</code> 要改寫成 <code>User.where(*)</code>；</li>
+<li><code>User.find_last_by_*</code> 改寫成 <code>User.where(*).last</code>；</li>
+<li><code>User.scoped_by_*</code> 改寫成 <code>User.where(*)</code>；</li>
+<li><code>User.find_or_initialize_by_*</code> 改寫為 <code>User.where(*).first_or_initialize</code>；</li>
+<li><code>User.find_or_create_by_*</code> 改寫成 <code>User.find_or_create_by(*)</code> 或者 <code>User.where(*).first_or_create</code>；</li>
+<li><code>User.find_or_create_by_*!</code> 則要改寫成 <code>User.find_or_create_by!(*)</code> 或是 <code>User.where(*).first_or_create!</code>；</li>
+</ul>
+
+
+<p>看起來有點不太習慣，感覺沒有原本的直覺，為什麼要改這樣我也不曉得。</p>
+]]></content>
+  </entry>
+  
+</feed>
