@@ -6,9 +6,13 @@ comments: true
 categories: Tech
 ---
 
+![](https://lh3.googleusercontent.com/-mDHp26oTCxg/VINpfJZV2ZI/AAAAAAAAIJk/FlmyYl4aRBY/w770-h333-no/Screen%2BShot%2B2014-12-07%2Bat%2B4.38.35%2BAM.png)
+
 這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「[IO.js – Evented I/O for V8 javascript](https://news.ycombinator.com/item?id=8669557)」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。
 
 整件事情發展詭譎得像 [Prometheus](http://www.imdb.com/title/tt1446714/) 的 Elisabeth Shaw 剛發現黑色黏液一樣，不知道到底是希望還是崩壞的開始。最近公司有要用 Node.js 所以我就追了一下新聞，大概統整出來的概況寫了這篇觀察紀錄，或許有些可能有錯麻煩在幫我指正，感謝喔！
+
+<!-- more -->
 
 ### 故事的序章
 
