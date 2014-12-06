@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="從 Rails 寄信要先寫 Mailer 模組，這部份可以交給 generator 自動生成： rails g mailer CommentMailer 這樣就會有 Mailer 和 Views 兩個部分，跟 Controller 的概念其實很像，在 Mailer 裡面定義的 action &hellip;">
+  <meta name="description" content="PS. 以下環境為 OS X，我不確定其他平台是否可用相同的方式。 從指令的歷史紀錄自動補全 剛看到「9 Enhancements to Shell and Vim Productivity」這篇文章，學到一個新招就是 ⌃ + r 可以用搜尋的方式，自動找出歷史記錄裡的指令，例如我蠻虛榮的喜歡用 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/9/" />
-<meta property="og:description" content="從 Rails 寄信要先寫 Mailer 模組，這部份可以交給 generator 自動生成： rails g mailer CommentMailer 這樣就會有 Mailer 和 Views 兩個部分，跟 Controller 的概念其實很像，在 Mailer 裡面定義的 action &hellip;" />
+<meta property="og:description" content="PS. 以下環境為 OS X，我不確定其他平台是否可用相同的方式。 從指令的歷史紀錄自動補全 剛看到「9 Enhancements to Shell and Vim Productivity」這篇文章，學到一個新招就是 ⌃ + r 可以用搜尋的方式，自動找出歷史記錄裡的指令，例如我蠻虛榮的喜歡用 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="從 Rails 寄信要先寫 Mailer 模組，這部份可以交給 generator 自動生成： rails g mailer CommentMailer 這樣就會有 Mailer 和 Views 兩個部分，跟 Controller 的概念其實很像，在 Mailer 裡面定義的 action &hellip;" />
+<meta itemprop="description" content="PS. 以下環境為 OS X，我不確定其他平台是否可用相同的方式。 從指令的歷史紀錄自動補全 剛看到「9 Enhancements to Shell and Vim Productivity」這篇文章，學到一個新招就是 ⌃ + r 可以用搜尋的方式，自動找出歷史記錄裡的指令，例如我蠻虛榮的喜歡用 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,81 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/enhancements-to-shell-productivity/">幾個加強 Shell 生產力的用法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-18T09:42:00+08:00" pubdate data-updated="true">Oct 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>PS. 以下環境為 OS X，我不確定其他平台是否可用相同的方式。</p>
+
+<h2>從指令的歷史紀錄自動補全</h2>
+
+<p>剛看到「<a href="http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity">9 Enhancements to Shell and Vim Productivity</a>」這篇文章，學到一個新招就是 <code>⌃ + r</code> 可以用搜尋的方式，自動找出歷史記錄裡的指令，例如我蠻虛榮的喜歡用 <code>awk</code> 統計自己輸入過的指令次數<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，以前都是用複製貼上的方式，現在透過 <code>⌃ + r</code> 只要輸入 <code>awk</code> 馬上就找到了。</p>
+
+<h2>跳字移動</h2>
+
+<p>另外，最近終於找出如何在 <a href="http://www.iterm2.com/">iTerm 2</a> 底下跳字移動了，所謂跳字移動就是在單字之間移動 cursor，而不是一個字母慢慢走。在 OS X 下，一般文字編輯器都是壓著 <code>⌥ + ←</code> 和 <code>⌥ + →</code>，可是 iTerm 2 下會觸發到其他的快捷鍵，所以要來修改一下。</p>
+
+<p>方法就是打開偏好設定面板，在 Profile > Key 標籤頁下修改 <code>⌥ + ←</code> 和 <code>⌥ + →</code> 這兩個快捷鍵設定，分別改成 Action 為 Send Escape Sequence、Esc + b 以及 Action 為 Send Escape Sequence、Esc + f，這樣一來就跟平常慣用的方式一樣了。</p>
+
+<p><del>目前我還在找尋該怎麼在 iTerm 2 底下用 <code>⌥ + ⌫</code> 來跳字刪除單字，如果找到方法會再補上來。</del></p>
+
+<p>2012.10.19 更新：<code>⌥ + ⌫</code> 的方法跟上面差不多，快捷鍵設好後 Action 為 Send Escape Sequence、Esc + 007f，這裡的 007f 要用 Unicode 16 進位輸入。</p>
+
+<h2>善用 alias 縮寫</h2>
+
+<p>這有優點也有缺點，優點是可以少打很多字，缺點是換了別台電腦會突然發現自己不會下指令了。XD</p>
+
+<p>用法是在主機根目錄下的 .bash_profile（原本如果沒有這個檔案就自己手動建立一個）裡加上 <code>alias</code> 指令，例如要改變目錄位置回到上一層，一般用法是這樣：</p>
+
+<pre><code>cd ..
+cd ../..
+</code></pre>
+
+<p>在 .bash_profile 裡加上：</p>
+
+<pre><code>alias ..="cd .."
+alias ...="cd ../.."
+</code></pre>
+
+<p>之後只要用 <code>..</code> 就可回到上一層目錄，用 <code>…</code> 回到上上一層目錄，可以參考看看我備份在 <a href="https://github.com/chinghanho/.dotfiles/blob/master/.aliases">Github</a> 上的設定。不過 alias 不要用得太兇，其實只要設定幾個常用到的就好，弄太多到時候一方面可能記不住，有時還可能跟其他指令衝突到，需要自己衡量一下。</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>這條指令我放在 <a href="https://gist.github.com/3280141" alt="gist" target="_blank">Gist</a> 上，有興趣可以玩玩看，別忘了把結果回覆在這篇文章的留言上哦。XD <a href='#fnref:1' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -587,128 +662,6 @@ $$Score = \frac{P-1}{(T+2)^{G}}$$
 <div class="footnotes">
     <ol>
         <li id='fn:1'>David Heinemeier Hansson，Rails 框架的發明者，是我所敬愛的一位 Hacker。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>Tom Preston-Werner 是 Github 的共同創辦人，目前的 Github CEO，今天才知道原來 Gravatar 是他建立的，後來被 <a href="http://automattic.com/" alt="automattic">Automattic</a> 給買去了，而 Automattic 是目前最紅的 CMS：WordPress 主要貢獻者，WordPress 一開始則是由 Michel Valdrighi 用 PHP 和 MySQL 開發的。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>前陣子注意到中國大陸也有不少 clone，其中最引人注意的是一家叫做 <a href="https://gitcafe.com/" alt="gitcafe">GitCafe</a> 的公司，也是採用 Ruby on Rail 進行開發，創辦人和開發團隊好像也是很厲害的角色。 <a href='#fnref:3' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/wo-de-mac-ruan-ti-gong-ju-xiang/">2012 我的 Mac 軟體工具箱</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-03T22:27:00+08:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>一年前剛開始用 Mac 滿一個月時寫過一篇類似「<a href="https://www.google.com/search?hl=zh-TW&amp;site=&amp;source=hp&amp;q=%E7%82%BA%E4%BB%80%E9%BA%BC%E6%88%91%E7%94%A8+Mac&amp;btnG=%E6%90%9C%E5%B0%8B&amp;oq=&amp;gs_l=">為什麼我用 Mac</a>」的文章，其實內容的七成是軟體清單，不過換了部落格文章沒跟著帶過來，那就算了。而上個月剛過 Macbook Air 一年的保固，剛好提醒我該寫寫一些東西。</p>
-
-<p>這篇文章在 2013 年以前還是會繼續更新，我就先列出幾個比較實用的軟體：</p>
-
-<h2>程式開發</h2>
-
-<ul>
-<li><a href="http://kapeli.com/dash/">Dash</a>：可以很方便地查詢 API 文件，也可以用來管理 code snippets；雖然是免費的，可是使用一段時間後沒有付費購買，查看文件的介面會被塗鴉成粉紅色，用是可以用啦，只是很醜……；（2012.11.26 更新：這軟體好用是好用，但是作者為了讓使用者付費真是無所不用其極，手法實在讓人不是很舒服，儘管我還是在上個月底購買正版了。:p）</li>
-<li><a href="http://growl.info/">Growl</a>：這個歸類在程式開發工具？對，因為我裝這個就是為了自動化執行 RSpec 測試，然後直接把測試結果輸出成「通知」的形式，有空我再來寫教學文；</li>
-<li><a href="http://www.iterm2.com/#/section/home">iTerm 2</a>：終端機軟體，可以開分頁和切割視窗區塊，也有很多小細節設定；（2012.11.26 更新：<a href="/posts/oh-my-zsh/">OH MY ZSHELL!</a>）</li>
-<li><a href="http://www.sourcetreeapp.com/">SourceTree</a>：原本只是拿來看圖形介面的 Git log 用，後來發現用裡面的 Git Flow 功能也超級方便，更棒的他是免費的；</li>
-<li><a href="http://www.sublimetext.com/2">Sublime Text 2</a>：我曾寫了<a href="/posts/sublime-text-2-the-best-editor-in-2012/">一篇專文</a>來介紹這個編輯器；</li>
-</ul>
-
-
-<h2>雲端空間</h2>
-
-<ul>
-<li><a href="http://getcloudapp.com/">CloudApp</a>：臨時傳檔很方便，丟上去馬上分享；</li>
-<li><a href="https://www.dropbox.com/">Dropbox</a>：這應該不用再介紹了，大家都在用的；</li>
-</ul>
-
-
-<h2>文字處理</h2>
-
-<ul>
-<li><a href="http://www.iawriter.com/">iA Writer</a>：超級具有設計感的文字編輯器，使用 Markdown 語法，簡潔、優雅的外觀可以讓人專注在文字上面，而不被功能所影響；</li>
-<li><a href="http://mouapp.com/">Mou</a>：這也是使用 Markdown 語法，功能非常豐富，整合特定的部落格平台直接發佈文章，還有其他細微但是超級方便的功能；</li>
-</ul>
-
-
-<h2>圖像處理</h2>
-
-<ul>
-<li><a href="http://www.haozhaopian.com/mac/">Great Photo</a>：包含 HDR 合成、濾鏡與景深效果等等效果，簡單容易使用，以免費的來說已經很不錯了；</li>
-<li><a href="http://itunes.apple.com/gb/app/jpegmini-lite/id525742250?mt=12">JPEGmini Lite</a>：壓縮 JPEG 檔案，看名字有 Lite 就可以猜到有分免費版本和付費的 Pro 版本，對我來說 Lite 就夠用了；</li>
-<li><a href="https://itunes.apple.com/us/app/sip/id507257563?mt=12">Sip</a>：汲取螢幕畫面上像素的顏色，支援各種描述色彩格式；</li>
-</ul>
-
-
-<h2>瀏覽器</h2>
-
-<ul>
-<li><a href="https://www.google.com/intl/zh-TW/chrome/browser/">Google Chrome</a>：介面好看、功能很多、性能很強，儘管外掛裝多了會把拖累整體速度，但是平均起來還是最佳的瀏覽器。我還會同時安裝 <a href="https://tools.google.com/dlpage/chromesxs">Google Chrome Canary</a> 版本，來測試最新的開發技術；</li>
-<li>Safari：因為沒裝 Flash、沒裝外掛，通常在沒有接電源時使用，打開使用者代理程式上網，感覺這樣非常省電；</li>
-</ul>
-
-
-<h2>社交通訊</h2>
-
-<ul>
-<li><a href="http://adium.im/">Adium</a>：集合主流、非主流的社交服務在同一個軟體上，例如：Google Talk、MSN、Facebook、Twitter 等等，這樣就不必開一堆軟體；</li>
-<li><a href="http://www.cobookapp.com/">Cobook</a>：替代 OS X 內建的通訊錄軟體，可以整合社群網站例如 Facebook 或是 Twitter 等等，直接把好友匯入通訊錄<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，然後直接跟 Google 通訊錄同步，這樣我的 Android 手機也可以用；:)</li>
-<li><a href="http://tapbots.com/blog/news/tweetbot-for-mac-beta-sort-of">Tweetbot</a>：目前還在測試階段，而且因為 Twitter 限制 API 的政策，目前可能已經無法下載。以前我會推薦 Twitter 官方的 app，但是用過 Tweetbot 之後再也回不去了；</li>
-</ul>
-
-
-<h2>影音軟體</h2>
-
-<ul>
-<li>iTunes：家喻戶曉我想應該不必介紹；</li>
-<li><a href="http://mplayerx.org/">MPlayerX</a>：支援的檔案格式多、優雅的無框介面設計、可以支援手勢縮放視窗大小等等，外接螢幕時啟用全螢幕模式不會吃掉第二個螢幕；</li>
-</ul>
-
-
-<h2>實用工具</h2>
-
-<ul>
-<li><a href="http://www.alfredapp.com/">Alfred</a>：Spotlight 替代品，更有彈性地添加各種客製化功能；</li>
-<li><a href="http://www.freemacsoft.net/appcleaner/">AppCleaner</a>：協助乾淨地移除 Mac 上的軟體；</li>
-<li><a href="http://bjango.com/mac/istatmenus/">iStats Menu 3</a>：系統資訊 Dashboard 顯示在 Menu bar 上，很 geek 的東西；:p</li>
-<li><a href="http://manytricks.com/moom/">Moom</a>：適合大螢幕或是多螢幕使用，可以很方便的切割視窗大小，有效利用視窗空間；</li>
-<li><a href="https://itunes.apple.com/us/app/the-unarchiver/id425424353?mt=12">The Unarchiver</a>：解壓縮的軟體，簡單好用；</li>
-<li><a href="http://manytricks.com/timesink/">Time Sink</a>：統計 Mac 上各個軟體的使用時間，如果要統計網頁的使用時間可以用 <a href="https://chrome.google.com/webstore/detail/timestats/ejifodhjoeeenihgfpjijjmpomaphmah">timeStats</a> 這個擴充套件（Chrome only）；</li>
-<li><a href="http://www.trankynam.com/xtrafinder/">XtraFinder</a>：Finder 的加強版，免費的！</li>
-<li><a href="http://tw.media.yahoo.com/keykey/instruction_mac.php">Yahoo! 輸入法</a>：除了那個一點通很頭痛，其他都很好<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>；</li>
-</ul>
-
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>目前 Facebook 好像限制了一些 API 導致無法存取很詳細的資料，好險我在 API 改版前就把好友的資料全都匯出來了。XD <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>關掉 OS X 的一點通可以參考：<a href="http://blog.buginception.com/blog/2012/02/29/disable-yahoo-keykey-onekey-on-mac">[OSX]關閉Yahoo!輸入法的一點通服務</a> <a href='#fnref:2' rev='footnote'>↩</a></li>
     </ol>
 </div>
 

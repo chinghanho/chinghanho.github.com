@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="原本老爸用自由門還可以翻出來到 Facebook 上貼些吃吃喝喝的照片，可是最近 GFW 又在搞怪，自由門也不太有效，所以老爸就問我能不能幫他架個 VPN 網路，剛好最近在練習 Rails deploy 玩到 Amazon AWS 雲端服務，所以想說乾脆開個 instance 來架看看。 &hellip;">
+  <meta name="description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/8/" />
-<meta property="og:description" content="原本老爸用自由門還可以翻出來到 Facebook 上貼些吃吃喝喝的照片，可是最近 GFW 又在搞怪，自由門也不太有效，所以老爸就問我能不能幫他架個 VPN 網路，剛好最近在練習 Rails deploy 玩到 Amazon AWS 雲端服務，所以想說乾脆開個 instance 來架看看。 &hellip;" />
+<meta property="og:description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="原本老爸用自由門還可以翻出來到 Facebook 上貼些吃吃喝喝的照片，可是最近 GFW 又在搞怪，自由門也不太有效，所以老爸就問我能不能幫他架個 VPN 網路，剛好最近在練習 Rails deploy 玩到 Amazon AWS 雲端服務，所以想說乾脆開個 instance 來架看看。 &hellip;" />
+<meta itemprop="description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,95 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/oh-my-zsh/">OH MY ZSHELL!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-14T11:22:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 <a href="http://mxcl.github.com/homebrew/">Homebrew</a> 安裝新版本，管理也會比較方便。</p>
+
+<p>2012.11.23 更新：今天換成一個從 <a href="https://github.com/agnoster">agnoster</a> fork 出來的<a href="https://gist.github.com/3751033">主題</a>，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 <a href="https://raw.github.com/chinghanho/.dotfiles/master/.oh-my-zsh/custom/chh.zsh-theme">Github</a> 上下載。要有這個效果必須使用這<a href="https://gist.github.com/1595572">三種特殊字型</a>；而我的終端機主題用的是 <a href="https://github.com/godfat">@godfat</a> 的 <a href="https://raw.github.com/godfat/dev-tool/master/.config/iterm/DarkIllumina.itermcolors">DarkIllumina</a>。</p>
+
+<p><img src="http://lh5.googleusercontent.com/-3kZx026TRBs/UK7yHhBcRSI/AAAAAAAAFYM/XPmrOwB_E60/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-23%2520%25E4%25B8%258A%25E5%258D%258811.48.07.png" alt="" /></p>
+
+<p>PS. 小叮嚀：背景不要用半透明的，對比要設到最小，這樣的顯示效果是最棒的。:)</p>
+
+<p>2012.11.15 更新：用了兩天，目前發現最大的問題就是 Zsh 啟動效能有點慢，每新開一個 session 都會花上快 2 秒鐘，不過還不致於影響到心情。:p</p>
+
+<hr />
+
+<p>原本對於 Bash 用起來也沒什麼不滿，只是稍嫌單調的配色讓人感到有點無聊而已，而昨天把 <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> 安裝起來後，一開始雖然對豐富的色彩感到新鮮，可是很快就疲勞了。</p>
+
+<p>不過 oh-my-zsh 還有超級強大的 auto-complete 功能，真的是很好玩的東西，敲一敲 tab 鍵就可以列出所有指令和說明，而且很多補丁和功能都已經有人幫你寫好了，所以我打算再玩一陣子看看。:p</p>
+
+<p>安裝方式也超級簡單，就用官方建議的自動安裝方法，只需要一條 <code>curl</code> 指令：</p>
+
+<pre><code>curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+</code></pre>
+
+<p>之前我的 Bash 調教起來也是有不錯的色彩區別，不過 oh-my-zsh 做的更極致，可以在 <a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Themes">Github</a> 上或是 <a href="http://zshthem.es/">zshthem.es</a> 上尋找喜歡的樣式，目前這是我用的主題「<a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/nebirhos.zsh-theme">nebirhos</a>」：</p>
+
+<p><img src="https://lh5.googleusercontent.com/-YC6ShHhxmrQ/UKMXilZfROI/AAAAAAAAFVk/KYdxbNA9gyY/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-14%2520%25E4%25B8%258A%25E5%258D%258811.40.03.png" alt="" /></p>
+
+<p>我不是很喜歡前面那個 username 的格式，可是我還沒研究過 Zsh 的語法怎麼寫，也不會改，看起來跟 Bash 好像完全不一樣，等有時間再來摸摸看。</p>
+
+<p>因為平常會有習慣做 <a href="http://en.wikipedia.org/wiki/Quantified_Self">quantified self</a> 的統計，包括用終端機輸入的指令（果然夠宅 XD），但是從 Bash 切到 Zsh 後記錄檔案就換成 .zsh_history 了，為了年底記錄所以先在這邊些把 Bash 用過指令統計導出來：</p>
+
+<pre><code> 1  1124  24.6006%    c
+ 2  985   21.5583%    git
+ 3  343   7.50711%    rails
+ 4  328   7.17881%    cd
+ 5  314   6.8724%     rspec
+ 6  257   5.62486%    la
+ 7  197   4.31167%    rake
+ 8  154   3.37054%    s
+ 9  109   2.38564%    ..
+10  95    2.07923%    rvm
+11  68    1.48829%    guard
+12  36    0.787919%   bundle
+13  29    0.634712%   ssh
+14  28    0.612826%   pry
+15  27    0.590939%   open
+16  26    0.569052%   middleman
+17  26    0.569052%   gem
+18  24    0.525279%   rm
+19  24    0.525279%   heroku
+20  23    0.503392%   nvm
+</code></pre>
+
+<p>看起來很少對吧？這是因為這份記錄只有不到二十天，原本 Bash 預設的歷史紀錄 size 很小，後來我才發現，所以我現在把它改成 1000000000 應該夠我用 10 年了！XD</p>
+
+<p>最後我整理了一下自己的 dotfiles，然後寫了一個 <a href="https://github.com/chinghanho/.dotfiles/blob/master/Rakefile">Rakefile</a> 腳本，以後如果換新機器，只要從 <a href="https://github.com/chinghanho/.dotfiles">Github</a> 上 clone 下來，執行 <code>rake install</code> 就完成了，超級方便的。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -608,81 +697,6 @@ Enter your choice (1 or 2) or press Ctrl-C to abort: 1
 <div class="footnotes">
     <ol>
         <li id='fn:1'>真的不是要針對 Windows 啦，只是上面舉例用到它，所以只好一直抓它來打。:p <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>虛構出來的，沒這種東西。 <a href='#fnref:2' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/enhancements-to-shell-productivity/">幾個加強 Shell 生產力的用法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-18T09:42:00+08:00" pubdate data-updated="true">Oct 18<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>PS. 以下環境為 OS X，我不確定其他平台是否可用相同的方式。</p>
-
-<h2>從指令的歷史紀錄自動補全</h2>
-
-<p>剛看到「<a href="http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity">9 Enhancements to Shell and Vim Productivity</a>」這篇文章，學到一個新招就是 <code>⌃ + r</code> 可以用搜尋的方式，自動找出歷史記錄裡的指令，例如我蠻虛榮的喜歡用 <code>awk</code> 統計自己輸入過的指令次數<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，以前都是用複製貼上的方式，現在透過 <code>⌃ + r</code> 只要輸入 <code>awk</code> 馬上就找到了。</p>
-
-<h2>跳字移動</h2>
-
-<p>另外，最近終於找出如何在 <a href="http://www.iterm2.com/">iTerm 2</a> 底下跳字移動了，所謂跳字移動就是在單字之間移動 cursor，而不是一個字母慢慢走。在 OS X 下，一般文字編輯器都是壓著 <code>⌥ + ←</code> 和 <code>⌥ + →</code>，可是 iTerm 2 下會觸發到其他的快捷鍵，所以要來修改一下。</p>
-
-<p>方法就是打開偏好設定面板，在 Profile > Key 標籤頁下修改 <code>⌥ + ←</code> 和 <code>⌥ + →</code> 這兩個快捷鍵設定，分別改成 Action 為 Send Escape Sequence、Esc + b 以及 Action 為 Send Escape Sequence、Esc + f，這樣一來就跟平常慣用的方式一樣了。</p>
-
-<p><del>目前我還在找尋該怎麼在 iTerm 2 底下用 <code>⌥ + ⌫</code> 來跳字刪除單字，如果找到方法會再補上來。</del></p>
-
-<p>2012.10.19 更新：<code>⌥ + ⌫</code> 的方法跟上面差不多，快捷鍵設好後 Action 為 Send Escape Sequence、Esc + 007f，這裡的 007f 要用 Unicode 16 進位輸入。</p>
-
-<h2>善用 alias 縮寫</h2>
-
-<p>這有優點也有缺點，優點是可以少打很多字，缺點是換了別台電腦會突然發現自己不會下指令了。XD</p>
-
-<p>用法是在主機根目錄下的 .bash_profile（原本如果沒有這個檔案就自己手動建立一個）裡加上 <code>alias</code> 指令，例如要改變目錄位置回到上一層，一般用法是這樣：</p>
-
-<pre><code>cd ..
-cd ../..
-</code></pre>
-
-<p>在 .bash_profile 裡加上：</p>
-
-<pre><code>alias ..="cd .."
-alias ...="cd ../.."
-</code></pre>
-
-<p>之後只要用 <code>..</code> 就可回到上一層目錄，用 <code>…</code> 回到上上一層目錄，可以參考看看我備份在 <a href="https://github.com/chinghanho/.dotfiles/blob/master/.aliases">Github</a> 上的設定。不過 alias 不要用得太兇，其實只要設定幾個常用到的就好，弄太多到時候一方面可能記不住，有時還可能跟其他指令衝突到，需要自己衡量一下。</p>
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>這條指令我放在 <a href="https://gist.github.com/3280141" alt="gist" target="_blank">Gist</a> 上，有興趣可以玩玩看，別忘了把結果回覆在這篇文章的留言上哦。XD <a href='#fnref:1' rev='footnote'>↩</a></li>
     </ol>
 </div>
 

@@ -9,7 +9,16 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="記憶是瑣碎的片刻，經驗是記憶的連續。大多數的片刻無法保存，而我只是試著去挽留那一小部分。 分析自己每天使用電腦的紀錄這個行為看起來有點宅，可是作為一個離不開電腦的 developer，這件事突然變得有點意義，所以我開始整理一些軟體從電腦上記錄下來的 log，在「是芥末日」前回顧一下。 &hellip;">
+  <meta name="description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
+[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +39,32 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/6/" />
-<meta property="og:description" content="記憶是瑣碎的片刻，經驗是記憶的連續。大多數的片刻無法保存，而我只是試著去挽留那一小部分。 分析自己每天使用電腦的紀錄這個行為看起來有點宅，可是作為一個離不開電腦的 developer，這件事突然變得有點意義，所以我開始整理一些軟體從電腦上記錄下來的 log，在「是芥末日」前回顧一下。 &hellip;" />
+<meta property="og:description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
+[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="記憶是瑣碎的片刻，經驗是記憶的連續。大多數的片刻無法保存，而我只是試著去挽留那一小部分。 分析自己每天使用電腦的紀錄這個行為看起來有點宅，可是作為一個離不開電腦的 developer，這件事突然變得有點意義，所以我開始整理一些軟體從電腦上記錄下來的 log，在「是芥末日」前回顧一下。 &hellip;" />
+<meta itemprop="description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
+[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +127,141 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/rails-length-size-count/">Rails 的 Length、size、count 差別</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-22T12:26:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Ruby</h2>
+
+<p>在 Ruby 中對於陣列而言 <code>length</code> 和 <code>size</code> 是一樣的，<code>count</code> 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">count</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此外，效能上 count 會比較差一點：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s2">&quot;benchmark&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">CYCLES</span> <span class="o">=</span> <span class="mi">10_000_000</span>
+</span><span class='line'><span class="n">array</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">10</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span> <span class="o">&lt;&lt;</span> <span class="nb">rand</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bmbm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[count]</span><span class="p">)</span>  <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">count</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[size]</span><span class="p">)</span>   <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">size</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[length]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">length</span> <span class="p">}}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Rehearsal ------------------------------------------</span>
+</span><span class='line'><span class="c1"># count    2.790000   0.000000   2.790000 (  2.796578)</span>
+</span><span class='line'><span class="c1"># size     1.860000   0.000000   1.860000 (  1.860494)</span>
+</span><span class='line'><span class="c1"># length   1.900000   0.010000   1.910000 (  1.908549)</span>
+</span><span class='line'><span class="c1"># --------------------------------- total: 6.560000sec</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#              user     system      total        real</span>
+</span><span class='line'><span class="c1"># count    2.820000   0.000000   2.820000 (  2.827195)</span>
+</span><span class='line'><span class="c1"># size     1.890000   0.000000   1.890000 (  1.893677)</span>
+</span><span class='line'><span class="c1"># length   1.940000   0.000000   1.940000 (  1.950517)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Rails</h2>
+
+<p>在 Rails 的 ActiveRecord 中有不一樣的操作方式，使用 <code>length</code> 會從資料庫撈出資料，在記憶體裡面去計數：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">length</span>
+</span><span class='line'><span class="no">Topic</span> <span class="no">Load</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="n">*</span> <span class="no">FROM</span> <span class="s2">&quot;topics&quot;</span> <span class="no">WHERE</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="s2">&quot;user_id&quot;</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看到了嗎？把 user 底下的 topics 全部拉出來，只是為了去數他，瘋了！其實 SQL 已經提供很好的語法可以有效地計算欄位裡的數量，在 Rails 中只要用 <code>count</code> 就可以呼叫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">count</span>
+</span><span class='line'><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">3</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="no">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="no">FROM</span> <span class="s2">&quot;topics&quot;</span> <span class="no">WHERE</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="s2">&quot;user_id&quot;</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是這有個問題，這個指令每下一次就會向資料庫操作一次，如果已經讀過的話，沒必要老在那拉扯資料庫，所以這時候可以用 <code>size</code> 方法，這會先檢查有沒有讀過，讀過的話就用 <code>length</code> 返回長度，如果沒讀過就用 <code>count</code>。</p>
+
+<p>順便參考一下<a href="https://github.com/rails/rails/blob/4657dba60eebc0d7cea11ffd18aa70d7a3d00e45/activerecord/lib/active_record/relation.rb#L201">原始碼</a>這樣寫的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Returns size of the records.</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">size</span>
+</span><span class='line'>  <span class="n">loaded?</span> <span class="p">?</span> <span class="vi">@records</span><span class="o">.</span><span class="n">length</span> <span class="p">:</span> <span class="n">count</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>One more thing…</h2>
+
+<p>如果在 model 中加上一個 topics_count 欄位，counter_cache 會讓 <code>size</code> 自動去參考這個欄位的值，這樣也能有效提昇效能。</p>
+
+<p>參考 RailsCasts 的 <a href="http://railscasts.com/episodes/23-counter-cache-column">#23 Counter Cache Column</a>。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -587,65 +749,6 @@
 <div class="footnotes">
     <ol>
         <li id='fn:1'>其實大多數的 bug 也都是人為造成的。:p <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>事實上我根本不敢玩鞭炮。XD <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>以 Ruby on Rails Deployment 為例，這就是為什麼要用 <a href="/posts/ruby-on-rails-server-options/">Capistrano</a> 自動化佈署的原因。:) <a href='#fnref:3' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/new-domain-chh-tw/">註冊了新域名 CHH.tw</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-20T16:36:00+08:00" pubdate data-updated="true">Nov 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>原本的 whiteball.tw 這個月底到期，趁著最近有個活動促銷，趕快買了一個 .tw 結尾的 CHH.tw，沒意外的話以後應該是不會再改了。今天下午花了一點時間，把 CloudFlare 上的 record 設定全部搬家，順便刪除一些已經沒用的網址。</p>
-
-<p>為什麼網址要取 CHH？當然因為這是個人網站，我的名字 Ching-Han Ho 縮寫就是 CHH，另一方面因為我的偶像 David Heinemeier Hansson<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup> 縮寫是 DHH 的關係，兩個字很像啊。XD</p>
-
-<p>2012.11.21 更新：今天 DHH 在 <a href="https://twitter.com/dhh/status/271209790674464768">Twitter</a> 上報喜說他兒子出生了，叫做 Colt Heinemeier Hansson！XD</p>
-
-<p>反正本站一直以來都是「微流量」，就算不做 <a href="http://blog.longwin.com.tw/2009/10/http-status-redirect-301-302-diff-2009/">HTTP 301 導向</a>其實也沒什麼差啦，所以不想多花時間寫腳本，只是到 Google 和 Bing 的站長工具去上傳了一下新網址的網站地圖，還有把一些平常在追流量的分析工具改一下設定。</p>
-
-<p>然後又演練一次把新網址跟 Google App 結合，這次花的時間只有十分鐘超快，果然熟能生巧。以後就可以到處用 @chh.tw 的信箱，多麼帥氣啊。:p</p>
-
-<p>在這邊分享一個 Gmail 的小技巧，有時候在外面用信箱註冊怕信箱被該網站賣給 spammer，這個雖然沒辦法預防，但是可以知道信箱是被誰傳出去的，因為一般的網站是不會對信箱進行字串處理，所以可以在信箱加上 <code>+</code> 符號，後面接著註冊的網站名稱，例如：</p>
-
-<p>example+fb@chh.tw</p>
-
-<p>這樣郵件還是會寄到 example@chh.tw 這個信箱，但我們可以知道這是從 fb 這個網站寄來的，如果你收到垃圾信件，你就知道你的信箱是誰給你洩漏出去的了。現在新的<a href="http://www.techbang.com/posts/10878-law-of-personal-data-protection-of-the-interests-of-you-and-me-on-several-networks-of-common-funding-legal-issues-pchome-201-science-and-technology">個資法</a>這麼兇，用這招去告死對方吧！XD</p>
-
-<p>再見了，Whiteball！:)</p>
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>David Heinemeier Hansson 是 Ruby on Rails 框架的發明者，是我景仰的 hacker 之一。 <a href='#fnref:1' rev='footnote'>↩</a></li>
     </ol>
 </div>
 

@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>io.js 是什麼？Node.js 社群分裂事件觀察 - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「IO.js – Evented I/O for V8 javascript」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。 整件事情發展詭譎得像 Prometheus 的 Elisabeth &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/what-is-iojs-nodejs-forking/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="io.js 是什麼？Node.js 社群分裂事件觀察" /><meta itemprop="name" content="io.js 是什麼？Node.js 社群分裂事件觀察" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/what-is-iojs-nodejs-forking/" />
+<meta property="og:description" content="這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「IO.js – Evented I/O for V8 javascript」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。 整件事情發展詭譎得像 Prometheus 的 Elisabeth &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2014-12-07 04:29:00 +0800" />
+
+<meta property="article:section" content="Tech" />
+<meta itemprop="description" content="這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「IO.js – Evented I/O for V8 javascript」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。 整件事情發展詭譎得像 Prometheus 的 Elisabeth &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">io.js 是什麼？Node.js 社群分裂事件觀察</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-07T04:29:00+08:00" pubdate data-updated="true">Dec 7<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「<a href="https://news.ycombinator.com/item?id=8669557">IO.js – Evented I/O for V8 javascript</a>」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。</p>
+
+<p>整件事情發展詭譎得像 <a href="http://www.imdb.com/title/tt1446714/">Prometheus</a> 的 Elisabeth Shaw 剛發現黑色黏液一樣，不知道到底是希望還是崩壞的開始。最近公司有要用 Node.js 所以我就追了一下新聞，大概統整出來的概況寫了這篇觀察紀錄，或許有些可能有錯麻煩在幫我指正，感謝喔！</p>
+
+<h3>故事的序章</h3>
+
+<p>希臘傳說中的巨人族自殺喝下奇怪的黑色黏液來開創人類世界，Node.js 的創建者 <a href="https://github.com/ry">ry</a>（Ryan Dahl） 確實也有點像上帝創世後神龍見首不見尾地消失無蹤，怎麼有種 <a href="http://www.smashingmagazine.com/2010/05/15/why-a-tale-of-a-post-modern-genius/">_why</a> 風格的感覺……都回到真實世界去了嗎（<a href="http://www.imdb.com/title/tt0133093/">The Matrix</a> 梗）？</p>
+
+<p>在 ry <a href="https://groups.google.com/forum/#!topic/nodejs/hfajgpvGTLY">消失</a>之前他把 Node.js 版權賣給了 <a href="https://www.joyent.com/">Joyent</a> 還替他們工作了一陣子，但稍微有點信仰的 developer 都不會喜歡參與的 Open Source 專案跟商業公司扯上關係，這次 io.js 事件主導人之一的 <a href="https://github.com/mikeal">mikeal</a>（Mikeal Rogers）就寫了一篇「<a href="https://medium.com/@mikeal/on-corporate-ownership-of-open-source-786ebd15847e">On Corporate Ownership of Open Source</a>」說出他的想法。</p>
+
+<p>Node.js 有另外兩個非常重要的 core commiter 分別是 <a href="https://github.com/piscisaureus">piscisaureus</a>（Bert Belder）和 <a href="https://github.com/bnoordhuis">bnoordhuis</a>（Ben Noordhuis），他們成立的公司 <a href="http://strongloop.com/">StrongLoop</a> 想要搶奪 Node.js 社群統治權的野心非常強，是 Joyent 最大的兢爭對手，但無奈商標權就是 Joyent 的，StrongLoop 也不能拿他們怎麼辦。</p>
+
+<p>StrongLoop 你就直說吧！你就是想要取代 Joyent 來主導 Node.js 的發展！XD</p>
+
+<h3>分裂的跡象</h3>
+
+<p>Open Source 這回事嘛……就是授權範圍允許，當然可以 fork 一份出去改成自己想要的版本，只是看整個社群願不願意支持而已。我不是很了解 Node.js 核心的開發上，Joyent 是用什麼樣的風格來管理，但顯然有很多 core commiter 不太滿意，從很久之前就出現了分裂的聲音。</p>
+
+<p>Joyent 做為 Node.js 所有者、掌門人也聞到了這個味道，當然不會坐視這種情況不管，因此成立了所謂的 <a href="http://nodejs.org/about/advisory-board/">Advisory Board</a>，目的就是在於廣納所有 Node.js developer 的意見跟想法。</p>
+
+<p>呃，傾聽人民的聲音？但似乎此舉在某些人眼裡看起來就是獨裁者的作秀，實質上沒什麼幫助，所以熱血革命鬥士開始組織 <a href="http://nodeforward.org/">Node Forward</a> 來討論該怎麼「推翻」政府，最後有了今日的 <a href="https://github.com/iojs/io.js/">io.js</a>。</p>
+
+<p>說說看在這之間難道 StrongLoop 的人難道不會煽風點火嗎？:p</p>
+
+<h3>io.js 是什麼？</h3>
+
+<p>io.js 目前在 Github 上的專案位置：<a href="https://github.com/iojs/io.js">https://github.com/iojs/io.js</a></p>
+
+<p>它的前身是 <a href="https://github.com/node-forward/">node-forward</a>/node，也就是 Node Forward 用來抵抗 Joyent 的專案，另一個 Node.js fork 版本，在正式 public release 前醞釀了大概 4 個禮拜左右。</p>
+
+<p>io.js 目的是希望可以讓 Node.js 更加擁抱社群、更自由、更公開、更透明……之類的，而不是被 Joyent「跋扈的專制統治」，其實我也不曉得真實狀況是怎樣。總之，目前的核心成員有原本 Node.js 的重要貢獻者：</p>
+
+<ul>
+<li>Fedor Indutny（@indutny）</li>
+<li>Trevor Norris（@trevnorris）</li>
+<li>Ben Noordhuis（@bnoordhuis）</li>
+<li>Isaac Z. Schlueter（@isaacs）</li>
+<li>Nathan Rajlich（@TooTallNate）</li>
+<li>Bert Belder（@piscisaureus）</li>
+</ul>
+
+
+<p>也有邀請 Advisory Board 大家長 TJ Fontaine（@tjfontaine）但是被婉拒了，劇情超像 <a href="http://www.imdb.com/title/tt3110960/">Jimmy&#8217;s Hall</a> 的神父啊！lol</p>
+
+<h3>賤人就是矯情</h3>
+
+<p>StrongLoop 在 io.js 公諸於世之後發表了「<a href="http://strongloop.com/strongblog/position-on-io-js/">StrongLoop’s Position on io.js</a>」文章，來表示「其實我們還是愛著 Node.js 啦！但如果……」，彷彿是在向 Joyent 下達最後通牒，不好好處理我們就分手吧！</p>
+
+<p>分裂其實對於整個 Node.js 生態系來說絕對是有害無益，但 StrongLoop 的態度就是師馬昭之心。看吧！文末還不忘歌功頌德一下他們自己。</p>
+
+<p>最近常在他們公司網站上看到自我宣傳的文宣，尤其是這次 v0.12 版本當中有很大比例的程式碼是由 StrongLoop 的人 commit 的，那是因為 v0.12 可以視為 v1.0 版本的候選版本，這也意味著在告訴大家 Node.js v1.0 正式版最強力的推動者是我們 StrongLoop 啊！</p>
+
+<p>其實這也沒什麼不好，而且 io.js 給的方向確實就是現在 Node.js 需要處理以及解決的問題，純粹是一種給人的觀感差異罷了。:p</p>
+
+<h3>小結</h3>
+
+<p>「這是個政治問題，需要政治的智慧來解決」，已經無關乎技術。</p>
+
+<p>整個事件對於 Node.js 還是有點影響的，那就是 Joyent 終於<a href="http://blog.nodejs.org/2014/12/03/advisory-board-update/">發佈消息</a>說 v0.12 即將到來，可能也意味著 v1.0 正式版本要隨之釋出，不過……我想這已經無法阻止 io.js 那群人繼續 forking，接下來會如何繼續拭目以待吧！</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-07T04:29:00+08:00" pubdate data-updated="true">Dec 7<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tech/'>Tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/what-is-iojs-nodejs-forking/" data-via="" data-counturl="http://blog.chh.tw/posts/what-is-iojs-nodejs-forking/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/node-template-engine-jade-vs-handlebars/" title="Previous Post: Node 樣版引擎評估：Jade、Handlebars">&laquo; Node 樣版引擎評估：Jade、Handlebars</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/what-is-iojs-nodejs-forking/';
+        var disqus_url = 'http://blog.chh.tw/posts/what-is-iojs-nodejs-forking/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

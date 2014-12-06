@@ -9,8 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="短文版 用 jade。 長文版 因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。 活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的： TJ 早期樣版引擎代表作 ejs
-以及 TJ 後來的 jade &hellip;">
+  <meta name="description" content="這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「IO.js – Evented I/O for V8 javascript」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。 整件事情發展詭譎得像 Prometheus 的 Elisabeth &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,16 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/" />
-<meta property="og:description" content="短文版 用 jade。 長文版 因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。 活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的： TJ 早期樣版引擎代表作 ejs
-以及 TJ 後來的 jade &hellip;" />
+<meta property="og:description" content="這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「IO.js – Evented I/O for V8 javascript」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。 整件事情發展詭譎得像 Prometheus 的 Elisabeth &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="短文版 用 jade。 長文版 因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。 活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的： TJ 早期樣版引擎代表作 ejs
-以及 TJ 後來的 jade &hellip;" />
+<meta itemprop="description" content="這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「IO.js – Evented I/O for V8 javascript」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。 整件事情發展詭譎得像 Prometheus 的 Elisabeth &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -103,6 +100,100 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/what-is-iojs-nodejs-forking/">io.js 是什麼？Node.js 社群分裂事件觀察</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-07T04:29:00+08:00" pubdate data-updated="true">Dec 7<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「<a href="https://news.ycombinator.com/item?id=8669557">IO.js – Evented I/O for V8 javascript</a>」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。</p>
+
+<p>整件事情發展詭譎得像 <a href="http://www.imdb.com/title/tt1446714/">Prometheus</a> 的 Elisabeth Shaw 剛發現黑色黏液一樣，不知道到底是希望還是崩壞的開始。最近公司有要用 Node.js 所以我就追了一下新聞，大概統整出來的概況寫了這篇觀察紀錄，或許有些可能有錯麻煩在幫我指正，感謝喔！</p>
+
+<h3>故事的序章</h3>
+
+<p>希臘傳說中的巨人族自殺喝下奇怪的黑色黏液來開創人類世界，Node.js 的創建者 <a href="https://github.com/ry">ry</a>（Ryan Dahl） 確實也有點像上帝創世後神龍見首不見尾地消失無蹤，怎麼有種 <a href="http://www.smashingmagazine.com/2010/05/15/why-a-tale-of-a-post-modern-genius/">_why</a> 風格的感覺……都回到真實世界去了嗎（<a href="http://www.imdb.com/title/tt0133093/">The Matrix</a> 梗）？</p>
+
+<p>在 ry <a href="https://groups.google.com/forum/#!topic/nodejs/hfajgpvGTLY">消失</a>之前他把 Node.js 版權賣給了 <a href="https://www.joyent.com/">Joyent</a> 還替他們工作了一陣子，但稍微有點信仰的 developer 都不會喜歡參與的 Open Source 專案跟商業公司扯上關係，這次 io.js 事件主導人之一的 <a href="https://github.com/mikeal">mikeal</a>（Mikeal Rogers）就寫了一篇「<a href="https://medium.com/@mikeal/on-corporate-ownership-of-open-source-786ebd15847e">On Corporate Ownership of Open Source</a>」說出他的想法。</p>
+
+<p>Node.js 有另外兩個非常重要的 core commiter 分別是 <a href="https://github.com/piscisaureus">piscisaureus</a>（Bert Belder）和 <a href="https://github.com/bnoordhuis">bnoordhuis</a>（Ben Noordhuis），他們成立的公司 <a href="http://strongloop.com/">StrongLoop</a> 想要搶奪 Node.js 社群統治權的野心非常強，是 Joyent 最大的兢爭對手，但無奈商標權就是 Joyent 的，StrongLoop 也不能拿他們怎麼辦。</p>
+
+<p>StrongLoop 你就直說吧！你就是想要取代 Joyent 來主導 Node.js 的發展！XD</p>
+
+<h3>分裂的跡象</h3>
+
+<p>Open Source 這回事嘛……就是授權範圍允許，當然可以 fork 一份出去改成自己想要的版本，只是看整個社群願不願意支持而已。我不是很了解 Node.js 核心的開發上，Joyent 是用什麼樣的風格來管理，但顯然有很多 core commiter 不太滿意，從很久之前就出現了分裂的聲音。</p>
+
+<p>Joyent 做為 Node.js 所有者、掌門人也聞到了這個味道，當然不會坐視這種情況不管，因此成立了所謂的 <a href="http://nodejs.org/about/advisory-board/">Advisory Board</a>，目的就是在於廣納所有 Node.js developer 的意見跟想法。</p>
+
+<p>呃，傾聽人民的聲音？但似乎此舉在某些人眼裡看起來就是獨裁者的作秀，實質上沒什麼幫助，所以熱血革命鬥士開始組織 <a href="http://nodeforward.org/">Node Forward</a> 來討論該怎麼「推翻」政府，最後有了今日的 <a href="https://github.com/iojs/io.js/">io.js</a>。</p>
+
+<p>說說看在這之間難道 StrongLoop 的人難道不會煽風點火嗎？:p</p>
+
+<h3>io.js 是什麼？</h3>
+
+<p>io.js 目前在 Github 上的專案位置：<a href="https://github.com/iojs/io.js">https://github.com/iojs/io.js</a></p>
+
+<p>它的前身是 <a href="https://github.com/node-forward/">node-forward</a>/node，也就是 Node Forward 用來抵抗 Joyent 的專案，另一個 Node.js fork 版本，在正式 public release 前醞釀了大概 4 個禮拜左右。</p>
+
+<p>io.js 目的是希望可以讓 Node.js 更加擁抱社群、更自由、更公開、更透明……之類的，而不是被 Joyent「跋扈的專制統治」，其實我也不曉得真實狀況是怎樣。總之，目前的核心成員有原本 Node.js 的重要貢獻者：</p>
+
+<ul>
+<li>Fedor Indutny（@indutny）</li>
+<li>Trevor Norris（@trevnorris）</li>
+<li>Ben Noordhuis（@bnoordhuis）</li>
+<li>Isaac Z. Schlueter（@isaacs）</li>
+<li>Nathan Rajlich（@TooTallNate）</li>
+<li>Bert Belder（@piscisaureus）</li>
+</ul>
+
+
+<p>也有邀請 Advisory Board 大家長 TJ Fontaine（@tjfontaine）但是被婉拒了，劇情超像 <a href="http://www.imdb.com/title/tt3110960/">Jimmy&#8217;s Hall</a> 的神父啊！lol</p>
+
+<h3>賤人就是矯情</h3>
+
+<p>StrongLoop 在 io.js 公諸於世之後發表了「<a href="http://strongloop.com/strongblog/position-on-io-js/">StrongLoop’s Position on io.js</a>」文章，來表示「其實我們還是愛著 Node.js 啦！但如果……」，彷彿是在向 Joyent 下達最後通牒，不好好處理我們就分手吧！</p>
+
+<p>分裂其實對於整個 Node.js 生態系來說絕對是有害無益，但 StrongLoop 的態度就是師馬昭之心。看吧！文末還不忘歌功頌德一下他們自己。</p>
+
+<p>最近常在他們公司網站上看到自我宣傳的文宣，尤其是這次 v0.12 版本當中有很大比例的程式碼是由 StrongLoop 的人 commit 的，那是因為 v0.12 可以視為 v1.0 版本的候選版本，這也意味著在告訴大家 Node.js v1.0 正式版最強力的推動者是我們 StrongLoop 啊！</p>
+
+<p>其實這也沒什麼不好，而且 io.js 給的方向確實就是現在 Node.js 需要處理以及解決的問題，純粹是一種給人的觀感差異罷了。:p</p>
+
+<h3>小結</h3>
+
+<p>「這是個政治問題，需要政治的智慧來解決」，已經無關乎技術。</p>
+
+<p>整個事件對於 Node.js 還是有點影響的，那就是 Joyent 終於<a href="http://blog.nodejs.org/2014/12/03/advisory-board-update/">發佈消息</a>說 v0.12 即將到來，可能也意味著 v1.0 正式版本要隨之釋出，不過……我想這已經無法阻止 io.js 那群人繼續 forking，接下來會如何繼續拭目以待吧！</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -316,59 +407,6 @@
   
     <footer>
       <a rel="full-article" href="/posts/oocss-smacss-and-css-guidelines/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/my-password-algorithm/">每個人都應該有一套自己的密碼演算法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-29T16:06:00+08:00" pubdate data-updated="true">Jun 29<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="https://lh4.googleusercontent.com/-XJ2BlPNnueY/Uc7GM1tq0bI/AAAAAAAAGgM/EDQev1B22wU/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202013-06-29%2520%25E4%25B8%258B%25E5%258D%25887.32.00.png" alt="the-matrix" /></p>
-
-<p>最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。</p>
-
-<p>在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的，但是在<del>室友</del>駭客面前、或是網站管理員面前，它是透明毫無隱藏的，所以在這前提下就不應該把每個網站全部設同個密碼，因為駭客可以拿這套帳號密碼去登入其他網站。</p>
-
-<h2>密碼演算法</h2>
-
-<p>但是每個網站密碼都不一樣怎麼記得住？所以需要一套「演算法」，以後只需要記憶這套算法，而不是去記密碼。「演算法」聽起來好像很神奇，其實只是一套組合的方法，隨便舉例：</p>
-
-<blockquote><p>網站分級變數 + 常數 + 網站辨識代號 = 密碼</p></blockquote>
-
-<p>以下來分別說明這些東西是什麼。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/posts/my-password-algorithm/">Read on &rarr;</a>
     </footer>
   
 

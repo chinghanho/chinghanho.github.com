@@ -4,7 +4,7 @@
   <title><![CDATA[@ChingHanHo]]></title>
   <link href="http://blog.chh.tw/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2014-11-29T08:19:44+08:00</updated>
+  <updated>2014-12-07T04:37:09+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,73 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[io.js 是什麼？Node.js 社群分裂事件觀察]]></title>
+    <link href="http://blog.chh.tw/posts/what-is-iojs-nodejs-forking/"/>
+    <updated>2014-12-07T04:29:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/what-is-iojs-nodejs-forking</id>
+    <content type="html"><![CDATA[<p>這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「<a href="https://news.ycombinator.com/item?id=8669557">IO.js – Evented I/O for V8 javascript</a>」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。</p>
+
+<p>整件事情發展詭譎得像 <a href="http://www.imdb.com/title/tt1446714/">Prometheus</a> 的 Elisabeth Shaw 剛發現黑色黏液一樣，不知道到底是希望還是崩壞的開始。最近公司有要用 Node.js 所以我就追了一下新聞，大概統整出來的概況寫了這篇觀察紀錄，或許有些可能有錯麻煩在幫我指正，感謝喔！</p>
+
+<h3>故事的序章</h3>
+
+<p>希臘傳說中的巨人族自殺喝下奇怪的黑色黏液來開創人類世界，Node.js 的創建者 <a href="https://github.com/ry">ry</a>（Ryan Dahl） 確實也有點像上帝創世後神龍見首不見尾地消失無蹤，怎麼有種 <a href="http://www.smashingmagazine.com/2010/05/15/why-a-tale-of-a-post-modern-genius/">_why</a> 風格的感覺……都回到真實世界去了嗎（<a href="http://www.imdb.com/title/tt0133093/">The Matrix</a> 梗）？</p>
+
+<p>在 ry <a href="https://groups.google.com/forum/#!topic/nodejs/hfajgpvGTLY">消失</a>之前他把 Node.js 版權賣給了 <a href="https://www.joyent.com/">Joyent</a> 還替他們工作了一陣子，但稍微有點信仰的 developer 都不會喜歡參與的 Open Source 專案跟商業公司扯上關係，這次 io.js 事件主導人之一的 <a href="https://github.com/mikeal">mikeal</a>（Mikeal Rogers）就寫了一篇「<a href="https://medium.com/@mikeal/on-corporate-ownership-of-open-source-786ebd15847e">On Corporate Ownership of Open Source</a>」說出他的想法。</p>
+
+<p>Node.js 有另外兩個非常重要的 core commiter 分別是 <a href="https://github.com/piscisaureus">piscisaureus</a>（Bert Belder）和 <a href="https://github.com/bnoordhuis">bnoordhuis</a>（Ben Noordhuis），他們成立的公司 <a href="http://strongloop.com/">StrongLoop</a> 想要搶奪 Node.js 社群統治權的野心非常強，是 Joyent 最大的兢爭對手，但無奈商標權就是 Joyent 的，StrongLoop 也不能拿他們怎麼辦。</p>
+
+<p>StrongLoop 你就直說吧！你就是想要取代 Joyent 來主導 Node.js 的發展！XD</p>
+
+<h3>分裂的跡象</h3>
+
+<p>Open Source 這回事嘛……就是授權範圍允許，當然可以 fork 一份出去改成自己想要的版本，只是看整個社群願不願意支持而已。我不是很了解 Node.js 核心的開發上，Joyent 是用什麼樣的風格來管理，但顯然有很多 core commiter 不太滿意，從很久之前就出現了分裂的聲音。</p>
+
+<p>Joyent 做為 Node.js 所有者、掌門人也聞到了這個味道，當然不會坐視這種情況不管，因此成立了所謂的 <a href="http://nodejs.org/about/advisory-board/">Advisory Board</a>，目的就是在於廣納所有 Node.js developer 的意見跟想法。</p>
+
+<p>呃，傾聽人民的聲音？但似乎此舉在某些人眼裡看起來就是獨裁者的作秀，實質上沒什麼幫助，所以熱血革命鬥士開始組織 <a href="http://nodeforward.org/">Node Forward</a> 來討論該怎麼「推翻」政府，最後有了今日的 <a href="https://github.com/iojs/io.js/">io.js</a>。</p>
+
+<p>說說看在這之間難道 StrongLoop 的人難道不會煽風點火嗎？:p</p>
+
+<h3>io.js 是什麼？</h3>
+
+<p>io.js 目前在 Github 上的專案位置：<a href="https://github.com/iojs/io.js">https://github.com/iojs/io.js</a></p>
+
+<p>它的前身是 <a href="https://github.com/node-forward/">node-forward</a>/node，也就是 Node Forward 用來抵抗 Joyent 的專案，另一個 Node.js fork 版本，在正式 public release 前醞釀了大概 4 個禮拜左右。</p>
+
+<p>io.js 目的是希望可以讓 Node.js 更加擁抱社群、更自由、更公開、更透明……之類的，而不是被 Joyent「跋扈的專制統治」，其實我也不曉得真實狀況是怎樣。總之，目前的核心成員有原本 Node.js 的重要貢獻者：</p>
+
+<ul>
+<li>Fedor Indutny（@indutny）</li>
+<li>Trevor Norris（@trevnorris）</li>
+<li>Ben Noordhuis（@bnoordhuis）</li>
+<li>Isaac Z. Schlueter（@isaacs）</li>
+<li>Nathan Rajlich（@TooTallNate）</li>
+<li>Bert Belder（@piscisaureus）</li>
+</ul>
+
+
+<p>也有邀請 Advisory Board 大家長 TJ Fontaine（@tjfontaine）但是被婉拒了，劇情超像 <a href="http://www.imdb.com/title/tt3110960/">Jimmy&#8217;s Hall</a> 的神父啊！lol</p>
+
+<h3>賤人就是矯情</h3>
+
+<p>StrongLoop 在 io.js 公諸於世之後發表了「<a href="http://strongloop.com/strongblog/position-on-io-js/">StrongLoop’s Position on io.js</a>」文章，來表示「其實我們還是愛著 Node.js 啦！但如果……」，彷彿是在向 Joyent 下達最後通牒，不好好處理我們就分手吧！</p>
+
+<p>分裂其實對於整個 Node.js 生態系來說絕對是有害無益，但 StrongLoop 的態度就是師馬昭之心。看吧！文末還不忘歌功頌德一下他們自己。</p>
+
+<p>最近常在他們公司網站上看到自我宣傳的文宣，尤其是這次 v0.12 版本當中有很大比例的程式碼是由 StrongLoop 的人 commit 的，那是因為 v0.12 可以視為 v1.0 版本的候選版本，這也意味著在告訴大家 Node.js v1.0 正式版最強力的推動者是我們 StrongLoop 啊！</p>
+
+<p>其實這也沒什麼不好，而且 io.js 給的方向確實就是現在 Node.js 需要處理以及解決的問題，純粹是一種給人的觀感差異罷了。:p</p>
+
+<h3>小結</h3>
+
+<p>「這是個政治問題，需要政治的智慧來解決」，已經無關乎技術。</p>
+
+<p>整個事件對於 Node.js 還是有點影響的，那就是 Joyent 終於<a href="http://blog.nodejs.org/2014/12/03/advisory-board-update/">發佈消息</a>說 v0.12 即將到來，可能也意味著 v1.0 正式版本要隨之釋出，不過……我想這已經無法阻止 io.js 那群人繼續 forking，接下來會如何繼續拭目以待吧！</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Node 樣版引擎評估：Jade、Handlebars]]></title>
@@ -1877,129 +1944,6 @@ execute pathogen#infect()
 <p>仿真設計的介面目的不只是降低使用者防禦心理，目的也在能讓使用者用自己已經熟悉的方式，來透過這個軟體來解決問題。但是，畢竟軟體終究是軟體，是個虛擬的介面，並不是使用者「真正熟悉」的東西，因此要做好仿真設計相對下門檻變得非常高。</p>
 
 <p>會讓異塵行者感到「簡潔數位化介面才是真正正道」的原因，我想就是 Evernote 做了一個非常糟糕的仿真設計介面示範。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails 重大 SQL injection 安全漏洞其實沒這麼可怕]]></title>
-    <link href="http://blog.chh.tw/posts/rails-sql-injection-what-happened/"/>
-    <updated>2013-01-04T09:15:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/rails-sql-injection-what-happened</id>
-    <content type="html"><![CDATA[<p><img src="http://lh3.googleusercontent.com/-Ptn8b9s_OAM/UOYvBgxC29I/AAAAAAAAFj8/qaLFQuKm_L0/s666/exploits_of_a_mom.png" alt="xkcd" /></p>
-
-<p>2013.01.10 更新：前兩天 <a href="https://groups.google.com/forum/?fromgroups=#!topic/rubyonrails-security/61bkgvnSGTQ">Rails 又爆出新的漏洞</a>（有沒有這麼歡樂啊？XD），比本篇文章所講的嚴重一百萬倍，據說這漏洞是非常容易被搞，所以「一定」要更新到最新版本（目前的版本是 3.2.11、3.1.10、3.0.19 和 2.3.15 ）！不過目前我沒辦法重現這個 bug，也不清楚這次到底是不是「真有這麼可怕？」。:p</p>
-
-<p><a href="http://xkcd.com/327/">xkcd</a> 這張圖幽默地說明 SQL injection 的可怕，一位媽媽用 SQL 語法替自己小孩取名字，結果校方電腦沒有消毒資料就寫道資料庫去，結果整個資料庫就爆掉了，原來這小孩的名字其實是刪掉整個表格的語法。XD</p>
-
-<p>Rails 前兩天的<a href="http://weblog.rubyonrails.org/2013/1/2/Rails-3-2-10--3-1-9--and-3-0-18-have-been-released/">重大安全更新</a>，所有 3.x 的版本都有問題，引起鄉民激動的討論，我看了一下<a href="http://news.ycombinator.com/item?id=4999406">大家討論的內容</a>看不出什麼所以然來，也不曉得這次的 SQL 注射是怎麼辦到的，可能很多人跟我一樣都搞不清楚狀況，所以 <a href="http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts/">Phusion 部落格</a>發表了一篇文章來說明整件事情的原委，寫得相當清楚。</p>
-
-<p>現在我終於搞清楚這個 bug 是這麼回事……</p>
-
-<h2>動態 finder</h2>
-
-<p>Rails 透過 ActiveRecord 查詢資料庫，通常會用到像是 <code>User.find(params[:id])</code> 這樣的方法，依照參數給的值查詢 model 的主鍵（primary key），非常方便。此外，Rails 還有非常方便的動態 finder，可以依照資料庫欄位來尋找給予的參數，例如：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">find_by_foo</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:foo</span><span class="o">]</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>而這次 Rails 3.2.10（包括 3.1.9 和 3.0.18）所修補的這個 bug 就是發生在這個動態 finder。<code>find_by_*</code> 用來查詢指定的任何欄位，例如 User model 中有 name、email 這兩個欄位，那就可以這樣寫：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:login</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_email</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>params[:name]</code> 和 <code>params[:email]</code> 是使用者 input 的參數，因此 cracker 就可能會用 <a href="http://en.wikipedia.org/wiki/SQL_injection">SQL 填字遊戲</a>注射髒東西進來。這麼簡單的原理 Rails 當然有保護措施，他們用<a href="http://blog.chh.tw/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/">單引號</a> <code>' '</code> 不轉義字元，例如以下這例子：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; SELECT &quot;users&quot;.* FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;login&quot; = &#39;chh&#39; LIMIT 1</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="s2">&quot;chh&#39;; DROP TABLE USERS; --&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; SELECT &quot;users&quot;.* FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;name&quot; = &#39;chh&#39;&#39;; DROP TABLE USERS; --&#39; LIMIT 1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>cracker 想要把整個 User 表格都摘掉，不轉義的結果最後只會找不到東西，返回 nil，因為我們 login 欄位裡並沒有一個叫做「chh&#8217;; DROP TABLE USERS; &#8211;」的使用者。看起來好像沒事了，可是 ActiveRecord 的動態 finder 不只可以接受字串，如果有需要的話還可以自己定義 SQL 查詢條件，例如：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="ss">:select</span> <span class="o">=&gt;</span> <span class="s2">&quot;id, login&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; User Load (0.3ms)  SELECT id, login FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;login&quot; = &#39;chh&#39; LIMIT 1</span>
-</span><span class='line'><span class="c1"># =&gt; #&lt;User id: 1, login: &quot;chh&quot;&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>只調出 id 跟 login 兩個欄位，也可以直接用 <code>:select</code>，儘管傳回來的會是 nil：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="ss">:select</span> <span class="o">=&gt;</span> <span class="s2">&quot;1; DROP TABLE users; --&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; SELECT 1; DROP TABLE users; -- FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;name&quot; IS NULL LIMIT 1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可是這就有點問題了，由於 <code>User.find_by_login(params[:login])</code> 的 <code>params[:login]</code> 參數請求是會被 Rails 轉換成 hash 的，也就是說如果 cracker 用傳來的不是 string 而是有髒東西的 hash，那就會變成資安漏洞！例如以下的 URL：</p>
-
-<pre><code>/example-url?login[select]=whatever&amp;login[limit]=23
-</code></pre>
-
-<p>這個時候的 <code>params[:login]</code> 得到的就是一個 hash：<code>{ "select" =&gt; "whatever", "limit" =&gt; 23 }</code>。BUT！在 Ruby 當中 string 和 hash 是兩種不同的資料類型，雖然 Rails 中常常某些情況這兩種會混用，因為這是 ActiveSupport::HashWithIndifferentAccess 會自動轉換 hash 為 string ，以避免不必要的臭蟲滋生；<code>params[:login]</code> 也是如此。</p>
-
-<p>而如果 cracker 想要用這個方法搞我們的 Rails app，他就必須要讓 string <code>"select"</code> 變成 hash <code>:select</code>，這樣才有辦法注射，但這是不可能的，Rails 會把它轉成 string。</p>
-
-<h2>問題點</h2>
-
-<p>可是問題就發生在 <a href="https://github.com/binarylogic/authlogic">Authlogic</a> 這個 gem，他們透過很粗糙的方式向資料庫查詢 token：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_persistence_token</span><span class="p">(</span><span class="n">the_token</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這個 <code>the_token</code> 並沒有將 hash 轉為 string，因此暴露了漏洞讓 cracker 有機可趁，可是一定要透過 session data 這種認證方式，否則其他方法 <code>the_token</code> 都會變成 string。</p>
-
-<p>要破解這招要先準備這個 Rails 網站的 secret_token，該怎麼拿到呢？可以 <a href="https://www.google.com/search?q=inurl:secret_token+filetype%3Arb+site%3Agithub.com">google</a> 一下找到一堆 open source 專案的 secret_token，很多人佈署網站的時候都沒有重新 <code>rake secret</code>，而且就直接暴露到 Github 上去了。XD</p>
-
-<p>所以說這次的安全漏洞其實不會「瞬間」讓所有的 Rails app 都陷入危險狀態，甚至可以說，就算不更新好像也不會怎樣（？），除非網站用的是 open source ，也用到像 Authlogic 這種 gem，而且剛好又沒有重新產生新的 secret_token，才會有立即的危險。話說回來，這也不像是 Rails 本身的 bug，只是開發者會很容易不小心疏忽這個部份，所以 Rails 為了預防這種情況發生，才會補上這次的安全更新。</p>
-
-<h2>防禦方法</h2>
-
-<p>目前要補上這個漏洞有三種方法：</p>
-
-<ul>
-<li>更新 Rails 新版本，目前官方已經發出 patch，更新完以後什麼事情都不用做；:)</li>
-<li>在所有的 <code>find_by_*</code> 參數都加上過濾機制，例如 <code>find_by_login(params[:login].to_s)</code>，強制轉換成字串；</li>
-<li>如果使用 open source 的網站，記得執行 <code>rake secret</code> 重新產生 token；</li>
-</ul>
-
-
-<p>secret_token.rb 檔案的處理可以像 <a href="http://blog.chh.tw/posts/rails-database-yml-management/">database.yml</a> 一樣，製作成一個樣板，命名成 secret_token.rb.example，然後原本的檔案不列入版本控制，最後佈署時寫個腳本用 symlink 覆蓋過去；也可以參考<a href="https://github.com/gedankenstuecke/snpr/blob/master/config/initializers/secret_token.rb">這個作法</a>，在 Rails app 根目錄底下新建 secret_token 檔案專門拿來放 token，再引入到 secret_token.rb 去；或者也可以設在環境變數 <code>ENV</code> 裡。</p>
-
-<h2>One More Thing&#8230; About Rails 4 Dynamic Methods&#8230;</h2>
-
-<p>Rails 4 的動態 finder <a href="http://edgeguides.rubyonrails.org/4_0_release_notes.html#active-record-deprecations">改變了一些寫法</a>，除了 <code>find_by_*</code> 和 <code>find_by_*!</code> 這兩個之外，其他的全部都不能再用了：</p>
-
-<ul>
-<li><code>User.find_all_by_*</code> 要改寫成 <code>User.where(*)</code>；</li>
-<li><code>User.find_last_by_*</code> 改寫成 <code>User.where(*).last</code>；</li>
-<li><code>User.scoped_by_*</code> 改寫成 <code>User.where(*)</code>；</li>
-<li><code>User.find_or_initialize_by_*</code> 改寫為 <code>User.where(*).first_or_initialize</code>；</li>
-<li><code>User.find_or_create_by_*</code> 改寫成 <code>User.find_or_create_by(*)</code> 或者 <code>User.where(*).first_or_create</code>；</li>
-<li><code>User.find_or_create_by_*!</code> 則要改寫成 <code>User.find_or_create_by!(*)</code> 或是 <code>User.where(*).first_or_create!</code>；</li>
-</ul>
-
-
-<p>看起來有點不太習慣，感覺沒有原本的直覺，為什麼要改這樣我也不曉得。</p>
 ]]></content>
   </entry>
   
