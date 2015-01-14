@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | @ChingHanHo]]></title>
   <link href="http://blog.chh.tw/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2014-12-07T04:40:35+08:00</updated>
+  <updated>2015-01-14T16:19:52+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -46,6 +46,8 @@
 <p>呃，傾聽人民的聲音？但似乎此舉在某些人眼裡看起來就是獨裁者的作秀，實質上沒什麼幫助，所以熱血革命鬥士開始組織 <a href="http://nodeforward.org/">Node Forward</a> 來討論該怎麼「推翻」政府，最後有了今日的 <a href="https://github.com/iojs/io.js/">io.js</a>。</p>
 
 <p>說說看在這之間難道 StrongLoop 的人難道不會煽風點火嗎？:p</p>
+
+<p>Update 2015.01.14：今天 io.js 發佈 1.0.0 版本把整個 Twitter 洗版洗得一塌糊塗，然後我也看到另外一個軼聞，就是 Ben Noordhuis 被當初被 Joyent「驅逐」的原因竟然是因為<a href="https://github.com/joyent/libuv/commit/804d40ee14dc0f82c482dcc8d1c41c14333fcb48">性別歧視用字</a>的問題，也可以<a href="https://github.com/joyent/libuv/pull/1015#issuecomment-29568172">在這裏</a>找到他本人的說法。另一層考量就是 Ben 為 Joyent 競爭對手工作，很難不讓人聯想這是一起政治事件。</p>
 
 <h3>io.js 是什麼？</h3>
 
