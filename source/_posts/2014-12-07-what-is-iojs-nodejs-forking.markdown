@@ -34,6 +34,8 @@ Joyent 做為 Node.js 所有者、掌門人也聞到了這個味道，當然不�
 
 說說看在這之間難道 StrongLoop 的人難道不會煽風點火嗎？:p
 
+Update 2015.01.14：今天 io.js 發佈 1.0.0 版本把整個 Twitter 洗版洗得一塌糊塗，然後我也看到另外一個軼聞，就是 Ben Noordhuis 被當初被 Joyent「驅逐」的原因竟然是因為[性別歧視用字](https://github.com/joyent/libuv/commit/804d40ee14dc0f82c482dcc8d1c41c14333fcb48)的問題，也可以[在這裏](https://github.com/joyent/libuv/pull/1015#issuecomment-29568172)找到他本人的說法。另一層考量就是 Ben 為 Joyent 競爭對手工作，很難不讓人聯想這是一起政治事件。
+
 ### io.js 是什麼？
 
 io.js 目前在 Github 上的專案位置：[https://github.com/iojs/io.js](https://github.com/iojs/io.js)
