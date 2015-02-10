@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="2013.01.10 更新：前兩天 Rails 又爆出新的漏洞（有沒有這麼歡樂啊？XD），比本篇文章所講的嚴重一百萬倍，據說這漏洞是非常容易被搞，所以「一定」要更新到最新版本（目前的版本是 3.2.11、3.1.10、3.0.19 和 2.3.15 ）！不過目前我沒辦法重現這個 bug， &hellip;">
+  <meta name="description" content="這篇文章在 iTunes 11 出來時就寫好，結果放在草稿夾裡一直忘記完成，今天因為看到了電腦玩物站長異塵行者對仿真設計的看法（舊文章今天才看到），才想起來還沒有發佈；異塵行者認為： 雖然高雅擬真風格看起來舒適，但畢竟我們不是真在紙本筆記使用 Evernote，而是在台數位裝置上， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/5/" />
-<meta property="og:description" content="2013.01.10 更新：前兩天 Rails 又爆出新的漏洞（有沒有這麼歡樂啊？XD），比本篇文章所講的嚴重一百萬倍，據說這漏洞是非常容易被搞，所以「一定」要更新到最新版本（目前的版本是 3.2.11、3.1.10、3.0.19 和 2.3.15 ）！不過目前我沒辦法重現這個 bug， &hellip;" />
+<meta property="og:description" content="這篇文章在 iTunes 11 出來時就寫好，結果放在草稿夾裡一直忘記完成，今天因為看到了電腦玩物站長異塵行者對仿真設計的看法（舊文章今天才看到），才想起來還沒有發佈；異塵行者認為： 雖然高雅擬真風格看起來舒適，但畢竟我們不是真在紙本筆記使用 Evernote，而是在台數位裝置上， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="2013.01.10 更新：前兩天 Rails 又爆出新的漏洞（有沒有這麼歡樂啊？XD），比本篇文章所講的嚴重一百萬倍，據說這漏洞是非常容易被搞，所以「一定」要更新到最新版本（目前的版本是 3.2.11、3.1.10、3.0.19 和 2.3.15 ）！不過目前我沒辦法重現這個 bug， &hellip;" />
+<meta itemprop="description" content="這篇文章在 iTunes 11 出來時就寫好，結果放在草稿夾裡一直忘記完成，今天因為看到了電腦玩物站長異塵行者對仿真設計的看法（舊文章今天才看到），才想起來還沒有發佈；異塵行者認為： 雖然高雅擬真風格看起來舒適，但畢竟我們不是真在紙本筆記使用 Evernote，而是在台數位裝置上， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/skeuomorphism/">我對仿真設計介面的看法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-10T10:21:00+08:00" pubdate data-updated="true">Jan 10<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://lh5.googleusercontent.com/-VJMDa0tOOjE/UO4RTtHUqJI/AAAAAAAAFu8/_MU2WkKlTEw/s690/WAwzA.jpg" alt="itunes" /></p>
+
+<p>這篇文章在 iTunes 11 出來時就寫好，結果放在草稿夾裡一直忘記完成，今天因為看到了電腦玩物站長異塵行者對<a href="http://playpcesor.blogspot.com/2012/11/evernote-50-iphone-ipad.html">仿真設計的看法</a>（舊文章今天才看到），才想起來還沒有發佈；異塵行者認為：</p>
+
+<blockquote><p>雖然高雅擬真風格看起來舒適，但畢竟我們不是真在紙本筆記使用 Evernote，而是在台數位裝置上，對生產力工具來說簡潔數位化介面才是真正正道。</p></blockquote>
+
+<p>前幾個禮拜因為好奇去聽了幾堂<a href="https://www.coursera.org/course/hci">史丹佛大學人機互動課程</a>，得到幾個非常重要的觀念。華麗高雅的擬真風格並非單純的綴飾，更不是「贅飾」，事實上這種設計風格是有意義的。</p>
+
+<p>舉例來說，當第一次看到 <a href="https://itunes.apple.com/us/app/clear/id504544917">clear</a> 與 OS X Mountain Lion 內建的 <a href="http://appleinsider.com/articles/12/03/30/inside_os_x_108_mountain_lion_reminders_app_adds_geofence_location_alerts">Reminder</a> 時，不看「說明書」可能還不曉得 clear 是做什麼的；尤其對於不常使用數位工具的使用者，仿真設計是讓軟體能夠更貼近他們的生活，他們也許沒辦法立即掌握這個程式所有功能，但確實能夠降低防禦心理。</p>
+
+<p>我平常觀察那些不慣用電腦的使用者，他們在操作電腦時的動作，很多人會在第一步不知道該點擊什麼就停下來，因為「純數位化」的介面讓他們不知所措，進而增加心理挫折感，然後可能就不再使用這個軟體，這也就是為什麼要一開始就要降低使用者的防禦心理。</p>
+
+<p>仿真設計的介面目的不只是降低使用者防禦心理，目的也在能讓使用者用自己已經熟悉的方式，來透過這個軟體來解決問題。但是，畢竟軟體終究是軟體，是個虛擬的介面，並不是使用者「真正熟悉」的東西，因此要做好仿真設計相對下門檻變得非常高。</p>
+
+<p>會讓異塵行者感到「簡潔數位化介面才是真正正道」的原因，我想就是 Evernote 做了一個非常糟糕的仿真設計介面示範。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -539,82 +589,6 @@ $ echo "config/database.yml" &gt;&gt; .gitignore
 <p><img src="http://lh4.googleusercontent.com/-JUS4VoFaWwE/UNrNeRUEqkI/AAAAAAAAFfo/k69Phmixw8Q/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-26%2520%25E4%25B8%258B%25E5%258D%25885.59.32.png" alt="rails-panel" /></p>
 
 <p>超級清楚！我不曉得其他人都用什麼方式檢視 log，不過這目前是我用過最好的工具，對於查看 view render、資料庫拉資料的時間以及傳遞的參數內容都非常方便，推薦！</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/mandarin-phonetic-symbols-and-han-han-yu-pin-yin/">注音符號與漢語拼音</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-25T10:41:00+08:00" pubdate data-updated="true">Dec 25<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近如果只是打少少幾個字，例如使用 Google 搜尋的時候，我都會刻意切換到漢語拼音輸入法來練習；如果是打一整篇文章，我還是會用注音輸入法，畢竟是從小用到大用的東西，已經非常習慣了，每分鐘至少可以打 80 字以上。</p>
-
-<p>哪個工具效率高，我通常就會選擇那一個，對我目前而言注音符號絕對效率比較高，但隨著使用的時間久了，我發現注音符號有兩個缺點：</p>
-
-<ol>
-<li>手指在鍵盤上的移動距離太遠：注音符號整整比英文字母多了十幾個字，因此就多了整整一排鍵盤的空間，偏偏最遠的那排都是常用的東西（聲調之類的），當輸入注音的時候，會發現浪費很多時間在移動手指頭，打久了會感覺很累、很沒有效率；</li>
-<li>學習成本相對較高：學習成本高不是指注音很難學，而是注音符號全世界只有台灣一個國家在用，如果以「投資報酬率」來算實在沒有漢語拼音來得經濟實惠，因為學漢語拼音還可以順便學英文（？）；</li>
-</ol>
-
-
-<p>不過注音符號確實精準地解決了讀音問題，而且徹頭徹尾是用「中國人」自己的智慧<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，而不是用「外國人」的字來解決「中國人」的問題，這在民族主義作祟的某種程度上，會讓人感到有點自豪吧（？）；可能也是因為這樣，台灣人講起話來感覺比較大陸人標準（自以為）。:p</p>
-
-<p>其實中文最快、最有效率的輸入法應該是倉頡或嘸蝦米，可是學習這兩套輸入法的門檻過高，以我已經會注音符號和一點點破英文來說，注音及漢語拼音相較下更適合我才對；就像很多「資深」programmer 都會催眠新手說 vim、emacs 多好用，結果害新手一進來就掉入大坑。</p>
-
-<p>現在許多漢語拼音輸入法都支援不帶聲調的寫法，這有優點也有缺點，在「<a href="http://taiwan.chtsai.org/2012/08/22/yunduan_guge_pinyin_shurufa/">雲端谷歌拼音輸入法</a>」這篇文章的作者蔡志浩寫得相當清楚，這也就是為什麼我要學著使用漢語拼音的原因：</p>
-
-<blockquote><p>漢語拼音不帶調整句輸入有顯著的好處。你的手指只需要在字母區域移動，不需要經常移動較長的距離到數字列。當然也有些缺點，例如有些音節的鍵數可能要比注音多一點（例如「chuang」與「ㄔㄨㄤ」）。但如果你習慣英打就會發現注音輸入法手指經常移動到數字列所增加的時間是減少的按鍵次數補不回來的。這也是為什麼二十四年前的第一代行列輸入法原本要用使用四十個鍵（包括最上面的數字列），過了沒幾年就改成現在的三十鍵版本了。</p></blockquote>
-
-<p>另一方面，現在有的網站會用中文作為 URL 來提升 SEO，例如<a href="http://blog.xdite.net/posts/2011/10/25/yahoo-seo-url/">悲劇的 Yahoo! 新聞</a><sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>，可是中文塞在 URL 裡面會造成幾個問題：</p>
-
-<ol>
-<li>URL 過長：中文經過轉碼後變成一大串的字符，這在分享網址的時候會變得很難看，而且正因為太長，反而降低了 SEO 的效果；</li>
-<li>中英文混雜：URL 裡面夾雜中文和英文，對於搜尋引擎的檢索會變得比較困難；</li>
-<li>搜尋引擎支援度不足：有的搜尋引擎還沒辦法檢索中文的 URL；</li>
-</ol>
-
-
-<p>所以目前使用中文 URL 的人還是很少，大部分的人會將中文<a href="https://github.com/flyerhzm/chinese_permalink">用程式翻譯成英文</a>，或者是改用漢語拼音，這樣也有利於搜尋引擎檢索關鍵字。</p>
-
-<p>在大陸主流用的是漢語拼音，所以百度搜尋引擎對於漢語拼音的支援度，就比 Google 表現得更好：</p>
-
-<p><img src="http://lh3.googleusercontent.com/-QsSZc-5QqOw/UNkRKV3EiSI/AAAAAAAAFfU/B5qiRpFOw8k/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-25%2520%25E4%25B8%258A%25E5%258D%258810.35.37.png" alt="hanyu-search" /></p>
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>可以參考維基百科<a href="http://zh.wikipedia.org/wiki/%E6%B3%A8%E9%9F%B3%E7%AC%A6%E8%99%9F">注音符號</a>的條目。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>這可能是因為 Yahoo! 英文站就是把關鍵字塞在數字前，所以才造成中文站的悲劇。 <a href='#fnref:2' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-
-
 </div>
   
   

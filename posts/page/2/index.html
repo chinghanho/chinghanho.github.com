@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。 在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的， &hellip;">
+  <meta name="description" content="真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。 （本文的例子用的是 SCSS 語法） ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/2/" />
-<meta property="og:description" content="最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。 在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的， &hellip;" />
+<meta property="og:description" content="真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。 （本文的例子用的是 SCSS 語法） " />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。 在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的， &hellip;" />
+<meta itemprop="description" content="真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。 （本文的例子用的是 SCSS 語法） " />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/oocss-smacss-and-css-guidelines/">劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-05T10:40:00+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。</p>
+
+<p>（本文的例子用的是 SCSS 語法）</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/oocss-smacss-and-css-guidelines/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -285,53 +328,6 @@
   
     <footer>
       <a rel="full-article" href="/posts/git-submodule/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/tmux-terminal-multiplexer/">終端機必備的多工良伴：tmux</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-09T17:11:00+08:00" pubdate data-updated="true">Apr 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。</p>
-
-<p>從官網上的描述，<a href="http://tmux.sourceforge.net/">tmux</a> 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh 登入到遠端主機也不會斷掉，此外還可以在同個視窗下切割區塊，如下圖（<a href="http://www.psteiner.com/2012/05/tmux-for-ruby-on-rails.html">圖片來源</a>）：</p>
-
-<p><img src="http://lh5.googleusercontent.com/-Z0XpVHmJ-ks/UWO-JgwbszI/AAAAAAAAF_M/QdewyOkH1xw/s690/rumble.png" alt="tmux-demo" /></p>
-
-<p>右邊開 Vim 寫程式，左上角跑 RSpec 測試，同時左下角開 Rails server 看 log，神奇的是這些狀態可以保存起來，不需要的時候可以藏到背景去，可是用 Sublime Text 2 就沒這麼理想，害我有種想改用 Vim 的衝動。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/posts/tmux-terminal-multiplexer/">Read on &rarr;</a>
     </footer>
   
 

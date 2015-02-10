@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「IO.js – Evented I/O for V8 javascript」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。 整件事情發展詭譎得像 Prometheus 的 Elisabeth &hellip;">
+  <meta name="description" content="這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD Page 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/" />
-<meta property="og:description" content="這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「IO.js – Evented I/O for V8 javascript」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。 整件事情發展詭譎得像 Prometheus 的 Elisabeth &hellip;" />
+<meta property="og:description" content="這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD Page 1 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「IO.js – Evented I/O for V8 javascript」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。 整件事情發展詭譎得像 Prometheus 的 Elisabeth &hellip;" />
+<meta itemprop="description" content="這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD Page 1 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/iojs-nodejs-performance/">io.js 1.1 vs node.js 0.12.0 vs node.js 0.10.36</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-10T23:37:00+08:00" pubdate data-updated="true">Feb 10<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD</p>
+
+<h3>Page 1</h3>
+
+<p><img src="https://lh3.googleusercontent.com/-AWI4LN6fELs/VNomvCU_iMI/AAAAAAAAIKs/Im1igPcG3EI/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.28.59%2BPM.png" alt="node.js v0.12.0 page1" /></p>
+
+<p>node.js v0.12.0 TTFB 1.36s。</p>
+
+<p><img src="https://lh6.googleusercontent.com/-tl-PFTsvs-0/VNomy_t_IkI/AAAAAAAAILU/YRiVxSVD5Dc/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.34.28%2BPM.png" alt="io.js v1.1.0 page1" /></p>
+
+<p>io.js v1.1.0 TTFB 1.21s。</p>
+
+<p><img src="https://lh4.googleusercontent.com/-pJ4XM3ov8v4/VNomx2fPf-I/AAAAAAAAILE/RxH-DOoQygg/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.30.32%2BPM.png" alt="node.js v0.10.36 page1" /></p>
+
+<p>node.js v0.10.36 TTFB 603ms。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/iojs-nodejs-performance/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -315,49 +370,6 @@
   
     <footer>
       <a rel="full-article" href="/posts/node-http-vs-connect-vs-express/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/oocss-smacss-and-css-guidelines/">劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-05T10:40:00+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。</p>
-
-<p>（本文的例子用的是 SCSS 語法）</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/posts/oocss-smacss-and-css-guidelines/">Read on &rarr;</a>
     </footer>
   
 

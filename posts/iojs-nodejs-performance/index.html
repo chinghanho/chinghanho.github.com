@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>io.js 1.1 VS node.js 0.12.0 VS node.js 0.10.36 - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD Page 1 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/iojs-nodejs-performance/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="io.js 1.1 VS node.js 0.12.0 VS node.js 0.10.36" /><meta itemprop="name" content="io.js 1.1 VS node.js 0.12.0 VS node.js 0.10.36" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/iojs-nodejs-performance/" />
+<meta property="og:description" content="這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD Page 1 &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2015-02-10 23:37:00 +0800" />
+
+<meta property="article:section" content="Programing" />
+<meta itemprop="description" content="這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD Page 1 &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">io.js 1.1 vs node.js 0.12.0 vs node.js 0.10.36</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-10T23:37:00+08:00" pubdate data-updated="true">Feb 10<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD</p>
+
+<h3>Page 1</h3>
+
+<p><img src="https://lh3.googleusercontent.com/-AWI4LN6fELs/VNomvCU_iMI/AAAAAAAAIKs/Im1igPcG3EI/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.28.59%2BPM.png" alt="node.js v0.12.0 page1" /></p>
+
+<p>node.js v0.12.0 TTFB 1.36s。</p>
+
+<p><img src="https://lh6.googleusercontent.com/-tl-PFTsvs-0/VNomy_t_IkI/AAAAAAAAILU/YRiVxSVD5Dc/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.34.28%2BPM.png" alt="io.js v1.1.0 page1" /></p>
+
+<p>io.js v1.1.0 TTFB 1.21s。</p>
+
+<p><img src="https://lh4.googleusercontent.com/-pJ4XM3ov8v4/VNomx2fPf-I/AAAAAAAAILE/RxH-DOoQygg/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.30.32%2BPM.png" alt="node.js v0.10.36 page1" /></p>
+
+<p>node.js v0.10.36 TTFB 603ms。</p>
+
+<!-- more -->
+
+
+<h3>Page 2</h3>
+
+<p><img src="https://lh4.googleusercontent.com/-5LGXJ2DInfM/VNomvEBYaQI/AAAAAAAAIK0/UyWZldWsB-4/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.29.22%2BPM.png" alt="node.js v0.12.0 page2" /></p>
+
+<p>node.js v0.12.0 TTFB 910ms。</p>
+
+<p><img src="https://lh3.googleusercontent.com/-CePlsRGHndI/VNomzP3ZMzI/AAAAAAAAILc/YlkhDkjRHAY/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.34.49%2BPM.png" alt="io.js v1.1.0 page2" /></p>
+
+<p>io.js v1.1.0 TTFB 776ms。</p>
+
+<p><img src="https://lh5.googleusercontent.com/-AemhYmtokBw/VNomx8aIBMI/AAAAAAAAILg/3GBjTwsTs1w/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.30.43%2BPM.png" alt="node.js v0.10.36 page2" /></p>
+
+<p>node.js v0.10.36 TTFB 604ms。</p>
+
+<h3>Page 3</h3>
+
+<p><img src="https://lh3.googleusercontent.com/-sbjgcsYBKEI/VNomvAQ99yI/AAAAAAAAIKw/1kKSgNjzysw/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.29.37%2BPM.png" alt="node.js v0.12.0 page3" /></p>
+
+<p>node.js v0.12.0 TTFB 221ms。</p>
+
+<p><img src="https://lh4.googleusercontent.com/-D1D5stJUzPg/VNomxwPjWOI/AAAAAAAAILI/Zj_XEEIcOxs/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.30.51%2BPM.png" alt="node.js v0.10.36 page3" /></p>
+
+<p>io.js v1.1.0 TTFB 217ms。</p>
+
+<p><img src="https://lh3.googleusercontent.com/-ZnrOiohW9VU/VNomzm0vZCI/AAAAAAAAILk/cT8R99I1tJc/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.35.08%2BPM.png" alt="io.js v1.1.0 page3" /></p>
+
+<p>node.js v0.10.36 TTFB 150ms。</p>
+
+<h3>結論</h3>
+
+<p>每個頁面我都土法重複 reload 過好幾次，大概抓的數字是看到的平均值，想說這樣的測試太土法了，沒參考性，但是三個頁面的測試結果彼此比較後都很相像，所以應該可以說明什麼了吧！</p>
+
+<ul>
+<li>node.js v0.12.0 TTFB 1.36s +0%</li>
+<li>io.js v1.1.0 TTFB 1.21s +12%</li>
+<li>node.js v0.10.36 TTFB 603ms +126%</li>
+</ul>
+
+
+<p>頁面一舊版 node.js v0.10.36 比其他兩頁都快得多！跟 io.js v1.1.0 比起來也快了至少 100%。</p>
+
+<ul>
+<li>node.js v0.12.0 TTFB 910ms +0%</li>
+<li>io.js v1.1.0 TTFB 776ms +17%</li>
+<li>node.js v0.10.36 TTFB 604ms +51%</li>
+</ul>
+
+
+<p>頁面二也是 node.js v0.10.36 最快。</p>
+
+<ul>
+<li>node.js v0.12.0 TTFB 221ms +0%</li>
+<li>io.js v1.1.0 TTFB 217ms +1.8%</li>
+<li>node.js v0.10.36 TTFB 150ms +47%</li>
+</ul>
+
+
+<p>頁面三其實都相差不遠，但 node.js v0.10.36 仍然反應最快。</p>
+
+<p>結論就是……等網站上到遠端 server 之後再來測一次真實網路環境下的 TTFB 吧！以目前在本機測試的結果，還沒有很想更新到 node.js v0.12.0，而且以<a href="http://blog.chh.tw/posts/what-is-iojs-nodejs-forking/">現在這局勢</a>看來 io.js 勢頭很高，再過一段時間來評估直接把專案跳去改用 io.js 算了。:p</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-10T23:37:00+08:00" pubdate data-updated="true">Feb 10<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programing/'>Programing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/iojs-nodejs-performance/" data-via="" data-counturl="http://blog.chh.tw/posts/iojs-nodejs-performance/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/what-is-iojs-nodejs-forking/" title="Previous Post: io.js 是什麼？Node.js 社群分裂事件觀察">&laquo; io.js 是什麼？Node.js 社群分裂事件觀察</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/iojs-nodejs-performance/';
+        var disqus_url = 'http://blog.chh.tw/posts/iojs-nodejs-performance/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

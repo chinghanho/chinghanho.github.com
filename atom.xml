@@ -4,7 +4,7 @@
   <title><![CDATA[@ChingHanHo]]></title>
   <link href="http://blog.chh.tw/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2015-01-14T16:19:52+08:00</updated>
+  <updated>2015-02-11T00:13:38+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,93 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[io.js 1.1 VS node.js 0.12.0 VS node.js 0.10.36]]></title>
+    <link href="http://blog.chh.tw/posts/iojs-nodejs-performance/"/>
+    <updated>2015-02-10T23:37:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/iojs-nodejs-performance</id>
+    <content type="html"><![CDATA[<p>這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD</p>
+
+<h3>Page 1</h3>
+
+<p><img src="https://lh3.googleusercontent.com/-AWI4LN6fELs/VNomvCU_iMI/AAAAAAAAIKs/Im1igPcG3EI/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.28.59%2BPM.png" alt="node.js v0.12.0 page1" /></p>
+
+<p>node.js v0.12.0 TTFB 1.36s。</p>
+
+<p><img src="https://lh6.googleusercontent.com/-tl-PFTsvs-0/VNomy_t_IkI/AAAAAAAAILU/YRiVxSVD5Dc/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.34.28%2BPM.png" alt="io.js v1.1.0 page1" /></p>
+
+<p>io.js v1.1.0 TTFB 1.21s。</p>
+
+<p><img src="https://lh4.googleusercontent.com/-pJ4XM3ov8v4/VNomx2fPf-I/AAAAAAAAILE/RxH-DOoQygg/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.30.32%2BPM.png" alt="node.js v0.10.36 page1" /></p>
+
+<p>node.js v0.10.36 TTFB 603ms。</p>
+
+<!-- more -->
+
+
+<h3>Page 2</h3>
+
+<p><img src="https://lh4.googleusercontent.com/-5LGXJ2DInfM/VNomvEBYaQI/AAAAAAAAIK0/UyWZldWsB-4/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.29.22%2BPM.png" alt="node.js v0.12.0 page2" /></p>
+
+<p>node.js v0.12.0 TTFB 910ms。</p>
+
+<p><img src="https://lh3.googleusercontent.com/-CePlsRGHndI/VNomzP3ZMzI/AAAAAAAAILc/YlkhDkjRHAY/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.34.49%2BPM.png" alt="io.js v1.1.0 page2" /></p>
+
+<p>io.js v1.1.0 TTFB 776ms。</p>
+
+<p><img src="https://lh5.googleusercontent.com/-AemhYmtokBw/VNomx8aIBMI/AAAAAAAAILg/3GBjTwsTs1w/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.30.43%2BPM.png" alt="node.js v0.10.36 page2" /></p>
+
+<p>node.js v0.10.36 TTFB 604ms。</p>
+
+<h3>Page 3</h3>
+
+<p><img src="https://lh3.googleusercontent.com/-sbjgcsYBKEI/VNomvAQ99yI/AAAAAAAAIKw/1kKSgNjzysw/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.29.37%2BPM.png" alt="node.js v0.12.0 page3" /></p>
+
+<p>node.js v0.12.0 TTFB 221ms。</p>
+
+<p><img src="https://lh4.googleusercontent.com/-D1D5stJUzPg/VNomxwPjWOI/AAAAAAAAILI/Zj_XEEIcOxs/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.30.51%2BPM.png" alt="node.js v0.10.36 page3" /></p>
+
+<p>io.js v1.1.0 TTFB 217ms。</p>
+
+<p><img src="https://lh3.googleusercontent.com/-ZnrOiohW9VU/VNomzm0vZCI/AAAAAAAAILk/cT8R99I1tJc/w1118-h331-no/Screen%2BShot%2B2015-02-10%2Bat%2B11.35.08%2BPM.png" alt="io.js v1.1.0 page3" /></p>
+
+<p>node.js v0.10.36 TTFB 150ms。</p>
+
+<h3>結論</h3>
+
+<p>每個頁面我都土法重複 reload 過好幾次，大概抓的數字是看到的平均值，想說這樣的測試太土法了，沒參考性，但是三個頁面的測試結果彼此比較後都很相像，所以應該可以說明什麼了吧！</p>
+
+<ul>
+<li>node.js v0.12.0 TTFB 1.36s +0%</li>
+<li>io.js v1.1.0 TTFB 1.21s +12%</li>
+<li>node.js v0.10.36 TTFB 603ms +126%</li>
+</ul>
+
+
+<p>頁面一舊版 node.js v0.10.36 比其他兩頁都快得多！跟 io.js v1.1.0 比起來也快了至少 100%。</p>
+
+<ul>
+<li>node.js v0.12.0 TTFB 910ms +0%</li>
+<li>io.js v1.1.0 TTFB 776ms +17%</li>
+<li>node.js v0.10.36 TTFB 604ms +51%</li>
+</ul>
+
+
+<p>頁面二也是 node.js v0.10.36 最快。</p>
+
+<ul>
+<li>node.js v0.12.0 TTFB 221ms +0%</li>
+<li>io.js v1.1.0 TTFB 217ms +1.8%</li>
+<li>node.js v0.10.36 TTFB 150ms +47%</li>
+</ul>
+
+
+<p>頁面三其實都相差不遠，但 node.js v0.10.36 仍然反應最快。</p>
+
+<p>結論就是……等網站上到遠端 server 之後再來測一次真實網路環境下的 TTFB 吧！以目前在本機測試的結果，還沒有很想更新到 node.js v0.12.0，而且以<a href="http://blog.chh.tw/posts/what-is-iojs-nodejs-forking/">現在這局勢</a>看來 io.js 勢頭很高，再過一段時間來評估直接把專案跳去改用 io.js 算了。:p</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[io.js 是什麼？Node.js 社群分裂事件觀察]]></title>
@@ -1928,29 +2015,6 @@ execute pathogen#infect()
 <p>有時候我們只需要部分的方法，而不是全部，所以會加上一些過濾條件，只撈出自己需要的部分，這樣的行為又稱為 Pattern Dispatch，因為是基於某種 pattern 來篩選方法。</p>
 
 <p>以上就是 Dynamic Dispatch 的解釋，這個技巧經常可以在 Ruby 的 Test::Unit 標準庫裡看到，把 class 的實例方法（instance method）撈出來，然後一個一個代進測試程式碼裡面去跑。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[我對仿真設計介面的看法]]></title>
-    <link href="http://blog.chh.tw/posts/skeuomorphism/"/>
-    <updated>2013-01-10T10:21:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/skeuomorphism</id>
-    <content type="html"><![CDATA[<p><img src="http://lh5.googleusercontent.com/-VJMDa0tOOjE/UO4RTtHUqJI/AAAAAAAAFu8/_MU2WkKlTEw/s690/WAwzA.jpg" alt="itunes" /></p>
-
-<p>這篇文章在 iTunes 11 出來時就寫好，結果放在草稿夾裡一直忘記完成，今天因為看到了電腦玩物站長異塵行者對<a href="http://playpcesor.blogspot.com/2012/11/evernote-50-iphone-ipad.html">仿真設計的看法</a>（舊文章今天才看到），才想起來還沒有發佈；異塵行者認為：</p>
-
-<blockquote><p>雖然高雅擬真風格看起來舒適，但畢竟我們不是真在紙本筆記使用 Evernote，而是在台數位裝置上，對生產力工具來說簡潔數位化介面才是真正正道。</p></blockquote>
-
-<p>前幾個禮拜因為好奇去聽了幾堂<a href="https://www.coursera.org/course/hci">史丹佛大學人機互動課程</a>，得到幾個非常重要的觀念。華麗高雅的擬真風格並非單純的綴飾，更不是「贅飾」，事實上這種設計風格是有意義的。</p>
-
-<p>舉例來說，當第一次看到 <a href="https://itunes.apple.com/us/app/clear/id504544917">clear</a> 與 OS X Mountain Lion 內建的 <a href="http://appleinsider.com/articles/12/03/30/inside_os_x_108_mountain_lion_reminders_app_adds_geofence_location_alerts">Reminder</a> 時，不看「說明書」可能還不曉得 clear 是做什麼的；尤其對於不常使用數位工具的使用者，仿真設計是讓軟體能夠更貼近他們的生活，他們也許沒辦法立即掌握這個程式所有功能，但確實能夠降低防禦心理。</p>
-
-<p>我平常觀察那些不慣用電腦的使用者，他們在操作電腦時的動作，很多人會在第一步不知道該點擊什麼就停下來，因為「純數位化」的介面讓他們不知所措，進而增加心理挫折感，然後可能就不再使用這個軟體，這也就是為什麼要一開始就要降低使用者的防禦心理。</p>
-
-<p>仿真設計的介面目的不只是降低使用者防禦心理，目的也在能讓使用者用自己已經熟悉的方式，來透過這個軟體來解決問題。但是，畢竟軟體終究是軟體，是個虛擬的介面，並不是使用者「真正熟悉」的東西，因此要做好仿真設計相對下門檻變得非常高。</p>
-
-<p>會讓異塵行者感到「簡潔數位化介面才是真正正道」的原因，我想就是 Evernote 做了一個非常糟糕的仿真設計介面示範。</p>
 ]]></content>
   </entry>
   
