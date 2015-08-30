@@ -9,15 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="先從 Singleton Methods 講起 透過以下的 code 可以察覺，其實定義 singleton method 的方式跟定義實例方法（instance method）很像，就好像把某個 class 實例化後命名為大寫的 C，然後對這個實例定義方法： 1
-2
-3
-4
-5
-6
-7
-8
-9 &hellip;">
+  <meta name="description" content="大約在一個月前就有看到 Opera 要改用 WebKit rendering 引擎的消息，所以昨天看到 Opera 開發團隊發佈的新聞其實沒有太驚訝，反而是看到鄉民們激動的表現讓我有點意外。 要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -38,30 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/4/" />
-<meta property="og:description" content="先從 Singleton Methods 講起 透過以下的 code 可以察覺，其實定義 singleton method 的方式跟定義實例方法（instance method）很像，就好像把某個 class 實例化後命名為大寫的 C，然後對這個實例定義方法： 1
-2
-3
-4
-5
-6
-7
-8
-9 &hellip;" />
+<meta property="og:description" content="大約在一個月前就有看到 Opera 要改用 WebKit rendering 引擎的消息，所以昨天看到 Opera 開發團隊發佈的新聞其實沒有太驚訝，反而是看到鄉民們激動的表現讓我有點意外。 要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="先從 Singleton Methods 講起 透過以下的 code 可以察覺，其實定義 singleton method 的方式跟定義實例方法（instance method）很像，就好像把某個 class 實例化後命名為大寫的 C，然後對這個實例定義方法： 1
-2
-3
-4
-5
-6
-7
-8
-9 &hellip;" />
+<meta itemprop="description" content="大約在一個月前就有看到 Opera 要改用 WebKit rendering 引擎的消息，所以昨天看到 Opera 開發團隊發佈的新聞其實沒有太驚訝，反而是看到鄉民們激動的表現讓我有點意外。 要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -124,6 +100,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/opera-move-to-webkit/">Opera 產品全面改用 WebKit 引擎</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-14T08:40:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://lh3.googleusercontent.com/-81Na2LPt3oY/URwrpztPvcI/AAAAAAAAF0I/nW6cpHKy0xQ/s690/installed-browsers.png" alt="installed-browsers" /></p>
+
+<p>大約在一個月前就有看到 <a href="http://www.pocket-lint.com/news/49375/opera-ice-new-webkit-browser">Opera 要改用 WebKit rendering 引擎</a>的消息，所以昨天看到 <a href="http://my.opera.com/ODIN/blog/300-million-users-and-move-to-webkit">Opera 開發團隊發佈的新聞</a>其實沒有太驚訝，反而是看到<a href="http://news.ycombinator.com/item?id=5211953">鄉民們激動的表現</a>讓我有點意外。</p>
+
+<p>要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit 引擎說實在跟我沒有太大的關係，對於網站開發有沒有影響我也不知道，因為在我練功的路上目前都沒有碰到太多跟瀏覽器前端有關的部份，要說直接的影響大概就是寫 CSS 可以少個 prefix 吧！可是我寫 CSS 都是用 <a href="https://github.com/chriseppstein/compass">Compass</a> 這個武裝神器，本來就沒有在寫 prefix 啊。XD</p>
+
+<p>我最喜歡的瀏覽器是 Google Chrome，可是有時會因為不同的需求或是開發需要，我電腦裡同時安裝了各家瀏覽器，包括 Safari、Firefox 和 Opera 等等。裝 Firefox 是因為要用到某些特別的 add-ons；而 Opera 則是 UI 用得不是很習慣所以不喜歡，裝起來只是純粹開發測試用。現在 Opera 改用 WebKit 後突然發現好像已經可以移除它了齁！:p</p>
+
+<p>跟我一樣的人應該也不少，Opera 改用 WebKit 應該多多少少會影響到市佔率，可是我想其實應該不會減少太多，因為「一般使用者」本來就沒有在乎 Opera 用的是哪一套 rendering 引擎，重點還是在 UI 的設計跟整體效能讓使用者滿不滿意。我對 Opera 沒有什麼偏見，真的只是純粹用不慣而已。</p>
+
+<p>Opera 放棄 Presto 後市場上就只剩下 WebKit、Gecko 和 Trident 三個主要的 rendering 引擎，也許以後會常見到「最佳瀏覽效果請使用 WebKit-base 瀏覽器」這樣的標語出現在網頁的尾部，也可能讓 WebKit 推向成為下一個「IE 世代」，誰知道呢？即便到真的有那麼一天，我相信以現在 web 的發展程度，一定會出現一個替代品讓堅持開放信仰的人們能夠有個地方去。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -716,119 +738,6 @@
 
 
 <p>這樣寫的好處就是當程式需要延展、擴充的時候，我們不需要去動到其他的部分，可以專注在焦點本身，比較容易維護。這個時候不論 <code>SourceData</code> 新增多少個 <code>get_*</code> 實例方法時，都可以動態地在 <code>User</code> class 產生方法。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/dynamic-dispatch/">Ruby 的 Dynamic Dispatch 技巧</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-13T22:41:00+08:00" pubdate data-updated="true">Jan 13<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>三天前開始看 <a href="http://pragprog.com/book/ppmetr/metaprogramming-ruby">Metaprogramming Ruby</a>，希望可以在這個禮拜把整本讀完。讀書要寫筆記，一方面整理思緒、一方面幫助記憶、一方面還能分享，而且這本是英文原文，畢竟不是中文母語，有些內容當下看懂了，可是揮發得很快，所以我決定寫點東西下來。</p>
-
-<h2>Dynamic Dispatch</h2>
-
-<p>如果 <code>the_object.call_method</code>，那麼這個 <code>the_object</code> 就稱為接收者。<a href="http://en.wikipedia.org/wiki/Dynamic_dispatch">Dynamic Dispatch</a> 是指依照接收者的物件類型，來決定呼叫的方法，這個技巧會非常需要用到 <code>send</code>。</p>
-
-<h2>Send 用法</h2>
-
-<p><code>send</code> 其實跟 <code>.</code> 一樣，不同的是他可以把方法當成參數，傳送給接收者使用，接收者可能是個 class，也可能是個實例（instance），例如一般的 Ruby code 會這樣子在 class 裡定義一個方法：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ClassC</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is a method in class C.&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>而我們可以透過以下的方法來呼叫這個 ClassC 的實例方法：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method</span>        <span class="c1"># =&gt; &quot;This is a method in class C.&quot;</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:call_method</span><span class="p">)</span> <span class="c1"># =&gt; &quot;This is a method in class C.&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這裡把 <code>call_method</code> 當成 <code>send</code> 的參數（可以是 hash，也可以是 string），然後丟給接收者；既然方法可以被當成物件來丟，意思也就是可以把一些方法存起來成一個 array，然後依照不同需求的時候丟給接收者使用。</p>
-
-<p>舉例來說，當 <code>ClassC</code> 有很多的實例方法時，可以把它們存成一個 array，然後用 Dynamic Dispatch 技巧傳給接收者：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ClassC</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_a</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is method_a in class C.&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_b</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is method_b in class C.&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">methods</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">instance_methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span>
-</span><span class='line'><span class="nb">methods</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="nb">method</span><span class="o">|</span> <span class="n">c</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">method</span><span class="p">)</span> <span class="p">}</span>
-</span><span class='line'><span class="c1"># =&gt; This is method_a in class C.</span>
-</span><span class='line'><span class="c1"># =&gt; This is method_b in class C.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>有時候我們只需要部分的方法，而不是全部，所以會加上一些過濾條件，只撈出自己需要的部分，這樣的行為又稱為 Pattern Dispatch，因為是基於某種 pattern 來篩選方法。</p>
-
-<p>以上就是 Dynamic Dispatch 的解釋，這個技巧經常可以在 Ruby 的 Test::Unit 標準庫裡看到，把 class 的實例方法（instance method）撈出來，然後一個一個代進測試程式碼裡面去跑。</p>
 </div>
   
   

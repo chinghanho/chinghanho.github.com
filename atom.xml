@@ -4,7 +4,7 @@
   <title><![CDATA[@ChingHanHo]]></title>
   <link href="http://blog.chh.tw/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2015-02-11T00:13:38+08:00</updated>
+  <updated>2015-08-30T17:11:28+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,272 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[9 個存取硬體裝置的 Javascript API]]></title>
+    <link href="http://blog.chh.tw/posts/9-javascript-apis-accessing-device-sensors/"/>
+    <updated>2015-08-30T17:09:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/9-javascript-apis-accessing-device-sensors</id>
+    <content type="html"><![CDATA[<p>原生 HTML5 和 Javascript API 可以直接從瀏覽器存取硬體組件和感測器。這裏的硬體裝置主要是指手機。</p>
+
+<h3>點擊連結傳送簡訊</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;tel:0912345678&quot;</span><span class="nt">&gt;</span>打給我！<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- Android --&gt;</span>
+</span><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;sms:0912345678?body=你到哪了？&quot;</span><span class="nt">&gt;</span>傳簡訊給我！<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'><span class="c">&lt;!-- iOS --&gt;</span>
+</span><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;sms:0912345678&amp;amp;body=你到哪了？&quot;</span><span class="nt">&gt;</span>傳簡訊給我！<span class="nt">&lt;/a&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>延伸資料：</p>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/6480462/how-to-pre-populate-the-sms-body-text-via-an-html-link">How to pre-populate the sms body text via an html link - StackOverflow</a></li>
+</ul>
+
+
+<h3>地理定位 API</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">geolocation</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">navigator</span><span class="p">.</span><span class="nx">geolocation</span><span class="p">.</span><span class="nx">getCurrentPosition</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">position</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">whereareyou</span> <span class="o">=</span> <span class="nx">position</span><span class="p">.</span><span class="nx">coords</span><span class="p">.</span><span class="nx">latitude</span> <span class="o">+</span> <span class="s1">&#39; ,&#39;</span> <span class="o">+</span> <span class="nx">position</span><span class="p">.</span><span class="nx">coords</span><span class="p">.</span><span class="nx">longitude</span>
+</span><span class='line'>    <span class="nx">alert</span><span class="p">(</span><span class="nx">whereareyou</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>裝置方向與裝置體感 API</h3>
+
+<p>這兩個功能是建立在裝置的陀螺儀和指南針感測器上，它能夠傳回目前裝置的旋轉角度，以及三個維度。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">DeviceOrientationEvent</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;deviceorientation&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// gamma 是左到右傾斜的角度</span>
+</span><span class='line'>    <span class="c1">// beta  是前到後傾斜的角度</span>
+</span><span class='line'>    <span class="c1">// alpha 是裝置面向在指南針方位上的角度</span>
+</span><span class='line'>    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">gamma</span> <span class="o">+</span> <span class="s1">&#39; ,&#39;</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">beta</span> <span class="o">+</span> <span class="s1">&#39; ,&#39;</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">alpha</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">},</span> <span class="kc">false</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>有了裝置體感的 API，也可以做出搖一搖復原輸入的功能。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">DeviceMotionEvent</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;devicemotion&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evnet</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="s1">&#39;&lt;br/&gt;&#39;</span> <span class="o">+</span> <span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">y</span> <span class="o">+</span> <span class="s1">&#39;&lt;br/&gt;&#39;</span> <span class="o">+</span> <span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">z</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 加速感測</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">x</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">z</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 加速感測包括重力參數</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">accelerationIncludingGravity</span><span class="p">.</span><span class="nx">x</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">accelerationIncludingGravity</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">accelerationIncludingGravity</span><span class="p">.</span><span class="nx">z</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 旋轉率</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">rotationRate</span><span class="p">.</span><span class="nx">alpha</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">rotationRate</span><span class="p">.</span><span class="nx">beta</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">rotationRate</span><span class="p">.</span><span class="nx">gamma</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="kc">false</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>延伸資料：</p>
+
+<ul>
+<li><a href="https://developers.google.com/web/fundamentals/device-access/device-orientation/dev-motion?hl=zh-tw">裝置動作 - Web Fundamentals</a></li>
+<li><a href="https://developers.google.com/web/fundamentals/device-access/device-orientation/?hl=zh-tw">裝置定向 - Web Fundamentals</a></li>
+</ul>
+
+
+<h3>震動馬達</h3>
+
+<p>目前只支援 Android 的 Chrome 以及 Opera、Firefox，iOS 尚不支援。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">btn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;btn&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">vibrate</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">vibrate</span> <span class="o">||</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozVibrate</span> <span class="o">||</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">webkitVibrate</span>
+</span><span class='line'><span class="nx">btn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">vibrate</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>延伸資料：</p>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate">Navigator.vibrate() - MDN</a></li>
+</ul>
+
+
+<h3>剩餘電力管理</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">battery</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">battery</span> <span class="o">||</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">webkitBattery</span> <span class="o">||</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozBattery</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">_battery</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;目前電力剩下：&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">_battery</span><span class="p">.</span><span class="nx">level</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span>
+</span><span class='line'>  <span class="nx">_battery</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;chargingchange&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;開始充電！&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="kc">false</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">getBattery</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">navigator</span><span class="p">.</span><span class="nx">getBattery</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">log</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">battery</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">log</span><span class="p">(</span><span class="nx">battery</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>亮度感測器</h3>
+
+<p>目前只有 Firefox 支援這個 API。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="s1">&#39;ondevicelight&#39;</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;devicelight&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// 回傳的是亮度單位 lux</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">&quot; lux&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>近距離感測 API</h3>
+
+<p>這個也是只有 Firefox 支援。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span><span class="p">(</span><span class="s1">&#39;ondeviceproximity&#39;</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Fired when object is in the detection zone</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;deviceproximity&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// Object distance in centimeters</span>
+</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">&quot; centimeters&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;deviceproximity not supported&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="s1">&#39;ondeviceproximity&#39;</span> <span class="k">in</span> <span class="nb">window</span><span class="p">){</span>
+</span><span class='line'>  <span class="c1">// Fired when object is in the detection zone</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;userproximity&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">near</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Object is near&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Object is far&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;userproximity not supported&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p>參考：</p>
+
+<ul>
+<li><a href="http://www.webondevices.com/9-javascript-apis-accessing-device-sensors/">9 JavaScript APIs accessing Device Hardware</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[io.js 1.1 VS node.js 0.12.0 VS node.js 0.10.36]]></title>
@@ -1929,92 +2195,6 @@ execute pathogen#infect()
 
 
 <p>這樣寫的好處就是當程式需要延展、擴充的時候，我們不需要去動到其他的部分，可以專注在焦點本身，比較容易維護。這個時候不論 <code>SourceData</code> 新增多少個 <code>get_*</code> 實例方法時，都可以動態地在 <code>User</code> class 產生方法。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ruby 的 Dynamic Dispatch 技巧]]></title>
-    <link href="http://blog.chh.tw/posts/dynamic-dispatch/"/>
-    <updated>2013-01-13T22:41:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/dynamic-dispatch</id>
-    <content type="html"><![CDATA[<p>三天前開始看 <a href="http://pragprog.com/book/ppmetr/metaprogramming-ruby">Metaprogramming Ruby</a>，希望可以在這個禮拜把整本讀完。讀書要寫筆記，一方面整理思緒、一方面幫助記憶、一方面還能分享，而且這本是英文原文，畢竟不是中文母語，有些內容當下看懂了，可是揮發得很快，所以我決定寫點東西下來。</p>
-
-<h2>Dynamic Dispatch</h2>
-
-<p>如果 <code>the_object.call_method</code>，那麼這個 <code>the_object</code> 就稱為接收者。<a href="http://en.wikipedia.org/wiki/Dynamic_dispatch">Dynamic Dispatch</a> 是指依照接收者的物件類型，來決定呼叫的方法，這個技巧會非常需要用到 <code>send</code>。</p>
-
-<h2>Send 用法</h2>
-
-<p><code>send</code> 其實跟 <code>.</code> 一樣，不同的是他可以把方法當成參數，傳送給接收者使用，接收者可能是個 class，也可能是個實例（instance），例如一般的 Ruby code 會這樣子在 class 裡定義一個方法：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ClassC</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is a method in class C.&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>而我們可以透過以下的方法來呼叫這個 ClassC 的實例方法：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method</span>        <span class="c1"># =&gt; &quot;This is a method in class C.&quot;</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:call_method</span><span class="p">)</span> <span class="c1"># =&gt; &quot;This is a method in class C.&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這裡把 <code>call_method</code> 當成 <code>send</code> 的參數（可以是 hash，也可以是 string），然後丟給接收者；既然方法可以被當成物件來丟，意思也就是可以把一些方法存起來成一個 array，然後依照不同需求的時候丟給接收者使用。</p>
-
-<p>舉例來說，當 <code>ClassC</code> 有很多的實例方法時，可以把它們存成一個 array，然後用 Dynamic Dispatch 技巧傳給接收者：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ClassC</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_a</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is method_a in class C.&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_b</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is method_b in class C.&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">methods</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">instance_methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span>
-</span><span class='line'><span class="nb">methods</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="nb">method</span><span class="o">|</span> <span class="n">c</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">method</span><span class="p">)</span> <span class="p">}</span>
-</span><span class='line'><span class="c1"># =&gt; This is method_a in class C.</span>
-</span><span class='line'><span class="c1"># =&gt; This is method_b in class C.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>有時候我們只需要部分的方法，而不是全部，所以會加上一些過濾條件，只撈出自己需要的部分，這樣的行為又稱為 Pattern Dispatch，因為是基於某種 pattern 來篩選方法。</p>
-
-<p>以上就是 Dynamic Dispatch 的解釋，這個技巧經常可以在 Ruby 的 Test::Unit 標準庫裡看到，把 class 的實例方法（instance method）撈出來，然後一個一個代進測試程式碼裡面去跑。</p>
 ]]></content>
   </entry>
   

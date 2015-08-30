@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Programing | @ChingHanHo]]></title>
   <link href="http://blog.chh.tw/blog/categories/programing/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2015-02-11T00:13:38+08:00</updated>
+  <updated>2015-08-30T17:11:28+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,204 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[9 個存取硬體裝置的 Javascript API]]></title>
+    <link href="http://blog.chh.tw/posts/9-javascript-apis-accessing-device-sensors/"/>
+    <updated>2015-08-30T17:09:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/9-javascript-apis-accessing-device-sensors</id>
+    <content type="html"><![CDATA[<p>原生 HTML5 和 Javascript API 可以直接從瀏覽器存取硬體組件和感測器。這裏的硬體裝置主要是指手機。</p>
+
+<h3>點擊連結傳送簡訊</h3>
+
+<p>``` html
+<a href="tel:0912345678">打給我！</a></p>
+
+<!-- Android -->
+
+
+<p><a href="sms:0912345678?body=你到哪了？">傳簡訊給我！</a></p>
+
+<!-- iOS -->
+
+
+<p><a href="sms:0912345678&amp;body=你到哪了？">傳簡訊給我！</a>
+```</p>
+
+<p>延伸資料：</p>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/6480462/how-to-pre-populate-the-sms-body-text-via-an-html-link">How to pre-populate the sms body text via an html link - StackOverflow</a></li>
+</ul>
+
+
+<h3>地理定位 API</h3>
+
+<p>``` js
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(function (position) {</p>
+
+<pre><code>var whereareyou = position.coords.latitude + ' ,' + position.coords.longitude
+alert(whereareyou)
+</code></pre>
+
+<p>  })
+}
+```</p>
+
+<h3>裝置方向與裝置體感 API</h3>
+
+<p>這兩個功能是建立在裝置的陀螺儀和指南針感測器上，它能夠傳回目前裝置的旋轉角度，以及三個維度。</p>
+
+<p>``` js
+if (window.DeviceOrientationEvent) {
+  window.addEventListener('deviceorientation', function(event) {</p>
+
+<pre><code>// gamma 是左到右傾斜的角度
+// beta  是前到後傾斜的角度
+// alpha 是裝置面向在指南針方位上的角度
+document.body.innerHTML = event.gamma + ' ,' + event.beta + ' ,' + event.alpha
+</code></pre>
+
+<p>  }, false)
+}
+```</p>
+
+<p>有了裝置體感的 API，也可以做出搖一搖復原輸入的功能。</p>
+
+<p>``` js
+if (window.DeviceMotionEvent) {
+  window.addEventListener('devicemotion', function(evnet) {</p>
+
+<pre><code>document.body.innerHTML = evnet.acceleration.x + '&lt;br/&gt;' + evnet.acceleration.y + '&lt;br/&gt;' + evnet.acceleration.z
+
+// 加速感測
+console.log(evnet.acceleration.x)
+console.log(evnet.acceleration.y)
+console.log(evnet.acceleration.z)
+
+// 加速感測包括重力參數
+console.log(evnet.accelerationIncludingGravity.x)
+console.log(evnet.accelerationIncludingGravity.y)
+console.log(evnet.accelerationIncludingGravity.z)
+
+// 旋轉率
+console.log(evnet.rotationRate.alpha)
+console.log(evnet.rotationRate.beta)
+console.log(evnet.rotationRate.gamma)
+</code></pre>
+
+<p>  }, false)
+}
+```</p>
+
+<p>延伸資料：</p>
+
+<ul>
+<li><a href="https://developers.google.com/web/fundamentals/device-access/device-orientation/dev-motion?hl=zh-tw">裝置動作 - Web Fundamentals</a></li>
+<li><a href="https://developers.google.com/web/fundamentals/device-access/device-orientation/?hl=zh-tw">裝置定向 - Web Fundamentals</a></li>
+</ul>
+
+
+<h3>震動馬達</h3>
+
+<p>目前只支援 Android 的 Chrome 以及 Opera、Firefox，iOS 尚不支援。</p>
+
+<p><code>js
+var btn = document.getElementById('btn')
+var vibrate = navigator.vibrate || navigator.mozVibrate || navigator.webkitVibrate
+btn.addEventListener('click', function (event) {
+  vibrate(1000)
+})
+</code></p>
+
+<p>延伸資料：</p>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate">Navigator.vibrate() - MDN</a></li>
+</ul>
+
+
+<h3>剩餘電力管理</h3>
+
+<p>``` js
+var battery = navigator.battery || navigator.webkitBattery || navigator.mozBattery</p>
+
+<p>function log(<em>battery) {
+  document.body.innerHTML = '目前電力剩下：' + (</em>battery.level * 100) + '%'
+  _battery.addEventListener('chargingchange', function() {</p>
+
+<pre><code>alert('開始充電！')
+</code></pre>
+
+<p>  }, false)
+}</p>
+
+<p>if (navigator.getBattery) {
+  navigator.getBattery().then(log)
+} else if (battery) {
+  log(battery)
+}
+```</p>
+
+<h3>亮度感測器</h3>
+
+<p>目前只有 Firefox 支援這個 API。</p>
+
+<p><code>js
+if ('ondevicelight' in window) {
+  window.addEventListener("devicelight", function (event) {
+  // 回傳的是亮度單位 lux
+  console.log(event.value + " lux")
+  })
+}
+</code></p>
+
+<h3>近距離感測 API</h3>
+
+<p>這個也是只有 Firefox 支援。</p>
+
+<p>``` js
+if('ondeviceproximity' in window) {
+  // Fired when object is in the detection zone
+  window.addEventListener('deviceproximity', function (event) {</p>
+
+<pre><code>  // Object distance in centimeters
+  console.log(event.value + " centimeters")
+})
+</code></pre>
+
+<p>} else {
+  console.log("deviceproximity not supported")
+}</p>
+
+<p>if('ondeviceproximity' in window){
+  // Fired when object is in the detection zone
+  window.addEventListener('userproximity', function (event) {</p>
+
+<pre><code>if(event.near == true) {
+  console.log("Object is near")
+} else {
+  console.log("Object is far")
+}
+</code></pre>
+
+<p>  })
+} else {
+  console.log("userproximity not supported")
+}
+```</p>
+
+<hr />
+
+<p>參考：</p>
+
+<ul>
+<li><a href="http://www.webondevices.com/9-javascript-apis-accessing-device-sensors/">9 JavaScript APIs accessing Device Hardware</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[io.js 1.1 VS node.js 0.12.0 VS node.js 0.10.36]]></title>
@@ -381,262 +579,6 @@ var express = require('express')
 
 <ul>
 <li><a href="http://stackoverflow.com/questions/5284340/what-is-node-js-connect-express-and-middleware">What is Node.js' Connect, Express and “middleware”?</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範]]></title>
-    <link href="http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/"/>
-    <updated>2013-08-05T10:40:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines</id>
-    <content type="html"><![CDATA[<p>真心覺得寫出 CSS 並不難，但是要寫出可被維護的 CSS 比其他程式語言都還難。所幸已經有許多大師級的人物，提出許多設計模式和思維，藉由站在巨人的肩膀上可以讓事情事半功倍。這篇文章就來說說 OOCSS、SMACSS 和撰寫 CSS 時應該注意的規範。</p>
-
-<p>（本文的例子用的是 SCSS 語法）</p>
-
-<!-- more -->
-
-
-<h2>OOCSS</h2>
-
-<p>OOCSS 不是什麼新技術，只是一種撰寫 CSS 的設計模式，或者可以說是一種「道德規範」，大致上我覺得重點只有兩個：</p>
-
-<ul>
-<li><a href="#html-dependency">減少對 HTML 結構的依賴</a></li>
-<li><a href="#reuse-classes">增加 CSS class 重複性的使用</a></li>
-</ul>
-
-
-<p><a name="html-dependency"></a></p>
-
-<h3>減少對 HTML 結構的依賴</h3>
-
-<p>``` html
-<nav class="nav--main">
-  <ul></p>
-
-<pre><code>&lt;li&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
-</code></pre>
-
-<p>  </ul>
-</nav>
-```</p>
-
-<p>一般的導航欄寫法，結構應該會像上面的 HTML 範例一樣，如果要對那些 <code>&lt;a&gt;</code> 標籤定義樣式，CSS 的寫法可能寫成 <code>.nav--main ul li a {}</code>，這種寫法先不管效能上的問題，可以看出來過度地依賴元素標籤的結構，有可能之後 HTML 結構改變，這個 CSS 就必須跟著重構，造成維護上多餘的成本。</p>
-
-<p>若從這個例子來考量，原則上 <code>&lt;a&gt;</code> 都一定會接在 <code>&lt;li&gt;</code> 標籤的後面，一個 <code>&lt;li&gt;</code> 只會有一個 <code>&lt;a&gt;</code>，通常不會獨立存在，那就可以寫成 <code>.nav--main a {}</code>，會是比較好的寫法，甚至是直接給 <code>&lt;a&gt;</code> 加上 class <code>nav--main_item</code>。後者是 OOCSS 所提倡的用法。</p>
-
-<p>這樣的寫法，一來效能理論上比較好（我沒辦法驗證），二來層次比較單純。</p>
-
-<p><a name="reuse-classes"></a></p>
-
-<h3>增加 CSS class 的重複使用</h3>
-
-<p>在 OOCSS 的觀念中，強調重複使用 class，而應該避免使用 id 作為 CSS 的選擇器。這種想法就是像 <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">OOP</a> 盡量抽離重複的程式碼，例如以下這個例子，這是兩種按鈕的 CSS 樣式屬性：</p>
-
-<p><code>scss
-.button {
-  display: inline-block;
-  padding: 6px 12px;
-  color: hsla(0, 100%, 100%, 1);
-  &amp;.button-default { background: hsla(180, 1%, 28%, 1); }
-  &amp;.button-primary { background: hsla(208, 56%, 53%, 1); }
-}
-</code></p>
-
-<p>上面的 CSS 將兩種不同樣式的 button，抽離出重複的部份，並且定義在同個 class 上。因此，要使用這樣的樣式，HTML 的寫法可能長這個樣子：</p>
-
-<p><code>html
-&lt;a class="button button-default"&gt;
-&lt;a class="button button-primary"&gt;
-</code></p>
-
-<p>先用 <code>button</code> 宣告此為一個按鈕的樣式，再用 <code>button-default</code> 或 <code>button-primary</code> 作為按鈕底色的區別。這麼做可以維護成本變得比較低，例如：想要改網站上所有按鈕的大小，就只要修改 <code>.button</code> 的 <code>padding</code> 而已。</p>
-
-<h2>SMACSS</h2>
-
-<p>我對 SMACSS 的理解還不是很深入，或許把 <a href="http://smacss.com/">Scalable and Modular Architecture for CSS</a> 看完後會有更深一曾的理解。目前對 SMACSS 的概念僅限於它對 CSS 不同的業務邏輯所做的劃分方式：</p>
-
-<p>但我認為原本的設計不是很妥當，因此我自己做了一些改良：</p>
-
-<ul>
-<li><a href="#base">Base</a></li>
-<li><a href="#layout">Layout</a></li>
-<li><a href="#module">Module</a></li>
-<li><a href="#partial">Partial</a></li>
-<li><a href="#state">State</a></li>
-<li><a href="#theme">Theme</a></li>
-</ul>
-
-
-<p><a name="base"></a></p>
-
-<h3>Base</h3>
-
-<p>Base 就是設定標籤元素的預設值，例如瀏覽器的 reset 可以寫在這裡，如果用的是 Compass，只要 <code>@include global-reset</code> 即可。這裡只會對標籤元素本身做設定，不會出現任何 class 或 id，但是可以有屬性選擇器或是偽類：</p>
-
-<p><code>scss
-html {}
-input[type=text] {}
-a:hover {}
-</code></p>
-
-<p><a name="layout"></a></p>
-
-<h3>Layout</h3>
-
-<p>Layout 是指整個網站的「大架構」的外觀，而非 <code>.button</code> 這種小元件的 class。網站通常會有一些主要的大區塊，可能是 header 或 footer，Layout 就是用來定義這些「大架構」的 CSS。如果有做 Responsive Web Design 或是用 Grid System，也是把規則寫在 Layout 這裡。</p>
-
-<p>以下這是個範例：</p>
-
-<p>``` scss</p>
-
-<h1>header { margin: 30px 0; }</h1>
-
-<h1>articles-wrapper { ......; }</h1>
-
-<p>.sidebar {
-  &amp;.sidebar--right { ......; }
-  &amp;.sidebar-left { ......; }
-}
-```</p>
-
-<p>通常只有一個選擇器，一個 id、或一個 class。</p>
-
-<p><a name="module"></a></p>
-
-<h3>Module</h3>
-
-<p>原本的 SMACSS 對 Module 的設計我覺得不是很好，所以我硬是將 Module 拆分出一個 <a href="#partial">Partial</a>。</p>
-
-<p>這裡的 Module 顧名思義，就是可以在其他地方被重複使用，如果要找更明確的例子，我想就像 Twitter Bootstrap 的 <a href="http://getbootstrap.com/2.3.2/components.html">Components</a> 一樣，或者像前面 OOCSS 所舉例的 <code>.button</code> 這種會被重複使用的元件模組。</p>
-
-<p>模組不需要用任何的 prefix，因為 Module 就是設計來可以重複應用在不同的 page 上。</p>
-
-<h3>Partial</h3>
-
-<p><a name="partial"></a></p>
-
-<p>Partial 跟 Latout 不同，也跟 Module 不同，他比 Layout 的範圍小，可能是 header 底下的某個子元素。他不像 Module，他是特定單一領域下特別的設定。</p>
-
-<p><code>scss
-.nav--main {
-  a { ......; }
-}
-</code></p>
-
-<p>通常會將 Partial 的名稱加在子 class 作為 prefix，例如 <code>.nav--main</code> 底下的 <code>.nav--main_item</code>。至於為什麼要用這麼奇怪的命名方式？這等等在 <a href="#bem">CSS 規範</a>部分會說明介紹。</p>
-
-<p><a name="state"></a></p>
-
-<h3>State</h3>
-
-<p>State 負責定義元素不同的狀態下，所呈現的樣式。但是並非指一個元素的 <code>:hover</code> 或 <code>:active</code> 下的狀態。舉例來說，一個導航欄分頁，目前所在頁面的分頁需要加上 <code>.active</code> 的屬性表示目前位置是在這個分頁，HTML 會長這樣：</p>
-
-<p>``` html
-<nav class="nav--main">
-  <ul></p>
-
-<pre><code>&lt;li&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
-&lt;li class="active"&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
-</code></pre>
-
-<p>  </ul>
-</nav>
-```</p>
-
-<p>因此可以替 <code>.nav--main</code> 增加 <code>.active</code> 這樣的子 class：</p>
-
-<p>``` scss
-.nav--main {
-  // others…;
-  .active {</p>
-
-<pre><code>background: darken($background-color, 16%);
-</code></pre>
-
-<p>  }
-}
-```</p>
-
-<p>有時候為了讓閱讀更貼近語義，會用比較友善的命名方式，以此段的範例來說，<code>.is-active</code> 就比 <code>.active</code> 來得好讀。</p>
-
-<p><a name="theme"></a></p>
-
-<h3>Theme</h3>
-
-<p>Theme 是畫面上所有「主視覺」的定義，例如 <code>border-color</code>、<code>background-image</code> 或是 <code>font-family</code> 等相關的 Typography 設定。為什麼說是「主視覺」？因為有些元件模組仍然是留在 Module 去定義，Theme 就像 Layout 一樣負責「大架構」上的視覺樣式。</p>
-
-<h2>CSS 規範</h2>
-
-<p>這裡整理的是我覺得一定要知道的，其他還有很多規範可以轉到文末的參考資源連結，那篇文章有介紹更多的細節。</p>
-
-<p><a name="bem"></a></p>
-
-<h3>BEM</h3>
-
-<p>BEM 即 Block、Element、Modifier 的縮寫，這是一種 class 的命名技巧。如果整個 project 只有自己一個人做，那當然是不太可能出現 class 重複的問題，但是如果同時多個 F2E 一起寫同個部分的 CSS，就很容易出現共用 class 的問題，因此有了 BEM 這樣的命名技巧。</p>
-
-<p>將 Block 區塊作為起始開頭，像前面 SMACSS 介紹的 Partial 就可以拿來作為 Block 的 prefix 名稱；Element 則是 Block 下的元素；Modifier 則是這個元素的屬性。</p>
-
-<p>不同 Block 和 Element 用 <code>__</code> 兩個底線區隔開來，不同的 Modifier 則用 <code>--</code> 兩個 dash 區隔。至於 <code>-</code> 一個 dash 則表示這個 class 不依賴任何 Block 或 Element，是個獨立的存在，例如：<code>.page-container</code> 或 <code>.article-wrapper</code>。</p>
-
-<p>這裡有個範例：</p>
-
-<p>``` scss
-.sidebar {
-  .sidebar--left__section {</p>
-
-<pre><code>.sidebar--left__section--header {}
-.sidebar--left__section--footer {}
-</code></pre>
-
-<p>  }
-}
-```</p>
-
-<h3>Javascript Hook</h3>
-
-<p>透過 CSS class 來作為 Javascript 選取 DOM 節點的方式，就是 Javascript Hook。用 jQuery 可以常常看到這樣的寫法：<code>$('.nav--main a')</code>，可是當 CSS 跟 Javascript 攪在一起反而造成兩邊維護上的不便，當改了 CSS 時 Javascript 也要跟著改。</p>
-
-<p>所以用 HTML 的屬性去選取 DOM 節點會更好，如果非要用 CSS 的 class 那也可以多寫一個 <code>js-</code> 的 prefix，以表示這個節點有被 Javascript 使用，例如：</p>
-
-<p><code>html
-&lt;li class="nav--main__item  js-nav--main__item"&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
-&lt;li class="nav--main__item  js-nav--main__item"&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
-&lt;li class="nav--main__item  js-nav--main__item"&gt;&lt;a&gt;.........&lt;/a&gt;&lt;/li&gt;
-</code></p>
-
-<p>PS. HTML 裡兩個 class 之間用兩個空格，會比一個空格看起來好閱讀。</p>
-
-<h3>合理的選擇器</h3>
-
-<blockquote><p>class 無所謂是否語意化的問題；你應該關注它們是否合理，不要刻意強調 class 名稱要符合語意，而要注重使用的合理性與未來性。</p></blockquote>
-
-<p>有時候為了表示更明確，在使用 CSS 的選擇器時，要表示某的 class 是搭配某個標籤元素使用，會寫成這樣：</p>
-
-<p><code>css
-ol.breadcrumb{}
-p.intro{}
-ul.image-thumbs{}
-</code></p>
-
-<p>但是上面這個寫法效能不是很好，同樣的目的但可以減少多餘的修飾，試試改用下面這種寫法，將標籤名稱用註解標示起來，維護上有相同的效果，但是瀏覽器處理的速度會比較快：</p>
-
-<p><code>css
-/*ol*/.breadcrumb{}
-/*p*/.intro{}
-/*ul*/.image-thumbs{}
-</code></p>
-
-<h2>參考資源</h2>
-
-<ul>
-<li><a href="https://github.com/doggy8088/CSS-Guidelines">撰寫可管理、可維護的 CSS 高階技巧</a></li>
 </ul>
 
 ]]></content>
