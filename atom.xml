@@ -4,7 +4,7 @@
   <title><![CDATA[@ChingHanHo]]></title>
   <link href="http://blog.chh.tw/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2015-10-01T00:37:07+08:00</updated>
+  <updated>2015-10-01T00:37:39+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -25,6 +25,9 @@
 <p>jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB，壓縮後大約是 24.5KB，比 jQuery 平均小了 74%！</p>
 
 <p>Zepto 極其輕巧的秘訣在於它預設只有 jQuery 最關鍵的幾個核心功能，並且用友善的模組化設計，保持每個功能能夠輕易地被擴充。</p>
+
+<!-- more -->
+
 
 <h2>擴充 animate 模組</h2>
 

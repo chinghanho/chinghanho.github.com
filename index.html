@@ -137,30 +137,12 @@
 
 <p>Zepto 極其輕巧的秘訣在於它預設只有 jQuery 最關鍵的幾個核心功能，並且用友善的模組化設計，保持每個功能能夠輕易地被擴充。</p>
 
-<h2>擴充 animate 模組</h2>
-
-<p>jQuery 的 <code>animate</code> 效能不是很好，上次在製作公司官網作品牆，讓圖片載完進行 <code>fadeIn</code> 的效果，造成 FPS 低到明顯感受到 lag。</p>
-
-<p>通常需要用到大量的動態視覺效果的首選是 GreenSock 所提供的 TweenMax（344KB）。如果只是需要用來取代 jQuery 的 <code>animate</code> 操作 DOM 的動態效果，那麼能夠跟 jQuery 無縫整合的 Velocity（215KB）有更好的條件。Velocity 優點是效能高，體積比較小，也能夠相容 jQuery API。</p>
-
-<p>Zepto 因為模組化設計的關係，預設是不包括 <code>animate</code> 這個方法的，因此便可以改用 Velocity 來擴充。</p>
-
-<p>外部網站參考：</p>
-
-<ul>
-<li><a href="http://zeptojs.com/">Zepto 的專案網站</a></li>
-<li><a href="http://julian.com/research/velocity/">Velocity 的專案網站</a></li>
-<li><a href="https://greensock.com/tweenmax">TweenMax 的專案網站</a></li>
-</ul>
-
-
-<h2>瀏覽器相容性</h2>
-
-<p>jQuery 2.0 開始就直接放棄 IE 9 以下的瀏覽器，Zepto 更狠直接跳到 IE 10+；而 Velocity 則是不支援 IE 8 以下，所以能不能使用 Zepto + Velocity 這個組合要先觀察一下產品的目標使用群。</p>
-
-<p>如果打算支援 IE 8，還是去用 jQuery 1.11.3 吧！</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/posts/using-zepto-replace-jquery/">Read on &rarr;</a>
+    </footer>
   
 
 
