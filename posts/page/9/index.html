@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="Rails Rumble 是國外相當有名的 Hackathon 大賽，是一場考驗 hacker 們的爆肝力體力和智力的「遊戲」，必須 48 小時之內用 Ruby on Rails 或是其他 Rack-based 的 Ruby 框架寫出一個「最小可行性產品1」。 48 小時內能完成什麼網站？ &hellip;">
+  <meta name="description" content="上禮拜練習佈署 Rails 到 Amazon EC2 伺服器上，也理解了一下如何透過 SSH 操作遠端 server，很多原理還不是很懂，大部分只是得過且過，碰到問題就用別人的解決方案，目前是能讓機器動起來就好。 如果哪天能夠不再只是按照別人的食譜來架設，能夠依照自己需求去調整， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/9/" />
-<meta property="og:description" content="Rails Rumble 是國外相當有名的 Hackathon 大賽，是一場考驗 hacker 們的爆肝力體力和智力的「遊戲」，必須 48 小時之內用 Ruby on Rails 或是其他 Rack-based 的 Ruby 框架寫出一個「最小可行性產品1」。 48 小時內能完成什麼網站？ &hellip;" />
+<meta property="og:description" content="上禮拜練習佈署 Rails 到 Amazon EC2 伺服器上，也理解了一下如何透過 SSH 操作遠端 server，很多原理還不是很懂，大部分只是得過且過，碰到問題就用別人的解決方案，目前是能讓機器動起來就好。 如果哪天能夠不再只是按照別人的食譜來架設，能夠依照自己需求去調整， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="Rails Rumble 是國外相當有名的 Hackathon 大賽，是一場考驗 hacker 們的爆肝力體力和智力的「遊戲」，必須 48 小時之內用 Ruby on Rails 或是其他 Rack-based 的 Ruby 框架寫出一個「最小可行性產品1」。 48 小時內能完成什麼網站？ &hellip;" />
+<meta itemprop="description" content="上禮拜練習佈署 Rails 到 Amazon EC2 伺服器上，也理解了一下如何透過 SSH 操作遠端 server，很多原理還不是很懂，大部分只是得過且過，碰到問題就用別人的解決方案，目前是能讓機器動起來就好。 如果哪天能夠不再只是按照別人的食譜來架設，能夠依照自己需求去調整， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,264 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/deply-rails-app-on-ec2/">如何佈署 Rails 應用程式到 Amazon EC2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-02T08:39:00+08:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>上禮拜練習佈署 Rails 到 <a href="http://aws.amazon.com/ec2/">Amazon EC2</a> 伺服器上，也理解了一下如何透過 SSH 操作遠端 server，很多原理還不是很懂，大部分只是得過且過，碰到問題就用別人的解決方案，目前是能讓機器動起來就好。</p>
+
+<p>如果哪天能夠不再只是按照別人的食譜來架設，能夠依照自己需求去調整，我想應該就是跨越了新手入門的級別了吧！</p>
+
+<h2>申請 Amazon AWS 帳號</h2>
+
+<p>對於新手而言使用 PaaS 的 <a href="http://www.heroku.com/">Heroku</a> 比較方便，不過 AWS 給的是更豐富的彈性。</p>
+
+<p>申請 Amazon AWS 需要信用卡帳號，新註冊的使用者可以有 12 個月的<a href="http://aws.amazon.com/free/">免費方案</a>，適合初學者練習用。這部份可以參考<a href="http://blog.soft.idv.tw/?p=824">阿正老師</a>寫的教學，整個申請流程和選擇機器的步驟，都有詳細的說明。而這篇文章用的作業系統環境是 Ubuntu 12.04 LTS 這個版本。</p>
+
+<p>如果機器準備好了，應該會得到一個金鑰檔案（.pem）和一組 IP，這個時候就可以開終端機用 SSH 跟剛剛選好 server 連線：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh -i YOUR_NAME.pem ubuntu@IP位址
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>等等會用到以下幾個工具，需要逐一安裝到伺服器上：</p>
+
+<ul>
+<li>RVM</li>
+<li>Nginx</li>
+<li>Passenger</li>
+</ul>
+
+
+<h2>調整 Ubuntu 環境設定</h2>
+
+<p>在安裝其他軟體之前，現對系統進行更新，確保軟體清單都是最新的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get upgrade <span class="c">#對系統進行升級</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>修改系統時間，選擇到台北的時區，可以用 <code>date</code> 指令來確認時間有沒有正確：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo dpkg-reconfigure tzdata
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install ntp
+</span><span class='line'><span class="nv">$ </span>sudo ntpdate ntp.ubuntu.com <span class="c"># Update time</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果平常有偏好用 alias 可以這個時候先設定好，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;alias ls=&#39;ls -l&#39;&quot;</span> &gt;&gt; ~/.bash_aliases
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;alias sudo=&#39;sudo env PATH=$PATH&#39;&quot;</span> &gt;&gt; ~/.bash_aliases
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>RVM</h2>
+
+<p>有時候我們會需要同時安裝多個 Ruby 版本在機器上，所以需要一套版本控制系統來切換，這裡用的是 RVM（Ruby Version Manager）<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>curl -L https://get.rvm.io | sudo bash -s stable <span class="c"># 用 curl 指令安裝 RVM</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> /etc/profile.d/rvm.sh <span class="c"># 啟用 RVM</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把 RVM 安裝好以後輸入 <code>rvm requirements</code> 查看需要哪些 dependencies，例如我要安裝標準的 Ruby MRI 版本<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>，那就需要安裝以下這些套件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion pkg-config
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>現在網路這麼方便，隨時可以在網路上找到最新的文件，所以沒有必要把文件下載到本機裡，以下這個指令可以預設不要下載 gem 的文件說明檔案：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;gem: --no-ri --no-rdoc&#39;</span>  &gt;&gt; ~/.gemrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>RVM 安裝 Ruby 前面要用 <code>rvmsudo</code>，因為 <code>sudo</code> 不會包含 RVM 的環境變數，這個步驟需要 compile 可能會花比較久的時間；安裝好以後安裝 Rails 套件，然後建立一個 app 來測試看看：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvmsudo rvm install 1.9.3 --default --with-openssl-dir<span class="o">=</span><span class="nv">$HOME</span>/.rvm/usr
+</span><span class='line'><span class="nv">$ </span>gem list <span class="c"># 查看有哪些 Gems，主要是確保安裝成功</span>
+</span><span class='line'><span class="nv">$ </span>rvmsudo gem install rails
+</span><span class='line'><span class="nv">$ </span>rails -v <span class="c"># 確認 Rails 安裝成功</span>
+</span><span class='line'><span class="nv">$ </span>rails new firstapp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ubuntu 預設沒有 JavaScript 的直譯器，需要在 Gemfile 中解開這行註解，然後重新 <code>bundle install</code>：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;therubyracer&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這個時候已經可以打開 server，執行 <code>rails server</code> 啟動 WEBrick server<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>。在 Amazon EC2 Management Console 後台的 Security Groups 打開 3000 port，連到 Amazon 給的 Public 域名，順利的話應該可以看到 Rails 的初始畫面。</p>
+
+<h2>Nginx + Phusion Passenger</h2>
+
+<p>要先把 Passenger 的 gem 安裝起來：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvmsudo gem install passenger
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後再安裝 Nginx 的 Passenger 模組：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvmsudo passenger-install-nginx-module
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這時會先檢查軟體需要的 dependencies，如果找不到也不用擔心，會出現說明指導該怎麼做，例如我遇到這個軟體沒有安裝：</p>
+
+<pre><code>* To install Curl development headers with SSL support:
+  Please run apt-get install libcurl4-openssl-dev or libcurl4-gnutls-dev, whichever you prefer.
+</code></pre>
+
+<p>那就按照指示把它裝起來就好了，然後重新執行一次安裝模組的指令繼續安裝 Nginx：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install libcurl4-openssl-dev
+</span><span class='line'><span class="nv">$ </span>rvmsudo passenger-install-nginx-module
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果軟體需要的 dependencies 都安裝好了以後，會詢問是要自動下載安裝，還是自訂安裝：</p>
+
+<pre><code>Automatically download and install Nginx?
+
+Nginx doesn't support loadable modules such as some other web servers do,
+so in order to install Nginx with Passenger support, it must be recompiled.
+
+Do you want this installer to download, compile and install Nginx for you?
+
+ 1. Yes: download, compile and install Nginx for me. (recommended)
+The easiest way to get started. A stock Nginx 1.2.3 with Passenger
+support, but with no other additional third party modules, will be
+installed for you to a directory of your choice.
+
+ 2. No: I want to customize my Nginx installation. (for advanced users)
+Choose this if you want to compile Nginx with more third party modules
+besides Passenger, or if you need to pass additional options to Nginx's
+'configure' script. This installer will  1) ask you for the location of
+the Nginx source code,  2) run the 'configure' script according to your
+instructions, and  3) run 'make install'.
+
+Whichever you choose, if you already have an existing Nginx configuration file,
+then it will be preserved.
+
+Enter your choice (1 or 2) or press Ctrl-C to abort: 1
+</code></pre>
+
+<p>因為沒有特別的需求，所以選擇 <code>1</code> 完整安裝，詢問安裝路徑時，就用預設的即可。接下來等待 Nginx 編譯完成，這可能會花不少時間，可以去 <a href="http://news.ycombinator.com/">Hacker News</a> 先看個新聞。</p>
+
+<p>這裡我參考了 <a href="http://chloerei.com/2012/08/05/rails-deploy-guides-1-base-deploy/">@chloerei</a> 的作法，新增 Nginx 伺服器啟動腳本，事實上我不曉得這腳本是怎麼運作的，這也就是我前言講的，目前功力太弱只能照著別人的食譜作為解決方案：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/init.d
+</span><span class='line'><span class="nv">$ </span>sudo wget https://raw.github.com/chloerei/nginx-init-ubuntu-passenger/master/nginx
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d nginx defaults
+</span><span class='line'><span class="nv">$ </span>sudo chmod +x nginx
+</span><span class='line'><span class="nv">$ </span>sudo service nginx start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣以後可以用 <code>sudo service nginx [start|stop|restart]</code> 方式來管理伺服器了，變得比較方便一些。</p>
+
+<p>修改 /opt/nginx/conf/nginx.conf 文件設定，裡面看起來很多東西，但是重點只有以下這幾個：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>http {
+</span><span class='line'>  ...
+</span><span class='line'>  passenger_root /usr/local/rvm/gems/ruby-1.9.3-p286/gems/passenger-3.0.17;
+</span><span class='line'>  passenger_ruby /usr/local/rvm/wrappers/ruby-1.9.3-p286/ruby;
+</span><span class='line'>  ...
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>server {
+</span><span class='line'>  listen 80;
+</span><span class='line'>  server_name www.yourhost.com;
+</span><span class='line'>  root /somewhere/public;   # &lt;--- be sure to point to 'public'!
+</span><span class='line'>  passenger_enabled on;
+</span><span class='line'>  }</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>passenger_root</code> 和 <code>passenger_ruby</code> 讓 Nginx 可以找到 Passenger 執行路徑；<code>server_name</code> 是網域名稱，<code>root</code> 指向 Rails app 下的 /public 目錄（!important）。</p>
+
+<p>如果在 nginx.conf 檔案中有 <code>location /</code> 這段程式碼，把它註解掉，因為這樣可能會導致你看到 403 Forbidden。最後只要在 EC2 後台開啟 80 port，作法跟前面測試 Rails app 一樣，應該就可以正常連上了。</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>當然也有其他選擇，例如 <a href="https://github.com/sstephenson/rbenv">rbenv</a> 是相較下較輕量的 Ruby 版本控制系統。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>以 C 語言實作的官方版本，通常稱為 CRuby 或是 MRI，意思是 Matz&#8217;s Ruby Interpreter。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>WEBrick 是用 Ruby 實作的簡單 HTTP server，開發的時候很好用，可是拿來當 production server 就會不敷使用。 <a href='#fnref:3' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -495,117 +753,6 @@ alias ...="cd ../.."
 <div class="footnotes">
     <ol>
         <li id='fn:1'>我在這裡卡了好久，後來才想起來是應用程式密碼搞得鬼。XD <a href='#fnref:1' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/hacker-news-de-tui-wen-xi-tong-yan-suan-fa-yong-ruby-shi-zuo/">Hacker News 推文系統演算法用 Ruby 實作</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-12T23:37:00+08:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><!-- MathJax -->
-
-
-<script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-<p><a href="http://news.ycombinator.com/">Hacker News</a> 是現代資訊人相當重要的資訊來源，今天在 Github 上找到一個<a href="https://github.com/happypeter/auth-love">用 Rails 製作的 clone</a>，一時興起就抓來玩玩，這項 project 將整個前端幾乎都複製了過來，不過後端當然完全不同，可惜缺少了最重要的推文演算法，所以我就找了一些資源，然後用 Ruby 來實作。</p>
-
-<p>參考了一下「<a href="http://amix.dk/blog/post/19574">How Hacker News ranking algorithm works</a>」的算法後，發現其實這套算法一點也不複雜，而且簡單得讓我有點意外，寫成比較熟悉的數學公式像是這樣：</p>
-
-<div markdown="0">
-$$Score = \frac{P-1}{(T+2)^{G}}$$
-</div>
-
-
-<p>這裡翻譯一下每個變數代表的意義：</p>
-
-<ul>
-<li>P 表示每篇文章的 points，減一是為了刪掉作者自己投自己的那票（沒有人自己按自己讚的啦！XD）</li>
-<li>T 表示時間間距，單位為小時，加二是避免分母太小</li>
-<li>G 表示重力係數，意思是文章分數下降的速度</li>
-</ul>
-
-
-<p>G 預設給 1.5，除非網站的文章提交數量很多很快，否則我認為沒必要太高<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>。如果用 Ruby 可以這樣寫：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">compute_score</span>
-</span><span class='line'>  <span class="n">time</span> <span class="o">=</span> <span class="p">(</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">-</span> <span class="nb">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">)</span><span class="o">/</span><span class="mi">3600</span><span class="o">.</span><span class="mi">0</span>
-</span><span class='line'>  <span class="n">gravity</span> <span class="o">=</span> <span class="mi">1</span><span class="o">.</span><span class="mi">5</span>
-</span><span class='line'>  <span class="n">points</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">to_i</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">score</span> <span class="o">=</span> <span class="p">(</span><span class="n">points</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">time</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="n">gravity</span>
-</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">update_attributes</span><span class="p">(</span><span class="ss">:score</span> <span class="o">=&gt;</span> <span class="n">score</span><span class="o">*</span><span class="mi">1000</span><span class="p">)</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可是真的超級醜，「It just works!」能動就好（咦？），不過我已經想好該怎麼「重構」（是這樣講的嗎？）了，今天寫的 code 已經 pull request 給作者，明後天有時間再來修正<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>。</p>
-
-<p>然後要找個計時器讓應用程式每隔一段時間就要來刷 score，找了一下 <a href="https://www.ruby-toolbox.com/categories/scheduling">Toolbox</a> 看起來 <a href="https://github.com/jmettraux/rufus-scheduler">rufus-scheduler</a> 比較簡單，只要在 Model 加上一些時間參數就可以自己跑了：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rufus/scheduler&#39;</span>
-</span><span class='line'><span class="n">scheduler</span> <span class="o">=</span> <span class="ss">Rufus</span><span class="p">:</span><span class="ss">:Scheduler</span><span class="o">.</span><span class="n">start_new</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scheduler</span><span class="o">.</span><span class="n">every</span> <span class="s1">&#39;1m&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">compute_score</span> <span class="p">}</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>這個係數影響了更新速度，所以非常重要，憑個人感覺來看，如果網站一天沒有新增超過 10 篇文章，其實 1.5 還嫌高。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>那欄 score 乘以 1000 是因為浮點數寫入資料庫會進位成 0，所以把它放大 1000 倍為整數。 <a href='#fnref:2' rev='footnote'>↩</a></li>
     </ol>
 </div>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[@ChingHanHo]]></title>
   <link href="http://blog.chh.tw/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2015-08-30T17:11:28+08:00</updated>
+  <updated>2015-10-01T00:37:07+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用 Zepto + Velocity 無縫取代 jQuery 更輕巧]]></title>
+    <link href="http://blog.chh.tw/posts/using-zepto-replace-jquery/"/>
+    <updated>2015-10-01T00:26:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/using-zepto-replace-jquery</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/fKcLfP4rJK5syiKv-cfmDYlbdC0_dV8sAdyQfYM3DxZW76knVkgxFsMC4sWsBpaN_27emoOHF504CNpmSDn0rnlDG2Eu1vw6RNowi18owUxdnBYaotT3hz2BIWnrQioS-tfQfOU4iDNAss3pzDKuNOPmSLWjNVP-zQrZJhZOK1Xf78TU9GdCSKnIApESyUZ777gjz7LC5PKw9Yk_NcNr8GCrKRsd7cCQciMf_sSmmZ1sqWKRcIAVWdt-B7_5fV9nW4vNfBYkFvJCI-BaIC_KmR-KPiVMUHi7y4hMzW1DmT4uzAJwfKIk3tvjWW6pEe345hE3R0nxqq-y0apP64DcndcDHFq16S1KqW465nsZRwvg6412LAjzp1cVM_XEimA9NekxAlTC1u89PNLyALrNtaaNRsAsj02D43lSFKu0gEKGMdAl23BhXkBtL-khwLYgoKWCbRkvZ7eznqnONx7zyGxxbNNU48Rn5NLDhw74Bxr0Xy72I1ROoGjm7E22V5-5BSl3CbsBAgczJ-fxCgxHzYWsmJpdqAIA6DVFmD5A8Vk=w690" alt="zeptojs" /></p>
+
+<p>Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。</p>
+
+<p>jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB，壓縮後大約是 24.5KB，比 jQuery 平均小了 74%！</p>
+
+<p>Zepto 極其輕巧的秘訣在於它預設只有 jQuery 最關鍵的幾個核心功能，並且用友善的模組化設計，保持每個功能能夠輕易地被擴充。</p>
+
+<h2>擴充 animate 模組</h2>
+
+<p>jQuery 的 <code>animate</code> 效能不是很好，上次在製作公司官網作品牆，讓圖片載完進行 <code>fadeIn</code> 的效果，造成 FPS 低到明顯感受到 lag。</p>
+
+<p>通常需要用到大量的動態視覺效果的首選是 GreenSock 所提供的 TweenMax（344KB）。如果只是需要用來取代 jQuery 的 <code>animate</code> 操作 DOM 的動態效果，那麼能夠跟 jQuery 無縫整合的 Velocity（215KB）有更好的條件。Velocity 優點是效能高，體積比較小，也能夠相容 jQuery API。</p>
+
+<p>Zepto 因為模組化設計的關係，預設是不包括 <code>animate</code> 這個方法的，因此便可以改用 Velocity 來擴充。</p>
+
+<p>外部網站參考：</p>
+
+<ul>
+<li><a href="http://zeptojs.com/">Zepto 的專案網站</a></li>
+<li><a href="http://julian.com/research/velocity/">Velocity 的專案網站</a></li>
+<li><a href="https://greensock.com/tweenmax">TweenMax 的專案網站</a></li>
+</ul>
+
+
+<h2>瀏覽器相容性</h2>
+
+<p>jQuery 2.0 開始就直接放棄 IE 9 以下的瀏覽器，Zepto 更狠直接跳到 IE 10+；而 Velocity 則是不支援 IE 8 以下，所以能不能使用 Zepto + Velocity 這個組合要先觀察一下產品的目標使用群。</p>
+
+<p>如果打算支援 IE 8，還是去用 jQuery 1.11.3 吧！</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[9 個存取硬體裝置的 Javascript API]]></title>
@@ -2071,130 +2109,6 @@ execute pathogen#infect()
 <h2>除 bug 可能比較困難</h2>
 
 <p>看起來好像很好用，可是會有個問題，因為這個方法本來就不存在，因此很容易造成一些奇怪的 bug，例如透過 <code>user.respond_to?(:name)</code> 來檢查方法存不存在時，返回的竟然會是 false！用起來卻沒問題。所以使用 <code>method_missing</code> 時也要修改 <code>respond_to?</code> 的查找方式，以免測試一直跑不過。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ruby 的 Dynamic Method 技巧]]></title>
-    <link href="http://blog.chh.tw/posts/dynamic-method/"/>
-    <updated>2013-01-14T18:37:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/dynamic-method</id>
-    <content type="html"><![CDATA[<p>這是繼上一篇 <a href="http://blog.chh.tw/posts/dynamic-dispatch/">Dynamic Dispatch</a> 寫的筆記，今天要分享的是 Dynamic Method 這個程式技巧。而 Dynamic Method 就是在程式 runtime 時，動態地定義方法，而不是事先寫好。</p>
-
-<p>直接舉例子比較容易理解，假設原本有個 <code>SourceData</code> class，可以從這裡透過像是 <code>get_name</code> 之類的實例方法（instance method）取得實例變數（instance variables）的值，它的 code 可能長得像這個樣子：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">SourceData</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@name</span>     <span class="o">=</span> <span class="nb">name</span>
-</span><span class='line'>    <span class="vi">@email</span>    <span class="o">=</span> <span class="n">email</span>
-</span><span class='line'>    <span class="vi">@location</span> <span class="o">=</span> <span class="n">location</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">get_name</span><span class="p">;</span>     <span class="vi">@name</span><span class="p">;</span>     <span class="k">end</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">get_email</span><span class="p">;</span>    <span class="vi">@email</span><span class="p">;</span>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">get_location</span><span class="p">;</span> <span class="vi">@location</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果我們想要從另外一個叫做 <code>User</code> 的 class，透過 <code>SourceData</code> 的實例方法來獲取它的實例變數，我們可能會這麼做：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_data</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@source_data</span> <span class="o">=</span> <span class="n">source_data</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">name</span><span class="p">;</span>     <span class="vi">@source_data</span><span class="o">.</span><span class="n">get_name</span><span class="p">;</span>     <span class="k">end</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">email</span><span class="p">;</span>    <span class="vi">@source_data</span><span class="o">.</span><span class="n">get_email</span><span class="p">;</span>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">location</span><span class="p">;</span> <span class="vi">@source_data</span><span class="o">.</span><span class="n">get_location</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="no">SourceData</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="s2">&quot;user@example.tw&quot;</span><span class="p">,</span> <span class="s2">&quot;Taiwan&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>     <span class="c1"># =&gt; chh</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>    <span class="c1"># =&gt; user@example.tw</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">location</span> <span class="c1"># =&gt; Taiwan</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這會有個問題就是，當我們想要在 <code>SourceData</code> 塞入更多實例變數的時候，例如新增一個 <code>get_birthday</code> 實例方法，還要記得去 <code>User</code> class 去補上一條，這便違反了 <a href="http://en.wikipedia.org/wiki/Open/closed_principle">Open/closed principle</a>，而且也不符合 <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself">Don&#8217;t_repeat_yourself</a> 原則，這樣寫程式會變得非常沒有效率。</p>
-
-<p>假如當我在 <code>SourceData</code> class 加上新的 <code>get_*</code> 實例方法時，電腦會自動幫我把另外一部分的程式也寫好，那這個世界就太完美了。而仰賴 Ruby 的動態特性，真的就是可以這麼完美：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_data</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@source_data</span> <span class="o">=</span> <span class="n">source_data</span>
-</span><span class='line'>    <span class="vi">@source_data</span><span class="o">.</span><span class="n">methods</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="sr">/^get_(.*)$/</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="no">User</span><span class="o">.</span><span class="n">define_infos</span><span class="p">(</span><span class="vg">$1</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">define_infos</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">define_method</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="vi">@source_data</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="no">SourceData</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="s2">&quot;user@example.tw&quot;</span><span class="p">,</span> <span class="s2">&quot;Taiwan&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>     <span class="c1"># =&gt; chh</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>    <span class="c1"># =&gt; user@example.tw</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">location</span> <span class="c1"># =&gt; Taiwan</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這樣寫的好處就是當程式需要延展、擴充的時候，我們不需要去動到其他的部分，可以專注在焦點本身，比較容易維護。這個時候不論 <code>SourceData</code> 新增多少個 <code>get_*</code> 實例方法時，都可以動態地在 <code>User</code> class 產生方法。</p>
 ]]></content>
   </entry>
   

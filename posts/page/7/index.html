@@ -9,7 +9,20 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="Peter Norvig 是 Google 的研究總監，似乎就是那個專門製造「沒用」產品的那個部門的主管，但是他所做的工作是全世界最尖端的科技，例如人工智慧。最近他接受了英國 The Guardian 採訪，提到一些我很感興趣的內容： This idea that intelligence is &hellip;">
+  <meta name="description" content="Ruby 的單引號（'）跟雙引號（"）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+var = &quot;hello world &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +43,40 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/7/" />
-<meta property="og:description" content="Peter Norvig 是 Google 的研究總監，似乎就是那個專門製造「沒用」產品的那個部門的主管，但是他所做的工作是全世界最尖端的科技，例如人工智慧。最近他接受了英國 The Guardian 採訪，提到一些我很感興趣的內容： This idea that intelligence is &hellip;" />
+<meta property="og:description" content="Ruby 的單引號（'）跟雙引號（"）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+var = &quot;hello world &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="Peter Norvig 是 Google 的研究總監，似乎就是那個專門製造「沒用」產品的那個部門的主管，但是他所做的工作是全世界最尖端的科技，例如人工智慧。最近他接受了英國 The Guardian 採訪，提到一些我很感興趣的內容： This idea that intelligence is &hellip;" />
+<meta itemprop="description" content="Ruby 的單引號（'）跟雙引號（"）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如： 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+var = &quot;hello world &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +139,194 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/">Ruby 單引號、雙引號差別與效能測試</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-08T14:32:00+08:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ruby 的單引號（<code>'</code>）跟雙引號（<code>"</code>）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s1">&#39;hello world\nnew line&#39;</span>
+</span><span class='line'><span class="c1"># =&gt; hello world\nnew line</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;hello world</span><span class="se">\n</span><span class="s2">new line&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; hello world</span>
+</span><span class='line'><span class="c1"># =&gt; new line</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s1">&#39;#{var}&#39;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; #{var}</span>
+</span><span class='line'><span class="c1"># =&gt; hello world</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果兩個引號之間要插一個相同的引號，就要用不同風格的引號來包，否則就會噴出 SyntaxError 的錯誤，除非加一個 <code>\</code> 來轉義，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s1">&#39;This is David\&#39;s pen&#39;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;This is David&#39;s pen&quot;</span>
+</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
+</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是這樣很麻煩，所以這時就會需要用到 <code>%q</code> 和 <code>%Q</code> 這個方法，前者等於單引號的用法，後者等於雙引號的用法（也可以直接寫成 <code>%{}</code>），例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="sx">%q{Hello world!\n This is David&#39;s pen}</span>
+</span><span class='line'><span class="c1"># =&gt; Hello world!\nThis is David&#39;s pen</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="sx">%Q{Hello world!</span><span class="se">\n</span><span class="sx"> This is David&#39;s pen}</span>
+</span><span class='line'><span class="c1"># =&gt; Hello world!</span>
+</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>單引號跟雙引號之間的差別大致上就這樣，那效能呢？我寫了一個腳本來測試兩者的速度差異，結果如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s2">&quot;benchmark&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">CYCLES</span> <span class="o">=</span> <span class="mi">10_000_000</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bmbm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&#39;hello world&#39;]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&quot;hello world&quot;]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span> <span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%q{hello world}]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%q{hello world}</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%Q{hello world}]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%Q{hello world}</span> <span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&#39;hello world&#39; + n.to_s]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span> <span class="o">+</span> <span class="mi">1</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&quot;hello world </span><span class="se">\#</span><span class="sx">{n}&quot;]</span><span class="p">)</span>    <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;hello world </span><span class="si">#{</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%q{hello world } + n.to_s]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%q{hello world }</span> <span class="o">+</span> <span class="mi">1</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%Q{hello world </span><span class="se">\#</span><span class="sx">{n}}]</span><span class="p">)</span>     <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%Q{hello world </span><span class="si">#{</span><span class="mi">1</span><span class="si">}</span><span class="sx">}</span> <span class="p">}}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># ruby-1.9.3-p327</span>
+</span><span class='line'><span class="c1"># Rehearsal -------------------------------------------------------------</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39;               4.100000   0.010000   4.110000 (  4.112255)</span>
+</span><span class='line'><span class="c1"># &quot;hello world&quot;               4.060000   0.000000   4.060000 (  4.069385)</span>
+</span><span class='line'><span class="c1"># %q{hello world}             4.090000   0.010000   4.100000 (  4.099501)</span>
+</span><span class='line'><span class="c1"># %Q{hello world}             4.090000   0.000000   4.090000 (  4.104130)</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39; + n.to_s     10.680000   0.020000  10.700000 ( 10.705543)</span>
+</span><span class='line'><span class="c1"># &quot;hello world #{n}&quot;          9.870000   0.010000   9.880000 (  9.895310)</span>
+</span><span class='line'><span class="c1"># %q{hello world } + n.to_s  10.710000   0.020000  10.730000 ( 10.744212)</span>
+</span><span class='line'><span class="c1"># %Q{hello world #{n}}        9.810000   0.010000   9.820000 (  9.832551)</span>
+</span><span class='line'><span class="c1"># --------------------------------------------------- total: 57.490000sec</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#                                 user     system      total        real</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39;               4.010000   0.010000   4.020000 (  4.018492)</span>
+</span><span class='line'><span class="c1"># &quot;hello world&quot;               4.010000   0.010000   4.020000 (  4.017989)</span>
+</span><span class='line'><span class="c1"># %q{hello world}             4.010000   0.000000   4.010000 (  4.021088)</span>
+</span><span class='line'><span class="c1"># %Q{hello world}             4.010000   0.010000   4.020000 (  4.019685)</span>
+</span><span class='line'><span class="c1"># &#39;hello world&#39; + n.to_s     10.700000   0.010000  10.710000 ( 10.730320)</span>
+</span><span class='line'><span class="c1"># &quot;hello world #{n}&quot;          9.860000   0.020000   9.880000 (  9.890101)</span>
+</span><span class='line'><span class="c1"># %q{hello world } + n.to_s  10.610000   0.010000  10.620000 ( 10.634330)</span>
+</span><span class='line'><span class="c1"># %Q{hello world #{n}}        9.860000   0.020000   9.880000 (  9.884285)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>得出兩個結果：</p>
+
+<ul>
+<li>字串插值的寫法會比用 <code>+</code> 拼接的效能好（而且可讀性也比較高）；</li>
+<li>雙引號比單引號效能好；</li>
+</ul>
+
+
+<p>一般情況，我的習慣都是使用雙引號，個人覺得看起來也比較好看。:p</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -411,54 +638,6 @@
     </ol>
 </div>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/disable-os-x-dashboard/">關閉 OS X 雞肋的 Dashboard</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-17T06:36:00+08:00" pubdate data-updated="true">Nov 17<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>OS X 不知道在哪一個版本加進 Dashboard 這個功能，對我來說這東西一點用也沒有，如果把 widgets 挪到桌面上可能還方便一點，可是放到 Dashboard 上真的超級不方便。</p>
-
-<p>不過就算把 widgets 弄到桌面上，我還是不會用到這些工具，所以我決定把它整個給移除掉，因為開在背景這東西也是會消耗資源的。關閉的方法很簡單，在終端機中輸入：</p>
-
-<pre><code>defaults write com.apple.dashboard mcx-disabled -boolean YES
-killall Dock
-</code></pre>
-
-<p>第一條指令後面的 YES 換成 NO 的話，就是復原這個動作，不過記得，都要下 <code>killall Dock</code> 這個指令重新啟動 Dock 才會生效。</p>
-
-<p><img src="http://lh5.googleusercontent.com/-sPmI3eSBgYU/UKbA4bQtJOI/AAAAAAAAFXs/LAGQ9ySlNVI/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-17%2520%25E4%25B8%258A%25E5%258D%25886.37.49.png" alt="" /></p>
-
-<p>現在滑到 Mission Control 也不會出現 Dashboard 了，整個心情都變好，頭腦也變聰明，考試都考一百分。XD</p>
 </div>
   
   

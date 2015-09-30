@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="三天前開始看 Metaprogramming Ruby，希望可以在這個禮拜把整本讀完。讀書要寫筆記，一方面整理思緒、一方面幫助記憶、一方面還能分享，而且這本是英文原文，畢竟不是中文母語，有些內容當下看懂了，可是揮發得很快，所以我決定寫點東西下來。 Dynamic Dispatch 如果 &hellip;">
+  <meta name="description" content="這是繼上一篇 Dynamic Dispatch 寫的筆記，今天要分享的是 Dynamic Method 這個程式技巧。而 Dynamic Method 就是在程式 runtime 時，動態地定義方法，而不是事先寫好。 直接舉例子比較容易理解，假設原本有個 SourceData class， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/5/" />
-<meta property="og:description" content="三天前開始看 Metaprogramming Ruby，希望可以在這個禮拜把整本讀完。讀書要寫筆記，一方面整理思緒、一方面幫助記憶、一方面還能分享，而且這本是英文原文，畢竟不是中文母語，有些內容當下看懂了，可是揮發得很快，所以我決定寫點東西下來。 Dynamic Dispatch 如果 &hellip;" />
+<meta property="og:description" content="這是繼上一篇 Dynamic Dispatch 寫的筆記，今天要分享的是 Dynamic Method 這個程式技巧。而 Dynamic Method 就是在程式 runtime 時，動態地定義方法，而不是事先寫好。 直接舉例子比較容易理解，假設原本有個 SourceData class， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="三天前開始看 Metaprogramming Ruby，希望可以在這個禮拜把整本讀完。讀書要寫筆記，一方面整理思緒、一方面幫助記憶、一方面還能分享，而且這本是英文原文，畢竟不是中文母語，有些內容當下看懂了，可是揮發得很快，所以我決定寫點東西下來。 Dynamic Dispatch 如果 &hellip;" />
+<meta itemprop="description" content="這是繼上一篇 Dynamic Dispatch 寫的筆記，今天要分享的是 Dynamic Method 這個程式技巧。而 Dynamic Method 就是在程式 runtime 時，動態地定義方法，而不是事先寫好。 直接舉例子比較容易理解，假設原本有個 SourceData class， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,157 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/dynamic-method/">Ruby 的 Dynamic Method 技巧</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-14T18:37:00+08:00" pubdate data-updated="true">Jan 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>這是繼上一篇 <a href="/posts/dynamic-dispatch/">Dynamic Dispatch</a> 寫的筆記，今天要分享的是 Dynamic Method 這個程式技巧。而 Dynamic Method 就是在程式 runtime 時，動態地定義方法，而不是事先寫好。</p>
+
+<p>直接舉例子比較容易理解，假設原本有個 <code>SourceData</code> class，可以從這裡透過像是 <code>get_name</code> 之類的實例方法（instance method）取得實例變數（instance variables）的值，它的 code 可能長得像這個樣子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">SourceData</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@name</span>     <span class="o">=</span> <span class="nb">name</span>
+</span><span class='line'>    <span class="vi">@email</span>    <span class="o">=</span> <span class="n">email</span>
+</span><span class='line'>    <span class="vi">@location</span> <span class="o">=</span> <span class="n">location</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">get_name</span><span class="p">;</span>     <span class="vi">@name</span><span class="p">;</span>     <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">get_email</span><span class="p">;</span>    <span class="vi">@email</span><span class="p">;</span>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">get_location</span><span class="p">;</span> <span class="vi">@location</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果我們想要從另外一個叫做 <code>User</code> 的 class，透過 <code>SourceData</code> 的實例方法來獲取它的實例變數，我們可能會這麼做：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_data</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@source_data</span> <span class="o">=</span> <span class="n">source_data</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">name</span><span class="p">;</span>     <span class="vi">@source_data</span><span class="o">.</span><span class="n">get_name</span><span class="p">;</span>     <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">email</span><span class="p">;</span>    <span class="vi">@source_data</span><span class="o">.</span><span class="n">get_email</span><span class="p">;</span>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">location</span><span class="p">;</span> <span class="vi">@source_data</span><span class="o">.</span><span class="n">get_location</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="no">SourceData</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="s2">&quot;user@example.tw&quot;</span><span class="p">,</span> <span class="s2">&quot;Taiwan&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>     <span class="c1"># =&gt; chh</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>    <span class="c1"># =&gt; user@example.tw</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">location</span> <span class="c1"># =&gt; Taiwan</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這會有個問題就是，當我們想要在 <code>SourceData</code> 塞入更多實例變數的時候，例如新增一個 <code>get_birthday</code> 實例方法，還要記得去 <code>User</code> class 去補上一條，這便違反了 <a href="http://en.wikipedia.org/wiki/Open/closed_principle">Open/closed principle</a>，而且也不符合 <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself">Don&#8217;t_repeat_yourself</a> 原則，這樣寫程式會變得非常沒有效率。</p>
+
+<p>假如當我在 <code>SourceData</code> class 加上新的 <code>get_*</code> 實例方法時，電腦會自動幫我把另外一部分的程式也寫好，那這個世界就太完美了。而仰賴 Ruby 的動態特性，真的就是可以這麼完美：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_data</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@source_data</span> <span class="o">=</span> <span class="n">source_data</span>
+</span><span class='line'>    <span class="vi">@source_data</span><span class="o">.</span><span class="n">methods</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="sr">/^get_(.*)$/</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="no">User</span><span class="o">.</span><span class="n">define_infos</span><span class="p">(</span><span class="vg">$1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">define_infos</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">define_method</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="vi">@source_data</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="no">SourceData</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="s2">&quot;user@example.tw&quot;</span><span class="p">,</span> <span class="s2">&quot;Taiwan&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>     <span class="c1"># =&gt; chh</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>    <span class="c1"># =&gt; user@example.tw</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">location</span> <span class="c1"># =&gt; Taiwan</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣寫的好處就是當程式需要延展、擴充的時候，我們不需要去動到其他的部分，可以專注在焦點本身，比較容易維護。這個時候不論 <code>SourceData</code> 新增多少個 <code>get_*</code> 實例方法時，都可以動態地在 <code>User</code> class 產生方法。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -475,185 +626,6 @@ $ echo "config/database.yml" &gt;&gt; .gitignore
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/rails-4-mass-assignment/">Rails 4 Mass Assignment</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-30T16:07:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://lh3.googleusercontent.com/-hgXyfwvn2go/UN_3CJlzFMI/AAAAAAAAFhg/GiaBdbUll8k/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-30%2520%25E4%25B8%258B%25E5%258D%25884.09.42.png" alt="github-hacked" /></p>
-
-<p>前陣子爆發的 <a href="https://github.com/rails/rails/commit/b83965785db1eec019edf1fc272b1aa393e6dc57">Github Hacked</a> 事件，就是因為沒有在 model 裡面正確設定 <code>attr_accessible</code> 或 <code>attr_protected</code> 過濾屬性，所造成的 Mass Assignment 漏洞。可是在 model 裡面寫 <code>attr_accessible</code> 來過濾傳進來的參數，這樣的動作很不太對勁……</p>
-
-<p>我想 Github 的開發者多是 hacker 級的高手，不致於犯這麼初級的錯誤。MVC 架構中 model 單純用來進行資料庫相關的動作，controller 才是負責所有邏輯部份，包括 client input、output，所以 Github 肯定是把過濾機制寫在 controller 裡面（像 37signals 就是這麼做的）。但是不管怎麼樣，最後漏洞還是出現了。:p</p>
-
-<p>DHH 也在 <a href="https://twitter.com/dhh/status/176465643107909632">Twitter</a> 上說過：</p>
-
-<blockquote><p>The right place to guard against these issues is in the controller, not the model. AR&#8217;s attr_accessible is the wrong way about it.</p></blockquote>
-
-<p>所以處理 Mass Assignment 的程式碼，應該要放在 controller 而不是 model，所有從 client 傳來的資料，都應該要在 controller 先行處理，對此 DHH 也提供了 <a href="http://37signals.com/">37Signals</a> 的解決方案，亮點在那個 <code>slice</code>：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
-</span><span class='line'>    <span class="no">Post</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">update</span>
-</span><span class='line'>    <span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">update_attributes!</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kp">private</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">post_params</span>
-</span><span class='line'>      <span class="n">params</span><span class="o">[</span><span class="ss">:post</span><span class="o">].</span><span class="n">slice</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:content</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>基於上述的這些種種原因，所以到了 Rails 4 就把原本 <code>attr_accessor</code> 的工作拉到 controller 裡來做。以下是 <a href="https://twitter.com/spastorino">Santiago Pastorino</a> 寫的範例，原本 Rails 3.2 的寫法是：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># app/models/user.rb</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">attr_accessible</span> <span class="ss">:username</span><span class="p">,</span> <span class="ss">:password</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># app/controllers/users_controller.rb</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">UsersControlelr</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
-</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create!</span> <span class="n">params</span><span class="o">[</span><span class="ss">:user</span><span class="o">]</span>
-</span><span class='line'>    <span class="n">redirect_to</span> <span class="vi">@user</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>到了 Rails 4 的寫法改為以下，亮點在那個 <code>permit</code>：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># app/models/user.rb</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># app/controllers/users_controller.rb</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">UsersControlelr</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
-</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create!</span> <span class="n">params</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:username</span><span class="p">,</span> <span class="ss">:password</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">redirect_to</span> <span class="vi">@user</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這個方法其實就跟 DHH 提供的那個解法非常類似，在 actions 裡面決定哪些屬性是可以通過的，所以也可以把參數寫到 <code>private</code> 下方：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># app/controllers/users_controller.rb</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">UsersControlelr</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
-</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create!</span> <span class="n">user_params</span>
-</span><span class='line'>    <span class="n">redirect_to</span> <span class="vi">@user</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kp">private</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">user_params</span>
-</span><span class='line'>      <span class="n">params</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:username</span><span class="p">,</span> <span class="ss">:password</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這樣一來就可以決定哪些參數在通過 <code>create</code> 這個 action 的時候會被過濾掉，而且不會影響到其他的 actions，在維護上我想應該也會相較容易一些。</p>
-
-<p>升級版本的過渡期間，如果想要使用舊寫法的可以安裝 <a href="https://github.com/rails/protected_attributes">protected_attributes</a> 這個 gem，就可以繼續使用 <code>attr_accessible</code> 和 <code>attr_protected</code>；而想要嘗鮮使用新寫法，則可以安裝 <a href="https://github.com/rails/strong_parameters">strong_parameters</a> 這個 gem，然後修改以下設定：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># config/application.rb</span>
-</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">active_record</span><span class="o">.</span><span class="n">whitelist_attributes</span> <span class="o">=</span> <span class="kp">false</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># app/models/**.rb</span>
-</span><span class='line'><span class="kp">include</span> <span class="ss">ActiveModel</span><span class="p">:</span><span class="ss">:ForbiddenAttributesProtection</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>最後修改所有 controllers 的參數寫法，參考上面 Santiago Pastorino 寫的 <code>user_params</code> 例子。等到 Rails 4 正式發佈時，只要把 application.rb 和 models 做的修改復原回來，還有把 strong_parameters 從 Gemfile 踢出去就完成了。</p>
 </div>
   
   

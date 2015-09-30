@@ -9,10 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="昨天在看新一期 RailsCasts 的時候，見到 Ryan Bates 用了一個有趣的小工具叫做 CLOC，如果用的是 OS X 可以透過 Homebrew 來安裝： 1
-2
-brew update
-brew install cloc 儘管 Rails 有內建的指令 rake stats &hellip;">
+  <meta name="description" content="<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> Hacker News 是現代資訊人相當重要的資訊來源，今天在 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -33,20 +30,14 @@ brew install cloc 儘管 Rails 有內建的指令 rake stats &hellip;">
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/10/" />
-<meta property="og:description" content="昨天在看新一期 RailsCasts 的時候，見到 Ryan Bates 用了一個有趣的小工具叫做 CLOC，如果用的是 OS X 可以透過 Homebrew 來安裝： 1
-2
-brew update
-brew install cloc 儘管 Rails 有內建的指令 rake stats &hellip;" />
+<meta property="og:description" content="<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> Hacker News 是現代資訊人相當重要的資訊來源，今天在 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="昨天在看新一期 RailsCasts 的時候，見到 Ryan Bates 用了一個有趣的小工具叫做 CLOC，如果用的是 OS X 可以透過 Homebrew 來安裝： 1
-2
-brew update
-brew install cloc 儘管 Rails 有內建的指令 rake stats &hellip;" />
+<meta itemprop="description" content="<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> Hacker News 是現代資訊人相當重要的資訊來源，今天在 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -109,6 +100,117 @@ brew install cloc 儘管 Rails 有內建的指令 rake stats &hellip;" />
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/hacker-news-de-tui-wen-xi-tong-yan-suan-fa-yong-ruby-shi-zuo/">Hacker News 推文系統演算法用 Ruby 實作</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-12T23:37:00+08:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><!-- MathJax -->
+
+
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<p><a href="http://news.ycombinator.com/">Hacker News</a> 是現代資訊人相當重要的資訊來源，今天在 Github 上找到一個<a href="https://github.com/happypeter/auth-love">用 Rails 製作的 clone</a>，一時興起就抓來玩玩，這項 project 將整個前端幾乎都複製了過來，不過後端當然完全不同，可惜缺少了最重要的推文演算法，所以我就找了一些資源，然後用 Ruby 來實作。</p>
+
+<p>參考了一下「<a href="http://amix.dk/blog/post/19574">How Hacker News ranking algorithm works</a>」的算法後，發現其實這套算法一點也不複雜，而且簡單得讓我有點意外，寫成比較熟悉的數學公式像是這樣：</p>
+
+<div markdown="0">
+$$Score = \frac{P-1}{(T+2)^{G}}$$
+</div>
+
+
+<p>這裡翻譯一下每個變數代表的意義：</p>
+
+<ul>
+<li>P 表示每篇文章的 points，減一是為了刪掉作者自己投自己的那票（沒有人自己按自己讚的啦！XD）</li>
+<li>T 表示時間間距，單位為小時，加二是避免分母太小</li>
+<li>G 表示重力係數，意思是文章分數下降的速度</li>
+</ul>
+
+
+<p>G 預設給 1.5，除非網站的文章提交數量很多很快，否則我認為沒必要太高<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>。如果用 Ruby 可以這樣寫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">compute_score</span>
+</span><span class='line'>  <span class="n">time</span> <span class="o">=</span> <span class="p">(</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">-</span> <span class="nb">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">)</span><span class="o">/</span><span class="mi">3600</span><span class="o">.</span><span class="mi">0</span>
+</span><span class='line'>  <span class="n">gravity</span> <span class="o">=</span> <span class="mi">1</span><span class="o">.</span><span class="mi">5</span>
+</span><span class='line'>  <span class="n">points</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">to_i</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">score</span> <span class="o">=</span> <span class="p">(</span><span class="n">points</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">time</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="n">gravity</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">update_attributes</span><span class="p">(</span><span class="ss">:score</span> <span class="o">=&gt;</span> <span class="n">score</span><span class="o">*</span><span class="mi">1000</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是真的超級醜，「It just works!」能動就好（咦？），不過我已經想好該怎麼「重構」（是這樣講的嗎？）了，今天寫的 code 已經 pull request 給作者，明後天有時間再來修正<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>。</p>
+
+<p>然後要找個計時器讓應用程式每隔一段時間就要來刷 score，找了一下 <a href="https://www.ruby-toolbox.com/categories/scheduling">Toolbox</a> 看起來 <a href="https://github.com/jmettraux/rufus-scheduler">rufus-scheduler</a> 比較簡單，只要在 Model 加上一些時間參數就可以自己跑了：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rufus/scheduler&#39;</span>
+</span><span class='line'><span class="n">scheduler</span> <span class="o">=</span> <span class="ss">Rufus</span><span class="p">:</span><span class="ss">:Scheduler</span><span class="o">.</span><span class="n">start_new</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scheduler</span><span class="o">.</span><span class="n">every</span> <span class="s1">&#39;1m&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">.</span><span class="n">compute_score</span> <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>這個係數影響了更新速度，所以非常重要，憑個人感覺來看，如果網站一天沒有新增超過 10 篇文章，其實 1.5 還嫌高。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>那欄 score 乘以 1000 是因為浮點數寫入資料庫會進位成 0，所以把它放大 1000 倍為整數。 <a href='#fnref:2' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -542,68 +644,6 @@ brew install cloc 儘管 Rails 有內建的指令 rake stats &hellip;" />
     </ol>
 </div>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/the-advantage-of-the-16-9-display/">The Advantage of the 16:9 Display</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-15T10:02:00+08:00" pubdate data-updated="true">Sep 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近 iPhone 5 發表了，對於螢幕比例 16:9 的討論開始多了起來，其中主要的幾項優勢大致上應該不外乎以下這幾種，我稍微整理了一下，並且試圖理解一下這些說法：</p>
-
-<h3>最接近電影拍攝比例</h3>
-
-<p>其實這個說法站不住腳，因為實際上電影畫面的比例是<a href="http://zh.wikipedia.org/wiki/%E9%95%B7%E5%AF%AC%E6%AF%94_(%E5%BD%B1%E5%83%8F)">超過這個值</a>的，不過依然是個非常重要的比例，因為越來越多的 HDTV 節目、HD 攝影機以及帶有攝影功能的照相機，都是採用 16:9。</p>
-
-<h3>利於畫面的空間應用</h3>
-
-<p>Windows 7 內建將視窗拖移到畫面左右會自動分割，在 Mac 可以利用 <a href="http://manytricks.com/moom/">Moom</a> 這樣的軟體。以我自己的經驗，同時開啟文字編輯器和瀏覽器，這樣的畫面空間分割方式非常便利，而 16:9 是不是能將這點做到最好的體驗，我的態度是保留的。</p>
-
-<h3>利用率較高成本較低</h3>
-
-<p>切割面板的時候，16:9 是<a href="http://it.people.com.cn/BIG5/115811/115891/7658297.html">最不浪費成本的比例</a>，而且因為是寬螢幕，所以畫面的面積是最小的（也就是<a href="http://ideapit.net/?p=809">成本最低</a>），這一點其實才是至今成為主流的最主要原因，是成本與影片製作交互妥協下的產物，由這樣的原因就可以知道，這個比例並不是針對視覺最佳化的設計。</p>
-
-<h3>最接近黃金切割比例</h3>
-
-<p>與黃金切割比例（1.618）最接近的畫面比例其實是 16:10（1.6），目前可以看到大多數吹捧 16:9 的言論大多還是基於上一點的原因，而黃金切割比例這個說法是我看過最唬爛的。</p>
-
-<h2>個人感想</h2>
-
-<p>我認為 16:9 適合電視、電影這種大螢幕，而不是適合用在電腦螢幕，我第一次感受最明顯的就是在店裡同時看到 11 寸與 13 寸的 Macbook Air，變深深體會到 16:9 的螢幕在視覺的壓迫上是多麼的難受。</p>
-
-<p>即便很多人用電腦螢幕觀看 HD 的電影，但是對我而言電腦並不是這樣作為純粹的娛樂設備，以現在來說，更多時候（絕大多數）電腦是非常重要的生產力工具，所以影片是否能塞滿整個畫面並非我主要的考量。</p>
-
-<p>我也比較過同樣是 16:9 的 21.5 寸和 27 寸的 iMac，27 寸的 iMac 帶來的視覺體驗就比 21.5 寸的還要好，所以我最終還是認為，16:9 並不適合用在小螢幕上。</p>
-
-<p>（我不是 iOS app 的開發者，對於這次改變比例沒什麼感受，但是我非常喜歡原本 3.5 寸的 iPhone）</p>
 </div>
   
   

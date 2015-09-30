@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>OOPS! 錯誤 404 找不到你要找的文章嗎？ - @ChingHanHo</title>
+  <title>使用 Zepto + Velocity 無縫取代 jQuery 更輕巧 - @ChingHanHo</title>
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="OOPS! 錯誤 404 找不到你要找的文章嗎？ 我們會儘快在短時間內，請我們唯一的開發者修好這個 bug。（才怪）
-以下最近的文章找找看有沒有幫助？ 使用 Zepto + Velocity 無縫取代 jQuery 更輕巧
-Oct 01 2015 posted in Programing 9 &hellip;">
+  <meta name="description" content="Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。 jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ Oct 01 2015 posted in Programing 9 &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.chh.tw/404.html">
+  <link rel="canonical" href="http://blog.chh.tw/posts/using-zepto-replace-jquery/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -29,21 +27,17 @@ Oct 01 2015 posted in Programing 9 &hellip;">
   <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
   <!-- Facebook Open Graph
      Facebook Debugger: https://developers.facebook.com/tools/debug -->
-<meta property="og:title" content="OOPS! 錯誤 404 找不到你要找的文章嗎？" /><meta itemprop="name" content="OOPS! 錯誤 404 找不到你要找的文章嗎？" />
+<meta property="og:title" content="使用 Zepto + Velocity 無縫取代 jQuery 更輕巧" /><meta itemprop="name" content="使用 Zepto + Velocity 無縫取代 jQuery 更輕巧" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://blog.chh.tw/404.html" />
-<meta property="og:description" content="OOPS! 錯誤 404 找不到你要找的文章嗎？ 我們會儘快在短時間內，請我們唯一的開發者修好這個 bug。（才怪）
-以下最近的文章找找看有沒有幫助？ 使用 Zepto + Velocity 無縫取代 jQuery 更輕巧
-Oct 01 2015 posted in Programing 9 &hellip;" />
+<meta property="og:url" content="http://blog.chh.tw/posts/using-zepto-replace-jquery/" />
+<meta property="og:description" content="Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。 jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2015-10-01 00:26:00 +0800" />
 
-
-
-<meta itemprop="description" content="OOPS! 錯誤 404 找不到你要找的文章嗎？ 我們會儘快在短時間內，請我們唯一的開發者修好這個 bug。（才怪）
-以下最近的文章找找看有沒有幫助？ 使用 Zepto + Velocity 無縫取代 jQuery 更輕巧
-Oct 01 2015 posted in Programing 9 &hellip;" />
+<meta property="article:section" content="Programing" />
+<meta itemprop="description" content="Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。 jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -105,82 +99,120 @@ Oct 01 2015 posted in Programing 9 &hellip;" />
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">OOPS! 錯誤 404 找不到你要找的文章嗎？</h1>
+    
+      <h1 class="entry-title">使用 Zepto + Velocity 無縫取代 jQuery 更輕巧</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-01T00:26:00+08:00" pubdate data-updated="true">Oct 1<span>st</span>, 2015</time>
+        
+      </p>
     
   </header>
-  
-  <p>我們會儘快在短時間內，請我們唯一的開發者修好這個 bug。（才怪）</p>
-<p>以下最近的文章找找看有沒有幫助？</p>
-<section id="details"></section>
-<div id="blog-archives" class="missing">
-
-<article>
-  
-<h1><a href="/posts/using-zepto-replace-jquery/">使用 Zepto + Velocity 無縫取代 jQuery 更輕巧</a></h1>
-<time datetime="2015-10-01T00:26:00+08:00" pubdate><span class='month'>Oct</span> <span class='day'>01</span> <span class='year'>2015</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/programing/'>Programing</a></span>
-</footer>
 
 
-</article>
+<div class="entry-content"><p><img src="https://lh3.googleusercontent.com/fKcLfP4rJK5syiKv-cfmDYlbdC0_dV8sAdyQfYM3DxZW76knVkgxFsMC4sWsBpaN_27emoOHF504CNpmSDn0rnlDG2Eu1vw6RNowi18owUxdnBYaotT3hz2BIWnrQioS-tfQfOU4iDNAss3pzDKuNOPmSLWjNVP-zQrZJhZOK1Xf78TU9GdCSKnIApESyUZ777gjz7LC5PKw9Yk_NcNr8GCrKRsd7cCQciMf_sSmmZ1sqWKRcIAVWdt-B7_5fV9nW4vNfBYkFvJCI-BaIC_KmR-KPiVMUHi7y4hMzW1DmT4uzAJwfKIk3tvjWW6pEe345hE3R0nxqq-y0apP64DcndcDHFq16S1KqW465nsZRwvg6412LAjzp1cVM_XEimA9NekxAlTC1u89PNLyALrNtaaNRsAsj02D43lSFKu0gEKGMdAl23BhXkBtL-khwLYgoKWCbRkvZ7eznqnONx7zyGxxbNNU48Rn5NLDhw74Bxr0Xy72I1ROoGjm7E22V5-5BSl3CbsBAgczJ-fxCgxHzYWsmJpdqAIA6DVFmD5A8Vk=w690" alt="zeptojs" /></p>
 
-<article>
-  
-<h1><a href="/posts/9-javascript-apis-accessing-device-sensors/">9 個存取硬體裝置的 Javascript API</a></h1>
-<time datetime="2015-08-30T17:09:00+08:00" pubdate><span class='month'>Aug</span> <span class='day'>30</span> <span class='year'>2015</span></time>
+<p>Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/programing/'>Programing</a></span>
-</footer>
+<p>jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB，壓縮後大約是 24.5KB，比 jQuery 平均小了 74%！</p>
 
+<p>Zepto 極其輕巧的秘訣在於它預設只有 jQuery 最關鍵的幾個核心功能，並且用友善的模組化設計，保持每個功能能夠輕易地被擴充。</p>
 
-</article>
+<h2>擴充 animate 模組</h2>
 
-<article>
-  
-<h1><a href="/posts/iojs-nodejs-performance/">io.js 1.1 VS node.js 0.12.0 VS node.js 0.10.36</a></h1>
-<time datetime="2015-02-10T23:37:00+08:00" pubdate><span class='month'>Feb</span> <span class='day'>10</span> <span class='year'>2015</span></time>
+<p>jQuery 的 <code>animate</code> 效能不是很好，上次在製作公司官網作品牆，讓圖片載完進行 <code>fadeIn</code> 的效果，造成 FPS 低到明顯感受到 lag。</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/programing/'>Programing</a></span>
-</footer>
+<p>通常需要用到大量的動態視覺效果的首選是 GreenSock 所提供的 TweenMax（344KB）。如果只是需要用來取代 jQuery 的 <code>animate</code> 操作 DOM 的動態效果，那麼能夠跟 jQuery 無縫整合的 Velocity（215KB）有更好的條件。Velocity 優點是效能高，體積比較小，也能夠相容 jQuery API。</p>
 
+<p>Zepto 因為模組化設計的關係，預設是不包括 <code>animate</code> 這個方法的，因此便可以改用 Velocity 來擴充。</p>
 
-</article>
+<p>外部網站參考：</p>
 
-<article>
-  
-<h1><a href="/posts/what-is-iojs-nodejs-forking/">io.js 是什麼？Node.js 社群分裂事件觀察</a></h1>
-<time datetime="2014-12-07T04:29:00+08:00" pubdate><span class='month'>Dec</span> <span class='day'>07</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/tech/'>Tech</a></span>
-</footer>
+<ul>
+<li><a href="http://zeptojs.com/">Zepto 的專案網站</a></li>
+<li><a href="http://julian.com/research/velocity/">Velocity 的專案網站</a></li>
+<li><a href="https://greensock.com/tweenmax">TweenMax 的專案網站</a></li>
+</ul>
 
 
-</article>
+<h2>瀏覽器相容性</h2>
 
-<article>
-  
-<h1><a href="/posts/node-template-engine-jade-vs-handlebars/">Node 樣版引擎評估：Jade、Handlebars</a></h1>
-<time datetime="2014-11-29T01:38:00+08:00" pubdate><span class='month'>Nov</span> <span class='day'>29</span> <span class='year'>2014</span></time>
+<p>jQuery 2.0 開始就直接放棄 IE 9 以下的瀏覽器，Zepto 更狠直接跳到 IE 10+；而 Velocity 則是不支援 IE 8 以下，所以能不能使用 Zepto + Velocity 這個組合要先觀察一下產品的目標使用群。</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/programing/'>Programing</a></span>
-</footer>
-
-
-</article>
-
+<p>如果打算支援 IE 8，還是去用 jQuery 1.11.3 吧！</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-01T00:26:00+08:00" pubdate data-updated="true">Oct 1<span>st</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programing/'>Programing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/using-zepto-replace-jquery/" data-via="" data-counturl="http://blog.chh.tw/posts/using-zepto-replace-jquery/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/9-javascript-apis-accessing-device-sensors/" title="Previous Post: 9 個存取硬體裝置的 Javascript API">&laquo; 9 個存取硬體裝置的 Javascript API</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -207,7 +239,10 @@ Oct 01 2015 posted in Programing 9 &hellip;" />
       var disqus_shortname = 'chinghanho';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/using-zepto-replace-jquery/';
+        var disqus_url = 'http://blog.chh.tw/posts/using-zepto-replace-jquery/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

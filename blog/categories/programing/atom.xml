@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Programing | @ChingHanHo]]></title>
   <link href="http://blog.chh.tw/blog/categories/programing/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2015-08-30T17:11:28+08:00</updated>
+  <updated>2015-10-01T00:37:07+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用 Zepto + Velocity 無縫取代 jQuery 更輕巧]]></title>
+    <link href="http://blog.chh.tw/posts/using-zepto-replace-jquery/"/>
+    <updated>2015-10-01T00:26:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/using-zepto-replace-jquery</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/fKcLfP4rJK5syiKv-cfmDYlbdC0_dV8sAdyQfYM3DxZW76knVkgxFsMC4sWsBpaN_27emoOHF504CNpmSDn0rnlDG2Eu1vw6RNowi18owUxdnBYaotT3hz2BIWnrQioS-tfQfOU4iDNAss3pzDKuNOPmSLWjNVP-zQrZJhZOK1Xf78TU9GdCSKnIApESyUZ777gjz7LC5PKw9Yk_NcNr8GCrKRsd7cCQciMf_sSmmZ1sqWKRcIAVWdt-B7_5fV9nW4vNfBYkFvJCI-BaIC_KmR-KPiVMUHi7y4hMzW1DmT4uzAJwfKIk3tvjWW6pEe345hE3R0nxqq-y0apP64DcndcDHFq16S1KqW465nsZRwvg6412LAjzp1cVM_XEimA9NekxAlTC1u89PNLyALrNtaaNRsAsj02D43lSFKu0gEKGMdAl23BhXkBtL-khwLYgoKWCbRkvZ7eznqnONx7zyGxxbNNU48Rn5NLDhw74Bxr0Xy72I1ROoGjm7E22V5-5BSl3CbsBAgczJ-fxCgxHzYWsmJpdqAIA6DVFmD5A8Vk=w690" alt="zeptojs" /></p>
+
+<p>Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。</p>
+
+<p>jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB，壓縮後大約是 24.5KB，比 jQuery 平均小了 74%！</p>
+
+<p>Zepto 極其輕巧的秘訣在於它預設只有 jQuery 最關鍵的幾個核心功能，並且用友善的模組化設計，保持每個功能能夠輕易地被擴充。</p>
+
+<h2>擴充 animate 模組</h2>
+
+<p>jQuery 的 <code>animate</code> 效能不是很好，上次在製作公司官網作品牆，讓圖片載完進行 <code>fadeIn</code> 的效果，造成 FPS 低到明顯感受到 lag。</p>
+
+<p>通常需要用到大量的動態視覺效果的首選是 GreenSock 所提供的 TweenMax（344KB）。如果只是需要用來取代 jQuery 的 <code>animate</code> 操作 DOM 的動態效果，那麼能夠跟 jQuery 無縫整合的 Velocity（215KB）有更好的條件。Velocity 優點是效能高，體積比較小，也能夠相容 jQuery API。</p>
+
+<p>Zepto 因為模組化設計的關係，預設是不包括 <code>animate</code> 這個方法的，因此便可以改用 Velocity 來擴充。</p>
+
+<p>外部網站參考：</p>
+
+<ul>
+<li><a href="http://zeptojs.com/">Zepto 的專案網站</a></li>
+<li><a href="http://julian.com/research/velocity/">Velocity 的專案網站</a></li>
+<li><a href="https://greensock.com/tweenmax">TweenMax 的專案網站</a></li>
+</ul>
+
+
+<h2>瀏覽器相容性</h2>
+
+<p>jQuery 2.0 開始就直接放棄 IE 9 以下的瀏覽器，Zepto 更狠直接跳到 IE 10+；而 Velocity 則是不支援 IE 8 以下，所以能不能使用 Zepto + Velocity 這個組合要先觀察一下產品的目標使用群。</p>
+
+<p>如果打算支援 IE 8，還是去用 jQuery 1.11.3 吧！</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[9 個存取硬體裝置的 Javascript API]]></title>
@@ -500,87 +538,6 @@ if (cat.name) {
   console.log(cat.name)  // I got a name
 }
 </code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Node.js 的 http vs Connect vs Express]]></title>
-    <link href="http://blog.chh.tw/posts/node-http-vs-connect-vs-express/"/>
-    <updated>2013-09-05T02:17:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/node-http-vs-connect-vs-express</id>
-    <content type="html"><![CDATA[<p><img src="https://lh5.googleusercontent.com/-mk_3GdVqmSI/Uid55DfCYHI/AAAAAAAAGp4/3mW_vcrS63Q/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-05+%25E4%25B8%258A%25E5%258D%25882.19.28.png" alt="node-express" /></p>
-
-<p>這篇應該是我第一篇寫有關 <a href="http://nodejs.org/">Node.js</a> 的文章，未來應該會開始多寫一些有關 Javascript 的東西。這次主題要來聊聊 Node.js 的 http 模組，跟知名的 Connect 和 Express 之間的關係，如果上網去問，有人會回說就像是 Ruby 的 <a href="http://rack.github.io/">Rack</a> 一樣，但是具體到底是什麼東西呢？</p>
-
-<!-- more -->
-
-
-<h2>http 模組</h2>
-
-<p>Node.js 自身就帶有一個叫做 http 的 <a href="http://nodejs.org/api/http.html">module</a>，可以呼叫 <code>http.createServe</code> 建立一個相當基本伺服器，具體用法會長得像是以下這個樣子，可以建立一份檔案命名為 <em>server.js</em> 來測試一下：</p>
-
-<p>``` js
-var http = require('http')</p>
-
-<p>http.createServer(function(req, res) {
-  res.writeHead(200)
-  res.end("hello world\n")
-}).listen(8000)
-```</p>
-
-<p>然後在終端機執行 <code>node server.js</code> 指令來啟動伺服器，因為程式碼裡面指定了 8000 port，所以當在瀏覽器裡打開 <a href="http://localhost:8000">http://localhost:8000</a> 看到「hello world」就代表成功了。</p>
-
-<h2>Connect</h2>
-
-<p>然而我需要更多的細節，例如讀取送來的 request 中的 cookies，因此 <a href="http://www.senchalabs.org/connect/">Connect</a> 這樣的 middleware 框架，便是用來輕鬆安插各種 middleware 來處理 request，透過 <code>connect.cookieParser()</code> 讓 <code>req</code> 物件多了一個 <code>cookies</code> 屬性：</p>
-
-<p>``` js
-var http    = require('http')
-  , connect = require('connect')</p>
-
-<p>var app = connect()
-  .use(connect.cookieParser())
-  .use(function(req, res) {</p>
-
-<pre><code>console.log(req.cookies);
-res.end('hello');
-</code></pre>
-
-<p>  })</p>
-
-<p>http.createServer(app).listen(8000)
-```</p>
-
-<p>但是 Connect 充其量只是提供了安插 middleware 的 API，其他像是 route、view rendering 等工作，就會需要靠 Express 這套框架了。</p>
-
-<h2>Express</h2>
-
-<p><a href="http://expressjs.com/">Express</a> 其實就是延伸自 Connect 的加強版，所有 Connect 的 API 在 Express 裡都可以使用，並且提供了更多實用的 functions，一次解決所有問題。</p>
-
-<p>將剛剛寫的程式碼修改成以下的範例，其中 <code>get</code> 這個 function 就是 HTTP 的動詞，有了這樣的 API 便能很輕鬆地策劃路由了：</p>
-
-<p>``` js
-var express = require('express')
-  , app     = express()</p>
-
-<p>app.use(express.cookieParser())</p>
-
-<p>app.get('/', function(req, res) {
-  console.log(req.cookies)
-  res.send('hello')
-})</p>
-
-<p>app.listen('4000')
-```</p>
-
-<p>一言以蔽之，http 之於 Connect，就如 Connect 之於 Express。</p>
-
-<h3>參考資料</h3>
-
-<ul>
-<li><a href="http://stackoverflow.com/questions/5284340/what-is-node-js-connect-express-and-middleware">What is Node.js' Connect, Express and “middleware”?</a></li>
-</ul>
-
 ]]></content>
   </entry>
   
