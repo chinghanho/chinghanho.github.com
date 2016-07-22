@@ -19,3 +19,10 @@ Create new post:
 rake new_post\[title\]
 rake gen_deploy
 ```
+
+if you are new on a new machine:
+
+```
+rake setup_github_pages
+rake gen_deploy
+```
