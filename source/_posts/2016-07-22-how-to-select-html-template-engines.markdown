@@ -1,0 +1,25 @@
+---
+layout: post
+title: "使用一個 HTML 樣版引擎的選擇重點"
+date: 2016-07-22 15:02
+comments: true
+categories: Programing
+---
+
+![](https://lh3.googleusercontent.com/QgvDvJX1TZztm_lBHTgAD2gEhw89v82uk9DVs1l69GlRVlSQ_fRxQ_WiNk54B-iUbyPB7AoUm2ZoBpHUD3cN99AHB6VTcSVUG24zeEypIKoWgk9cUnbnPMHsvmU5eoBjjQSBKaPBitjKvu82xnqYL5Gm0mMlU8OAzHcmh3_WxZx8EUsqB-roXuFp31zGkW84Z4JY3l01F6mPK6vTss_Xdg707k0y4lo0OX8mUnETc196rK2L5-y1clcgvLB33qvaBAHQq6JOqbuOmcV3_qbJb-NDC714KqTB-R6m15KBcTYk_72s8rUUOTKDGjDpsm-nVIGdwxJAjYICl8Cz7mB_c9pVeRKdx17ennNpyhUrK1JYuWAk4Gk9wPQv3_lt8PuxrvUMZwwkranlg1Ob0MB6XuQSn2MFaEGU1XFbgAOMZ6iPKjxceKupt9bE5aPevLjMk_O_WvKQAAzwg7Ne8BK_tUrmHWbYwvhUUpcwV-sKSsCFrE4Ps31LvgxqMWQ-c_Z0iq7Ou5WFWfc2eDrx_JWptmkTeWDfBmjo9uVuusVuXjy4g1G-GpSUIhU8ZYTBlKZZJA3dFRwevNTOmlC_hsFL8kgcfqbm_SXP=w1101-h493-no)
+
+### 語法
+
+首先當然是要喜歡上該樣版引擎的語法，因為使用樣版引擎的主要目的就是為了加速撰寫 HTML 的生產力，給先讓自己喜歡使用它，才有辦法寫得有效率。多數樣版引擎的入口頁會用簡單的範例，快速火力展示它的特點，這是很好的開始。但也因為這是精心設計的著陸頁，目的是攻取心裡的小惡魔，所以在選擇採用這套樣版引擎前也得特別小心。
+
+### 擴充性
+
+一個好的樣版引擎可以讓自己掌控專案的伸縮性，例如註冊新的 helper 跟 block，節省撰寫重複的程式碼，靈活地設計版型架構。
+
+### 安全性
+
+對於經驗不足的開發者來說這很容易鑄成大錯，在沒有意識下的輸出未消毒的內容，都可能會造成使用者傷害，而一個好的樣版引擎應該要預設消毒輸出。如果對自己的經驗很有信心，覺得這是初學者才會犯的錯誤，但也不能夠保證其他同事們不會粗心大意。
+
+### 勿矯枉過正
+
+使用樣版引擎是為了增加團隊在撰寫 HTML 的效率，所以應該以團隊的技術水平作為優先考量，如果團隊的平均技術水平沒有達到而貿然採用也只是增加大家困擾而已。 不要為了使用而使用。
