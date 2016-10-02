@@ -9,7 +9,8 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="Ruby 的單引號（'）跟雙引號（"）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如： 1
+  <meta name="description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
+[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
 2
 3
 4
@@ -17,12 +18,7 @@
 6
 7
 8
-9
-10
-11
-12
-13
-var = &quot;hello world &hellip;">
+9 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -43,7 +39,8 @@ var = &quot;hello world &hellip;">
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/7/" />
-<meta property="og:description" content="Ruby 的單引號（'）跟雙引號（"）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如： 1
+<meta property="og:description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
+[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
 2
 3
 4
@@ -51,19 +48,15 @@ var = &quot;hello world &hellip;">
 6
 7
 8
-9
-10
-11
-12
-13
-var = &quot;hello world &hellip;" />
+9 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="Ruby 的單引號（'）跟雙引號（"）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如： 1
+<meta itemprop="description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
+[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
 2
 3
 4
@@ -71,12 +64,7 @@ var = &quot;hello world &hellip;" />
 6
 7
 8
-9
-10
-11
-12
-13
-var = &quot;hello world &hellip;" />
+9 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -139,6 +127,330 @@ var = &quot;hello world &hellip;" />
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/rails-length-size-count/">Rails 的 Length、size、count 差別</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-22T12:26:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Ruby</h2>
+
+<p>在 Ruby 中對於陣列而言 <code>length</code> 和 <code>size</code> 是一樣的，<code>count</code> 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">count</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此外，效能上 count 會比較差一點：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s2">&quot;benchmark&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">CYCLES</span> <span class="o">=</span> <span class="mi">10_000_000</span>
+</span><span class='line'><span class="n">array</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">10</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span> <span class="o">&lt;&lt;</span> <span class="nb">rand</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bmbm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[count]</span><span class="p">)</span>  <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">count</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[size]</span><span class="p">)</span>   <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">size</span> <span class="p">}}</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[length]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">length</span> <span class="p">}}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Rehearsal ------------------------------------------</span>
+</span><span class='line'><span class="c1"># count    2.790000   0.000000   2.790000 (  2.796578)</span>
+</span><span class='line'><span class="c1"># size     1.860000   0.000000   1.860000 (  1.860494)</span>
+</span><span class='line'><span class="c1"># length   1.900000   0.010000   1.910000 (  1.908549)</span>
+</span><span class='line'><span class="c1"># --------------------------------- total: 6.560000sec</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#              user     system      total        real</span>
+</span><span class='line'><span class="c1"># count    2.820000   0.000000   2.820000 (  2.827195)</span>
+</span><span class='line'><span class="c1"># size     1.890000   0.000000   1.890000 (  1.893677)</span>
+</span><span class='line'><span class="c1"># length   1.940000   0.000000   1.940000 (  1.950517)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Rails</h2>
+
+<p>在 Rails 的 ActiveRecord 中有不一樣的操作方式，使用 <code>length</code> 會從資料庫撈出資料，在記憶體裡面去計數：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">length</span>
+</span><span class='line'><span class="no">Topic</span> <span class="no">Load</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="n">*</span> <span class="no">FROM</span> <span class="s2">&quot;topics&quot;</span> <span class="no">WHERE</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="s2">&quot;user_id&quot;</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看到了嗎？把 user 底下的 topics 全部拉出來，只是為了去數他，瘋了！其實 SQL 已經提供很好的語法可以有效地計算欄位裡的數量，在 Rails 中只要用 <code>count</code> 就可以呼叫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">count</span>
+</span><span class='line'><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">3</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="no">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="no">FROM</span> <span class="s2">&quot;topics&quot;</span> <span class="no">WHERE</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="s2">&quot;user_id&quot;</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是這有個問題，這個指令每下一次就會向資料庫操作一次，如果已經讀過的話，沒必要老在那拉扯資料庫，所以這時候可以用 <code>size</code> 方法，這會先檢查有沒有讀過，讀過的話就用 <code>length</code> 返回長度，如果沒讀過就用 <code>count</code>。</p>
+
+<p>順便參考一下<a href="https://github.com/rails/rails/blob/4657dba60eebc0d7cea11ffd18aa70d7a3d00e45/activerecord/lib/active_record/relation.rb#L201">原始碼</a>這樣寫的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Returns size of the records.</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">size</span>
+</span><span class='line'>  <span class="n">loaded?</span> <span class="p">?</span> <span class="vi">@records</span><span class="o">.</span><span class="n">length</span> <span class="p">:</span> <span class="n">count</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>One more thing…</h2>
+
+<p>如果在 model 中加上一個 topics_count 欄位，counter_cache 會讓 <code>size</code> 自動去參考這個欄位的值，這樣也能有效提昇效能。</p>
+
+<p>參考 RailsCasts 的 <a href="http://railscasts.com/episodes/23-counter-cache-column">#23 Counter Cache Column</a>。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/2012-memory-and-experience/">2012 記憶與經驗</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-19T10:34:00+08:00" pubdate data-updated="true">Dec 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://lh6.googleusercontent.com/-gkI64YAyaWA/UNFcUPI0QxI/AAAAAAAAFdg/sNhmiaFCwfw/s690/2012-12-13%252016.36.49.jpg" alt="taoyuan" /></p>
+
+<blockquote><p>記憶是瑣碎的片刻，經驗是記憶的連續。大多數的片刻無法保存，而我只是試著去挽留那一小部分。</p></blockquote>
+
+<p>分析自己每天使用電腦的紀錄這個行為看起來有點宅，可是作為一個離不開電腦的 developer，這件事突然變得有點意義，所以我開始整理一些軟體從電腦上記錄下來的 log，在「是芥末日」前回顧一下。</p>
+
+<h2>軟體使用時間統計</h2>
+
+<p>下面這張圖表列出的是各個軟體的使用時間，紀錄起點是上個月的 16 日，一直記錄到剛剛，也就是今天 12 月 19 日，前後總共記錄了大約一個月又三天，不過這套軟體<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup> 很吃 CPU 效能，至少會減少 Macbook Air 一個小時的續航力，所以到今天為止以後我不會再用這個軟體了。</p>
+
+<p><img src="http://lh3.googleusercontent.com/-jwYmsPpQN9A/UNEhpAbh9SI/AAAAAAAAFbU/RYCd-3ia7Ik/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%25889.52.47.png" alt="time-sink" /></p>
+
+<p>灰色的 bar 是軟體被啟動的時間，淺紫色是軟體被使用者 focus 的時間長度；Finder 就像 Windows 的 explorer.exe 一樣無法關閉，所以可以看到從頭到尾都是啟動的狀態，可是真正有用到的時間卻很少。:p</p>
+
+<p>也可以推知記錄時間總共是 30 幾天，使用電腦的時間就有 15 天，扣掉每天吃飯睡覺我幾乎張開眼睛就是在用電腦，這點可能需要好好檢討一下，花了很多時間在用電腦，可是學習效率並沒有想像中的高……</p>
+
+<p>最常用的軟體是 Google Chrome，打開電腦百分之九十的時間是打開瀏覽器上網，或許也間接證明了 <a href="https://www.youtube.com/watch?v=0QRO3gKj3qw">Google Chrome OS</a> 的理念是可行的？不過我開瀏覽器很多時候不是「上網」，而是開本機的伺服器在 coding。</p>
+
+<p>如果要算花在寫程式的時間，Sublime Text 2 跟 iTerm 2 應該可以合併起來一起計算，但是實際動手寫 code 還是要以使用 Sublime Text 2 時間為主，很明顯實際動手寫的時間還是太少，這可能也是造成學習效率低的原因。</p>
+
+<p>此外，看到 <a href="http://tapbots.com/software/tweetbot/">Tweetbot</a> 使用率這麼高，感覺非常有趣，因為我把 Google Chrome 的歷史紀錄撈出來看，<a href="twitter.com">twitter.com</a> 訪問率連前十名都沒有，果然 <a href="http://mashable.com/2012/08/16/twitter-api-big-changes/">Twitter 想盡辦法要搞死第三方 client</a> 不是沒有原因的。XD</p>
+
+<p>而 iTunes 也算是最常用的軟體之一，因為都開在 background 默默地讓他放音樂，所以會有看起來好像很不常用的假象。</p>
+
+<h2>Google Chrome 歷史紀錄統計</h2>
+
+<p>以下所有的圖表都是從 Google Chrome 過去三個月的歷史紀錄挖出來製作的，這三個月總共對 48652 個 URLs 訪問過 97787 次，三個月來就是每天平均訪問 1085 次，不禁都懷疑真有這麼多嗎？XD</p>
+
+<p><img src="http://lh6.googleusercontent.com/-KlYqZMNihhM/UNEhnkqeDUI/AAAAAAAAFbc/PsM84spnLmk/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%258810.01.50.png" alt="" /></p>
+
+<p>這張圖是過去過去三個月每天訪問過的網站數量，剛看到的時候很訝異 10 月 16 日那天發生什麼事，怎麼凸出一根刺在那邊？後來發現原來是 <a href="http://xkcd.com/">xkcd</a> 那張神圖「<a href="http://xkcd-map.rent-a-geek.de/">Click and Drag</a>」的關係啦<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>。:p</p>
+
+<p><img src="http://lh6.googleusercontent.com/-gBtUmrdiYy4/UNEhnmiOTiI/AAAAAAAAFa8/UkIW7oQqUfc/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%258810.02.44.png" alt="" /></p>
+
+<p>這張圖顯示的是都是哪些時間在上網，換句話說也就是我的作息時間，大概可以看出來每天平均睡 6 個小時，不過以後會試著把整個時間軸往前挪兩個小時。</p>
+
+<p><img src="http://lh3.googleusercontent.com/-lTR8tvcPTtQ/UNEho16qbwI/AAAAAAAAFbM/E4zMOR4bU08/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%25889.57.10.png" alt="" /></p>
+
+<p>Google Chrome 處理特定的訪問會有不同的分類，統計我的歷史紀錄後，得出我訪問的連結中主要有這幾種類別：</p>
+
+<ul>
+<li>link：從其他網頁上點擊連結，所到達的頁面；</li>
+<li>reload：不論是重新整理、重開已關閉的分頁等等都屬此類；</li>
+<li>auto_bookmark：應該是指 Google Chrome UI 上點擊的連結，例如書籤列；</li>
+<li>typed：直接從網址列上輸入網址；</li>
+<li>generated：選擇頁面上的文字，然後用右鍵從選單裡選擇搜尋或是開啟該網址；</li>
+<li>auto_toplevel<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>：從其他軟體開啟的網址<sup id='fnref:4'><a href='#fn:4' rel='footnote'>4</a></sup>，或是指起始頁面；</li>
+</ul>
+
+
+<p>雖然常用的網站我會存在書籤裡，可是有時候直接在網址列裡打網址比較快。</p>
+
+<p>11 月底的時候我用了 <a href="https://chrome.google.com/webstore/detail/timestats/ejifodhjoeeenihgfpjijjmpomaphmah">timeStats</a> 這個擴充套件，針對每個網站的停留時間做記錄：</p>
+
+<p><img src="http://lh6.googleusercontent.com/-lzaqBUnWJLs/UNFOyfWT1_I/AAAAAAAAFck/q1df4Oy1SzM/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25881.17.46.png" alt="" /></p>
+
+<p>第一名 127.0.0.1 是因為開本機的伺服器寫程式的關係，佔了最多時間，這樣子很好；第二名 Vimeo 可能是因為前陣子常在上面看一些國外的 talk，不小心停留的時間就超過了 Youtube 了；第三名竟然是 Facebook，可是我明明去 Twitter 比 Facebook 多啊（因為都用 Tweetbot 上 Twitter）。XD</p>
+
+<h2>個人 Google 搜尋使用統計</h2>
+
+<p>Google 最近在搞個人活動報表，把搜尋統計功能也一起弄到裡面去，結果顯示的資訊反而變少、更難用。就目前能找到的資料，可以得到從去年 11 月底到現在，進行過 Google 搜尋的次數總共大約是 25860 次，每個月平均搜尋 1990 次。</p>
+
+<p>如果用網路上謠傳 <a href="http://news.cnet.com/8301-11128_3-10140142-54.html">Google 搜尋一次會排放 7 公克的碳</a>來計算的話，那這一年來我就用 Google 排放了 181 公斤的碳了！好可怕！XD</p>
+
+<h2>部落格流量統計</h2>
+
+<p>小站在 6 月 15 日前多多少少還有一些穩定的流量，砍掉重練後就一直沒有起色，RSS 訂閱人數只有恢復到之前的三分之一，最近換了域名又是新的一次損傷。這半年來我一直在實驗不在社群網站上分享部落格連結，看看會有多少人連進來，六個月過去了成效看起來真的很慘啊。XD</p>
+
+<p><img src="http://lh3.googleusercontent.com/-VlR3vwfk2ME/UNFk1tYftEI/AAAAAAAAFeI/Ppa8tkNHKCc/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.53.53.png" alt="" /></p>
+
+<p>部落格的 PV 只有 4433，UV 只有 908 人，也就是說每一位訪客至少訪問了 4.88 個頁面。同時網站的跳出率是 63.71%，看來我的標題還不夠殺人，所以感覺跳出率還不算太高嘛。:p</p>
+
+<p><img src="http://lh6.googleusercontent.com/-8CznJnn7Oug/UNFpcuSmmOI/AAAAAAAAFec/LoXKL3e5_ic/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25883.14.35.png" alt="" /></p>
+
+<p>令我蠻訝異的是訪問我部落格的訪客，Mac 用戶竟然高達了 41.76%，即使從次要維度去篩選掉一些可能是我自己訪問的紀錄，也還是有超過 36%。可能是因為寫了一些關於 Ruby 的技術文章，引來了相同生態圈的讀者。</p>
+
+<p><img src="http://lh6.googleusercontent.com/-QgTIODhkcLg/UNFr_M0YFqI/AAAAAAAAFew/l5r1xG1-1N0/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25883.25.24.png" alt="" /></p>
+
+<p>訪客的地理位置絕大多數都是台灣、香港跟大陸來的，除亞太地區外，最多來源的是美國，前三名分別是 California、Texas 跟 Maryland 這三個地方。</p>
+
+<h2>Foursquare 台北市足跡</h2>
+
+<p><img class="center" src="http://lh4.googleusercontent.com/-mDo7GGwJFvY/UNFW_7tziwI/AAAAAAAAFc4/Jvt3ewvAb8M/s640/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25881.55.22.png"></p>
+
+<p>把 Foursquare 的歷史足跡用 <a href="http://www.wheredoyougo.net/">Where Do You Go</a> export 到 Google Map 上來看，我最常活動的幾個區域是仁愛圓環、台北車站、信義區跟內湖 Costco，看來台北市很多地方我都沒去過啊……Orz</p>
+
+<h2>iTunes 音樂排行</h2>
+
+<p><img src="http://lh4.googleusercontent.com/-_utNzfVzeok/UNFatFCONxI/AAAAAAAAFdM/frv12MhD2hw/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.11.26.png" alt="itunes" /></p>
+
+<p>用 iTunes 聽音樂是 10 月底<a href="http://photos.chh.tw/post/34282965017/earpods">換了耳機</a>才開始比較常聽（因為聲音變清楚了 XD），最常聽的前五首歌竟然全都被 Jason Mraz 包了！</p>
+
+<h2>Alfred 使用統計</h2>
+
+<p><img src="http://lh5.googleusercontent.com/-UFsv7dnYrng/UNFdzzAAC4I/AAAAAAAAFd0/27E1jUnFzOo/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.24.59.png" alt="alfred" /></p>
+
+<p>原本我的 Alfred 是從 Mac App Store 上安裝的，可是該版本無法使用 <a href="http://www.alfredapp.com/powerpack/">PowerPack</a>，所以 12 月 2 日我就改從 Alfred 官網上下載另外一個版本，所以統計發生了一點問題，實際上起始時間應該是 2012 年 2 月 19 日才對，總共使用 6384 次，平均每天使用 21 次。</p>
+
+<p>我覺得 Alfred 提供這個功能真不錯，可以讓使用者透過量化的數據，了解到自己對這個軟體的依賴性。</p>
+
+<h2>終端機指令使用統計</h2>
+
+<p>上個月使用 Bash 的統計放在「<a href="/posts/oh-my-zsh/">OH MY ZSHELL!</a>」，以下是這個月來使用 Zsh 的統計：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 1  1057  21.7356%    c
+</span><span class='line'> 2  686   14.1065%    git
+</span><span class='line'> 3  552   11.351%     cd
+</span><span class='line'> 4  384   7.89636%    lsa
+</span><span class='line'> 5  183   3.76311%    stt
+</span><span class='line'> 6  172   3.53691%    rails
+</span><span class='line'> 7  161   3.31071%    pry
+</span><span class='line'> 8  144   2.96114%    ..
+</span><span class='line'> 9  131   2.69381%    rvm
+</span><span class='line'>10  121   2.48818%    rake
+</span><span class='line'>11  110   2.26198%    ls
+</span><span class='line'>12  100   2.05634%    clear
+</span><span class='line'>13  77    1.58338%    which
+</span><span class='line'>14  67    1.37775%    curl
+</span><span class='line'>15  61    1.25437%    open
+</span><span class='line'>16  43    0.884228%   brew
+</span><span class='line'>17  40    0.822538%   ruby
+</span><span class='line'>18  40    0.822538%   rm
+</span><span class='line'>19  37    0.760847%   bundle
+</span><span class='line'>20  37    0.760847%   blog</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中使用 <code>clear</code> 這個指令的比例竟然高達 24%，這個是強迫症嗎？:p</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'><a href="http://manytricks.com/timesink/" alt="time-sink" target="_blank">Time Sink</a> 是 <a href="http://manytricks.com/" alt="many-tricks" target="_blank">Many Tricks</a> 公司出的產品，他們家最有名的應該是 <a href="http://manytricks.com/moom/" alt="moom" target="_blank">Moom</a> 這套視窗大小的控制軟體吧。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>這張神圖可以分割成 2592 個 2048px x 2048px 的圖，我不曉得他背後用的技術原理，不過顯然這造成了大量的訪問 request。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>現在 Google Chrome 的 API 好像用的是 start_page 這個名稱。 <a href='#fnref:3' rev='footnote'>↩</a></li><li id='fn:4'>比如說從 Tweetbot、Alfred 打開的網址，所以這類的網址以 <a href="http://t.co/" alt="t-co" target="_blank">t.co</a> 等居多。 <a href='#fnref:4' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -447,204 +759,6 @@ var = &quot;hello world &hellip;" />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/new-domain-chh-tw/">註冊了新域名 CHH.tw</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-20T16:36:00+08:00" pubdate data-updated="true">Nov 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>原本的 whiteball.tw 這個月底到期，趁著最近有個活動促銷，趕快買了一個 .tw 結尾的 CHH.tw，沒意外的話以後應該是不會再改了。今天下午花了一點時間，把 CloudFlare 上的 record 設定全部搬家，順便刪除一些已經沒用的網址。</p>
-
-<p>為什麼網址要取 CHH？當然因為這是個人網站，我的名字 Ching-Han Ho 縮寫就是 CHH，另一方面因為我的偶像 David Heinemeier Hansson<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup> 縮寫是 DHH 的關係，兩個字很像啊。XD</p>
-
-<p>2012.11.21 更新：今天 DHH 在 <a href="https://twitter.com/dhh/status/271209790674464768">Twitter</a> 上報喜說他兒子出生了，叫做 Colt Heinemeier Hansson！XD</p>
-
-<p>反正本站一直以來都是「微流量」，就算不做 <a href="http://blog.longwin.com.tw/2009/10/http-status-redirect-301-302-diff-2009/">HTTP 301 導向</a>其實也沒什麼差啦，所以不想多花時間寫腳本，只是到 Google 和 Bing 的站長工具去上傳了一下新網址的網站地圖，還有把一些平常在追流量的分析工具改一下設定。</p>
-
-<p>然後又演練一次把新網址跟 Google App 結合，這次花的時間只有十分鐘超快，果然熟能生巧。以後就可以到處用 @chh.tw 的信箱，多麼帥氣啊。:p</p>
-
-<p>在這邊分享一個 Gmail 的小技巧，有時候在外面用信箱註冊怕信箱被該網站賣給 spammer，這個雖然沒辦法預防，但是可以知道信箱是被誰傳出去的，因為一般的網站是不會對信箱進行字串處理，所以可以在信箱加上 <code>+</code> 符號，後面接著註冊的網站名稱，例如：</p>
-
-<p>example+fb@chh.tw</p>
-
-<p>這樣郵件還是會寄到 example@chh.tw 這個信箱，但我們可以知道這是從 fb 這個網站寄來的，如果你收到垃圾信件，你就知道你的信箱是誰給你洩漏出去的了。現在新的<a href="http://www.techbang.com/posts/10878-law-of-personal-data-protection-of-the-interests-of-you-and-me-on-several-networks-of-common-funding-legal-issues-pchome-201-science-and-technology">個資法</a>這麼兇，用這招去告死對方吧！XD</p>
-
-<p>再見了，Whiteball！:)</p>
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>David Heinemeier Hansson 是 Ruby on Rails 框架的發明者，是我景仰的 hacker 之一。 <a href='#fnref:1' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/ruby-on-rails-server-options/">Ruby on Rails 伺服器的選擇</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-18T07:35:00+08:00" pubdate data-updated="true">Nov 18<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>2012.11.25 更新：新增一些內容。</p>
-
-<p>Ruby on Rails 佈署方案五花八門，對於新手如我而言，看到一堆 Apache、Nginx、Mongrel、Phusion Passenger 和 Capistrano 這些名詞，可是一直搞不太清楚他們之間有什麼異同。</p>
-
-<p>今天在 <a href="http://stackoverflow.com/">StackOverflow</a> 上搜尋，讓我找到這一篇文章「<a href="http://stackoverflow.com/questions/4113299/ruby-on-rails-server-options">Ruby on Rails Server Options</a>」，終於搞懂他們之間的差別，所以順手翻譯了一下，還有加上一些自己知道的東西。</p>
-
-<h2>Apache vs Nginx</h2>
-
-<p>Apache 和 Nginx 都是 web server，就是能吐出靜態檔案，或是吐一些動態內容（搭配適當的模組）給 client 的伺服器。目前最流行的是 Apache，功能相當的多也相當的齊全，相較下 Nginx 是小而美的輕量伺服器，但絕對不要誤會它是小眾玩具。</p>
-
-<p>Apache 和 Nginx 專注在處理 HTTP 的效能上，所以對於靜態檔案的吞吐都有卓越的表現。但是無法開箱即用（out-of-the-box），也就是沒辦法直接執行 Ruby、Python 或是 PHP 等等的其他語言，而要倚賴 FastCGI或是代理方式<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，讓其他的 application server 來處理。</p>
-
-<p>application server<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup> 是種能夠將 HTTP request 送到程式碼（也就是寫好的 Rails app）裡面去處理的 server，既然能處理 HTTP request，所以它當然也可以充當 web server 的角色，可是會這樣用的人不多，因為他並不是真的這麼擅長這件事，原因後面會講<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>。</p>
-
-<h2>Mongrel vs WEBrick</h2>
-
-<p>Mongrel 是一個 Ruby 的 application server，具體來說他能夠用來：</p>
-
-<ol>
-<li>在它自己的 process space 讀取 Rails app<sup id='fnref:4'><a href='#fn:4' rel='footnote'>4</a></sup>；</li>
-<li>建立 TCP socket 跟外面的世界（網際網路）保持通訊，隨時把收到的 HTTP request 傳送到 Rails app，反過來則是把 Rails app 回應的 HTTP response，透過 socket 丟回到 client；</li>
-</ol>
-
-
-<p>WEBrick 也是做類似的事情，不同的地方是：</p>
-
-<ol>
-<li>完全用 Ruby 寫的，Mongrel 則是 Ruby 跟 C 的混合體（HTTP 解析器是用 C 寫的，因為效能比較好<sup id='fnref:5'><a href='#fn:5' rel='footnote'>5</a></sup>）；</li>
-<li>WEBrick 速度很慢，而且不夠強壯，開發的時候用起來很方便（WEBrick 預設包含在 Ruby 裡，Mongrel 則是要另外安裝），可是挪到 production 上一下子就會被打死，而且已知有 memory leak 和 HTTP 解析等問題；</li>
-</ol>
-
-
-<p>還有其他常見的 Ruby application server，例如 <a href="http://unicorn.bogomips.org/">Unicorn</a> 和 <a href="http://code.macournoyer.com/thin/">Thin</a>，他們跟 Mongrel 很類似，但是都有自己的一些特點，可以在網路上找找別人寫的效能測試，來評估一下要用哪一種方案。</p>
-
-<h2>Mongrel</h2>
-
-<p>雖然 Mongrel 可以拿來做 web server 相同的事情，但是沒有人會直接這樣用，因為 Mongrel 本質上是個 Ruby application server，負責把 request 帶到 Ruby code 裡面處理，然後再把處理完的東西用 HTTP 丟出來，並沒有辦法同時處理多個 request，也不擅長處理效能上的問題。</p>
-
-<p>舉例來說，當碰上慢吞吞的用戶，不只發過來的 HTTP requests 很慢，就連接收也超級慢，這樣老實的 HTTP server 就會被這傢伙卡住動彈不得，非得等到把這項工作完成才能繼續處理下一個用戶。更糟的是如果遇到壞人故意把 socket 留在那裡不讀取 HTTP 的 response，這樣就會造成 Ruby 永遠沒辦法處理接下來的任何 requests。</p>
-
-<p>儘管 web app 可以有很多解法，但是專業的還是交給專業的去做，更好的方式就是將這些任務交給 web server，因為這本來就是他們擅長的核心商業邏輯。</p>
-
-<p>換句話說，當拜訪一個 Rails 網站絕對不會直接跟 Mongrel 接觸到，它總是放在 Apache 或是 Nginx 後面扮演 reverse proxy 的角色，這麼做有幾個原因：</p>
-
-<ul>
-<li>由於每個 Mongrel-served 的 Rails app 同時只能處理一個 request，如果想要一次多跑幾個，那就需要同時多 run 幾個 Mongrel instance，而每個 instance 都為同一個 Rails app 做牛做馬，這種架構稱為「Mongrel cluster（一堆雜種？XD）」。Apache 或是 Nginx 會自動分配 request 到不同的 instance 之間；</li>
-<li>儘管 Mongrel 也可以吐靜態檔案，可是它並不是特別擅長這檔事，專業的交給專業的來，Apache 和 Nginx 都可以做得比它更快更好，所以大部分的人都會讓後者來提供靜態檔案；</li>
-</ul>
-
-
-<p>如果因為 Rails app 中某個 bug 讓其中一個 instance 崩潰，那也只需要重新啟動那個 instance 就好。不過 Mongrel 則需要隨時監控，如果出問題要自己去重新啟動。</p>
-
-<h2>Phusion Passenger</h2>
-
-<p><a href="https://www.phusionpassenger.com/">Phusion Passenger</a> 也是一個 Ruby 的 application server，但是運作方式很不一樣，它直接整合到 Apache 或者 Nginx 裡，只需要編輯 web server 配置檔案，指定到 Rails app 的 public 目錄，就可以讓 Rails 動起來。</p>
-
-<p>因為 Phusion Passenger 是基於 Rack 實作的，所以可以與任何 Rack-base 的 Ruby 框架應用程式相容。而 Rails 從 3.0 版本開始已經完整兼容 Rack 介面，只有早期的版本還沒有全部相容，不過 Phusion Passenger 仍然可以支援先前 1.x 和 2.x 的版本。</p>
-
-<p>使用 Phusion Passenger 的好處就是不必生那麼多「雜種（Mongrel）」，而且還有很多優點：</p>
-
-<ul>
-<li>當網站突然忙碌起來的時候，Mongrel cluster 能夠處理的 process 數量是固定的，在這方面 Phusion Passenger 完全會自動調適，當網站不忙的時候 process 也會自動關閉節省系統資源的消耗；</li>
-<li>如果 Rails app 崩潰了，Phusion Passenger 很貼心地、很聰明地會自動啟動；</li>
-<li>除此之外，Phusion Passenger 是用 C++ 寫的，所以效能非常好，速度 very very 快。:p</li>
-</ul>
-
-
-<p>Phusion Passenger 原本的名字是 mod_rails，目的跟 mod_php 一樣，為了讓 Apache 或 Nginx 能夠執行 web app。如果遇到系統崩潰，也能噴出有用的錯誤訊息來修復系統。</p>
-
-<p>基於以上這些原因，Phusion Passenger 成為目前最受歡迎的 Ruby application server，之前寫過佈署的過程，可以參考「<a href="/posts/deply-rails-app-on-ec2/">如何佈署 Rails 應用程式到 Amazon EC2</a>」。</p>
-
-<p>Phusion Passenger 其實也可以跟 Mongrel 一樣，可以不需要 Apache 或是 Nginx 而拿來直接當 web server 用；在 Rails app 中下 <code>passenger start</code> 指令，它將會啟動一個 Phusion Passenger web server，直接透過 port 80 來使用。當然，Mogrel 在 HTTP 處理上的缺點它也同樣會有。</p>
-
-<h2>Capistrano</h2>
-
-<p><a href="https://github.com/capistrano/capistrano">Capistrano</a> 既不是 web server 也不是 application server，它是完全不同的東西。在把 Rails app 佈署到 application server 上之前，同樣會需要一些事前的準備工作，像是：</p>
-
-<ul>
-<li>上傳 Rails app 程式碼和檔案到伺服器；</li>
-<li>安裝 app 倚賴的 libraries；</li>
-<li>建立或是 migrating 資料庫；</li>
-<li>啟動或是終止應用程式倚賴的任何 daemon，例如 DalayedJob workers 等等之類的；</li>
-<li>讓 app 運作起來所需要的其他東西；</li>
-</ul>
-
-
-<p>Capistrano 是一個工具，負責用來處理上述這些事前的準備工作，可以先告訴 Capistrano 每一次佈署新版本的 app 有哪些指令需要執行，或是伺服器在哪裡，讓整個佈署流程自動化。</p>
-
-<p>這並不是佈署 Rails 過程中必要的工具，如果偏好一切 DIY，也可以全部自己動手來做，如果只是自己一個人那還沒什麼問題，可是如果專案是整個團隊在維護，或是機器很多的時候，難保所有人都能如預期好好地把 app deploy 到機器上去，所以這時候最好就用 Capistrano。</p>
-
-<h2>其他參考資料：</h2>
-
-<ul>
-<li><a href="http://www.modrails.com/documentation/Architectural%20overview.html">Phusion Passenger design &amp; architecture</a></li>
-<li><a href="http://guides.beanstalkapp.com/deployments/deploy-with-capistrano.html">Deploying with Capistrano</a></li>
-</ul>
-
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>所謂的代理方式就是，Apache 和 Nginx 就是說把收到的 HTTP request 轉送到另一台伺服器去處理，然後再把 HTTP response 轉送回 client。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>application server 透過各種通訊協議，例如 HTTP、FastCGI、SCGI、AJP 等等，來連接到 web server。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>應該這麼說，web server 和 application server 是一種概念上的區分，並沒有說一定是哪一種 server。 <a href='#fnref:3' rev='footnote'>↩</a></li><li id='fn:4'>這句話是直接照翻，我還不是很懂所謂的 process space 是指什麼。 <a href='#fnref:4' rev='footnote'>↩</a></li><li id='fn:5'>C 語言是一種低階語言，少了許多解譯的動作，所以速度會比較快。 <a href='#fnref:5' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/page/8/">&larr; Older</a>
@@ -664,7 +778,7 @@ var = &quot;hello world &hellip;" />
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  Copyright &copy; 2016 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
   <section class="contruction-wrap">
     <div class="contruction"></div>
   </section>

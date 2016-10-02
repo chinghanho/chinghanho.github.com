@@ -4,7 +4,7 @@
   <title><![CDATA[@ChingHanHo]]></title>
   <link href="http://blog.chh.tw/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2015-10-01T00:37:39+08:00</updated>
+  <updated>2016-10-02T20:19:53+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,526 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[SCSS 物件導向模組設計 (1)]]></title>
+    <link href="http://blog.chh.tw/posts/scss-object-oriented/"/>
+    <updated>2016-10-02T19:47:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/scss-object-oriented</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/mZCl_NgujdrKc-XhTqKsXA30gUb7dGQaQhe4Jjx8Blj4_97XWHoy5Zbfq6bk2GCu59jt0Gdu1Li8wCI3iCr9ejKu_wFJxzI4u6IrFl--RQ3KER-J0s4WXZ7f5VuQkH9Kc1TijUI6tHbGMdCt-r_fYO9wUI9ImbRlIhBTW4dgkg2YRDwIFbJjeMGWgQHBtjUb1dmsmjmKtcqWVPH5yfdnXxItyvLUCuA2zuN1dW90gljU6fdj5p1ivtoNQERUrJpXUhF0F_sDQcYsc2m9YzzOKvVnmvYDo0tUtmw1YzUts1PwrybI-G9c-7gKrc12Z_8PZl9dmF4GqOmi4c8ODPFFTxnZZGW5OYTGYah3LtiEQR8OzDY5HuOEKm2LUGPOLdBHRZVT-Xs6Ljy1cx6DLIAVPb1Q1SukfmDigXDyaLimn9-oEazRlugDF9Q2qStJaRzrsi2Ht6tnFZ8LK1XsTjgFpMh3mRnGQCKBewIjd7FiVnYGtT0f3XMhkSjv24UYW3gJAZuPLBjl4P8YQBW20ZLWQi33oCDxQKLr6MOLp-cx7YjOGSqfoYkAvcy3F08TyA2XAhV2PL_4g5gAqnETmUZOPmep9kHwy1gFL1eYJhTdLAcH982D-w=w1101-h755-no" alt="" /></p>
+
+<p>三年前曾經寫過「<a href="http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/">劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範</a>」探討 OOCSS 模組化的方法論，時至今日對於模組化設計又有新的認識跟理解，大原則跟三年前的方法沒有出入，只是多做解釋跟補充。</p>
+
+<p>OOCSS 物件導向是解釋設計原則，但是不限於語法的設計。</p>
+
+<p>如果這個議題有興趣，歡迎繼續往下閱讀，如果有任何想法也歡迎留言與我討論！</p>
+
+<!-- more -->
+
+
+<p>這篇文章會解釋的內容，包括四個設計原則：</p>
+
+<ul>
+<li><a href="#srp">單一責任原則</a></li>
+<li><a href="#lkp">極少化原則</a></li>
+<li><a href="#isp">介面設計原則</a></li>
+<li><a href="#ocp">開放封閉原則</a></li>
+</ul>
+
+
+<p>SCSS 模組化設計模式：</p>
+
+<ul>
+<li><a href="#cp">元件模式</a></li>
+<li><a href="#sp">語義化模式</a></li>
+</ul>
+
+
+<hr />
+
+<p><a name="srp"></a></p>
+
+<h2>單一責任原則</h2>
+
+<p>一個 class 只負責一件事情。這個原則不是指 <a href="https://github.com/marmelab/universal.css">universal.css</a> 這種設計方式，事實上這個專案是個反諷。單一責任原則是指職責獨立、目的明確的 class。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.clearfix</span><span class="nd">:before</span><span class="o">,</span>
+</span><span class='line'><span class="nc">.clearfix</span><span class="nd">:after</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">display</span><span class="o">:</span> <span class="n">table</span><span class="p">;</span>
+</span><span class='line'>  <span class="na">content</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.clearfix</span><span class="nd">:after</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">clear</span><span class="o">:</span> <span class="no">both</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a name="lkp"></a></p>
+
+<h2>極少化原則</h2>
+
+<p>對於層級的依賴應該盡可能減少。</p>
+
+<p>多半的人剛開始寫 SCSS 都為它的巢狀語法感到著迷：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.page</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nc">.content</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nc">.header</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nc">.inner</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nc">.group-list</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nc">.group-item</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nt">a</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nc">...</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這個寫法有改善的空間，因為：</p>
+
+<ul>
+<li>不容易閱讀：當層級非常多的時候，哪段屬性屬於哪層 class 會看不清楚。</li>
+<li>太倚賴 DOM 結構：一旦改變 DOM 層級結構，SCSS 也可能會需要做層級調整，層級越多耦合性越高，意味維護成本越高。</li>
+</ul>
+
+
+<p>改善的方式便是在相同的命名空間下，試著將層級攤平。適當使用巢狀語法的範例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.nav</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">list-style-type</span><span class="o">:</span> <span class="no">none</span><span class="p">;</span>
+</span><span class='line'>  <span class="na">margin</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">li</span> <span class="p">{</span>
+</span><span class='line'>    <span class="na">display</span><span class="o">:</span> <span class="no">inline</span><span class="o">-</span><span class="no">block</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">a</span> <span class="p">{</span>
+</span><span class='line'>    <span class="na">display</span><span class="o">:</span> <span class="no">block</span><span class="p">;</span>
+</span><span class='line'>    <span class="na">text-decoration</span><span class="o">:</span> <span class="no">none</span><span class="p">;</span>
+</span><span class='line'>    <span class="na">color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>即便 <code>&lt;a&gt;</code> 的 DOM 結構是屬於 <code>&lt;li&gt;</code> 的子元素，仍然不影響它們的作用：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;nav&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;...&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;...&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;...&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;/ul&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>有時候與 DOM 元素本身有絕對關聯的 class，可以在使用區塊註解加以說明：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="cm">/* ul */</span><span class="nc">.nav</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nc">...</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a name="isp"></a></p>
+
+<h2>介面設計原則</h2>
+
+<p>針對介面設計，而不是針對實踐方式設計。這個原則可以減少重複的程式碼，增加可維護性。</p>
+
+<p>例如兩個有著相似樣式的區塊，往往會針對區塊實踐它們各別的樣式：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.card-default</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">border</span><span class="o">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="no">solid</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="kt">%</span><span class="o">,</span> <span class="mi">33</span><span class="kt">%</span><span class="o">,</span> <span class="mi">0</span><span class="mf">.85</span><span class="p">);</span>
+</span><span class='line'>  <span class="na">padding</span><span class="o">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.card-primary</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">border</span><span class="o">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="no">solid</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="kt">%</span><span class="o">,</span> <span class="mi">66</span><span class="kt">%</span><span class="o">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="na">padding</span><span class="o">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;card-default&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  ...
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;card-primary&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  ...
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>應該先設計這個模組的介面（interface），再依照介面實踐它不同的樣式特性：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="c1">// 先設計介面</span>
+</span><span class='line'><span class="nc">.card</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">border</span><span class="o">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="no">solid</span> <span class="no">transparent</span><span class="p">;</span>
+</span><span class='line'>  <span class="na">padding</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 再實踐不同的介面樣式</span>
+</span><span class='line'><span class="nc">.card-default</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">border-color</span><span class="o">:</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="kt">%</span><span class="o">,</span> <span class="mi">33</span><span class="kt">%</span><span class="o">,</span> <span class="mi">0</span><span class="mf">.85</span><span class="p">);</span>
+</span><span class='line'>  <span class="na">padding</span><span class="o">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.card-primary</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">border-color</span><span class="o">:</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="kt">%</span><span class="o">,</span> <span class="mi">66</span><span class="kt">%</span><span class="o">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="na">padding</span><span class="o">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;card card-default&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  ...
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;card card-primary&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  ...
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一旦先有了介面，後續也才能夠知道該怎麼對此模組進行擴充。</p>
+
+<p><a name="ocp"></a></p>
+
+<h2>開放封閉原則</h2>
+
+<p>對修改封閉、對擴充開放。除非是根本性上地調整模組的樣式，才會需要去改動到介面層級的樣式。這裡引用上一則原則的範例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.card</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">border</span><span class="o">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="no">solid</span> <span class="no">transparent</span><span class="p">;</span>
+</span><span class='line'>  <span class="na">padding</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.card-default</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">border-color</span><span class="o">:</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="kt">%</span><span class="o">,</span> <span class="mi">33</span><span class="kt">%</span><span class="o">,</span> <span class="mi">0</span><span class="mf">.85</span><span class="p">);</span>
+</span><span class='line'>  <span class="na">padding</span><span class="o">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;card card-default&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  ...
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>當某個頁面需要對此介面做特殊調整，可以使用開放封閉原則，對此介面進行擴充，而不會影響到其他頁面樣式：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.card-users</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">border-color</span><span class="o">:</span> <span class="nf">hsla</span><span class="p">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="kt">%</span><span class="o">,</span> <span class="mi">100</span><span class="kt">%</span><span class="o">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;card card-default card-users&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  ...
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p><a name="cp"></a></p>
+
+<h2>元件模式</h2>
+
+<p>元件模式的哲學在於 class 本身與語義化無關，應該關注它們是否合理，不要刻意強調 class 名稱要符合語義，而要注重使用的合理性與未來性。例如：子元素區塊使用 <code>.list-item</code> 上層元素使用 <code>.list-group</code> 作為子元素的集合，這與元素本身是否是個序列清單（<code>&lt;ol&gt;</code> ）無關。</p>
+
+<p>在前面瞭解過四大設計原則之後，現在已經可以很輕易地設計出模組。先設計介面（interface），再實踐不同的模組樣式：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.card</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="no">transparent</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.card-default</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.card-primary</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">red</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在 HTML 上的使用方式：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;card card-default&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;card card-primary&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>元件模式好處在於開發前端版型，只需要專注在刻寫 HTML 上，快速調用各種模組 class 名稱、減少花時間替 class 命名的 context switch 成本。缺點亦即很容易過度膨脹 HTML 體積，例如使用熱門框架 <a href="http://getbootstrap.com/">Bootstrap</a> 的人們應該對此都不陌生：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;col-lg-9 col-md-9 col-sm-9 col-xs-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  ...
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a name="sp"></a></p>
+
+<h2>語義化模式</h2>
+
+<p>語義化強調元素本身所代表的意義，但並非漫無目的地設計 class；結合四種模組設計原則，加上 SCSS 語法的便利性，可以很容易地設計出容易維護及擴充的模組：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nt">card</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">@at-root</span> <span class="p">{</span>
+</span><span class='line'>    <span class="err">%</span><span class="nn">#</span><span class="p">{</span><span class="na">&amp;}</span><span class="err"> </span><span class="na">{</span>
+</span><span class='line'>      <span class="na">background-color</span><span class="o">:</span> <span class="no">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="err">%</span><span class="nn">#</span><span class="p">{</span><span class="na">&amp;}-default</span><span class="err"> </span><span class="na">{</span>
+</span><span class='line'>     <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="err">%</span><span class="nn">#</span><span class="p">{</span><span class="na">&amp;}-primary</span><span class="err"> </span><span class="na">{</span>
+</span><span class='line'>      <span class="na">background-color</span><span class="o">:</span> <span class="nb">red</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.content</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">@extend</span> <span class="err">%</span><span class="nt">card</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">@</span><span class="nt">extend</span> <span class="err">%</span><span class="nt">card-default</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.sidebar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">@extend</span> <span class="err">%</span><span class="nt">card</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">@</span><span class="nt">extend</span> <span class="err">%</span><span class="nt">card-primary</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這會產生出以下的結果：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nc">.content</span><span class="o">,</span>
+</span><span class='line'><span class="nc">.sidebar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="no">transparent</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.content</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.sidebar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="na">background-color</span><span class="o">:</span> <span class="nb">red</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>因此可以清晰、明確地定義出區塊所代表的意義：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>...<span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>語義化模式的優點在於減少 HTML 冗長的 class 名稱串聯，透過 SCSS 語法優勢，對不同的區塊套入相同的模組樣式。缺點在於切出每個區塊時沒有那麼容易替其命名，增加了中間「做決定」的思考成本。</p>
+
+<p>兩個模式並非相互衝突，可以在適當的時機交互結合應用。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用一個 HTML 樣版引擎的選擇重點]]></title>
+    <link href="http://blog.chh.tw/posts/how-to-select-html-template-engines/"/>
+    <updated>2016-07-22T15:02:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/how-to-select-html-template-engines</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/QgvDvJX1TZztm_lBHTgAD2gEhw89v82uk9DVs1l69GlRVlSQ_fRxQ_WiNk54B-iUbyPB7AoUm2ZoBpHUD3cN99AHB6VTcSVUG24zeEypIKoWgk9cUnbnPMHsvmU5eoBjjQSBKaPBitjKvu82xnqYL5Gm0mMlU8OAzHcmh3_WxZx8EUsqB-roXuFp31zGkW84Z4JY3l01F6mPK6vTss_Xdg707k0y4lo0OX8mUnETc196rK2L5-y1clcgvLB33qvaBAHQq6JOqbuOmcV3_qbJb-NDC714KqTB-R6m15KBcTYk_72s8rUUOTKDGjDpsm-nVIGdwxJAjYICl8Cz7mB_c9pVeRKdx17ennNpyhUrK1JYuWAk4Gk9wPQv3_lt8PuxrvUMZwwkranlg1Ob0MB6XuQSn2MFaEGU1XFbgAOMZ6iPKjxceKupt9bE5aPevLjMk_O_WvKQAAzwg7Ne8BK_tUrmHWbYwvhUUpcwV-sKSsCFrE4Ps31LvgxqMWQ-c_Z0iq7Ou5WFWfc2eDrx_JWptmkTeWDfBmjo9uVuusVuXjy4g1G-GpSUIhU8ZYTBlKZZJA3dFRwevNTOmlC_hsFL8kgcfqbm_SXP=w1101-h493-no" alt="" /></p>
+
+<h3>語法</h3>
+
+<p>首先當然是要喜歡上該樣版引擎的語法，因為使用樣版引擎的主要目的就是為了加速撰寫 HTML 的生產力，給先讓自己喜歡使用它，才有辦法寫得有效率。多數樣版引擎的入口頁會用簡單的範例，快速火力展示它的特點，這是很好的開始。但也因為這是精心設計的著陸頁，目的是攻取心裡的小惡魔，所以在選擇採用這套樣版引擎前也得特別小心。</p>
+
+<h3>擴充性</h3>
+
+<p>一個好的樣版引擎可以讓自己掌控專案的伸縮性，例如註冊新的 helper 跟 block，節省撰寫重複的程式碼，靈活地設計版型架構。</p>
+
+<h3>安全性</h3>
+
+<p>對於經驗不足的開發者來說這很容易鑄成大錯，在沒有意識下的輸出未消毒的內容，都可能會造成使用者傷害，而一個好的樣版引擎應該要預設消毒輸出。如果對自己的經驗很有信心，覺得這是初學者才會犯的錯誤，但也不能夠保證其他同事們不會粗心大意。</p>
+
+<h3>勿矯枉過正</h3>
+
+<p>使用樣版引擎是為了增加團隊在撰寫 HTML 的效率，所以應該以團隊的技術水平作為優先考量，如果團隊的平均技術水平沒有達到而貿然採用也只是增加大家困擾而已。 不要為了使用而使用。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用 Zepto + Velocity 無縫取代 jQuery 更輕巧]]></title>
@@ -1836,282 +2356,6 @@ execute pathogen#infect()
 <p>這是 Ruby 很抽象的部分，有時候光看文字解釋很難理解，又礙於篇幅我沒寫得特別詳細，只是就重點部分做一下筆記，提供記憶和回顧使用，如果是完全不熟悉 metaclass 的初學者，最好去看 <a href="http://pragprog.com/book/ppmetr/metaprogramming-ruby">Metaprogramming Ruby</a> 這本書，相信會有很大的收穫，更有效的作法，就是打開 irb 實際敲敲看。</p>
 
 <p>此外，關於 Ruby class 之間的繼承關係，可以參考這張 <a href="http://objectgraph.rubyforge.org/dotOG.html">RubyForge</a> 整理的圖表，畫得不算很好，但是可以清楚看出類別之間關係，對於學習也是個很好的教材。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ruby 的 Flat Scope 技巧]]></title>
-    <link href="http://blog.chh.tw/posts/ruby-flat-scope/"/>
-    <updated>2013-01-16T15:30:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/ruby-flat-scope</id>
-    <content type="html"><![CDATA[<p>2013.01.17 更新：為了簡化說明，本篇文章省略了類別變數（class variables）。</p>
-
-<p>Ruby 的變數分為全域變數（global variables）、實例變數（instance variables）跟本地變數（local variables），變數的生命週期會隨著 scope 的不同而有所不同，而這個 scope 就是程式碼執行的環境。</p>
-
-<p>在 Ruby 中決定 scope 範圍的分別是 <code>module</code>、<code>class</code> 和 <code>def</code>，也就是所謂的 Scope Gates，當 code 執行時每經過這三個「Gates」，某些變數可能就會隨著 scope 出現或是消失。</p>
-
-<h2>Flat Scope</h2>
-
-<p>以下是簡單的例子，我用 <code>v1</code>、<code>v2</code> 和 <code>v3</code> 分別表示不同 scope 的本地變數：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">v1</span> <span class="o">=</span> <span class="s2">&quot;This is v1 outside of class C.&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">C</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; NameError</span>
-</span><span class='line'>  <span class="n">v2</span> <span class="o">=</span> <span class="s2">&quot;This is v2 inside of class C.&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method</span>
-</span><span class='line'>    <span class="n">v3</span> <span class="o">=</span> <span class="s2">&quot;This is v3 inside of call_method of class C.&quot;</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; NameError</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">v2</span> <span class="c1"># =&gt; NameError</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">v3</span> <span class="c1"># =&gt; &quot;This is v3 inside of call_method of class C.&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">v2</span> <span class="c1"># =&gt; &quot;This is v2 inside of class C.&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C.&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">C</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">call_method</span> <span class="c1"># =&gt; NameError</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>v1</code> 這個本地變數進不了 <code>C</code> class 的 scope，但是可以用 block 的方式傳給 <code>Class.new()</code>，這樣就不會通過「Gates」也就不會建立 scope，本地變數變得可以共用：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">v1</span> <span class="o">=</span> <span class="s2">&quot;This is v1 outside of class C.&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">C</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C.&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在 <code>C</code> class 裡 <code>v2</code> 這個本地變數也同樣進不了 <code>call_method</code> 這個 scope，因此可以用 <code>define_method</code> 來建立實例方法，避開使用 <code>def</code> 時的 Scope Gates，就能順利將本地變數傳進去：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span>
-</span><span class='line'>  <span class="n">v2</span> <span class="o">=</span> <span class="s2">&quot;This is v2 inside of class C.&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="n">v2</span> <span class="p">}</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">C</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">call_method</span> <span class="c1"># =&gt; &quot;This is v2 inside of class C.&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果把這兩個方法串起來用，就會變成這樣，同個本地變數共用到底：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">v1</span> <span class="o">=</span> <span class="s2">&quot;This is v1 outside of class C&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">C</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method</span><span class="p">)</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>為什麼不用全域變數？</h2>
-
-<p>全域變數的確可以把所有的 scope 全部打平，或者是說它根本無視 scope 的存在。雖然聽起來好像是個不錯的解決方案，但這會造成維護上的困難，因為會不曉得到底程式的哪一個部分改變了全域變數，所以通常會盡量避免使用它。</p>
-
-<h2>為什麼不用實例變數？</h2>
-
-<p>實例變數可以讓不同的實例方法共用相同的變數，這個方法經常可以看到，應用相當廣泛，例如這個範例程式經常見到：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
-</span><span class='line'>    <span class="vi">@shared</span> <span class="o">=</span> <span class="s2">&quot;Hello world!&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_a</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="vi">@shared</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_b</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="vi">@shared</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_a</span> <span class="c1"># =&gt; Hello world!</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_b</span> <span class="c1"># =&gt; Hello world!</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可是有時候我們並不想讓實例變數被外部取得，例如可以用 <code>c.instance_eval { puts @shared }</code> 挖出實例變數是什麼，這樣探詢別人的狀態，一般被認為不是好事，因為如果它想讓我們知道它的某個狀態，它應該會提供個函式讓我們來使用。所以如果不想讓別人知道這個物件（object）裡面有什麼，就可以使用剛剛介紹的方法：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span>
-</span><span class='line'>  <span class="n">shared</span> <span class="o">=</span> <span class="s2">&quot;Hello world!&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method_a</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">shared</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method_b</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">shared</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_a</span> <span class="c1"># =&gt; &quot;Hello world!&quot;</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_b</span> <span class="c1"># =&gt; &quot;Hello world!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這樣一來就沒有人能夠挖出 <code>shared</code> 到底是什麼了，隱私保護地相當好，而這個技巧被稱為 Shared Scope。:)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ruby 的 Ghost Method 與 Dynamic Proxy 技巧]]></title>
-    <link href="http://blog.chh.tw/posts/ruby-ghost-method-and-dynamic-proxy/"/>
-    <updated>2013-01-15T12:04:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/ruby-ghost-method-and-dynamic-proxy</id>
-    <content type="html"><![CDATA[<p>昨天寫的 <a href="http://blog.chh.tw/posts/dynamic-method/">Dynamic Method</a> 是 code 在 runtime 時才動態產生方法，也就是說這個方法的確存在，只是在需要的時候才會建立，而且用 <code>respond_to?</code> 是可以驗證為 true 的；而 Ghost Method 則是像鬼一般的看不到，甚至用 <code>respond_to?</code> 也會返回 false 的，可是我們卻可以很神奇地呼叫它。</p>
-
-<h2>關鍵在 method_missing</h2>
-
-<p>凡事都有例外，當呼叫方法時如果找不到，Ruby 給了 <code>method_missing</code> 這個方法來解決找不到方法時的補救措施，而 Ghost Method 技巧的關鍵就在於給了接收者一個不存在的方法時，然後由 <code>method_missing</code> 來當補救網。這裡引用昨天的範例程式，假設有一個 <code>SourceData</code> class：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">SourceData</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@name</span>     <span class="o">=</span> <span class="nb">name</span>
-</span><span class='line'>    <span class="vi">@email</span>    <span class="o">=</span> <span class="n">email</span>
-</span><span class='line'>    <span class="vi">@location</span> <span class="o">=</span> <span class="n">location</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">get_name</span><span class="p">;</span>     <span class="vi">@name</span><span class="p">;</span>     <span class="k">end</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">get_email</span><span class="p">;</span>    <span class="vi">@email</span><span class="p">;</span>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">get_location</span><span class="p">;</span> <span class="vi">@location</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然後我想在 <code>User</code> class 裡用 Ghost Method 技巧來取得 <code>SourceData</code> 的實例變數，那就要建立一個 <code>method_missing</code> 方方法來捕捉所有不存在的方法，然後用 <code>send</code> 方法轉送出去，這又稱為 Dynamic Proxy，因為就像是代理人將方法傳送給另一個物件（object）：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_data</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@source_data</span> <span class="o">=</span> <span class="n">source_data</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@source_data</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="no">SourceData</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="s2">&quot;user@example.tw&quot;</span><span class="p">,</span> <span class="s2">&quot;Taiwan&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>     <span class="c1"># =&gt; chh</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>    <span class="c1"># =&gt; user@example.tw</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">location</span> <span class="c1"># =&gt; Taiwan</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>除 bug 可能比較困難</h2>
-
-<p>看起來好像很好用，可是會有個問題，因為這個方法本來就不存在，因此很容易造成一些奇怪的 bug，例如透過 <code>user.respond_to?(:name)</code> 來檢查方法存不存在時，返回的竟然會是 false！用起來卻沒問題。所以使用 <code>method_missing</code> 時也要修改 <code>respond_to?</code> 的查找方式，以免測試一直跑不過。</p>
 ]]></content>
   </entry>
   

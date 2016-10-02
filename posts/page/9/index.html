@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="上禮拜練習佈署 Rails 到 Amazon EC2 伺服器上，也理解了一下如何透過 SSH 操作遠端 server，很多原理還不是很懂，大部分只是得過且過，碰到問題就用別人的解決方案，目前是能讓機器動起來就好。 如果哪天能夠不再只是按照別人的食譜來架設，能夠依照自己需求去調整， &hellip;">
+  <meta name="description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/9/" />
-<meta property="og:description" content="上禮拜練習佈署 Rails 到 Amazon EC2 伺服器上，也理解了一下如何透過 SSH 操作遠端 server，很多原理還不是很懂，大部分只是得過且過，碰到問題就用別人的解決方案，目前是能讓機器動起來就好。 如果哪天能夠不再只是按照別人的食譜來架設，能夠依照自己需求去調整， &hellip;" />
+<meta property="og:description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="上禮拜練習佈署 Rails 到 Amazon EC2 伺服器上，也理解了一下如何透過 SSH 操作遠端 server，很多原理還不是很懂，大部分只是得過且過，碰到問題就用別人的解決方案，目前是能讓機器動起來就好。 如果哪天能夠不再只是按照別人的食譜來架設，能夠依照自己需求去調整， &hellip;" />
+<meta itemprop="description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,160 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/oh-my-zsh/">OH MY ZSHELL!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-14T11:22:00+08:00" pubdate data-updated="true">Nov 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 <a href="http://mxcl.github.com/homebrew/">Homebrew</a> 安裝新版本，管理也會比較方便。</p>
+
+<p>2012.11.23 更新：今天換成一個從 <a href="https://github.com/agnoster">agnoster</a> fork 出來的<a href="https://gist.github.com/3751033">主題</a>，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 <a href="https://raw.github.com/chinghanho/.dotfiles/master/.oh-my-zsh/custom/chh.zsh-theme">Github</a> 上下載。要有這個效果必須使用這<a href="https://gist.github.com/1595572">三種特殊字型</a>；而我的終端機主題用的是 <a href="https://github.com/godfat">@godfat</a> 的 <a href="https://raw.github.com/godfat/dev-tool/master/.config/iterm/DarkIllumina.itermcolors">DarkIllumina</a>。</p>
+
+<p><img src="http://lh5.googleusercontent.com/-3kZx026TRBs/UK7yHhBcRSI/AAAAAAAAFYM/XPmrOwB_E60/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-23%2520%25E4%25B8%258A%25E5%258D%258811.48.07.png" alt="" /></p>
+
+<p>PS. 小叮嚀：背景不要用半透明的，對比要設到最小，這樣的顯示效果是最棒的。:)</p>
+
+<p>2012.11.15 更新：用了兩天，目前發現最大的問題就是 Zsh 啟動效能有點慢，每新開一個 session 都會花上快 2 秒鐘，不過還不致於影響到心情。:p</p>
+
+<hr />
+
+<p>原本對於 Bash 用起來也沒什麼不滿，只是稍嫌單調的配色讓人感到有點無聊而已，而昨天把 <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> 安裝起來後，一開始雖然對豐富的色彩感到新鮮，可是很快就疲勞了。</p>
+
+<p>不過 oh-my-zsh 還有超級強大的 auto-complete 功能，真的是很好玩的東西，敲一敲 tab 鍵就可以列出所有指令和說明，而且很多補丁和功能都已經有人幫你寫好了，所以我打算再玩一陣子看看。:p</p>
+
+<p>安裝方式也超級簡單，就用官方建議的自動安裝方法，只需要一條 <code>curl</code> 指令：</p>
+
+<pre><code>curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+</code></pre>
+
+<p>之前我的 Bash 調教起來也是有不錯的色彩區別，不過 oh-my-zsh 做的更極致，可以在 <a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Themes">Github</a> 上或是 <a href="http://zshthem.es/">zshthem.es</a> 上尋找喜歡的樣式，目前這是我用的主題「<a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/nebirhos.zsh-theme">nebirhos</a>」：</p>
+
+<p><img src="https://lh5.googleusercontent.com/-YC6ShHhxmrQ/UKMXilZfROI/AAAAAAAAFVk/KYdxbNA9gyY/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-14%2520%25E4%25B8%258A%25E5%258D%258811.40.03.png" alt="" /></p>
+
+<p>我不是很喜歡前面那個 username 的格式，可是我還沒研究過 Zsh 的語法怎麼寫，也不會改，看起來跟 Bash 好像完全不一樣，等有時間再來摸摸看。</p>
+
+<p>因為平常會有習慣做 <a href="http://en.wikipedia.org/wiki/Quantified_Self">quantified self</a> 的統計，包括用終端機輸入的指令（果然夠宅 XD），但是從 Bash 切到 Zsh 後記錄檔案就換成 .zsh_history 了，為了年底記錄所以先在這邊些把 Bash 用過指令統計導出來：</p>
+
+<pre><code> 1  1124  24.6006%    c
+ 2  985   21.5583%    git
+ 3  343   7.50711%    rails
+ 4  328   7.17881%    cd
+ 5  314   6.8724%     rspec
+ 6  257   5.62486%    la
+ 7  197   4.31167%    rake
+ 8  154   3.37054%    s
+ 9  109   2.38564%    ..
+10  95    2.07923%    rvm
+11  68    1.48829%    guard
+12  36    0.787919%   bundle
+13  29    0.634712%   ssh
+14  28    0.612826%   pry
+15  27    0.590939%   open
+16  26    0.569052%   middleman
+17  26    0.569052%   gem
+18  24    0.525279%   rm
+19  24    0.525279%   heroku
+20  23    0.503392%   nvm
+</code></pre>
+
+<p>看起來很少對吧？這是因為這份記錄只有不到二十天，原本 Bash 預設的歷史紀錄 size 很小，後來我才發現，所以我現在把它改成 1000000000 應該夠我用 10 年了！XD</p>
+
+<p>最後我整理了一下自己的 dotfiles，然後寫了一個 <a href="https://github.com/chinghanho/.dotfiles/blob/master/Rakefile">Rakefile</a> 腳本，以後如果換新機器，只要從 <a href="https://github.com/chinghanho/.dotfiles">Github</a> 上 clone 下來，執行 <code>rake install</code> 就完成了，超級方便的。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/setting-up-a-vpn-server-on-amazon-ec2/">三秒鐘在 Amazon EC2 上架好 VPN-server</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-05T08:52:00+08:00" pubdate data-updated="true">Nov 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原本老爸用<a href="http://us.dongtaiwang.com/?lang=cn">自由門</a>還可以翻出來到 Facebook 上貼些吃吃喝喝的照片，可是最近 GFW 又在搞怪，自由門也不太有效，所以老爸就問我能不能幫他架個 VPN 網路，剛好最近在練習 <a href="http://blog.whiteball.tw/posts/deply-rails-app-on-ec2/">Rails deploy</a> 玩到 Amazon AWS 雲端服務，所以想說乾脆開個 instance 來架看看。</p>
+
+<p>上網查了一下資料發現已經有人把整個流程寫成執行檔，只要先用 <code>wget</code> 把檔案抓到本機裡執行就搞定了，步驟超級簡單。首先有幾個前置作業：</p>
+
+<ul>
+<li>開一台 Amazon AMI 32 位元的 instance</li>
+<li>Security Groups 防火牆設定要打開 port 1723 給 VPN 連線用（當然別忘了 SSH 用的 port 22）</li>
+</ul>
+
+
+<p>然後用 <code>wget</code> 把執行檔抓到本機執行：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget https://raw.github.com/gist/999866/4fa28f39890fa4244ebeb82ea4e097e75756b582/pptpd.sh
+</span><span class='line'>sudo sh pptpd.sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安裝完成後，會輸出 VPN 帳號跟密碼在最後一行，把它複製起來收好，或是抄起來，接下來就可以到電腦上設定 VPN 了。如果要增加用户，就编辑 /etc/ppp/chap-secrets 這個檔案，自己添加用戶名稱和密碼即可。</p>
+
+<p>請注意 Free Tier 上下傳每個月限制是 15GB 免費，超過就要付錢了。15 GB 很多嗎？像我每天上網的流量可能都是超過 7、8 GB，當然是因為我會連到一些多媒體網站上去，如果用不到 VPN 來連記得把它關掉，有沒有回到撥接時代的感覺？XD</p>
+
+<p>參考資料：</p>
+
+<ul>
+<li><a href="http://passtest.net/2010/11/amazon-aws-ec2-vpn-vps-2/">Amazon EC2上一键安装配置PPTP VPN服务</a></li>
+<li><a href="http://www.mac52ipod.cn/post/set-vpn-on-apple-mac-os-x.php">Mac技巧之苹果电脑Mac OS X系统下设置VPN翻墙上真正互联网的教程</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -553,218 +707,6 @@ Enter your choice (1 or 2) or press Ctrl-C to abort: 1
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/enhancements-to-shell-productivity/">幾個加強 Shell 生產力的用法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-18T09:42:00+08:00" pubdate data-updated="true">Oct 18<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>PS. 以下環境為 OS X，我不確定其他平台是否可用相同的方式。</p>
-
-<h2>從指令的歷史紀錄自動補全</h2>
-
-<p>剛看到「<a href="http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity">9 Enhancements to Shell and Vim Productivity</a>」這篇文章，學到一個新招就是 <code>⌃ + r</code> 可以用搜尋的方式，自動找出歷史記錄裡的指令，例如我蠻虛榮的喜歡用 <code>awk</code> 統計自己輸入過的指令次數<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，以前都是用複製貼上的方式，現在透過 <code>⌃ + r</code> 只要輸入 <code>awk</code> 馬上就找到了。</p>
-
-<h2>跳字移動</h2>
-
-<p>另外，最近終於找出如何在 <a href="http://www.iterm2.com/">iTerm 2</a> 底下跳字移動了，所謂跳字移動就是在單字之間移動 cursor，而不是一個字母慢慢走。在 OS X 下，一般文字編輯器都是壓著 <code>⌥ + ←</code> 和 <code>⌥ + →</code>，可是 iTerm 2 下會觸發到其他的快捷鍵，所以要來修改一下。</p>
-
-<p>方法就是打開偏好設定面板，在 Profile > Key 標籤頁下修改 <code>⌥ + ←</code> 和 <code>⌥ + →</code> 這兩個快捷鍵設定，分別改成 Action 為 Send Escape Sequence、Esc + b 以及 Action 為 Send Escape Sequence、Esc + f，這樣一來就跟平常慣用的方式一樣了。</p>
-
-<p><del>目前我還在找尋該怎麼在 iTerm 2 底下用 <code>⌥ + ⌫</code> 來跳字刪除單字，如果找到方法會再補上來。</del></p>
-
-<p>2012.10.19 更新：<code>⌥ + ⌫</code> 的方法跟上面差不多，快捷鍵設好後 Action 為 Send Escape Sequence、Esc + 007f，這裡的 007f 要用 Unicode 16 進位輸入。</p>
-
-<h2>善用 alias 縮寫</h2>
-
-<p>這有優點也有缺點，優點是可以少打很多字，缺點是換了別台電腦會突然發現自己不會下指令了。XD</p>
-
-<p>用法是在主機根目錄下的 .bash_profile（原本如果沒有這個檔案就自己手動建立一個）裡加上 <code>alias</code> 指令，例如要改變目錄位置回到上一層，一般用法是這樣：</p>
-
-<pre><code>cd ..
-cd ../..
-</code></pre>
-
-<p>在 .bash_profile 裡加上：</p>
-
-<pre><code>alias ..="cd .."
-alias ...="cd ../.."
-</code></pre>
-
-<p>之後只要用 <code>..</code> 就可回到上一層目錄，用 <code>…</code> 回到上上一層目錄，可以參考看看我備份在 <a href="https://github.com/chinghanho/.dotfiles/blob/master/.aliases">Github</a> 上的設定。不過 alias 不要用得太兇，其實只要設定幾個常用到的就好，弄太多到時候一方面可能記不住，有時還可能跟其他指令衝突到，需要自己衡量一下。</p>
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>這條指令我放在 <a href="https://gist.github.com/3280141" alt="gist" target="_blank">Gist</a> 上，有興趣可以玩玩看，別忘了把結果回覆在這篇文章的留言上哦。XD <a href='#fnref:1' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/rails-tou-guo-gmail-fa-song-dian-zi-you-jian/">Rails 透過 Gmail 發送電子郵件</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-13T21:50:00+08:00" pubdate data-updated="true">Oct 13<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>從 Rails 寄信要先寫 Mailer 模組，這部份可以交給 generator 自動生成：</p>
-
-<pre><code>rails g mailer CommentMailer
-</code></pre>
-
-<p>這樣就會有 Mailer 和 Views 兩個部分，跟 Controller 的概念其實很像，在 Mailer 裡面定義的 action 也會對應到同名的 Views。這裡以 CommentMailer 為例，來定義一個 <code>comment_notify_email</code> 方法，在 Views 裡面可以同時建立兩個檔案分別是：</p>
-
-<ul>
-<li>comment_notify_email.html.erb</li>
-<li>comment_notify_email.text.erb</li>
-</ul>
-
-
-<p>之所以這麼做是因為有的郵件伺服器無法判別 HTML 格式，但不論哪一種機器都可以接收純文字，所以可以同時準備兩套，這樣 Rails 會依據對方的伺服器來推送不同格式的郵件。</p>
-
-<figure class='code'><figcaption><span>/app/mailers/comment_mailer.rb </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CommentMailer</span> <span class="o">&lt;</span> <span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">default</span> <span class="ss">from</span><span class="p">:</span> <span class="s2">&quot;myname@gmail.com&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">comment_notify_email</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@comment</span> <span class="o">=</span> <span class="n">comment</span>
-</span><span class='line'>    <span class="vi">@url</span> <span class="o">=</span> <span class="n">post_url</span><span class="p">(</span><span class="vi">@comment</span><span class="o">.</span><span class="n">post</span><span class="p">,</span> <span class="ss">:host</span> <span class="o">=&gt;</span> <span class="s2">&quot;localhost&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">mail</span><span class="p">(</span><span class="ss">:to</span> <span class="o">=&gt;</span> <span class="s2">&quot;myname@gmail.com&quot;</span><span class="p">,</span> <span class="ss">:subject</span> <span class="o">=&gt;</span> <span class="s2">&quot;There is a new comment on your blog.&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Views 的部份就跟 Controller 完全一樣了，在 Mailer 裡面定義的實例會傳送到對應的 Views 裡去使用，寫法就跟寫 CRUD 的動作一樣。接下來就是設定跟 Gmail 之間的 <a href="http://support.google.com/mail/bin/answer.py?hl=zh-Hant&amp;answer=13287">SMTP</a>。因為是在開發環境，所以這裡設定 development.rb 就好：</p>
-
-<figure class='code'><figcaption><span>/config/environments/development.rb </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">delivery_method</span> <span class="o">=</span> <span class="ss">:smtp</span>
-</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>  <span class="ss">:address</span>              <span class="o">=&gt;</span> <span class="s1">&#39;smtp.gmail.com&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:port</span>                 <span class="o">=&gt;</span> <span class="mi">587</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:user_name</span>            <span class="o">=&gt;</span> <span class="s1">&#39;myname@gmail.com&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:password</span>             <span class="o">=&gt;</span> <span class="s1">&#39;mypassword&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:authentication</span>       <span class="o">=&gt;</span> <span class="s1">&#39;plain&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:enable_starttls_auto</span> <span class="o">=&gt;</span> <span class="kp">true</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>值得注意的地方是：</p>
-
-<ul>
-<li><code>:user_name</code>：要把整個電子郵件完整輸進來，不要只打名稱</li>
-<li><code>:password</code>：如果有啟動應用程式專用密碼功能，就要輸入 Google 給的密碼<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>。</li>
-</ul>
-
-
-<p>可以開啟 console 先建立一個 comment，然後來試寄一下郵件，順利的話應該可以馬上在 Gmail 裡面收到你寄出的測試信件：</p>
-
-<pre><code>CommentMailer.comment_notify_email(Comment.last).deliver
-</code></pre>
-
-<p>如果老收不到信件，可以在 config 中將這個選項打開（改為 <code>true</code>），有問題會報錯誤出來方便除錯：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Don&#39;t care if the mailer can&#39;t send</span>
-</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">raise_delivery_errors</span> <span class="o">=</span> <span class="kp">true</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>最後一個步驟就是把 <code>comment_notify_email</code> 這個方法寫在 Controller 裡面，例如寫在 <code>create</code> 這個 action 可以在物件建立的時候觸發寄出郵件的這個功能。</p>
-
-<h2>Resources:</h2>
-
-<ul>
-<li><a href="http://guides.rubyonrails.org/action_mailer_basics.html">Action Mailer Basics</a></li>
-<li><a href="http://railscasts-china.com/episodes/how-to-send-emails-in-rails">#020 How to send emails in Rails</a></li>
-<li><a href="http://support.google.com/accounts/bin/answer.py?hl=en&amp;answer=185833">Signing in using application-specific passwords</a></li>
-</ul>
-
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>我在這裡卡了好久，後來才想起來是應用程式密碼搞得鬼。XD <a href='#fnref:1' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/page/10/">&larr; Older</a>
@@ -784,7 +726,7 @@ alias ...="cd ../.."
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  Copyright &copy; 2016 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
   <section class="contruction-wrap">
     <div class="contruction"></div>
   </section>

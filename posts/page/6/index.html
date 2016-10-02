@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="前陣子爆發的 Github Hacked 事件，就是因為沒有在 model 裡面正確設定 attr_accessible 或 attr_protected 過濾屬性，所造成的 Mass Assignment 漏洞。可是在 model 裡面寫 attr_accessible 來過濾傳進來的參數， &hellip;">
+  <meta name="description" content="2013.01.10 更新：前兩天 Rails 又爆出新的漏洞（有沒有這麼歡樂啊？XD），比本篇文章所講的嚴重一百萬倍，據說這漏洞是非常容易被搞，所以「一定」要更新到最新版本（目前的版本是 3.2.11、3.1.10、3.0.19 和 2.3.15 ）！不過目前我沒辦法重現這個 bug， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/6/" />
-<meta property="og:description" content="前陣子爆發的 Github Hacked 事件，就是因為沒有在 model 裡面正確設定 attr_accessible 或 attr_protected 過濾屬性，所造成的 Mass Assignment 漏洞。可是在 model 裡面寫 attr_accessible 來過濾傳進來的參數， &hellip;" />
+<meta property="og:description" content="2013.01.10 更新：前兩天 Rails 又爆出新的漏洞（有沒有這麼歡樂啊？XD），比本篇文章所講的嚴重一百萬倍，據說這漏洞是非常容易被搞，所以「一定」要更新到最新版本（目前的版本是 3.2.11、3.1.10、3.0.19 和 2.3.15 ）！不過目前我沒辦法重現這個 bug， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="前陣子爆發的 Github Hacked 事件，就是因為沒有在 model 裡面正確設定 attr_accessible 或 attr_protected 過濾屬性，所造成的 Mass Assignment 漏洞。可是在 model 裡面寫 attr_accessible 來過濾傳進來的參數， &hellip;" />
+<meta itemprop="description" content="2013.01.10 更新：前兩天 Rails 又爆出新的漏洞（有沒有這麼歡樂啊？XD），比本篇文章所講的嚴重一百萬倍，據說這漏洞是非常容易被搞，所以「一定」要更新到最新版本（目前的版本是 3.2.11、3.1.10、3.0.19 和 2.3.15 ）！不過目前我沒辦法重現這個 bug， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,224 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/rails-sql-injection-what-happened/">Rails 重大 SQL Injection 安全漏洞其實沒這麼可怕</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T09:15:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://lh3.googleusercontent.com/-Ptn8b9s_OAM/UOYvBgxC29I/AAAAAAAAFj8/qaLFQuKm_L0/s666/exploits_of_a_mom.png" alt="xkcd" /></p>
+
+<p>2013.01.10 更新：前兩天 <a href="https://groups.google.com/forum/?fromgroups=#!topic/rubyonrails-security/61bkgvnSGTQ">Rails 又爆出新的漏洞</a>（有沒有這麼歡樂啊？XD），比本篇文章所講的嚴重一百萬倍，據說這漏洞是非常容易被搞，所以「一定」要更新到最新版本（目前的版本是 3.2.11、3.1.10、3.0.19 和 2.3.15 ）！不過目前我沒辦法重現這個 bug，也不清楚這次到底是不是「真有這麼可怕？」。:p</p>
+
+<p><a href="http://xkcd.com/327/">xkcd</a> 這張圖幽默地說明 SQL injection 的可怕，一位媽媽用 SQL 語法替自己小孩取名字，結果校方電腦沒有消毒資料就寫道資料庫去，結果整個資料庫就爆掉了，原來這小孩的名字其實是刪掉整個表格的語法。XD</p>
+
+<p>Rails 前兩天的<a href="http://weblog.rubyonrails.org/2013/1/2/Rails-3-2-10--3-1-9--and-3-0-18-have-been-released/">重大安全更新</a>，所有 3.x 的版本都有問題，引起鄉民激動的討論，我看了一下<a href="http://news.ycombinator.com/item?id=4999406">大家討論的內容</a>看不出什麼所以然來，也不曉得這次的 SQL 注射是怎麼辦到的，可能很多人跟我一樣都搞不清楚狀況，所以 <a href="http://blog.phusion.nl/2013/01/03/rails-sql-injection-vulnerability-hold-your-horses-here-are-the-facts/">Phusion 部落格</a>發表了一篇文章來說明整件事情的原委，寫得相當清楚。</p>
+
+<p>現在我終於搞清楚這個 bug 是這麼回事……</p>
+
+<h2>動態 finder</h2>
+
+<p>Rails 透過 ActiveRecord 查詢資料庫，通常會用到像是 <code>User.find(params[:id])</code> 這樣的方法，依照參數給的值查詢 model 的主鍵（primary key），非常方便。此外，Rails 還有非常方便的動態 finder，可以依照資料庫欄位來尋找給予的參數，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">find_by_foo</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:foo</span><span class="o">]</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而這次 Rails 3.2.10（包括 3.1.9 和 3.0.18）所修補的這個 bug 就是發生在這個動態 finder。<code>find_by_*</code> 用來查詢指定的任何欄位，例如 User model 中有 name、email 這兩個欄位，那就可以這樣寫：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:login</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_email</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>params[:name]</code> 和 <code>params[:email]</code> 是使用者 input 的參數，因此 cracker 就可能會用 <a href="http://en.wikipedia.org/wiki/SQL_injection">SQL 填字遊戲</a>注射髒東西進來。這麼簡單的原理 Rails 當然有保護措施，他們用<a href="/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/">單引號</a> <code>' '</code> 不轉義字元，例如以下這例子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; SELECT &quot;users&quot;.* FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;login&quot; = &#39;chh&#39; LIMIT 1</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="s2">&quot;chh&#39;; DROP TABLE USERS; --&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; SELECT &quot;users&quot;.* FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;name&quot; = &#39;chh&#39;&#39;; DROP TABLE USERS; --&#39; LIMIT 1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>cracker 想要把整個 User 表格都摘掉，不轉義的結果最後只會找不到東西，返回 nil，因為我們 login 欄位裡並沒有一個叫做「chh&#8217;; DROP TABLE USERS; &#8211;」的使用者。看起來好像沒事了，可是 ActiveRecord 的動態 finder 不只可以接受字串，如果有需要的話還可以自己定義 SQL 查詢條件，例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="ss">:select</span> <span class="o">=&gt;</span> <span class="s2">&quot;id, login&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; User Load (0.3ms)  SELECT id, login FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;login&quot; = &#39;chh&#39; LIMIT 1</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;User id: 1, login: &quot;chh&quot;&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>只調出 id 跟 login 兩個欄位，也可以直接用 <code>:select</code>，儘管傳回來的會是 nil：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_login</span><span class="p">(</span><span class="ss">:select</span> <span class="o">=&gt;</span> <span class="s2">&quot;1; DROP TABLE users; --&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; SELECT 1; DROP TABLE users; -- FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;name&quot; IS NULL LIMIT 1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可是這就有點問題了，由於 <code>User.find_by_login(params[:login])</code> 的 <code>params[:login]</code> 參數請求是會被 Rails 轉換成 hash 的，也就是說如果 cracker 用傳來的不是 string 而是有髒東西的 hash，那就會變成資安漏洞！例如以下的 URL：</p>
+
+<pre><code>/example-url?login[select]=whatever&amp;login[limit]=23
+</code></pre>
+
+<p>這個時候的 <code>params[:login]</code> 得到的就是一個 hash：<code>{ "select" =&gt; "whatever", "limit" =&gt; 23 }</code>。BUT！在 Ruby 當中 string 和 hash 是兩種不同的資料類型，雖然 Rails 中常常某些情況這兩種會混用，因為這是 ActiveSupport::HashWithIndifferentAccess 會自動轉換 hash 為 string ，以避免不必要的臭蟲滋生；<code>params[:login]</code> 也是如此。</p>
+
+<p>而如果 cracker 想要用這個方法搞我們的 Rails app，他就必須要讓 string <code>"select"</code> 變成 hash <code>:select</code>，這樣才有辦法注射，但這是不可能的，Rails 會把它轉成 string。</p>
+
+<h2>問題點</h2>
+
+<p>可是問題就發生在 <a href="https://github.com/binarylogic/authlogic">Authlogic</a> 這個 gem，他們透過很粗糙的方式向資料庫查詢 token：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by_persistence_token</span><span class="p">(</span><span class="n">the_token</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這個 <code>the_token</code> 並沒有將 hash 轉為 string，因此暴露了漏洞讓 cracker 有機可趁，可是一定要透過 session data 這種認證方式，否則其他方法 <code>the_token</code> 都會變成 string。</p>
+
+<p>要破解這招要先準備這個 Rails 網站的 secret_token，該怎麼拿到呢？可以 <a href="https://www.google.com/search?q=inurl:secret_token+filetype%3Arb+site%3Agithub.com">google</a> 一下找到一堆 open source 專案的 secret_token，很多人佈署網站的時候都沒有重新 <code>rake secret</code>，而且就直接暴露到 Github 上去了。XD</p>
+
+<p>所以說這次的安全漏洞其實不會「瞬間」讓所有的 Rails app 都陷入危險狀態，甚至可以說，就算不更新好像也不會怎樣（？），除非網站用的是 open source ，也用到像 Authlogic 這種 gem，而且剛好又沒有重新產生新的 secret_token，才會有立即的危險。話說回來，這也不像是 Rails 本身的 bug，只是開發者會很容易不小心疏忽這個部份，所以 Rails 為了預防這種情況發生，才會補上這次的安全更新。</p>
+
+<h2>防禦方法</h2>
+
+<p>目前要補上這個漏洞有三種方法：</p>
+
+<ul>
+<li>更新 Rails 新版本，目前官方已經發出 patch，更新完以後什麼事情都不用做；:)</li>
+<li>在所有的 <code>find_by_*</code> 參數都加上過濾機制，例如 <code>find_by_login(params[:login].to_s)</code>，強制轉換成字串；</li>
+<li>如果使用 open source 的網站，記得執行 <code>rake secret</code> 重新產生 token；</li>
+</ul>
+
+
+<p>secret_token.rb 檔案的處理可以像 <a href="/posts/rails-database-yml-management/">database.yml</a> 一樣，製作成一個樣板，命名成 secret_token.rb.example，然後原本的檔案不列入版本控制，最後佈署時寫個腳本用 symlink 覆蓋過去；也可以參考<a href="https://github.com/gedankenstuecke/snpr/blob/master/config/initializers/secret_token.rb">這個作法</a>，在 Rails app 根目錄底下新建 secret_token 檔案專門拿來放 token，再引入到 secret_token.rb 去；或者也可以設在環境變數 <code>ENV</code> 裡。</p>
+
+<h2>One More Thing&#8230; About Rails 4 Dynamic Methods&#8230;</h2>
+
+<p>Rails 4 的動態 finder <a href="http://edgeguides.rubyonrails.org/4_0_release_notes.html#active-record-deprecations">改變了一些寫法</a>，除了 <code>find_by_*</code> 和 <code>find_by_*!</code> 這兩個之外，其他的全部都不能再用了：</p>
+
+<ul>
+<li><code>User.find_all_by_*</code> 要改寫成 <code>User.where(*)</code>；</li>
+<li><code>User.find_last_by_*</code> 改寫成 <code>User.where(*).last</code>；</li>
+<li><code>User.scoped_by_*</code> 改寫成 <code>User.where(*)</code>；</li>
+<li><code>User.find_or_initialize_by_*</code> 改寫為 <code>User.where(*).first_or_initialize</code>；</li>
+<li><code>User.find_or_create_by_*</code> 改寫成 <code>User.find_or_create_by(*)</code> 或者 <code>User.where(*).first_or_create</code>；</li>
+<li><code>User.find_or_create_by_*!</code> 則要改寫成 <code>User.find_or_create_by!(*)</code> 或是 <code>User.where(*).first_or_create!</code>；</li>
+</ul>
+
+
+<p>看起來有點不太習慣，感覺沒有原本的直覺，為什麼要改這樣我也不曉得。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/rails-database-yml-management/">Rails 的 database.yml 安全管理</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-01T12:06:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Rails 的資料庫設定都放在 config/database.yml 這個檔案裡面，包含伺服器位置、管理員帳號以及密碼等等的重要資訊，所以是不能放進版本控制系統中的。因此，除了要從版本控制系統中移除 database.yml，或者改製成樣板，也要告訴 git 停止追蹤檔案：</p>
+
+<pre><code>$ git mv config/database.yml config/database.yml.example
+$ echo "config/database.yml" &gt;&gt; .gitignore
+</code></pre>
+
+<p>那在使用 Capistrano 自動化佈署時，就需要另外將這個檔案另外上傳到伺服器去，這裡以 EC2 為例，透過憑證連上伺服器，把本地檔案丟到上面去：</p>
+
+<pre><code>$ scp -i path_to_cer.pem config/database.yml user_name@my_server.com:~/path_to_rails_app/shared/config/database.yml
+</code></pre>
+
+<p>最後在 config/deploy.rb 寫一個腳本，自動用 symlink 覆蓋上去就好了，以下是個範例：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># in RAILS_ROOT/config/deploy.rb:</span>
+</span><span class='line'><span class="n">after</span> <span class="s1">&#39;deploy:update_code&#39;</span><span class="p">,</span> <span class="s1">&#39;deploy:symlink_db&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">namespace</span> <span class="ss">:deploy</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">desc</span> <span class="s2">&quot;Symlinks the database.yml&quot;</span>
+</span><span class='line'>  <span class="n">task</span> <span class="ss">:symlink_db</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:app</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">run</span> <span class="s2">&quot;ln -nfs </span><span class="si">#{</span><span class="n">deploy_to</span><span class="si">}</span><span class="s2">/shared/config/database.yml </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">/config/database.yml&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -404,330 +622,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/rails-length-size-count/">Rails 的 Length、size、count 差別</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-22T12:26:00+08:00" pubdate data-updated="true">Dec 22<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Ruby</h2>
-
-<p>在 Ruby 中對於陣列而言 <code>length</code> 和 <code>size</code> 是一樣的，<code>count</code> 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">count</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>此外，效能上 count 會比較差一點：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s2">&quot;benchmark&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">CYCLES</span> <span class="o">=</span> <span class="mi">10_000_000</span>
-</span><span class='line'><span class="n">array</span> <span class="o">=</span> <span class="o">[]</span>
-</span><span class='line'>
-</span><span class='line'><span class="mi">10</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span> <span class="o">&lt;&lt;</span> <span class="nb">rand</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bmbm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[count]</span><span class="p">)</span>  <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">count</span> <span class="p">}}</span>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[size]</span><span class="p">)</span>   <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">size</span> <span class="p">}}</span>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[length]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">array</span><span class="o">.</span><span class="n">length</span> <span class="p">}}</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># Rehearsal ------------------------------------------</span>
-</span><span class='line'><span class="c1"># count    2.790000   0.000000   2.790000 (  2.796578)</span>
-</span><span class='line'><span class="c1"># size     1.860000   0.000000   1.860000 (  1.860494)</span>
-</span><span class='line'><span class="c1"># length   1.900000   0.010000   1.910000 (  1.908549)</span>
-</span><span class='line'><span class="c1"># --------------------------------- total: 6.560000sec</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">#              user     system      total        real</span>
-</span><span class='line'><span class="c1"># count    2.820000   0.000000   2.820000 (  2.827195)</span>
-</span><span class='line'><span class="c1"># size     1.890000   0.000000   1.890000 (  1.893677)</span>
-</span><span class='line'><span class="c1"># length   1.940000   0.000000   1.940000 (  1.950517)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Rails</h2>
-
-<p>在 Rails 的 ActiveRecord 中有不一樣的操作方式，使用 <code>length</code> 會從資料庫撈出資料，在記憶體裡面去計數：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">length</span>
-</span><span class='line'><span class="no">Topic</span> <span class="no">Load</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="n">*</span> <span class="no">FROM</span> <span class="s2">&quot;topics&quot;</span> <span class="no">WHERE</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="s2">&quot;user_id&quot;</span> <span class="o">=</span> <span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>看到了嗎？把 user 底下的 topics 全部拉出來，只是為了去數他，瘋了！其實 SQL 已經提供很好的語法可以有效地計算欄位裡的數量，在 Rails 中只要用 <code>count</code> 就可以呼叫：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">count</span>
-</span><span class='line'><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">3</span><span class="n">ms</span><span class="p">)</span>  <span class="no">SELECT</span> <span class="no">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="no">FROM</span> <span class="s2">&quot;topics&quot;</span> <span class="no">WHERE</span> <span class="s2">&quot;topics&quot;</span><span class="o">.</span><span class="s2">&quot;user_id&quot;</span> <span class="o">=</span> <span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可是這有個問題，這個指令每下一次就會向資料庫操作一次，如果已經讀過的話，沒必要老在那拉扯資料庫，所以這時候可以用 <code>size</code> 方法，這會先檢查有沒有讀過，讀過的話就用 <code>length</code> 返回長度，如果沒讀過就用 <code>count</code>。</p>
-
-<p>順便參考一下<a href="https://github.com/rails/rails/blob/4657dba60eebc0d7cea11ffd18aa70d7a3d00e45/activerecord/lib/active_record/relation.rb#L201">原始碼</a>這樣寫的：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Returns size of the records.</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">size</span>
-</span><span class='line'>  <span class="n">loaded?</span> <span class="p">?</span> <span class="vi">@records</span><span class="o">.</span><span class="n">length</span> <span class="p">:</span> <span class="n">count</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>One more thing…</h2>
-
-<p>如果在 model 中加上一個 topics_count 欄位，counter_cache 會讓 <code>size</code> 自動去參考這個欄位的值，這樣也能有效提昇效能。</p>
-
-<p>參考 RailsCasts 的 <a href="http://railscasts.com/episodes/23-counter-cache-column">#23 Counter Cache Column</a>。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/2012-memory-and-experience/">2012 記憶與經驗</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-19T10:34:00+08:00" pubdate data-updated="true">Dec 19<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://lh6.googleusercontent.com/-gkI64YAyaWA/UNFcUPI0QxI/AAAAAAAAFdg/sNhmiaFCwfw/s690/2012-12-13%252016.36.49.jpg" alt="taoyuan" /></p>
-
-<blockquote><p>記憶是瑣碎的片刻，經驗是記憶的連續。大多數的片刻無法保存，而我只是試著去挽留那一小部分。</p></blockquote>
-
-<p>分析自己每天使用電腦的紀錄這個行為看起來有點宅，可是作為一個離不開電腦的 developer，這件事突然變得有點意義，所以我開始整理一些軟體從電腦上記錄下來的 log，在「是芥末日」前回顧一下。</p>
-
-<h2>軟體使用時間統計</h2>
-
-<p>下面這張圖表列出的是各個軟體的使用時間，紀錄起點是上個月的 16 日，一直記錄到剛剛，也就是今天 12 月 19 日，前後總共記錄了大約一個月又三天，不過這套軟體<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup> 很吃 CPU 效能，至少會減少 Macbook Air 一個小時的續航力，所以到今天為止以後我不會再用這個軟體了。</p>
-
-<p><img src="http://lh3.googleusercontent.com/-jwYmsPpQN9A/UNEhpAbh9SI/AAAAAAAAFbU/RYCd-3ia7Ik/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%25889.52.47.png" alt="time-sink" /></p>
-
-<p>灰色的 bar 是軟體被啟動的時間，淺紫色是軟體被使用者 focus 的時間長度；Finder 就像 Windows 的 explorer.exe 一樣無法關閉，所以可以看到從頭到尾都是啟動的狀態，可是真正有用到的時間卻很少。:p</p>
-
-<p>也可以推知記錄時間總共是 30 幾天，使用電腦的時間就有 15 天，扣掉每天吃飯睡覺我幾乎張開眼睛就是在用電腦，這點可能需要好好檢討一下，花了很多時間在用電腦，可是學習效率並沒有想像中的高……</p>
-
-<p>最常用的軟體是 Google Chrome，打開電腦百分之九十的時間是打開瀏覽器上網，或許也間接證明了 <a href="https://www.youtube.com/watch?v=0QRO3gKj3qw">Google Chrome OS</a> 的理念是可行的？不過我開瀏覽器很多時候不是「上網」，而是開本機的伺服器在 coding。</p>
-
-<p>如果要算花在寫程式的時間，Sublime Text 2 跟 iTerm 2 應該可以合併起來一起計算，但是實際動手寫 code 還是要以使用 Sublime Text 2 時間為主，很明顯實際動手寫的時間還是太少，這可能也是造成學習效率低的原因。</p>
-
-<p>此外，看到 <a href="http://tapbots.com/software/tweetbot/">Tweetbot</a> 使用率這麼高，感覺非常有趣，因為我把 Google Chrome 的歷史紀錄撈出來看，<a href="twitter.com">twitter.com</a> 訪問率連前十名都沒有，果然 <a href="http://mashable.com/2012/08/16/twitter-api-big-changes/">Twitter 想盡辦法要搞死第三方 client</a> 不是沒有原因的。XD</p>
-
-<p>而 iTunes 也算是最常用的軟體之一，因為都開在 background 默默地讓他放音樂，所以會有看起來好像很不常用的假象。</p>
-
-<h2>Google Chrome 歷史紀錄統計</h2>
-
-<p>以下所有的圖表都是從 Google Chrome 過去三個月的歷史紀錄挖出來製作的，這三個月總共對 48652 個 URLs 訪問過 97787 次，三個月來就是每天平均訪問 1085 次，不禁都懷疑真有這麼多嗎？XD</p>
-
-<p><img src="http://lh6.googleusercontent.com/-KlYqZMNihhM/UNEhnkqeDUI/AAAAAAAAFbc/PsM84spnLmk/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%258810.01.50.png" alt="" /></p>
-
-<p>這張圖是過去過去三個月每天訪問過的網站數量，剛看到的時候很訝異 10 月 16 日那天發生什麼事，怎麼凸出一根刺在那邊？後來發現原來是 <a href="http://xkcd.com/">xkcd</a> 那張神圖「<a href="http://xkcd-map.rent-a-geek.de/">Click and Drag</a>」的關係啦<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>。:p</p>
-
-<p><img src="http://lh6.googleusercontent.com/-gBtUmrdiYy4/UNEhnmiOTiI/AAAAAAAAFa8/UkIW7oQqUfc/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%258810.02.44.png" alt="" /></p>
-
-<p>這張圖顯示的是都是哪些時間在上網，換句話說也就是我的作息時間，大概可以看出來每天平均睡 6 個小時，不過以後會試著把整個時間軸往前挪兩個小時。</p>
-
-<p><img src="http://lh3.googleusercontent.com/-lTR8tvcPTtQ/UNEho16qbwI/AAAAAAAAFbM/E4zMOR4bU08/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258A%25E5%258D%25889.57.10.png" alt="" /></p>
-
-<p>Google Chrome 處理特定的訪問會有不同的分類，統計我的歷史紀錄後，得出我訪問的連結中主要有這幾種類別：</p>
-
-<ul>
-<li>link：從其他網頁上點擊連結，所到達的頁面；</li>
-<li>reload：不論是重新整理、重開已關閉的分頁等等都屬此類；</li>
-<li>auto_bookmark：應該是指 Google Chrome UI 上點擊的連結，例如書籤列；</li>
-<li>typed：直接從網址列上輸入網址；</li>
-<li>generated：選擇頁面上的文字，然後用右鍵從選單裡選擇搜尋或是開啟該網址；</li>
-<li>auto_toplevel<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>：從其他軟體開啟的網址<sup id='fnref:4'><a href='#fn:4' rel='footnote'>4</a></sup>，或是指起始頁面；</li>
-</ul>
-
-
-<p>雖然常用的網站我會存在書籤裡，可是有時候直接在網址列裡打網址比較快。</p>
-
-<p>11 月底的時候我用了 <a href="https://chrome.google.com/webstore/detail/timestats/ejifodhjoeeenihgfpjijjmpomaphmah">timeStats</a> 這個擴充套件，針對每個網站的停留時間做記錄：</p>
-
-<p><img src="http://lh6.googleusercontent.com/-lzaqBUnWJLs/UNFOyfWT1_I/AAAAAAAAFck/q1df4Oy1SzM/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25881.17.46.png" alt="" /></p>
-
-<p>第一名 127.0.0.1 是因為開本機的伺服器寫程式的關係，佔了最多時間，這樣子很好；第二名 Vimeo 可能是因為前陣子常在上面看一些國外的 talk，不小心停留的時間就超過了 Youtube 了；第三名竟然是 Facebook，可是我明明去 Twitter 比 Facebook 多啊（因為都用 Tweetbot 上 Twitter）。XD</p>
-
-<h2>個人 Google 搜尋使用統計</h2>
-
-<p>Google 最近在搞個人活動報表，把搜尋統計功能也一起弄到裡面去，結果顯示的資訊反而變少、更難用。就目前能找到的資料，可以得到從去年 11 月底到現在，進行過 Google 搜尋的次數總共大約是 25860 次，每個月平均搜尋 1990 次。</p>
-
-<p>如果用網路上謠傳 <a href="http://news.cnet.com/8301-11128_3-10140142-54.html">Google 搜尋一次會排放 7 公克的碳</a>來計算的話，那這一年來我就用 Google 排放了 181 公斤的碳了！好可怕！XD</p>
-
-<h2>部落格流量統計</h2>
-
-<p>小站在 6 月 15 日前多多少少還有一些穩定的流量，砍掉重練後就一直沒有起色，RSS 訂閱人數只有恢復到之前的三分之一，最近換了域名又是新的一次損傷。這半年來我一直在實驗不在社群網站上分享部落格連結，看看會有多少人連進來，六個月過去了成效看起來真的很慘啊。XD</p>
-
-<p><img src="http://lh3.googleusercontent.com/-VlR3vwfk2ME/UNFk1tYftEI/AAAAAAAAFeI/Ppa8tkNHKCc/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.53.53.png" alt="" /></p>
-
-<p>部落格的 PV 只有 4433，UV 只有 908 人，也就是說每一位訪客至少訪問了 4.88 個頁面。同時網站的跳出率是 63.71%，看來我的標題還不夠殺人，所以感覺跳出率還不算太高嘛。:p</p>
-
-<p><img src="http://lh6.googleusercontent.com/-8CznJnn7Oug/UNFpcuSmmOI/AAAAAAAAFec/LoXKL3e5_ic/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25883.14.35.png" alt="" /></p>
-
-<p>令我蠻訝異的是訪問我部落格的訪客，Mac 用戶竟然高達了 41.76%，即使從次要維度去篩選掉一些可能是我自己訪問的紀錄，也還是有超過 36%。可能是因為寫了一些關於 Ruby 的技術文章，引來了相同生態圈的讀者。</p>
-
-<p><img src="http://lh6.googleusercontent.com/-QgTIODhkcLg/UNFr_M0YFqI/AAAAAAAAFew/l5r1xG1-1N0/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25883.25.24.png" alt="" /></p>
-
-<p>訪客的地理位置絕大多數都是台灣、香港跟大陸來的，除亞太地區外，最多來源的是美國，前三名分別是 California、Texas 跟 Maryland 這三個地方。</p>
-
-<h2>Foursquare 台北市足跡</h2>
-
-<p><img class="center" src="http://lh4.googleusercontent.com/-mDo7GGwJFvY/UNFW_7tziwI/AAAAAAAAFc4/Jvt3ewvAb8M/s640/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25881.55.22.png"></p>
-
-<p>把 Foursquare 的歷史足跡用 <a href="http://www.wheredoyougo.net/">Where Do You Go</a> export 到 Google Map 上來看，我最常活動的幾個區域是仁愛圓環、台北車站、信義區跟內湖 Costco，看來台北市很多地方我都沒去過啊……Orz</p>
-
-<h2>iTunes 音樂排行</h2>
-
-<p><img src="http://lh4.googleusercontent.com/-_utNzfVzeok/UNFatFCONxI/AAAAAAAAFdM/frv12MhD2hw/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.11.26.png" alt="itunes" /></p>
-
-<p>用 iTunes 聽音樂是 10 月底<a href="http://photos.chh.tw/post/34282965017/earpods">換了耳機</a>才開始比較常聽（因為聲音變清楚了 XD），最常聽的前五首歌竟然全都被 Jason Mraz 包了！</p>
-
-<h2>Alfred 使用統計</h2>
-
-<p><img src="http://lh5.googleusercontent.com/-UFsv7dnYrng/UNFdzzAAC4I/AAAAAAAAFd0/27E1jUnFzOo/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-19%2520%25E4%25B8%258B%25E5%258D%25882.24.59.png" alt="alfred" /></p>
-
-<p>原本我的 Alfred 是從 Mac App Store 上安裝的，可是該版本無法使用 <a href="http://www.alfredapp.com/powerpack/">PowerPack</a>，所以 12 月 2 日我就改從 Alfred 官網上下載另外一個版本，所以統計發生了一點問題，實際上起始時間應該是 2012 年 2 月 19 日才對，總共使用 6384 次，平均每天使用 21 次。</p>
-
-<p>我覺得 Alfred 提供這個功能真不錯，可以讓使用者透過量化的數據，了解到自己對這個軟體的依賴性。</p>
-
-<h2>終端機指令使用統計</h2>
-
-<p>上個月使用 Bash 的統計放在「<a href="/posts/oh-my-zsh/">OH MY ZSHELL!</a>」，以下是這個月來使用 Zsh 的統計：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> 1  1057  21.7356%    c
-</span><span class='line'> 2  686   14.1065%    git
-</span><span class='line'> 3  552   11.351%     cd
-</span><span class='line'> 4  384   7.89636%    lsa
-</span><span class='line'> 5  183   3.76311%    stt
-</span><span class='line'> 6  172   3.53691%    rails
-</span><span class='line'> 7  161   3.31071%    pry
-</span><span class='line'> 8  144   2.96114%    ..
-</span><span class='line'> 9  131   2.69381%    rvm
-</span><span class='line'>10  121   2.48818%    rake
-</span><span class='line'>11  110   2.26198%    ls
-</span><span class='line'>12  100   2.05634%    clear
-</span><span class='line'>13  77    1.58338%    which
-</span><span class='line'>14  67    1.37775%    curl
-</span><span class='line'>15  61    1.25437%    open
-</span><span class='line'>16  43    0.884228%   brew
-</span><span class='line'>17  40    0.822538%   ruby
-</span><span class='line'>18  40    0.822538%   rm
-</span><span class='line'>19  37    0.760847%   bundle
-</span><span class='line'>20  37    0.760847%   blog</span></code></pre></td></tr></table></div></figure>
-
-
-<p>其中使用 <code>clear</code> 這個指令的比例竟然高達 24%，這個是強迫症嗎？:p</p>
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'><a href="http://manytricks.com/timesink/" alt="time-sink" target="_blank">Time Sink</a> 是 <a href="http://manytricks.com/" alt="many-tricks" target="_blank">Many Tricks</a> 公司出的產品，他們家最有名的應該是 <a href="http://manytricks.com/moom/" alt="moom" target="_blank">Moom</a> 這套視窗大小的控制軟體吧。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>這張神圖可以分割成 2592 個 2048px x 2048px 的圖，我不曉得他背後用的技術原理，不過顯然這造成了大量的訪問 request。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>現在 Google Chrome 的 API 好像用的是 start_page 這個名稱。 <a href='#fnref:3' rev='footnote'>↩</a></li><li id='fn:4'>比如說從 Tweetbot、Alfred 打開的網址，所以這類的網址以 <a href="http://t.co/" alt="t-co" target="_blank">t.co</a> 等居多。 <a href='#fnref:4' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/page/7/">&larr; Older</a>
@@ -747,7 +641,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  Copyright &copy; 2016 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
   <section class="contruction-wrap">
     <div class="contruction"></div>
   </section>

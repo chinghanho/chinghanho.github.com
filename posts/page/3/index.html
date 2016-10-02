@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="先前曾經寫過怎麼使用 Pathogen 管理 Vim 的外掛，Git 的 submodule 用久了開始覺得很不方便，有時候只是要測試一下新玩具，用完就刪掉，可是前後要操作的指令至少超過四個，實在有夠麻煩。 正打算來寫個 script 自動化過程，但這種東西怎麼可能沒人寫過，於是上網找了一下， &hellip;">
+  <meta name="description" content="最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。 在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/3/" />
-<meta property="og:description" content="先前曾經寫過怎麼使用 Pathogen 管理 Vim 的外掛，Git 的 submodule 用久了開始覺得很不方便，有時候只是要測試一下新玩具，用完就刪掉，可是前後要操作的指令至少超過四個，實在有夠麻煩。 正打算來寫個 script 自動化過程，但這種東西怎麼可能沒人寫過，於是上網找了一下， &hellip;" />
+<meta property="og:description" content="最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。 在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="先前曾經寫過怎麼使用 Pathogen 管理 Vim 的外掛，Git 的 submodule 用久了開始覺得很不方便，有時候只是要測試一下新玩具，用完就刪掉，可是前後要操作的指令至少超過四個，實在有夠麻煩。 正打算來寫個 script 自動化過程，但這種東西怎麼可能沒人寫過，於是上網找了一下， &hellip;" />
+<meta itemprop="description" content="最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。 在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,106 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/my-password-algorithm/">每個人都應該有一套自己的密碼演算法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-29T16:06:00+08:00" pubdate data-updated="true">Jun 29<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh4.googleusercontent.com/-XJ2BlPNnueY/Uc7GM1tq0bI/AAAAAAAAGgM/EDQev1B22wU/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202013-06-29%2520%25E4%25B8%258B%25E5%258D%25887.32.00.png" alt="the-matrix" /></p>
+
+<p>最近有位朋友的 Facebook 帳號第二次被盜，然後一堆人被他加進一些討厭又奇怪的團購社團，那位朋友也是尷尬又無奈，所以我就教他一些我設定密碼的「演算法」，聊天內容很多，我就順便整理到部落格來分享，希望對其他人有用。</p>
+
+<p>在設定密碼前應該要有個基本認識，就是這個密碼可能對於你媽而言是保密的，但是在<del>室友</del>駭客面前、或是網站管理員面前，它是透明毫無隱藏的，所以在這前提下就不應該把每個網站全部設同個密碼，因為駭客可以拿這套帳號密碼去登入其他網站。</p>
+
+<h2>密碼演算法</h2>
+
+<p>但是每個網站密碼都不一樣怎麼記得住？所以需要一套「演算法」，以後只需要記憶這套算法，而不是去記密碼。「演算法」聽起來好像很神奇，其實只是一套組合的方法，隨便舉例：</p>
+
+<blockquote><p>網站分級變數 + 常數 + 網站辨識代號 = 密碼</p></blockquote>
+
+<p>以下來分別說明這些東西是什麼。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/my-password-algorithm/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/osx-windows-switch-applications-ux/">OS X 與 Windows 切換應用程式的介面體驗</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-10T15:39:00+08:00" pubdate data-updated="true">Jun 10<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>用了好一陣子 OS X 回頭去用 Windows，發現有好多不習慣，除了主要的功能鍵 <kbd>Ctrl</kbd> 跑到鍵盤邊緣去了（OS X 主要功能鍵 <kbd>Command</kbd> 就在空白鍵旁邊比較近），手指頭常常按錯之外，最近在整理硬碟資料夾的時候又被一個小小的切換視窗功能給煩到。</p>
+
+<p>常用電腦的人一定都很熟悉 Ctrl + Tab 這個功能，可以快速在不同視窗之間切換，可是在 Windows 下當我使用這個功能時，給我的介面是這樣的：</p>
+
+<p><img src="https://lh5.googleusercontent.com/-izHKKLQ5a8Q/UbWDPvs5uiI/AAAAAAAAGY4/FiR5NnVj9Ys/s592/switch-windows.png" alt="windows-switching-windows" /></p>
+
+<p>主要是一個視窗縮圖，和一個小小的應用程式 icon 塞在右下角，辨識度非常地差，我很難一眼就快速認出哪個視窗是我要切換的應用程式。再來看看 OS X 切換視窗的介面：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/osx-windows-switch-applications-ux/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -238,146 +338,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/vim-plugins-manager-pathogen/">Vim 補丁管理器：Pathogen</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-03T09:07:00+08:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="https://lh5.googleusercontent.com/-8oZ4apnadkQ/UVuFq3nS-NI/AAAAAAAAF9A/oJi0DRBBXYk/s690/mvim-screenshot.png" alt="mvim-screenshot" /></p>
-
-<p>2013.04.12 更新：今天把 Command-T 移除掉換用 <a href="https://github.com/kien/ctrlp.vim">ctrlp</a>，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
-2013.05.25 更新：今天起改用 Vundle 來管理，可以參考我的新文章：「<a href="/posts/vim-vundle/">更好用的 Vim 外掛管理工具：Vundle</a>」</p>
-
-<h2>安裝 Pathogen</h2>
-
-<p>管理 Vim 補丁我用的是 <a href="https://github.com/tpope/vim-pathogen">Pathogen</a> 這套，可以讓所有補丁統一放在 <em>~/.vim/bundle</em> 下，每個補丁就是一個獨立的資料夾，想要移除就直接砍掉即可。安裝方法是將 <em>pathogen.vim</em> 腳本放在 <em>~/.vim/autoload</em> 目錄下，可以用以下指令完成：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir -p ~/.vim/autoload ~/.vim/bundle; \
-</span><span class='line'>curl -Sso ~/.vim/autoload/pathogen.vim \
-</span><span class='line'>    https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然後將這行加進 <em>.vimrc</em> 裡，啟動 Vim 時便會自動讀取 <em>~/.vim/bundle</em> 下的補丁檔案：</p>
-
-<pre><code>" auto load all plugins in vim bundle
-execute pathogen#infect()
-</code></pre>
-
-<h2>安裝補丁</h2>
-
-<p>之後只要將下載的補丁資料夾拖進 <em>~/.vim/bundle</em> 裡面即可，不過我更偏愛使用 <a href="http://git-scm.com/">Git</a> 來管理。假設要安裝 <a href="https://github.com/wincent/Command-T">Command-T</a> 補丁，可以用 Git 的 submodule 指令完成：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/.vim
-</span><span class='line'>mkdir ~/.vim/bundle // if you have not yet created this directory
-</span><span class='line'>git submodule add https://github.com/wincent/Command-T.git bundle/command-t
-</span><span class='line'>git add .
-</span><span class='line'>git commit -m "install Command-T plugin as a submodule"</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<!-- git submodule update --init -->
-
-
-<h2>更新補丁</h2>
-
-<p>使用 Git 安裝補丁的好處是可以自己動手 hack，也可以保持更新。對單一補丁更新只要變更所在目錄到該補丁的位置，然後 <code>git pull</code> 去拉 upstream 的最新程式碼：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/.vim/bundle/command-t
-</span><span class='line'>git pull origin master</span></code></pre></td></tr></table></div></figure>
-
-
-<p>要一次更新所有已安裝的補丁，則可以用 Git 的 <code>foreach</code> 指令來更新每個補丁的最新版本：</p>
-
-<pre><code>git submodule foreach git pull origin master
-</code></pre>
-
-<h2>後記</h2>
-
-<p>平常被 Sublime Text 的 Package Control 寵慣了，來用 Vim 感到非常的麻煩和不習慣，而且 Command-T 安裝後還要用 Ruby 跟 C 去編譯才能用，這到底是什麼鬼編輯器啦！XD</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/https-www-google-com-vs-https-encrypted-google-com/">Google 搜尋加密有兩種</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-22T13:53:00+08:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>剛剛看 <a href="http://www.businessinsider.com/google-products-youve-never-heard-of-2013-3#encryptedgooglecom-is-a-more-secure-way-to-search-for-things-encrypted-uses-secure-sockets-layer-ssl-which-is-the-same-security-that-banks-use-online-11">Business Insider</a> 提到了 Google 的 <a href="https://encrypted.google.com/">encrypted.google.com</a> 這個網址，記得在 Google 還沒有對已登入用戶全面預設用 <a href="http://en.wikipedia.org/wiki/HTTP_Secure">HTTPS</a> 連線以前，<em>encrypted.google.com</em> 是專門用來使用 HTTPS 的網址，也就是當連線到 <em>https://www.google.com</em> 時會被自動跳轉到 <em>https://encrypted.google.com</em>。</p>
-
-<p>既然現在 Google 對於已登入的用戶已經預設用 HTTPS 連線，那這個東西還留著幹嘛？所以<a href="http://security.stackexchange.com/questions/32367/what-is-the-difference-between-https-google-com-and-https-encrypted-google-c">問一下 Google 找答案</a>，原來 <em>encrypted.google.com</em> 另有其他特異功能，兩者之間的差異，主要在於點擊廣告與搜尋結果時，處理 <a href="https://zh.wikipedia.org/wiki/HTTP%E5%8F%82%E7%85%A7%E4%BD%8D%E5%9D%80">HTTP 參照位址</a>的方式不同。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/posts/https-www-google-com-vs-https-encrypted-google-com/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/page/4/">&larr; Older</a>
@@ -397,7 +357,7 @@ execute pathogen#infect()
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  Copyright &copy; 2016 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
   <section class="contruction-wrap">
     <div class="contruction"></div>
   </section>

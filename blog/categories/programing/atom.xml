@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Programing | @ChingHanHo]]></title>
   <link href="http://blog.chh.tw/blog/categories/programing/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2015-10-01T00:37:39+08:00</updated>
+  <updated>2016-10-02T20:19:53+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,406 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[SCSS 物件導向模組設計 (1)]]></title>
+    <link href="http://blog.chh.tw/posts/scss-object-oriented/"/>
+    <updated>2016-10-02T19:47:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/scss-object-oriented</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/mZCl_NgujdrKc-XhTqKsXA30gUb7dGQaQhe4Jjx8Blj4_97XWHoy5Zbfq6bk2GCu59jt0Gdu1Li8wCI3iCr9ejKu_wFJxzI4u6IrFl--RQ3KER-J0s4WXZ7f5VuQkH9Kc1TijUI6tHbGMdCt-r_fYO9wUI9ImbRlIhBTW4dgkg2YRDwIFbJjeMGWgQHBtjUb1dmsmjmKtcqWVPH5yfdnXxItyvLUCuA2zuN1dW90gljU6fdj5p1ivtoNQERUrJpXUhF0F_sDQcYsc2m9YzzOKvVnmvYDo0tUtmw1YzUts1PwrybI-G9c-7gKrc12Z_8PZl9dmF4GqOmi4c8ODPFFTxnZZGW5OYTGYah3LtiEQR8OzDY5HuOEKm2LUGPOLdBHRZVT-Xs6Ljy1cx6DLIAVPb1Q1SukfmDigXDyaLimn9-oEazRlugDF9Q2qStJaRzrsi2Ht6tnFZ8LK1XsTjgFpMh3mRnGQCKBewIjd7FiVnYGtT0f3XMhkSjv24UYW3gJAZuPLBjl4P8YQBW20ZLWQi33oCDxQKLr6MOLp-cx7YjOGSqfoYkAvcy3F08TyA2XAhV2PL_4g5gAqnETmUZOPmep9kHwy1gFL1eYJhTdLAcH982D-w=w1101-h755-no" alt="" /></p>
+
+<p>三年前曾經寫過「<a href="http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/">劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範</a>」探討 OOCSS 模組化的方法論，時至今日對於模組化設計又有新的認識跟理解，大原則跟三年前的方法沒有出入，只是多做解釋跟補充。</p>
+
+<p>OOCSS 物件導向是解釋設計原則，但是不限於語法的設計。</p>
+
+<p>如果這個議題有興趣，歡迎繼續往下閱讀，如果有任何想法也歡迎留言與我討論！</p>
+
+<!-- more -->
+
+
+<p>這篇文章會解釋的內容，包括四個設計原則：</p>
+
+<ul>
+<li><a href="#srp">單一責任原則</a></li>
+<li><a href="#lkp">極少化原則</a></li>
+<li><a href="#isp">介面設計原則</a></li>
+<li><a href="#ocp">開放封閉原則</a></li>
+</ul>
+
+
+<p>SCSS 模組化設計模式：</p>
+
+<ul>
+<li><a href="#cp">元件模式</a></li>
+<li><a href="#sp">語義化模式</a></li>
+</ul>
+
+
+<hr />
+
+<p><a name="srp"></a></p>
+
+<h2>單一責任原則</h2>
+
+<p>一個 class 只負責一件事情。這個原則不是指 <a href="https://github.com/marmelab/universal.css">universal.css</a> 這種設計方式，事實上這個專案是個反諷。單一責任原則是指職責獨立、目的明確的 class。</p>
+
+<p>``` scss
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}</p>
+
+<p>.clearfix:after {
+  clear: both;
+}
+```</p>
+
+<p><a name="lkp"></a></p>
+
+<h2>極少化原則</h2>
+
+<p>對於層級的依賴應該盡可能減少。</p>
+
+<p>多半的人剛開始寫 SCSS 都為它的巢狀語法感到著迷：</p>
+
+<p>``` scss
+.page {
+  .content {</p>
+
+<pre><code>.header {
+  .inner {
+    .group-list {
+      .group-item {
+        a {
+          ...
+        }
+      }
+    }
+  }
+}
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>這個寫法有改善的空間，因為：</p>
+
+<ul>
+<li>不容易閱讀：當層級非常多的時候，哪段屬性屬於哪層 class 會看不清楚。</li>
+<li>太倚賴 DOM 結構：一旦改變 DOM 層級結構，SCSS 也可能會需要做層級調整，層級越多耦合性越高，意味維護成本越高。</li>
+</ul>
+
+
+<p>改善的方式便是在相同的命名空間下，試著將層級攤平。適當使用巢狀語法的範例：</p>
+
+<p>``` scss
+.nav {
+  list-style-type: none;
+  margin: 0;</p>
+
+<p>  li {</p>
+
+<pre><code>display: inline-block;
+</code></pre>
+
+<p>  }</p>
+
+<p>  a {</p>
+
+<pre><code>display: block;
+text-decoration: none;
+color: blue;
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>即便 <code>&lt;a&gt;</code> 的 DOM 結構是屬於 <code>&lt;li&gt;</code> 的子元素，仍然不影響它們的作用：</p>
+
+<p>``` html</p>
+
+<ul class="nav">
+  <li><a href="...">...</a></li>
+  <li><a href="...">...</a></li>
+  <li><a href="...">...</a></li>
+</ul>
+
+
+<p>```</p>
+
+<p>有時候與 DOM 元素本身有絕對關聯的 class，可以在使用區塊註解加以說明：</p>
+
+<p><code>scss
+/* ul */.nav {
+  ...
+}
+</code></p>
+
+<p><a name="isp"></a></p>
+
+<h2>介面設計原則</h2>
+
+<p>針對介面設計，而不是針對實踐方式設計。這個原則可以減少重複的程式碼，增加可維護性。</p>
+
+<p>例如兩個有著相似樣式的區塊，往往會針對區塊實踐它們各別的樣式：</p>
+
+<p>``` scss
+.card-default {
+  border: 1px solid hsla(0, 0%, 33%, 0.85);
+  padding: 15px;
+}</p>
+
+<p>.card-primary {
+  border: 1px solid hsla(0, 0%, 66%, 1);
+  padding: 20px;
+}
+```</p>
+
+<p>``` html</p>
+
+<div class="card-default">
+  ...
+</div>
+
+
+
+
+<div class="card-primary">
+  ...
+</div>
+
+
+<p>```</p>
+
+<p>應該先設計這個模組的介面（interface），再依照介面實踐它不同的樣式特性：</p>
+
+<p>``` scss
+// 先設計介面
+.card {
+  border: 1px solid transparent;
+  padding: 10px;
+}</p>
+
+<p>// 再實踐不同的介面樣式
+.card-default {
+  border-color: hsla(0, 0%, 33%, 0.85);
+  padding: 15px;
+}</p>
+
+<p>.card-primary {
+  border-color: hsla(0, 0%, 66%, 1);
+  padding: 20px;
+}
+```</p>
+
+<p>``` html</p>
+
+<div class="card card-default">
+  ...
+</div>
+
+
+
+
+<div class="card card-primary">
+  ...
+</div>
+
+
+<p>```</p>
+
+<p>一旦先有了介面，後續也才能夠知道該怎麼對此模組進行擴充。</p>
+
+<p><a name="ocp"></a></p>
+
+<h2>開放封閉原則</h2>
+
+<p>對修改封閉、對擴充開放。除非是根本性上地調整模組的樣式，才會需要去改動到介面層級的樣式。這裡引用上一則原則的範例：</p>
+
+<p>``` scss
+.card {
+  border: 1px solid transparent;
+  padding: 10px;
+}</p>
+
+<p>.card-default {
+  border-color: hsla(0, 0%, 33%, 0.85);
+  padding: 15px;
+}
+```</p>
+
+<p>``` html</p>
+
+<div class="card card-default">
+  ...
+</div>
+
+
+<p>```</p>
+
+<p>當某個頁面需要對此介面做特殊調整，可以使用開放封閉原則，對此介面進行擴充，而不會影響到其他頁面樣式：</p>
+
+<p><code>scss
+.card-users {
+  border-color: hsla(0, 0%, 100%, 1);
+}
+</code></p>
+
+<p>``` html</p>
+
+<div class="card card-default card-users">
+  ...
+</div>
+
+
+<p>```</p>
+
+<hr />
+
+<p><a name="cp"></a></p>
+
+<h2>元件模式</h2>
+
+<p>元件模式的哲學在於 class 本身與語義化無關，應該關注它們是否合理，不要刻意強調 class 名稱要符合語義，而要注重使用的合理性與未來性。例如：子元素區塊使用 <code>.list-item</code> 上層元素使用 <code>.list-group</code> 作為子元素的集合，這與元素本身是否是個序列清單（<code>&lt;ol&gt;</code> ）無關。</p>
+
+<p>在前面瞭解過四大設計原則之後，現在已經可以很輕易地設計出模組。先設計介面（interface），再實踐不同的模組樣式：</p>
+
+<p>``` scss
+.card {
+  background-color: transparent;
+}</p>
+
+<p>.card-default {
+  background-color: white;
+}</p>
+
+<p>.card-primary {
+  background-color: red;
+}
+```</p>
+
+<p>在 HTML 上的使用方式：</p>
+
+<p>``` html</p>
+
+<div class="card card-default">...</div>
+
+
+<div class="card card-primary">...</div>
+
+
+<p>```</p>
+
+<p>元件模式好處在於開發前端版型，只需要專注在刻寫 HTML 上，快速調用各種模組 class 名稱、減少花時間替 class 命名的 context switch 成本。缺點亦即很容易過度膨脹 HTML 體積，例如使用熱門框架 <a href="http://getbootstrap.com/">Bootstrap</a> 的人們應該對此都不陌生：</p>
+
+<p>``` html</p>
+
+<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+  ...
+</div>
+
+
+<p>```</p>
+
+<p><a name="sp"></a></p>
+
+<h2>語義化模式</h2>
+
+<p>語義化強調元素本身所代表的意義，但並非漫無目的地設計 class；結合四種模組設計原則，加上 SCSS 語法的便利性，可以很容易地設計出容易維護及擴充的模組：</p>
+
+<p>``` scss
+card {
+  @at-root {</p>
+
+<pre><code>%#{&amp;} {
+  background-color: transparent;
+}
+
+%#{&amp;}-default {
+ background-color: white;
+}
+
+%#{&amp;}-primary {
+  background-color: red;
+}
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>.content {
+  @extend %card;
+  @extend %card-default;
+}</p>
+
+<p>.sidebar {
+  @extend %card;
+  @extend %card-primary;
+}
+```</p>
+
+<p>這會產生出以下的結果：</p>
+
+<p>``` scss
+.content,
+.sidebar {
+  background-color: transparent;
+}</p>
+
+<p>.content {
+  background-color: white;
+}</p>
+
+<p>.sidebar {
+  background-color: red;
+}
+```</p>
+
+<p>因此可以清晰、明確地定義出區塊所代表的意義：</p>
+
+<p>``` html</p>
+
+<div class="sidebar">...</div>
+
+
+<div class="content">...</div>
+
+
+<p>```</p>
+
+<p>語義化模式的優點在於減少 HTML 冗長的 class 名稱串聯，透過 SCSS 語法優勢，對不同的區塊套入相同的模組樣式。缺點在於切出每個區塊時沒有那麼容易替其命名，增加了中間「做決定」的思考成本。</p>
+
+<p>兩個模式並非相互衝突，可以在適當的時機交互結合應用。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用一個 HTML 樣版引擎的選擇重點]]></title>
+    <link href="http://blog.chh.tw/posts/how-to-select-html-template-engines/"/>
+    <updated>2016-07-22T15:02:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/how-to-select-html-template-engines</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/QgvDvJX1TZztm_lBHTgAD2gEhw89v82uk9DVs1l69GlRVlSQ_fRxQ_WiNk54B-iUbyPB7AoUm2ZoBpHUD3cN99AHB6VTcSVUG24zeEypIKoWgk9cUnbnPMHsvmU5eoBjjQSBKaPBitjKvu82xnqYL5Gm0mMlU8OAzHcmh3_WxZx8EUsqB-roXuFp31zGkW84Z4JY3l01F6mPK6vTss_Xdg707k0y4lo0OX8mUnETc196rK2L5-y1clcgvLB33qvaBAHQq6JOqbuOmcV3_qbJb-NDC714KqTB-R6m15KBcTYk_72s8rUUOTKDGjDpsm-nVIGdwxJAjYICl8Cz7mB_c9pVeRKdx17ennNpyhUrK1JYuWAk4Gk9wPQv3_lt8PuxrvUMZwwkranlg1Ob0MB6XuQSn2MFaEGU1XFbgAOMZ6iPKjxceKupt9bE5aPevLjMk_O_WvKQAAzwg7Ne8BK_tUrmHWbYwvhUUpcwV-sKSsCFrE4Ps31LvgxqMWQ-c_Z0iq7Ou5WFWfc2eDrx_JWptmkTeWDfBmjo9uVuusVuXjy4g1G-GpSUIhU8ZYTBlKZZJA3dFRwevNTOmlC_hsFL8kgcfqbm_SXP=w1101-h493-no" alt="" /></p>
+
+<h3>語法</h3>
+
+<p>首先當然是要喜歡上該樣版引擎的語法，因為使用樣版引擎的主要目的就是為了加速撰寫 HTML 的生產力，給先讓自己喜歡使用它，才有辦法寫得有效率。多數樣版引擎的入口頁會用簡單的範例，快速火力展示它的特點，這是很好的開始。但也因為這是精心設計的著陸頁，目的是攻取心裡的小惡魔，所以在選擇採用這套樣版引擎前也得特別小心。</p>
+
+<h3>擴充性</h3>
+
+<p>一個好的樣版引擎可以讓自己掌控專案的伸縮性，例如註冊新的 helper 跟 block，節省撰寫重複的程式碼，靈活地設計版型架構。</p>
+
+<h3>安全性</h3>
+
+<p>對於經驗不足的開發者來說這很容易鑄成大錯，在沒有意識下的輸出未消毒的內容，都可能會造成使用者傷害，而一個好的樣版引擎應該要預設消毒輸出。如果對自己的經驗很有信心，覺得這是初學者才會犯的錯誤，但也不能夠保證其他同事們不會粗心大意。</p>
+
+<h3>勿矯枉過正</h3>
+
+<p>使用樣版引擎是為了增加團隊在撰寫 HTML 的效率，所以應該以團隊的技術水平作為優先考量，如果團隊的平均技術水平沒有達到而貿然採用也只是增加大家困擾而已。 不要為了使用而使用。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用 Zepto + Velocity 無縫取代 jQuery 更輕巧]]></title>
@@ -336,211 +736,6 @@ if('ondeviceproximity' in window) {
 <p>頁面三其實都相差不遠，但 node.js v0.10.36 仍然反應最快。</p>
 
 <p>結論就是……等網站上到遠端 server 之後再來測一次真實網路環境下的 TTFB 吧！以目前在本機測試的結果，還沒有很想更新到 node.js v0.12.0，而且以<a href="http://blog.chh.tw/posts/what-is-iojs-nodejs-forking/">現在這局勢</a>看來 io.js 勢頭很高，再過一段時間來評估直接把專案跳去改用 io.js 算了。:p</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Node 樣版引擎評估：Jade、Handlebars]]></title>
-    <link href="http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars/"/>
-    <updated>2014-11-29T01:38:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/node-template-engine-jade-vs-handlebars</id>
-    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/-aa-cbFoMPDs/VHi1FfBlM-I/AAAAAAAAIJM/T6wEE0RlEtQ/w640-h201-no/Screen%2BShot%2B2014-11-29%2Bat%2B1.44.09%2BAM.png" alt="" /></p>
-
-<h2>短文版</h2>
-
-<p>用 jade。</p>
-
-<h2>長文版</h2>
-
-<p>因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。</p>
-
-<p>活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的：</p>
-
-<ul>
-<li><a href="https://github.com/tj">TJ</a> 早期樣版引擎代表作 <a href="https://github.com/tj/ejs/">ejs</a></li>
-<li>以及 TJ 後來的 <a href="https://github.com/jadejs/jade">jade</a></li>
-<li>還有 <a href="https://github.com/wycats">wycats</a>（<a href="http://yehudakatz.com/">Yehuda Katz</a>）的 <a href="https://github.com/wycats/handlebars.js">handlebars</a></li>
-</ul>
-
-
-<p>TJ 當初設計 <a href="http://expressjs.com/">Express</a> 承襲 Ruby micro-framework <a href="http://www.sinatrarb.com/">Sinatra</a> 的設計理念，ejs 好像是因應而生（？），從 ejs 語法上面可以看到非常多 Ruby 樣版引擎 ERb 的影子，對我來說是最「友善」的。不過 TJ 另創 jade 樣版引擎加上投奔 Go 世界以後，ejs 的活躍程度越來越低，從今年 5 月之後就再也沒有更新過了。</p>
-
-<p>我向來都會先以「社群活躍度」來評量一個程式專案計畫可靠度，jade 貢獻者在 Github 上成立 <a href="https://github.com/jadejs">jadejs</a> 組織來維護專案，長久來看蠻可靠的。而 handlebars 在 Github 上也廣受 Javascript 開發者歡迎，所以最後我就拿這兩套樣版引擎來比較，以下是值得提出來講的部分。</p>
-
-<p>（再強調一次好了：語法設計、擴充性、使用彈性是我比較在意的項目）</p>
-
-<!-- more -->
-
-
-<h3>Layouts</h3>
-
-<p>寫過 Rails 後就很喜歡那種把不同 controller actions 的 view，跟 layouts 拆得乾乾淨淨的做法。這點 handlebars 可以做到，也是我最喜歡的一點，jade 必須在每一個 view 裡面寫上重複的 code，來表示外層的 layout：</p>
-
-<p>``` jade
-extends layout</p>
-
-<p>block content
-  h1= post.title
-```</p>
-
-<p>把內容的部分宣告成 block，然後套進 layout 裏去。這也不是大缺點啦，block 寫法可以讓 view 不同區塊使用上更有彈性，但這就很考驗 block 的拆分功力了，不然真的會很容易寫出大量讓人崩潰的縮進層級。</p>
-
-<h3>Partials</h3>
-
-<p>版型上共用的部分一定會拆出來到同個檔案去維護，例如 header、footer、sidebar 之類的，handlebars 要做到這點繞得也太大圈：得先告訴 handlebars 的實例（instance）某個目錄放著我要的 partials 檔案，例如有個 <code>header.hbs</code> partial 放在 <code>/views/partials</code> 目錄下，然後要在 app 主要程式中寫：</p>
-
-<p><code>js
-var hbs = require('hbs');
-hbs.registerPartial(__dirname, '/views/partials');
-</code></p>
-
-<p>才能在 view 裡面帶入 header 這個 partial：<code>{{&gt; header}}</code>。這樣讓檔案的組織非常缺乏彈性，如果 partials 不是在同個地方而是多個目錄，這樣光是找到檔案就很直覺。</p>
-
-<h3>條件判斷</h3>
-
-<p>這個是壓死駱駝最後一根稻草，handlebars 沒有辦法用很簡單的條件判斷式，內建的 <code>#if</code> helper 根本不是拿來寫「條件判斷」的，當初掃描完文件後一定會很自然地寫下 <code>{{#if query === 'list'}}</code>，這樣是不行的喔！</p>
-
-<p><code>#if</code> 頂多拿來判斷物件裡面有東西還是沒東西而已，如果真要寫個「條件判斷」一樣要拆去寫 helper，不管你的是多簡單的判斷。</p>
-
-<h3>結論</h3>
-
-<p>當初 wycats 寫 handlebars 時主要是為了解決前端樣版引擎的問題，所以可以發現很多 server-side 應用的場景 handlebars 都不適用。jade 是 TJ 寫給 Express 用的，讓我最不適應的地方是像 <a href="http://haml.info/">HAML</a> 那樣「縮進崇拜主義」簡化的語法我實在不敢恭維，但顯然目前沒有比「不習慣」更好的理由來阻止我用它，因為 jade 其他面向提供的 solution 確實都能解決問題。</p>
-
-<p>結論就是用 jade！</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MongoDB 的 ODM：mongoose 簡單介紹]]></title>
-    <link href="http://blog.chh.tw/posts/mongodb-odm-mongoose/"/>
-    <updated>2013-09-06T11:11:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/mongodb-odm-mongoose</id>
-    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/-Tdo_5cAPDnk/UilIbkRmleI/AAAAAAAAGqQ/vh6dM2gZvV4/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-06+%25E4%25B8%258A%25E5%258D%258811.12.48.png" alt="mongoose" /></p>
-
-<p><a href="http://mongoosejs.com/">mongoose</a> 是一套給 Node.js 用的 MongoDB ODM，跟常聽到的 ORM 不同的地方只是一些<a href="http://stackoverflow.com/questions/12261866/what-is-the-difference-between-an-orm-and-an-odm">技術名詞定義上的把戲</a>，其實是差不多的意思。</p>
-
-<p>透過 mongoose 可以用包裝過的、更高階的、更直覺的 API 語法，以及模擬 SQL 資料庫 schema-based 的方式，來操作 MongoDB 資料庫。以下是個官方文件給的簡單範例，先建立了一個叫做 Cat 的 Model，<code>model</code> 的第二個參數就是建立 schema 的所在：</p>
-
-<p>``` js
-var Cat = mongoose.model('Cat',
-  { name: String }
-);</p>
-
-<p>var kitty = new Cat({ name: 'Zildjian' });
-kitty.save(function (err) {
-  if (err) // ...
-  console.log('meow');
-});
-```</p>
-
-<!-- more -->
-
-
-<h2>與 MongoDB 建立連線</h2>
-
-<p>這裡繼續沿用上一篇文章「<a href="/posts/node-http-vs-connect-vs-express/">Node.js 的 Http vs Connect vs Express</a>」的例子，先把上一篇文章的範例程式碼複製過來，檔案名稱命名為 <em>server.js</em>，下指令執行 <code>node server.js</code> 這樣可以得到一台簡單的伺服器：</p>
-
-<p>``` js
-var express = require('express')
-  , app     = express()</p>
-
-<p>app.use(express.cookieParser())</p>
-
-<p>app.get('/', function(req, res) {
-  console.log(req.cookies)
-  res.send('hello')
-})</p>
-
-<p>app.listen('4000')
-```</p>
-
-<p>打開瀏覽器訪問 <a href="http://localhost:4000">http://localhost:4000</a> 應該可以看到「hello」的文字，從 console 應該也能看到有關 cookies 的資訊（有可能只是一個空的物件）。</p>
-
-<p>再來就是把 mongoose 給 requrie 進來，然後讓它跟 MongoDB 嘗試建立連線，連線的 URL 協議一定要用 <code>mongodb://</code> 這個 prefix：</p>
-
-<p><code>js
-var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/test')
-</code></p>
-
-<h2>mongoose 的兩個概念：Schema 與 Model</h2>
-
-<p>MongoDB 是以 documents 為基礎，在 SQL 資料庫稱為 table 的東西，在 NoSQL 裡稱為 collection。當然，這又是一種名詞定義上的把戲，實質上大同小異。</p>
-
-<h3>Schema</h3>
-
-<p>mongoose 的 Schema 概念就是用 schema-based 的方式，定義一個 collection 的組成結構，用程式碼描述會這樣子寫：</p>
-
-<p>``` js
-var Schema = mongoose.Schema
-var UserSchema = new Schema(
-  {</p>
-
-<pre><code>name:      { type: String },
-login:     { type: String, unique: true },
-email:     { type: String, unique: true },
-create_at: { type: Date, default: Date.now },
-update_at: { type: Date, default: Date.now }
-</code></pre>
-
-<p>  }
-)
-```</p>
-
-<p>因為 MongoDB 是 schema-less 相當有彈性，所以如果上面這個 schema 某些「欄位」沒有賦值，那麼在 MongoDB 裡就不會有那個「欄位」。說「欄位」是 SQL 的思維，可是我覺得這樣講會比較好理解。</p>
-
-<h3>Model</h3>
-
-<p>而 mongoose 的 Model 概念，則是對一個 collection 結構定義與操作方法的集合，也就是用 Schema 定義了一個 collection 的結構，加上其他對這個 collection 的驗證設定、操作方法等等，便構成了一個 Model。</p>
-
-<p>結合剛剛的 schema 範例，可以再加上一些驗證跟操作的方法：</p>
-
-<p>``` js
-UserSchema.pre('save', function(next) {
-  // do something...
-})</p>
-
-<p>UserSchema.statics = {</p>
-
-<p>  getUserByLogin: function(login, callback) {</p>
-
-<pre><code>this.findOne({ login: login })
-  .exec(callback)
-</code></pre>
-
-<p>  }</p>
-
-<p>}
-```</p>
-
-<p>最後將這個 Schema 定義到一個叫做 User 的 model：</p>
-
-<pre><code>mongoose.model('User', UserSchema)
-</code></pre>
-
-<p>當要使用這個 model 只要用 <code>mongoose.model()</code> 將 model 讀出來，便可以對他進行操作了：</p>
-
-<p>``` js
-var User = mongoose.model('User')</p>
-
-<p>User.getUserByLogin(login, function(err, user) {
-  // here we have a user...
-})
-```</p>
-
-<h2>為什麼 Schema-less 的資料庫需要 Schema-based？</h2>
-
-<p>不過這就很奇怪了，NoSQL 的 MongoDB 本身就是 schema-less 的資料庫，結果用 mongoose 還要去刻意模擬成 schema-based，這樣的思路是什麼？</p>
-
-<p>其實這是對 NoSQL 的 schema-less 的誤解，schema-less 並不代表 no-schema。在應用當中還是需要一個 schema 來代表 model，而 schema-less 只是代表一種彈性的模式。</p>
-
-<p>否則的話，會需要在很多地方寫髒亂的判斷條件，像是這樣的東西：</p>
-
-<p><code>js
-if (cat.name) {
-  console.log(cat.name)  // I got a name
-}
-</code></p>
 ]]></content>
   </entry>
   

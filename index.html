@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。 jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB， &hellip;">
+  <meta name="description" content="三年前曾經寫過「劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範」探討 OOCSS 模組化的方法論，時至今日對於模組化設計又有新的認識跟理解，大原則跟三年前的方法沒有出入，只是多做解釋跟補充。 OOCSS 物件導向是解釋設計原則，但是不限於語法的設計。 如果這個議題有興趣， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/" />
-<meta property="og:description" content="Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。 jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB， &hellip;" />
+<meta property="og:description" content="三年前曾經寫過「劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範」探討 OOCSS 模組化的方法論，時至今日對於模組化設計又有新的認識跟理解，大原則跟三年前的方法沒有出入，只是多做解釋跟補充。 OOCSS 物件導向是解釋設計原則，但是不限於語法的設計。 如果這個議題有興趣， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。 jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB， &hellip;" />
+<meta itemprop="description" content="三年前曾經寫過「劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範」探討 OOCSS 模組化的方法論，時至今日對於模組化設計又有新的認識跟理解，大原則跟三年前的方法沒有出入，只是多做解釋跟補充。 OOCSS 物件導向是解釋設計原則，但是不限於語法的設計。 如果這個議題有興趣， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,105 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/scss-object-oriented/">SCSS 物件導向模組設計 (1)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-10-02T19:47:00+08:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh3.googleusercontent.com/mZCl_NgujdrKc-XhTqKsXA30gUb7dGQaQhe4Jjx8Blj4_97XWHoy5Zbfq6bk2GCu59jt0Gdu1Li8wCI3iCr9ejKu_wFJxzI4u6IrFl--RQ3KER-J0s4WXZ7f5VuQkH9Kc1TijUI6tHbGMdCt-r_fYO9wUI9ImbRlIhBTW4dgkg2YRDwIFbJjeMGWgQHBtjUb1dmsmjmKtcqWVPH5yfdnXxItyvLUCuA2zuN1dW90gljU6fdj5p1ivtoNQERUrJpXUhF0F_sDQcYsc2m9YzzOKvVnmvYDo0tUtmw1YzUts1PwrybI-G9c-7gKrc12Z_8PZl9dmF4GqOmi4c8ODPFFTxnZZGW5OYTGYah3LtiEQR8OzDY5HuOEKm2LUGPOLdBHRZVT-Xs6Ljy1cx6DLIAVPb1Q1SukfmDigXDyaLimn9-oEazRlugDF9Q2qStJaRzrsi2Ht6tnFZ8LK1XsTjgFpMh3mRnGQCKBewIjd7FiVnYGtT0f3XMhkSjv24UYW3gJAZuPLBjl4P8YQBW20ZLWQi33oCDxQKLr6MOLp-cx7YjOGSqfoYkAvcy3F08TyA2XAhV2PL_4g5gAqnETmUZOPmep9kHwy1gFL1eYJhTdLAcH982D-w=w1101-h755-no" alt="" /></p>
+
+<p>三年前曾經寫過「<a href="http://blog.chh.tw/posts/oocss-smacss-and-css-guidelines/">劣以為的 OOCSS 和 SMACSS 以及其他 CSS 規範</a>」探討 OOCSS 模組化的方法論，時至今日對於模組化設計又有新的認識跟理解，大原則跟三年前的方法沒有出入，只是多做解釋跟補充。</p>
+
+<p>OOCSS 物件導向是解釋設計原則，但是不限於語法的設計。</p>
+
+<p>如果這個議題有興趣，歡迎繼續往下閱讀，如果有任何想法也歡迎留言與我討論！</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/scss-object-oriented/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/how-to-select-html-template-engines/">使用一個 HTML 樣版引擎的選擇重點</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-22T15:02:00+08:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh3.googleusercontent.com/QgvDvJX1TZztm_lBHTgAD2gEhw89v82uk9DVs1l69GlRVlSQ_fRxQ_WiNk54B-iUbyPB7AoUm2ZoBpHUD3cN99AHB6VTcSVUG24zeEypIKoWgk9cUnbnPMHsvmU5eoBjjQSBKaPBitjKvu82xnqYL5Gm0mMlU8OAzHcmh3_WxZx8EUsqB-roXuFp31zGkW84Z4JY3l01F6mPK6vTss_Xdg707k0y4lo0OX8mUnETc196rK2L5-y1clcgvLB33qvaBAHQq6JOqbuOmcV3_qbJb-NDC714KqTB-R6m15KBcTYk_72s8rUUOTKDGjDpsm-nVIGdwxJAjYICl8Cz7mB_c9pVeRKdx17ennNpyhUrK1JYuWAk4Gk9wPQv3_lt8PuxrvUMZwwkranlg1Ob0MB6XuQSn2MFaEGU1XFbgAOMZ6iPKjxceKupt9bE5aPevLjMk_O_WvKQAAzwg7Ne8BK_tUrmHWbYwvhUUpcwV-sKSsCFrE4Ps31LvgxqMWQ-c_Z0iq7Ou5WFWfc2eDrx_JWptmkTeWDfBmjo9uVuusVuXjy4g1G-GpSUIhU8ZYTBlKZZJA3dFRwevNTOmlC_hsFL8kgcfqbm_SXP=w1101-h493-no" alt="" /></p>
+
+<h3>語法</h3>
+
+<p>首先當然是要喜歡上該樣版引擎的語法，因為使用樣版引擎的主要目的就是為了加速撰寫 HTML 的生產力，給先讓自己喜歡使用它，才有辦法寫得有效率。多數樣版引擎的入口頁會用簡單的範例，快速火力展示它的特點，這是很好的開始。但也因為這是精心設計的著陸頁，目的是攻取心裡的小惡魔，所以在選擇採用這套樣版引擎前也得特別小心。</p>
+
+<h3>擴充性</h3>
+
+<p>一個好的樣版引擎可以讓自己掌控專案的伸縮性，例如註冊新的 helper 跟 block，節省撰寫重複的程式碼，靈活地設計版型架構。</p>
+
+<h3>安全性</h3>
+
+<p>對於經驗不足的開發者來說這很容易鑄成大錯，在沒有意識下的輸出未消毒的內容，都可能會造成使用者傷害，而一個好的樣版引擎應該要預設消毒輸出。如果對自己的經驗很有信心，覺得這是初學者才會犯的錯誤，但也不能夠保證其他同事們不會粗心大意。</p>
+
+<h3>勿矯枉過正</h3>
+
+<p>使用樣版引擎是為了增加團隊在撰寫 HTML 的效率，所以應該以團隊的技術水平作為優先考量，如果團隊的平均技術水平沒有達到而貿然採用也只是增加大家困擾而已。 不要為了使用而使用。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -496,115 +595,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/what-is-iojs-nodejs-forking/">io.js 是什麼？Node.js 社群分裂事件觀察</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-07T04:29:00+08:00" pubdate data-updated="true">Dec 7<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="https://lh3.googleusercontent.com/-mDHp26oTCxg/VINpfJZV2ZI/AAAAAAAAIJk/FlmyYl4aRBY/w770-h333-no/Screen%2BShot%2B2014-12-07%2Bat%2B4.38.35%2BAM.png" alt="" /></p>
-
-<p>這個事件已經燒了好幾天，剛開始注意到是 Hacker News 上出現「<a href="https://news.ycombinator.com/item?id=8669557">IO.js – Evented I/O for V8 javascript</a>」這篇推文，我甚至還不曉得到底該寫 IO.js 還是 io.js 比較正確。</p>
-
-<p>整件事情發展詭譎得像 <a href="http://www.imdb.com/title/tt1446714/">Prometheus</a> 的 Elisabeth Shaw 剛發現黑色黏液一樣，不知道到底是希望還是崩壞的開始。最近公司有要用 Node.js 所以我就追了一下新聞，大概統整出來的概況寫了這篇觀察紀錄，或許有些可能有錯麻煩在幫我指正，感謝喔！</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/posts/what-is-iojs-nodejs-forking/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/node-template-engine-jade-vs-handlebars/">Node 樣版引擎評估：Jade、Handlebars</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-29T01:38:00+08:00" pubdate data-updated="true">Nov 29<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="https://lh3.googleusercontent.com/-aa-cbFoMPDs/VHi1FfBlM-I/AAAAAAAAIJM/T6wEE0RlEtQ/w640-h201-no/Screen%2BShot%2B2014-11-29%2Bat%2B1.44.09%2BAM.png" alt="" /></p>
-
-<h2>短文版</h2>
-
-<p>用 jade。</p>
-
-<h2>長文版</h2>
-
-<p>因為這個專案效能不會是評估重點，語法設計、擴充性、使用彈性會是比較在意的部分。</p>
-
-<p>活在樣版引擎這個群雄割據的戰國時代實在太多選擇，從各方的評論和簡略地掃描文件上的語法特性，挑出以下幾個我比較喜歡的：</p>
-
-<ul>
-<li><a href="https://github.com/tj">TJ</a> 早期樣版引擎代表作 <a href="https://github.com/tj/ejs/">ejs</a></li>
-<li>以及 TJ 後來的 <a href="https://github.com/jadejs/jade">jade</a></li>
-<li>還有 <a href="https://github.com/wycats">wycats</a>（<a href="http://yehudakatz.com/">Yehuda Katz</a>）的 <a href="https://github.com/wycats/handlebars.js">handlebars</a></li>
-</ul>
-
-
-<p>TJ 當初設計 <a href="http://expressjs.com/">Express</a> 承襲 Ruby micro-framework <a href="http://www.sinatrarb.com/">Sinatra</a> 的設計理念，ejs 好像是因應而生（？），從 ejs 語法上面可以看到非常多 Ruby 樣版引擎 ERb 的影子，對我來說是最「友善」的。不過 TJ 另創 jade 樣版引擎加上投奔 Go 世界以後，ejs 的活躍程度越來越低，從今年 5 月之後就再也沒有更新過了。</p>
-
-<p>我向來都會先以「社群活躍度」來評量一個程式專案計畫可靠度，jade 貢獻者在 Github 上成立 <a href="https://github.com/jadejs">jadejs</a> 組織來維護專案，長久來看蠻可靠的。而 handlebars 在 Github 上也廣受 Javascript 開發者歡迎，所以最後我就拿這兩套樣版引擎來比較，以下是值得提出來講的部分。</p>
-
-<p>（再強調一次好了：語法設計、擴充性、使用彈性是我比較在意的項目）</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/posts/node-template-engine-jade-vs-handlebars/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/page/2/">&larr; Older</a>
@@ -622,7 +612,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  Copyright &copy; 2016 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
   <section class="contruction-wrap">
     <div class="contruction"></div>
   </section>

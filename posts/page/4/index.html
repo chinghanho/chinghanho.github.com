@@ -9,7 +9,8 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="昨天最熱門的消息就是 Google 宣布 Reader 的死亡（GR 的官方部落格上次更新竟然是兩年前），判刑日定在今年 7 月 1 日，RIP。文章的意思是，在執行死刑之前，使用者可以用 Google Takeout 把資料帶走，然後就趕快滾吧！雲端服務大概就是這麼回事吧， &hellip;">
+  <meta name="description" content="2013.04.12 更新：今天把 Command-T 移除掉換用 ctrlp，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
+2013.05.25 更新：今天起改用 Vundle 來管理，可以參考我的新文章：「更好用的 Vim 外掛管理工具： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +31,16 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/4/" />
-<meta property="og:description" content="昨天最熱門的消息就是 Google 宣布 Reader 的死亡（GR 的官方部落格上次更新竟然是兩年前），判刑日定在今年 7 月 1 日，RIP。文章的意思是，在執行死刑之前，使用者可以用 Google Takeout 把資料帶走，然後就趕快滾吧！雲端服務大概就是這麼回事吧， &hellip;" />
+<meta property="og:description" content="2013.04.12 更新：今天把 Command-T 移除掉換用 ctrlp，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
+2013.05.25 更新：今天起改用 Vundle 來管理，可以參考我的新文章：「更好用的 Vim 外掛管理工具： &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="昨天最熱門的消息就是 Google 宣布 Reader 的死亡（GR 的官方部落格上次更新竟然是兩年前），判刑日定在今年 7 月 1 日，RIP。文章的意思是，在執行死刑之前，使用者可以用 Google Takeout 把資料帶走，然後就趕快滾吧！雲端服務大概就是這麼回事吧， &hellip;" />
+<meta itemprop="description" content="2013.04.12 更新：今天把 Command-T 移除掉換用 ctrlp，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
+2013.05.25 更新：今天起改用 Vundle 來管理，可以參考我的新文章：「更好用的 Vim 外掛管理工具： &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +103,146 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/vim-plugins-manager-pathogen/">Vim 補丁管理器：Pathogen</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-03T09:07:00+08:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh5.googleusercontent.com/-8oZ4apnadkQ/UVuFq3nS-NI/AAAAAAAAF9A/oJi0DRBBXYk/s690/mvim-screenshot.png" alt="mvim-screenshot" /></p>
+
+<p>2013.04.12 更新：今天把 Command-T 移除掉換用 <a href="https://github.com/kien/ctrlp.vim">ctrlp</a>，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
+2013.05.25 更新：今天起改用 Vundle 來管理，可以參考我的新文章：「<a href="/posts/vim-vundle/">更好用的 Vim 外掛管理工具：Vundle</a>」</p>
+
+<h2>安裝 Pathogen</h2>
+
+<p>管理 Vim 補丁我用的是 <a href="https://github.com/tpope/vim-pathogen">Pathogen</a> 這套，可以讓所有補丁統一放在 <em>~/.vim/bundle</em> 下，每個補丁就是一個獨立的資料夾，想要移除就直接砍掉即可。安裝方法是將 <em>pathogen.vim</em> 腳本放在 <em>~/.vim/autoload</em> 目錄下，可以用以下指令完成：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir -p ~/.vim/autoload ~/.vim/bundle; \
+</span><span class='line'>curl -Sso ~/.vim/autoload/pathogen.vim \
+</span><span class='line'>    https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後將這行加進 <em>.vimrc</em> 裡，啟動 Vim 時便會自動讀取 <em>~/.vim/bundle</em> 下的補丁檔案：</p>
+
+<pre><code>" auto load all plugins in vim bundle
+execute pathogen#infect()
+</code></pre>
+
+<h2>安裝補丁</h2>
+
+<p>之後只要將下載的補丁資料夾拖進 <em>~/.vim/bundle</em> 裡面即可，不過我更偏愛使用 <a href="http://git-scm.com/">Git</a> 來管理。假設要安裝 <a href="https://github.com/wincent/Command-T">Command-T</a> 補丁，可以用 Git 的 submodule 指令完成：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/.vim
+</span><span class='line'>mkdir ~/.vim/bundle // if you have not yet created this directory
+</span><span class='line'>git submodule add https://github.com/wincent/Command-T.git bundle/command-t
+</span><span class='line'>git add .
+</span><span class='line'>git commit -m "install Command-T plugin as a submodule"</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- git submodule update --init -->
+
+
+<h2>更新補丁</h2>
+
+<p>使用 Git 安裝補丁的好處是可以自己動手 hack，也可以保持更新。對單一補丁更新只要變更所在目錄到該補丁的位置，然後 <code>git pull</code> 去拉 upstream 的最新程式碼：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/.vim/bundle/command-t
+</span><span class='line'>git pull origin master</span></code></pre></td></tr></table></div></figure>
+
+
+<p>要一次更新所有已安裝的補丁，則可以用 Git 的 <code>foreach</code> 指令來更新每個補丁的最新版本：</p>
+
+<pre><code>git submodule foreach git pull origin master
+</code></pre>
+
+<h2>後記</h2>
+
+<p>平常被 Sublime Text 的 Package Control 寵慣了，來用 Vim 感到非常的麻煩和不習慣，而且 Command-T 安裝後還要用 Ruby 跟 C 去編譯才能用，這到底是什麼鬼編輯器啦！XD</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/https-www-google-com-vs-https-encrypted-google-com/">Google 搜尋加密有兩種</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-22T13:53:00+08:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>剛剛看 <a href="http://www.businessinsider.com/google-products-youve-never-heard-of-2013-3#encryptedgooglecom-is-a-more-secure-way-to-search-for-things-encrypted-uses-secure-sockets-layer-ssl-which-is-the-same-security-that-banks-use-online-11">Business Insider</a> 提到了 Google 的 <a href="https://encrypted.google.com/">encrypted.google.com</a> 這個網址，記得在 Google 還沒有對已登入用戶全面預設用 <a href="http://en.wikipedia.org/wiki/HTTP_Secure">HTTPS</a> 連線以前，<em>encrypted.google.com</em> 是專門用來使用 HTTPS 的網址，也就是當連線到 <em>https://www.google.com</em> 時會被自動跳轉到 <em>https://encrypted.google.com</em>。</p>
+
+<p>既然現在 Google 對於已登入的用戶已經預設用 HTTPS 連線，那這個東西還留著幹嘛？所以<a href="http://security.stackexchange.com/questions/32367/what-is-the-difference-between-https-google-com-and-https-encrypted-google-c">問一下 Google 找答案</a>，原來 <em>encrypted.google.com</em> 另有其他特異功能，兩者之間的差異，主要在於點擊廣告與搜尋結果時，處理 <a href="https://zh.wikipedia.org/wiki/HTTP%E5%8F%82%E7%85%A7%E4%BD%8D%E5%9D%80">HTTP 參照位址</a>的方式不同。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/https-www-google-com-vs-https-encrypted-google-com/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -309,336 +452,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/ruby-flat-scope/">Ruby 的 Flat Scope 技巧</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-16T15:30:00+08:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>2013.01.17 更新：為了簡化說明，本篇文章省略了類別變數（class variables）。</p>
-
-<p>Ruby 的變數分為全域變數（global variables）、實例變數（instance variables）跟本地變數（local variables），變數的生命週期會隨著 scope 的不同而有所不同，而這個 scope 就是程式碼執行的環境。</p>
-
-<p>在 Ruby 中決定 scope 範圍的分別是 <code>module</code>、<code>class</code> 和 <code>def</code>，也就是所謂的 Scope Gates，當 code 執行時每經過這三個「Gates」，某些變數可能就會隨著 scope 出現或是消失。</p>
-
-<h2>Flat Scope</h2>
-
-<p>以下是簡單的例子，我用 <code>v1</code>、<code>v2</code> 和 <code>v3</code> 分別表示不同 scope 的本地變數：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">v1</span> <span class="o">=</span> <span class="s2">&quot;This is v1 outside of class C.&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">C</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; NameError</span>
-</span><span class='line'>  <span class="n">v2</span> <span class="o">=</span> <span class="s2">&quot;This is v2 inside of class C.&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method</span>
-</span><span class='line'>    <span class="n">v3</span> <span class="o">=</span> <span class="s2">&quot;This is v3 inside of call_method of class C.&quot;</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; NameError</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">v2</span> <span class="c1"># =&gt; NameError</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">v3</span> <span class="c1"># =&gt; &quot;This is v3 inside of call_method of class C.&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">v2</span> <span class="c1"># =&gt; &quot;This is v2 inside of class C.&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C.&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">C</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">call_method</span> <span class="c1"># =&gt; NameError</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>v1</code> 這個本地變數進不了 <code>C</code> class 的 scope，但是可以用 block 的方式傳給 <code>Class.new()</code>，這樣就不會通過「Gates」也就不會建立 scope，本地變數變得可以共用：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">v1</span> <span class="o">=</span> <span class="s2">&quot;This is v1 outside of class C.&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">C</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C.&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在 <code>C</code> class 裡 <code>v2</code> 這個本地變數也同樣進不了 <code>call_method</code> 這個 scope，因此可以用 <code>define_method</code> 來建立實例方法，避開使用 <code>def</code> 時的 Scope Gates，就能順利將本地變數傳進去：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span>
-</span><span class='line'>  <span class="n">v2</span> <span class="o">=</span> <span class="s2">&quot;This is v2 inside of class C.&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="n">v2</span> <span class="p">}</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">C</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">call_method</span> <span class="c1"># =&gt; &quot;This is v2 inside of class C.&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果把這兩個方法串起來用，就會變成這樣，同個本地變數共用到底：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">v1</span> <span class="o">=</span> <span class="s2">&quot;This is v1 outside of class C&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">C</span> <span class="o">=</span> <span class="no">Class</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method</span><span class="p">)</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">v1</span> <span class="c1"># =&gt; &quot;This is v1 outside of class C&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>為什麼不用全域變數？</h2>
-
-<p>全域變數的確可以把所有的 scope 全部打平，或者是說它根本無視 scope 的存在。雖然聽起來好像是個不錯的解決方案，但這會造成維護上的困難，因為會不曉得到底程式的哪一個部分改變了全域變數，所以通常會盡量避免使用它。</p>
-
-<h2>為什麼不用實例變數？</h2>
-
-<p>實例變數可以讓不同的實例方法共用相同的變數，這個方法經常可以看到，應用相當廣泛，例如這個範例程式經常見到：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
-</span><span class='line'>    <span class="vi">@shared</span> <span class="o">=</span> <span class="s2">&quot;Hello world!&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_a</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="vi">@shared</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_b</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="vi">@shared</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_a</span> <span class="c1"># =&gt; Hello world!</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_b</span> <span class="c1"># =&gt; Hello world!</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可是有時候我們並不想讓實例變數被外部取得，例如可以用 <code>c.instance_eval { puts @shared }</code> 挖出實例變數是什麼，這樣探詢別人的狀態，一般被認為不是好事，因為如果它想讓我們知道它的某個狀態，它應該會提供個函式讓我們來使用。所以如果不想讓別人知道這個物件（object）裡面有什麼，就可以使用剛剛介紹的方法：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span>
-</span><span class='line'>  <span class="n">shared</span> <span class="o">=</span> <span class="s2">&quot;Hello world!&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method_a</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">shared</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="ss">:call_method_b</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">shared</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_a</span> <span class="c1"># =&gt; &quot;Hello world!&quot;</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method_b</span> <span class="c1"># =&gt; &quot;Hello world!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這樣一來就沒有人能夠挖出 <code>shared</code> 到底是什麼了，隱私保護地相當好，而這個技巧被稱為 Shared Scope。:)</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/ruby-ghost-method-and-dynamic-proxy/">Ruby 的 Ghost Method 與 Dynamic Proxy 技巧</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-15T12:04:00+08:00" pubdate data-updated="true">Jan 15<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>昨天寫的 <a href="/posts/dynamic-method/">Dynamic Method</a> 是 code 在 runtime 時才動態產生方法，也就是說這個方法的確存在，只是在需要的時候才會建立，而且用 <code>respond_to?</code> 是可以驗證為 true 的；而 Ghost Method 則是像鬼一般的看不到，甚至用 <code>respond_to?</code> 也會返回 false 的，可是我們卻可以很神奇地呼叫它。</p>
-
-<h2>關鍵在 method_missing</h2>
-
-<p>凡事都有例外，當呼叫方法時如果找不到，Ruby 給了 <code>method_missing</code> 這個方法來解決找不到方法時的補救措施，而 Ghost Method 技巧的關鍵就在於給了接收者一個不存在的方法時，然後由 <code>method_missing</code> 來當補救網。這裡引用昨天的範例程式，假設有一個 <code>SourceData</code> class：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">SourceData</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@name</span>     <span class="o">=</span> <span class="nb">name</span>
-</span><span class='line'>    <span class="vi">@email</span>    <span class="o">=</span> <span class="n">email</span>
-</span><span class='line'>    <span class="vi">@location</span> <span class="o">=</span> <span class="n">location</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">get_name</span><span class="p">;</span>     <span class="vi">@name</span><span class="p">;</span>     <span class="k">end</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">get_email</span><span class="p">;</span>    <span class="vi">@email</span><span class="p">;</span>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">get_location</span><span class="p">;</span> <span class="vi">@location</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然後我想在 <code>User</code> class 裡用 Ghost Method 技巧來取得 <code>SourceData</code> 的實例變數，那就要建立一個 <code>method_missing</code> 方方法來捕捉所有不存在的方法，然後用 <code>send</code> 方法轉送出去，這又稱為 Dynamic Proxy，因為就像是代理人將方法傳送給另一個物件（object）：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">source_data</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@source_data</span> <span class="o">=</span> <span class="n">source_data</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@source_data</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="no">SourceData</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;chh&quot;</span><span class="p">,</span> <span class="s2">&quot;user@example.tw&quot;</span><span class="p">,</span> <span class="s2">&quot;Taiwan&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>     <span class="c1"># =&gt; chh</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>    <span class="c1"># =&gt; user@example.tw</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">user</span><span class="o">.</span><span class="n">location</span> <span class="c1"># =&gt; Taiwan</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>除 bug 可能比較困難</h2>
-
-<p>看起來好像很好用，可是會有個問題，因為這個方法本來就不存在，因此很容易造成一些奇怪的 bug，例如透過 <code>user.respond_to?(:name)</code> 來檢查方法存不存在時，返回的竟然會是 false！用起來卻沒問題。所以使用 <code>method_missing</code> 時也要修改 <code>respond_to?</code> 的查找方式，以免測試一直跑不過。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/page/5/">&larr; Older</a>
@@ -658,7 +471,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  Copyright &copy; 2016 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
   <section class="contruction-wrap">
     <div class="contruction"></div>
   </section>
