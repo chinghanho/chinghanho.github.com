@@ -9,8 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="2013.04.12 更新：今天把 Command-T 移除掉換用 ctrlp，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
-2013.05.25 更新：今天起改用 Vundle 來管理，可以參考我的新文章：「更好用的 Vim 外掛管理工具： &hellip;">
+  <meta name="description" content="每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。 從官網上的描述，tmux 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,16 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/4/" />
-<meta property="og:description" content="2013.04.12 更新：今天把 Command-T 移除掉換用 ctrlp，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
-2013.05.25 更新：今天起改用 Vundle 來管理，可以參考我的新文章：「更好用的 Vim 外掛管理工具： &hellip;" />
+<meta property="og:description" content="每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。 從官網上的描述，tmux 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="2013.04.12 更新：今天把 Command-T 移除掉換用 ctrlp，優點是用不用 Ruby 去編譯，用的是 Vimscript 去寫，所以效能跟問題也會比較少。
-2013.05.25 更新：今天起改用 Vundle 來管理，可以參考我的新文章：「更好用的 Vim 外掛管理工具： &hellip;" />
+<meta itemprop="description" content="每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。 從官網上的描述，tmux 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -103,6 +100,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/tmux-terminal-multiplexer/">終端機必備的多工良伴：tmux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-09T17:11:00+08:00" pubdate data-updated="true">Apr 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。</p>
+
+<p>從官網上的描述，<a href="http://tmux.sourceforge.net/">tmux</a> 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh 登入到遠端主機也不會斷掉，此外還可以在同個視窗下切割區塊，如下圖（<a href="http://www.psteiner.com/2012/05/tmux-for-ruby-on-rails.html">圖片來源</a>）：</p>
+
+<p><img src="http://lh5.googleusercontent.com/-Z0XpVHmJ-ks/UWO-JgwbszI/AAAAAAAAF_M/QdewyOkH1xw/s690/rumble.png" alt="tmux-demo" /></p>
+
+<p>右邊開 Vim 寫程式，左上角跑 RSpec 測試，同時左下角開 Rails server 看 log，神奇的是這些狀態可以保存起來，不需要的時候可以藏到背景去，可是用 Sublime Text 2 就沒這麼理想，害我有種想改用 Vim 的衝動。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/tmux-terminal-multiplexer/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -328,123 +372,6 @@ execute pathogen#infect()
 <p>跟我一樣的人應該也不少，Opera 改用 WebKit 應該多多少少會影響到市佔率，可是我想其實應該不會減少太多，因為「一般使用者」本來就沒有在乎 Opera 用的是哪一套 rendering 引擎，重點還是在 UI 的設計跟整體效能讓使用者滿不滿意。我對 Opera 沒有什麼偏見，真的只是純粹用不慣而已。</p>
 
 <p>Opera 放棄 Presto 後市場上就只剩下 WebKit、Gecko 和 Trident 三個主要的 rendering 引擎，也許以後會常見到「最佳瀏覽效果請使用 WebKit-base 瀏覽器」這樣的標語出現在網頁的尾部，也可能讓 WebKit 推向成為下一個「IE 世代」，誰知道呢？即便到真的有那麼一天，我相信以現在 web 的發展程度，一定會出現一個替代品讓堅持開放信仰的人們能夠有個地方去。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/ruby-metaclass-eigenclass/">關於 Ruby Class 他們沒告訴你的真相：MetaClass</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-17T20:19:00+08:00" pubdate data-updated="true">Jan 17<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>先從 Singleton Methods 講起</h2>
-
-<p>透過以下的 code 可以察覺，其實定義 singleton method 的方式跟定義實例方法（instance method）很像，就好像把某個 class 實例化後命名為大寫的 C，然後對這個實例定義方法：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># instance method</span>
-</span><span class='line'><span class="k">def</span> <span class="nc">c</span><span class="o">.</span><span class="nf">call_method</span>
-</span><span class='line'>  <span class="c1"># do something...</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># singleton method</span>
-</span><span class='line'><span class="k">def</span> <span class="nc">C</span><span class="o">.</span><span class="nf">call_method</span>
-</span><span class='line'>  <span class="c1"># do something...</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>為什麼舉這個例子呢？因為其實 singleton method 就是這樣創建的。</p>
-
-<p>在 Ruby 入門教學書籍上，幾乎每本書都說 class 是一種 Class，而 Class 的 superclass 是 Object，查找方法的路徑是這樣一層層往上找，但是他們沒有告訴我們，其實每一個 class 上面還有一個神祕的 class，就叫做 metaclass，而這個 metaclass 定義的實例方法就是該 class 的 singleton method。</p>
-
-<h2>再來說 MetaClass</h2>
-
-<p>metaclass 比較正規的稱呼是 eigenclass，會這樣叫可能是因為 Ruby 的歷史因素，metaclass 聽起來比較直覺所以我都習慣這樣用。而 metaclass 也是一種 Class，用我們比較熟悉的方法來理解的話，它就等於是以下這個例子的 <code>D</code> class：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">D</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">C</span> <span class="o">&lt;</span> <span class="n">D</span><span class="p">;</span> <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>也因為這樣的繼承結構，我們才能在「實例化」的 <code>C</code> class 物件上，呼叫定義在 metaclass 內的實例方法。不過跟一般的類別繼承關係比較不同的是，每個 metaclass 都只屬於一個 class，它不能同時被多個 class 繼承。</p>
-
-<p>由於每個 class 都有個 metaclass，當建立一個 class 的時候，Ruby 會自動為這個 class 創建一個 metaclass；而 class 的 singleton method 是定義在這裡面的，所以可以說 metaclass 才是「真正的」class。</p>
-
-<p>Ruby 用一個特殊的語法來取得 metaclass，即使在不知道 metaclass 之前，應該都有過這個語法，只是可能不知道原理，那就是 <code>class &lt;&lt; self</code>，這裡的 <code>self</code> 可以替換成任何想要取得 metaclass 的物件：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c_meta</span> <span class="o">=</span> <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="n">C</span>
-</span><span class='line'>  <span class="nb">self</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c_meta</span>
-</span><span class='line'><span class="c1"># =&gt; #&lt;Class:C&gt; 這就是 C class 的 metaclass</span>
-</span><span class='line'><span class="c1"># 而 C 只是 Class:C 的一個 instance</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c_meta</span><span class="o">.</span><span class="n">instance_methods</span>
-</span><span class='line'><span class="c1"># 這將會列出所有 C class 的 singleton method</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這是 Ruby 很抽象的部分，有時候光看文字解釋很難理解，又礙於篇幅我沒寫得特別詳細，只是就重點部分做一下筆記，提供記憶和回顧使用，如果是完全不熟悉 metaclass 的初學者，最好去看 <a href="http://pragprog.com/book/ppmetr/metaprogramming-ruby">Metaprogramming Ruby</a> 這本書，相信會有很大的收穫，更有效的作法，就是打開 irb 實際敲敲看。</p>
-
-<p>此外，關於 Ruby class 之間的繼承關係，可以參考這張 <a href="http://objectgraph.rubyforge.org/dotOG.html">RubyForge</a> 整理的圖表，畫得不算很好，但是可以清楚看出類別之間關係，對於學習也是個很好的教材。</p>
 </div>
   
   

@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="原本的 whiteball.tw 這個月底到期，趁著最近有個活動促銷，趕快買了一個 .tw 結尾的 CHH.tw，沒意外的話以後應該是不會再改了。今天下午花了一點時間，把 CloudFlare 上的 record 設定全部搬家，順便刪除一些已經沒用的網址。 為什麼網址要取 CHH？ &hellip;">
+  <meta name="description" content="電腦自動化是這麼回事，沒出事沒感覺，出點事哪管可能只是千萬之一，就好像不可容忍的災難。誰叫他是電腦，天生就沒有容錯空間，如果人們能夠把對待電腦嚴苛的要求，拿到政治和法律上，我想那才是真正的救贖吧？（笑） 儘管電腦有時候會有些 bug1，不過它的可靠性和效率超過人類已經是顯而易見的， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/8/" />
-<meta property="og:description" content="原本的 whiteball.tw 這個月底到期，趁著最近有個活動促銷，趕快買了一個 .tw 結尾的 CHH.tw，沒意外的話以後應該是不會再改了。今天下午花了一點時間，把 CloudFlare 上的 record 設定全部搬家，順便刪除一些已經沒用的網址。 為什麼網址要取 CHH？ &hellip;" />
+<meta property="og:description" content="電腦自動化是這麼回事，沒出事沒感覺，出點事哪管可能只是千萬之一，就好像不可容忍的災難。誰叫他是電腦，天生就沒有容錯空間，如果人們能夠把對待電腦嚴苛的要求，拿到政治和法律上，我想那才是真正的救贖吧？（笑） 儘管電腦有時候會有些 bug1，不過它的可靠性和效率超過人類已經是顯而易見的， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="原本的 whiteball.tw 這個月底到期，趁著最近有個活動促銷，趕快買了一個 .tw 結尾的 CHH.tw，沒意外的話以後應該是不會再改了。今天下午花了一點時間，把 CloudFlare 上的 record 設定全部搬家，順便刪除一些已經沒用的網址。 為什麼網址要取 CHH？ &hellip;" />
+<meta itemprop="description" content="電腦自動化是這麼回事，沒出事沒感覺，出點事哪管可能只是千萬之一，就好像不可容忍的災難。誰叫他是電腦，天生就沒有容錯空間，如果人們能夠把對待電腦嚴苛的要求，拿到政治和法律上，我想那才是真正的救贖吧？（笑） 儘管電腦有時候會有些 bug1，不過它的可靠性和效率超過人類已經是顯而易見的， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/automatically/">電腦自動化的可靠性</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-26T21:09:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://lh4.googleusercontent.com/-o6yYk2tMzN8/ULNgfhVSOqI/AAAAAAAAFYw/7dDPvi695dk/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-26%2520%25E4%25B8%258B%25E5%258D%25886.28.53.png" alt="" /></p>
+
+<p>電腦自動化是這麼回事，沒出事沒感覺，出點事哪管可能只是千萬之一，就好像不可容忍的災難。誰叫他是電腦，天生就沒有容錯空間，如果人們能夠把對待電腦嚴苛的要求，拿到政治和法律上，我想那才是真正的救贖吧？（笑）</p>
+
+<p>儘管電腦有時候會有些 bug<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，不過它的可靠性和效率超過人類已經是顯而易見的，因為我們的生活中早就已經充滿了 <a href="http://en.wikipedia.org/wiki/Programmable_logic_controller">PLC</a> 的東西，尤其是重要的基礎設施，包括工廠、食品加工、製藥、核能發電廠、捷運系統、金融系統、航空系統、國防系統等等，映入眼簾的一切都是電腦控制，全部都是仰賴電腦。</p>
+
+<p>前幾個禮拜有親戚在台北往基隆路上被拍到超速，好心跟親朋好友們提醒該路段要小心，老媽就說 TOYOTA 的車有定速系統，一開始就把速度設定好就不怕會超速了，不過另外有位親戚對於這種定速系統倒是相當不以為然，認為永遠<a href="http://www.mobile01.com/topicdetail.php?f=260&amp;t=2481108&amp;last=32457665">不該相信這種電子設備</a>。</p>
+
+<p>這其實也沒有錯，如果哪天電腦不行了，當機、中毒、短路、掛掉、爆炸，總是必須要準備好退路，讓這些電腦停擺的同時，讓整個社會能夠繼續運作，不致於因為發生 <a href="http://en.wikipedia.org/wiki/Blue_Screen_of_Death">BSoD</a> 就讓全世界陷入黑暗，或者是因為出現……新接龍？</p>
+
+<p><img src="http://lh6.googleusercontent.com/-hi6uzTZrI1g/ULNbJiNE97I/AAAAAAAAFYg/hkzPj1BXQ58/s690/579179_4751139094694_1381059163_n.jpg" alt="" /></p>
+
+<p>事實上很多時候根本搞不清楚真相，常常會陷入一種<a href="http://blog.chh.tw/posts/keiserens-nye-klaeder/">專家說的都是對的</a>的迷思，就像要等到日本核電廠爆掉了才能喚醒人們對於高科技的幻覺，甚至於加入積極反核的行列，可是在那之前核能專家們總是對大眾諄諄教誨核能是多麼地安全。</p>
+
+<p>扯開一下話題，前陣子被討論得沸沸湯湯的社會議題：廢死。到底應該寧殺一百也不肯錯放一人？還是寧放一百也不肯錯殺一人？前者可能變成的是政府濫權的武器，後者伸張人權後可能反而造成更多的傷害。我的看法很簡單，就是：</p>
+
+<blockquote><p>有沒有承擔後果的能力？</p></blockquote>
+
+<p>過年玩鞭炮要很小心，弄得不好可能炸傷自己也會炸傷旁邊的人，我可能基於自信和自負會去玩一下，可是如果這串鞭炮一不小心就會轟爛半顆地球，那我得坦承自己完全沒有承擔這種後果的能力，那我就不會去玩鞭炮<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>。</p>
+
+<p>電腦自動化很方便，很多時候它其實比人更可靠<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>，而我們應該要重新去思考那些真正重要的事情，或許那並不包括電腦自動化這件事。</p>
+
+<p>照片來源：<a href="http://www.youtube.com/watch?v=IojqOMWTgv8">The Matrix</a>、<a href="https://www.facebook.com/photo.php?fbid=4751139094694&amp;set=a.1249077985355.39557.1181623619">Facebook</a></p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>其實大多數的 bug 也都是人為造成的。:p <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>事實上我根本不敢玩鞭炮。XD <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>以 Ruby on Rails Deployment 為例，這就是為什麼要用 <a href="/posts/ruby-on-rails-server-options/">Capistrano</a> 自動化佈署的原因。:) <a href='#fnref:3' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -392,54 +457,6 @@ killall Dock
 
 <pre><code>sudo tmutil enablelocal
 </code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/enable-filevault-before-using-mac/">使用 Mac 前務必先開啟 FileVault 2 功能</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-15T07:16:00+08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>硬碟是相當精密的硬體，運作原理說起來簡單，其實非常複雜，如果要科普解釋，我通常會把硬碟比喻成「油畫」，如果畫錯了或是要修改，並不是用橡皮擦擦掉，而是用顏料直接覆蓋。</p>
-
-<p>直接覆蓋就會有個問題，油畫可以用紅外線掃描來得知底層是什麼樣子，所以才會有人發現<a href="http://big5.xinhuanet.com/gate/big5/news.xinhuanet.com/tech/2007-10/24/content_6928914.htm">蒙娜麗莎原來是有眉毛的</a>。XD</p>
-
-<p>可是硬碟如果有重要資料，這就變成很大的問題了，尤其是 <a href="http://www.ithome.com.tw/itadm/article.php?c=66722&amp;s=1">SSD 更麻煩</a>，所以這也是為什麼業界硬碟如果損壞了，都是採用<a href="http://youtu.be/avP5d16wEp0?t=1m15s">物理銷燬</a>這種方式，例如 Google 的資料中心：</p>
-
-<p><img src="http://lh3.googleusercontent.com/-G0aVvazyu3I/UKQuYHiWVkI/AAAAAAAAFV4/0hR-0glZG-g/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-15%2520%25E4%25B8%258A%25E5%258D%25887.49.52.png" alt="google-destroy-hdd" /></p>
-
-<p>對於個人使用者而言，有時候用電腦不一定是「用到死」，也許中間會二手賣出，那也不大可能把硬碟砸爛再給對方，所以有一種方式就是啟用 FileVault 2 這個功能（Windows 上我記得好像也有類似的功能），替你的資料先行加密，這樣別人就算從廢棄電腦裡面讀出資料，也不會直接得到原始資料。</p>
-
-<p><img src="http://lh3.googleusercontent.com/-1FanB4n87e8/UKQwaYadieI/AAAAAAAAFWA/8bI5u6ok61c/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-15%2520%25E4%25B8%258A%25E5%258D%25887.59.13.png" alt="filevault-2" /></p>
-
-<p>這必須在剛拿到電腦存入任何個人資料之前，就先設定好。</p>
 </div>
   
   

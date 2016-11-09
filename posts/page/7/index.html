@@ -9,16 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
-[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
-2
-3
-4
-5
-6
-7
-8
-9 &hellip;">
+  <meta name="description" content="最近如果只是打少少幾個字，例如使用 Google 搜尋的時候，我都會刻意切換到漢語拼音輸入法來練習；如果是打一整篇文章，我還是會用注音輸入法，畢竟是從小用到大用的東西，已經非常習慣了，每分鐘至少可以打 80 字以上。 哪個工具效率高，我通常就會選擇那一個，對我目前而言注音符號絕對效率比較高， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -39,32 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/7/" />
-<meta property="og:description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
-[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
-2
-3
-4
-5
-6
-7
-8
-9 &hellip;" />
+<meta property="og:description" content="最近如果只是打少少幾個字，例如使用 Google 搜尋的時候，我都會刻意切換到漢語拼音輸入法來練習；如果是打一整篇文章，我還是會用注音輸入法，畢竟是從小用到大用的東西，已經非常習慣了，每分鐘至少可以打 80 字以上。 哪個工具效率高，我通常就會選擇那一個，對我目前而言注音符號絕對效率比較高， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="Ruby 在 Ruby 中對於陣列而言 length 和 size 是一樣的，count 也有相同的效果，可是用途更靈活，能用來設定條選篩選內容： 1
-[1, 2, 3].count { |x| x &gt; 2 } 此外，效能上 count 會比較差一點： 1
-2
-3
-4
-5
-6
-7
-8
-9 &hellip;" />
+<meta itemprop="description" content="最近如果只是打少少幾個字，例如使用 Google 搜尋的時候，我都會刻意切換到漢語拼音輸入法來練習；如果是打一整篇文章，我還是會用注音輸入法，畢竟是從小用到大用的東西，已經非常習慣了，每分鐘至少可以打 80 字以上。 哪個工具效率高，我通常就會選擇那一個，對我目前而言注音符號絕對效率比較高， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -127,6 +100,82 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/mandarin-phonetic-symbols-and-han-han-yu-pin-yin/">注音符號與漢語拼音</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-25T10:41:00+08:00" pubdate data-updated="true">Dec 25<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近如果只是打少少幾個字，例如使用 Google 搜尋的時候，我都會刻意切換到漢語拼音輸入法來練習；如果是打一整篇文章，我還是會用注音輸入法，畢竟是從小用到大用的東西，已經非常習慣了，每分鐘至少可以打 80 字以上。</p>
+
+<p>哪個工具效率高，我通常就會選擇那一個，對我目前而言注音符號絕對效率比較高，但隨著使用的時間久了，我發現注音符號有兩個缺點：</p>
+
+<ol>
+<li>手指在鍵盤上的移動距離太遠：注音符號整整比英文字母多了十幾個字，因此就多了整整一排鍵盤的空間，偏偏最遠的那排都是常用的東西（聲調之類的），當輸入注音的時候，會發現浪費很多時間在移動手指頭，打久了會感覺很累、很沒有效率；</li>
+<li>學習成本相對較高：學習成本高不是指注音很難學，而是注音符號全世界只有台灣一個國家在用，如果以「投資報酬率」來算實在沒有漢語拼音來得經濟實惠，因為學漢語拼音還可以順便學英文（？）；</li>
+</ol>
+
+
+<p>不過注音符號確實精準地解決了讀音問題，而且徹頭徹尾是用「中國人」自己的智慧<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，而不是用「外國人」的字來解決「中國人」的問題，這在民族主義作祟的某種程度上，會讓人感到有點自豪吧（？）；可能也是因為這樣，台灣人講起話來感覺比較大陸人標準（自以為）。:p</p>
+
+<p>其實中文最快、最有效率的輸入法應該是倉頡或嘸蝦米，可是學習這兩套輸入法的門檻過高，以我已經會注音符號和一點點破英文來說，注音及漢語拼音相較下更適合我才對；就像很多「資深」programmer 都會催眠新手說 vim、emacs 多好用，結果害新手一進來就掉入大坑。</p>
+
+<p>現在許多漢語拼音輸入法都支援不帶聲調的寫法，這有優點也有缺點，在「<a href="http://taiwan.chtsai.org/2012/08/22/yunduan_guge_pinyin_shurufa/">雲端谷歌拼音輸入法</a>」這篇文章的作者蔡志浩寫得相當清楚，這也就是為什麼我要學著使用漢語拼音的原因：</p>
+
+<blockquote><p>漢語拼音不帶調整句輸入有顯著的好處。你的手指只需要在字母區域移動，不需要經常移動較長的距離到數字列。當然也有些缺點，例如有些音節的鍵數可能要比注音多一點（例如「chuang」與「ㄔㄨㄤ」）。但如果你習慣英打就會發現注音輸入法手指經常移動到數字列所增加的時間是減少的按鍵次數補不回來的。這也是為什麼二十四年前的第一代行列輸入法原本要用使用四十個鍵（包括最上面的數字列），過了沒幾年就改成現在的三十鍵版本了。</p></blockquote>
+
+<p>另一方面，現在有的網站會用中文作為 URL 來提升 SEO，例如<a href="http://blog.xdite.net/posts/2011/10/25/yahoo-seo-url/">悲劇的 Yahoo! 新聞</a><sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>，可是中文塞在 URL 裡面會造成幾個問題：</p>
+
+<ol>
+<li>URL 過長：中文經過轉碼後變成一大串的字符，這在分享網址的時候會變得很難看，而且正因為太長，反而降低了 SEO 的效果；</li>
+<li>中英文混雜：URL 裡面夾雜中文和英文，對於搜尋引擎的檢索會變得比較困難；</li>
+<li>搜尋引擎支援度不足：有的搜尋引擎還沒辦法檢索中文的 URL；</li>
+</ol>
+
+
+<p>所以目前使用中文 URL 的人還是很少，大部分的人會將中文<a href="https://github.com/flyerhzm/chinese_permalink">用程式翻譯成英文</a>，或者是改用漢語拼音，這樣也有利於搜尋引擎檢索關鍵字。</p>
+
+<p>在大陸主流用的是漢語拼音，所以百度搜尋引擎對於漢語拼音的支援度，就比 Google 表現得更好：</p>
+
+<p><img src="http://lh3.googleusercontent.com/-QsSZc-5QqOw/UNkRKV3EiSI/AAAAAAAAFfU/B5qiRpFOw8k/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-25%2520%25E4%25B8%258A%25E5%258D%258810.35.37.png" alt="hanyu-search" /></p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'>可以參考維基百科<a href="http://zh.wikipedia.org/wiki/%E6%B3%A8%E9%9F%B3%E7%AC%A6%E8%99%9F">注音符號</a>的條目。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>這可能是因為 Yahoo! 英文站就是把關鍵字塞在數字前，所以才造成中文站的悲劇。 <a href='#fnref:2' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -687,71 +736,6 @@
 <p>最後重複使用昨天文章「<a href="/posts/automatically/">電腦自動化的可靠性</a>」的結尾來做結論：</p>
 
 <blockquote><p>電腦自動化很方便，很多時候它其實比人更可靠，而我們應該要重新去思考那些真正重要的事情，或許那並不包括電腦自動化這件事。</p></blockquote>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/automatically/">電腦自動化的可靠性</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-26T21:09:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://lh4.googleusercontent.com/-o6yYk2tMzN8/ULNgfhVSOqI/AAAAAAAAFYw/7dDPvi695dk/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-26%2520%25E4%25B8%258B%25E5%258D%25886.28.53.png" alt="" /></p>
-
-<p>電腦自動化是這麼回事，沒出事沒感覺，出點事哪管可能只是千萬之一，就好像不可容忍的災難。誰叫他是電腦，天生就沒有容錯空間，如果人們能夠把對待電腦嚴苛的要求，拿到政治和法律上，我想那才是真正的救贖吧？（笑）</p>
-
-<p>儘管電腦有時候會有些 bug<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>，不過它的可靠性和效率超過人類已經是顯而易見的，因為我們的生活中早就已經充滿了 <a href="http://en.wikipedia.org/wiki/Programmable_logic_controller">PLC</a> 的東西，尤其是重要的基礎設施，包括工廠、食品加工、製藥、核能發電廠、捷運系統、金融系統、航空系統、國防系統等等，映入眼簾的一切都是電腦控制，全部都是仰賴電腦。</p>
-
-<p>前幾個禮拜有親戚在台北往基隆路上被拍到超速，好心跟親朋好友們提醒該路段要小心，老媽就說 TOYOTA 的車有定速系統，一開始就把速度設定好就不怕會超速了，不過另外有位親戚對於這種定速系統倒是相當不以為然，認為永遠<a href="http://www.mobile01.com/topicdetail.php?f=260&amp;t=2481108&amp;last=32457665">不該相信這種電子設備</a>。</p>
-
-<p>這其實也沒有錯，如果哪天電腦不行了，當機、中毒、短路、掛掉、爆炸，總是必須要準備好退路，讓這些電腦停擺的同時，讓整個社會能夠繼續運作，不致於因為發生 <a href="http://en.wikipedia.org/wiki/Blue_Screen_of_Death">BSoD</a> 就讓全世界陷入黑暗，或者是因為出現……新接龍？</p>
-
-<p><img src="http://lh6.googleusercontent.com/-hi6uzTZrI1g/ULNbJiNE97I/AAAAAAAAFYg/hkzPj1BXQ58/s690/579179_4751139094694_1381059163_n.jpg" alt="" /></p>
-
-<p>事實上很多時候根本搞不清楚真相，常常會陷入一種<a href="http://blog.chh.tw/posts/keiserens-nye-klaeder/">專家說的都是對的</a>的迷思，就像要等到日本核電廠爆掉了才能喚醒人們對於高科技的幻覺，甚至於加入積極反核的行列，可是在那之前核能專家們總是對大眾諄諄教誨核能是多麼地安全。</p>
-
-<p>扯開一下話題，前陣子被討論得沸沸湯湯的社會議題：廢死。到底應該寧殺一百也不肯錯放一人？還是寧放一百也不肯錯殺一人？前者可能變成的是政府濫權的武器，後者伸張人權後可能反而造成更多的傷害。我的看法很簡單，就是：</p>
-
-<blockquote><p>有沒有承擔後果的能力？</p></blockquote>
-
-<p>過年玩鞭炮要很小心，弄得不好可能炸傷自己也會炸傷旁邊的人，我可能基於自信和自負會去玩一下，可是如果這串鞭炮一不小心就會轟爛半顆地球，那我得坦承自己完全沒有承擔這種後果的能力，那我就不會去玩鞭炮<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>。</p>
-
-<p>電腦自動化很方便，很多時候它其實比人更可靠<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>，而我們應該要重新去思考那些真正重要的事情，或許那並不包括電腦自動化這件事。</p>
-
-<p>照片來源：<a href="http://www.youtube.com/watch?v=IojqOMWTgv8">The Matrix</a>、<a href="https://www.facebook.com/photo.php?fbid=4751139094694&amp;set=a.1249077985355.39557.1181623619">Facebook</a></p>
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>其實大多數的 bug 也都是人為造成的。:p <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>事實上我根本不敢玩鞭炮。XD <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>以 Ruby on Rails Deployment 為例，這就是為什麼要用 <a href="/posts/ruby-on-rails-server-options/">Capistrano</a> 自動化佈署的原因。:) <a href='#fnref:3' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
 </div>
   
   

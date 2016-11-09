@@ -9,7 +9,15 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="2013.01.17 更新：為了簡化說明，本篇文章省略了類別變數（class variables）。 Ruby 的變數分為全域變數（global variables）、實例變數（instance variables）跟本地變數（local variables），變數的生命週期會隨著 scope &hellip;">
+  <meta name="description" content="先從 Singleton Methods 講起 透過以下的 code 可以察覺，其實定義 singleton method 的方式跟定義實例方法（instance method）很像，就好像把某個 class 實例化後命名為大寫的 C，然後對這個實例定義方法： 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +38,30 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/5/" />
-<meta property="og:description" content="2013.01.17 更新：為了簡化說明，本篇文章省略了類別變數（class variables）。 Ruby 的變數分為全域變數（global variables）、實例變數（instance variables）跟本地變數（local variables），變數的生命週期會隨著 scope &hellip;" />
+<meta property="og:description" content="先從 Singleton Methods 講起 透過以下的 code 可以察覺，其實定義 singleton method 的方式跟定義實例方法（instance method）很像，就好像把某個 class 實例化後命名為大寫的 C，然後對這個實例定義方法： 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="2013.01.17 更新：為了簡化說明，本篇文章省略了類別變數（class variables）。 Ruby 的變數分為全域變數（global variables）、實例變數（instance variables）跟本地變數（local variables），變數的生命週期會隨著 scope &hellip;" />
+<meta itemprop="description" content="先從 Singleton Methods 講起 透過以下的 code 可以察覺，其實定義 singleton method 的方式跟定義實例方法（instance method）很像，就好像把某個 class 實例化後命名為大寫的 C，然後對這個實例定義方法： 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +124,123 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/ruby-metaclass-eigenclass/">關於 Ruby Class 他們沒告訴你的真相：MetaClass</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-17T20:19:00+08:00" pubdate data-updated="true">Jan 17<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>先從 Singleton Methods 講起</h2>
+
+<p>透過以下的 code 可以察覺，其實定義 singleton method 的方式跟定義實例方法（instance method）很像，就好像把某個 class 實例化後命名為大寫的 C，然後對這個實例定義方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># instance method</span>
+</span><span class='line'><span class="k">def</span> <span class="nc">c</span><span class="o">.</span><span class="nf">call_method</span>
+</span><span class='line'>  <span class="c1"># do something...</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># singleton method</span>
+</span><span class='line'><span class="k">def</span> <span class="nc">C</span><span class="o">.</span><span class="nf">call_method</span>
+</span><span class='line'>  <span class="c1"># do something...</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>為什麼舉這個例子呢？因為其實 singleton method 就是這樣創建的。</p>
+
+<p>在 Ruby 入門教學書籍上，幾乎每本書都說 class 是一種 Class，而 Class 的 superclass 是 Object，查找方法的路徑是這樣一層層往上找，但是他們沒有告訴我們，其實每一個 class 上面還有一個神祕的 class，就叫做 metaclass，而這個 metaclass 定義的實例方法就是該 class 的 singleton method。</p>
+
+<h2>再來說 MetaClass</h2>
+
+<p>metaclass 比較正規的稱呼是 eigenclass，會這樣叫可能是因為 Ruby 的歷史因素，metaclass 聽起來比較直覺所以我都習慣這樣用。而 metaclass 也是一種 Class，用我們比較熟悉的方法來理解的話，它就等於是以下這個例子的 <code>D</code> class：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">D</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">C</span> <span class="o">&lt;</span> <span class="n">D</span><span class="p">;</span> <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也因為這樣的繼承結構，我們才能在「實例化」的 <code>C</code> class 物件上，呼叫定義在 metaclass 內的實例方法。不過跟一般的類別繼承關係比較不同的是，每個 metaclass 都只屬於一個 class，它不能同時被多個 class 繼承。</p>
+
+<p>由於每個 class 都有個 metaclass，當建立一個 class 的時候，Ruby 會自動為這個 class 創建一個 metaclass；而 class 的 singleton method 是定義在這裡面的，所以可以說 metaclass 才是「真正的」class。</p>
+
+<p>Ruby 用一個特殊的語法來取得 metaclass，即使在不知道 metaclass 之前，應該都有過這個語法，只是可能不知道原理，那就是 <code>class &lt;&lt; self</code>，這裡的 <code>self</code> 可以替換成任何想要取得 metaclass 的物件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c_meta</span> <span class="o">=</span> <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="n">C</span>
+</span><span class='line'>  <span class="nb">self</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c_meta</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;Class:C&gt; 這就是 C class 的 metaclass</span>
+</span><span class='line'><span class="c1"># 而 C 只是 Class:C 的一個 instance</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c_meta</span><span class="o">.</span><span class="n">instance_methods</span>
+</span><span class='line'><span class="c1"># 這將會列出所有 C class 的 singleton method</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這是 Ruby 很抽象的部分，有時候光看文字解釋很難理解，又礙於篇幅我沒寫得特別詳細，只是就重點部分做一下筆記，提供記憶和回顧使用，如果是完全不熟悉 metaclass 的初學者，最好去看 <a href="http://pragprog.com/book/ppmetr/metaprogramming-ruby">Metaprogramming Ruby</a> 這本書，相信會有很大的收穫，更有效的作法，就是打開 irb 實際敲敲看。</p>
+
+<p>此外，關於 Ruby class 之間的繼承關係，可以參考這張 <a href="http://objectgraph.rubyforge.org/dotOG.html">RubyForge</a> 整理的圖表，畫得不算很好，但是可以清楚看出類別之間關係，對於學習也是個很好的教材。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -688,56 +829,6 @@
 <p>有時候我們只需要部分的方法，而不是全部，所以會加上一些過濾條件，只撈出自己需要的部分，這樣的行為又稱為 Pattern Dispatch，因為是基於某種 pattern 來篩選方法。</p>
 
 <p>以上就是 Dynamic Dispatch 的解釋，這個技巧經常可以在 Ruby 的 Test::Unit 標準庫裡看到，把 class 的實例方法（instance method）撈出來，然後一個一個代進測試程式碼裡面去跑。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/skeuomorphism/">我對仿真設計介面的看法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-10T10:21:00+08:00" pubdate data-updated="true">Jan 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://lh5.googleusercontent.com/-VJMDa0tOOjE/UO4RTtHUqJI/AAAAAAAAFu8/_MU2WkKlTEw/s690/WAwzA.jpg" alt="itunes" /></p>
-
-<p>這篇文章在 iTunes 11 出來時就寫好，結果放在草稿夾裡一直忘記完成，今天因為看到了電腦玩物站長異塵行者對<a href="http://playpcesor.blogspot.com/2012/11/evernote-50-iphone-ipad.html">仿真設計的看法</a>（舊文章今天才看到），才想起來還沒有發佈；異塵行者認為：</p>
-
-<blockquote><p>雖然高雅擬真風格看起來舒適，但畢竟我們不是真在紙本筆記使用 Evernote，而是在台數位裝置上，對生產力工具來說簡潔數位化介面才是真正正道。</p></blockquote>
-
-<p>前幾個禮拜因為好奇去聽了幾堂<a href="https://www.coursera.org/course/hci">史丹佛大學人機互動課程</a>，得到幾個非常重要的觀念。華麗高雅的擬真風格並非單純的綴飾，更不是「贅飾」，事實上這種設計風格是有意義的。</p>
-
-<p>舉例來說，當第一次看到 <a href="https://itunes.apple.com/us/app/clear/id504544917">clear</a> 與 OS X Mountain Lion 內建的 <a href="http://appleinsider.com/articles/12/03/30/inside_os_x_108_mountain_lion_reminders_app_adds_geofence_location_alerts">Reminder</a> 時，不看「說明書」可能還不曉得 clear 是做什麼的；尤其對於不常使用數位工具的使用者，仿真設計是讓軟體能夠更貼近他們的生活，他們也許沒辦法立即掌握這個程式所有功能，但確實能夠降低防禦心理。</p>
-
-<p>我平常觀察那些不慣用電腦的使用者，他們在操作電腦時的動作，很多人會在第一步不知道該點擊什麼就停下來，因為「純數位化」的介面讓他們不知所措，進而增加心理挫折感，然後可能就不再使用這個軟體，這也就是為什麼要一開始就要降低使用者的防禦心理。</p>
-
-<p>仿真設計的介面目的不只是降低使用者防禦心理，目的也在能讓使用者用自己已經熟悉的方式，來透過這個軟體來解決問題。但是，畢竟軟體終究是軟體，是個虛擬的介面，並不是使用者「真正熟悉」的東西，因此要做好仿真設計相對下門檻變得非常高。</p>
-
-<p>會讓異塵行者感到「簡潔數位化介面才是真正正道」的原因，我想就是 Evernote 做了一個非常糟糕的仿真設計介面示範。</p>
 </div>
   
   

@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;">
+  <meta name="description" content="硬碟是相當精密的硬體，運作原理說起來簡單，其實非常複雜，如果要科普解釋，我通常會把硬碟比喻成「油畫」，如果畫錯了或是要修改，並不是用橡皮擦擦掉，而是用顏料直接覆蓋。 直接覆蓋就會有個問題，油畫可以用紅外線掃描來得知底層是什麼樣子，所以才會有人發現蒙娜麗莎原來是有眉毛的。XD 可是硬碟如果有重要資料 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/9/" />
-<meta property="og:description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;" />
+<meta property="og:description" content="硬碟是相當精密的硬體，運作原理說起來簡單，其實非常複雜，如果要科普解釋，我通常會把硬碟比喻成「油畫」，如果畫錯了或是要修改，並不是用橡皮擦擦掉，而是用顏料直接覆蓋。 直接覆蓋就會有個問題，油畫可以用紅外線掃描來得知底層是什麼樣子，所以才會有人發現蒙娜麗莎原來是有眉毛的。XD 可是硬碟如果有重要資料 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="2012.12.31 更新：OS X 內建的 zsh 是 4.x 舊版本，可以用 Homebrew 安裝新版本，管理也會比較方便。 2012.11.23 更新：今天換成一個從 agnoster fork 出來的主題，另外依照自己的需要加上 RVM 的 Ruby 環境，截圖如下，如果喜歡可以從我的 &hellip;" />
+<meta itemprop="description" content="硬碟是相當精密的硬體，運作原理說起來簡單，其實非常複雜，如果要科普解釋，我通常會把硬碟比喻成「油畫」，如果畫錯了或是要修改，並不是用橡皮擦擦掉，而是用顏料直接覆蓋。 直接覆蓋就會有個問題，油畫可以用紅外線掃描來得知底層是什麼樣子，所以才會有人發現蒙娜麗莎原來是有眉毛的。XD 可是硬碟如果有重要資料 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/enable-filevault-before-using-mac/">使用 Mac 前務必先開啟 FileVault 2 功能</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-15T07:16:00+08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>硬碟是相當精密的硬體，運作原理說起來簡單，其實非常複雜，如果要科普解釋，我通常會把硬碟比喻成「油畫」，如果畫錯了或是要修改，並不是用橡皮擦擦掉，而是用顏料直接覆蓋。</p>
+
+<p>直接覆蓋就會有個問題，油畫可以用紅外線掃描來得知底層是什麼樣子，所以才會有人發現<a href="http://big5.xinhuanet.com/gate/big5/news.xinhuanet.com/tech/2007-10/24/content_6928914.htm">蒙娜麗莎原來是有眉毛的</a>。XD</p>
+
+<p>可是硬碟如果有重要資料，這就變成很大的問題了，尤其是 <a href="http://www.ithome.com.tw/itadm/article.php?c=66722&amp;s=1">SSD 更麻煩</a>，所以這也是為什麼業界硬碟如果損壞了，都是採用<a href="http://youtu.be/avP5d16wEp0?t=1m15s">物理銷燬</a>這種方式，例如 Google 的資料中心：</p>
+
+<p><img src="http://lh3.googleusercontent.com/-G0aVvazyu3I/UKQuYHiWVkI/AAAAAAAAFV4/0hR-0glZG-g/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-15%2520%25E4%25B8%258A%25E5%258D%25887.49.52.png" alt="google-destroy-hdd" /></p>
+
+<p>對於個人使用者而言，有時候用電腦不一定是「用到死」，也許中間會二手賣出，那也不大可能把硬碟砸爛再給對方，所以有一種方式就是啟用 FileVault 2 這個功能（Windows 上我記得好像也有類似的功能），替你的資料先行加密，這樣別人就算從廢棄電腦裡面讀出資料，也不會直接得到原始資料。</p>
+
+<p><img src="http://lh3.googleusercontent.com/-1FanB4n87e8/UKQwaYadieI/AAAAAAAAFWA/8bI5u6ok61c/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-15%2520%25E4%25B8%258A%25E5%258D%25887.59.13.png" alt="filevault-2" /></p>
+
+<p>這必須在剛拿到電腦存入任何個人資料之前，就先設定好。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -618,85 +666,6 @@ Enter your choice (1 or 2) or press Ctrl-C to abort: 1
 <div class="footnotes">
     <ol>
         <li id='fn:1'><a href="http://www.books.com.tw/exep/prod/booksfile.php?item=0010547374" alt="精實創業">精實創業</a>所提倡的一種概念，產品或服務不需要等到「完美」才推出，只要「堪用」能夠滿足使用者需求就夠了。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'><a href="https://github.com/klaustopher/hamlerbslim" alt="hamlerbslim">Github</a> 上有人用 <a href="http://httpd.apache.org/docs/2.2/programs/ab.html">Apache Benchmark</a> 做了一個實驗，測試 ERb、HAML、Slim 這三套樣板處理引擎的性能，有興趣可以參考看看。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>值得提一下的是最近 <a href="https://education.10gen.com/" alt="10gen">10Gen</a> 在線上開課，可以上免費的 MongoDB 專業課程。 <a href='#fnref:3' rev='footnote'>↩</a></li><li id='fn:4'>例如國內的 <a href="http://www.inside.com.tw/2012/01/30/icook-cloud-service" alt="icook-cloud-service">iCook</a> 就用了非常多的網路服務來「組裝」。 <a href='#fnref:4' rev='footnote'>↩</a></li>
-    </ol>
-</div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/tweetbot-for-mac-20-dollars-a-good-software-worth/">Tweetbot for Mac $20：一個好軟體應該值多少錢</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-19T19:43:00+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><em>TL;DR</em></p>
-
-<h2>第一次買軟體的經驗</h2>
-
-<p>記得我第一次花錢買「軟體」是在國小的時候，拿著存了幾個月的零用錢去偷買最新上市的戰地風雲，那價格好像是 1,000 多元左右，結果回家被老媽臭罵一頓，更慘的是，這遊戲後來玩不超過 50 次，Oops！真是虧爆了。:p</p>
-
-<p>不過當一下阿 Q 換個精神勝利的方式想想，如果用次數來平均計算的話，1,000 除以 50，這遊戲玩一次的成本大約 20 多塊錢，大概跟一杯半糖去冰的綠茶差不多。咦？這樣好像其實也不貴齁，反正遊戲現在已經變成一片廢光碟、清茶也變成一泡尿，通通不見了，可是「爽度」都有了。</p>
-
-<p>所以我開始想，平常老掛在嘴邊咒罵萬惡的 M$，一套作業系統賣 3,000、4,000 塊錢到底算貴還是不貴？現代人得了每天不用電腦會死的病，一年 365 天用個 300 次應該不算太多，平均成本算起來比綠茶還便宜，而且用越久越划算，簡直就賺翻了嘛！</p>
-
-<p>既然如此，怎麼還有人不願意買便宜到爆的 Windows 呢？顯然人們評估軟體的價值不是總共用了幾次。</p>
-
-<h2>免費試用 + 小額付費</h2>
-
-<p>事實上，我寧可花 20 元在一年內喝掉 200 杯綠茶，也不願意一次花 4,000 元買一套 Windows<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>。因為 20 元我可以隨時停掉不買，也許我喝到第 50 杯就膩了、煩了、倦了，然後改買其他飲料，但 Windows 不能用了兩個月還要求退一半費用。</p>
-
-<p>這樣講還是很怪，因為綠茶跟 Windows 本來就是牛馬不相及，而且如果是一杯 4,000 元的綠茶跟一套 4,000 元的 Windows，我會選哪一個？我兩個都不要，因為我既不要一套 4,000 元的 Windows 更不想要一杯 4,000 元的綠茶。</p>
-
-<p>說到底仍然是價格，更重要的是對於商品的期望值，我原本就已經對於「綠茶」有所預期，認為我買了這杯飲料應該可以得到什麼樣的「體驗」，即使以前我沒買過某家的綠茶，就算非常難喝，我還是有可能會買，可是 Menu 上如果有杯名叫「霸王菊花叉燒飲」<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>的新產品，我多半就不會輕易嘗試。</p>
-
-<p>軟體因為沒有基本的預期，儘管你知道那是個代辦事項軟體，可是不曉得能不能符合需要，也不知道可以得到什麼樣的「體驗」，就跟那杯「霸王菊花叉燒飲」一樣，即使附上樣品圖片我仍然會猶豫。</p>
-
-<p>如果這個時候店員遞上一小杯試喝，然後告訴你這是個好東西，而且很便宜的，經過嘗試後覺得好像真得很不賴，就很容易衝動買下去了。目前這可能是讓使用者掏錢買軟體最好的模式：免費試用（Lite &amp; Pro）、小額付費。看看那些在 iTunes App Store 和 Mac App Store 裡的那些軟體。</p>
-
-<h2>奇妙的軟體生態</h2>
-
-<p>說是讓使用者掏錢買軟體最好的模式，但未必是對軟體開發者最好的模式。這句話聽起來有點矛盾，使用者掏錢給開發者應該是好事才對。但是在這個模式底下軟體價格被壓到剩下一、兩塊（美元）錢，使用者還擁有「永久保固」。</p>
-
-<p>嗯……他花了兩塊錢買了你的軟體，請你用一輩子去照顧它。把手指頭拿出來數，怎麼數都不划算。媽呀！才兩塊？如果是那些隨便做一做的爛軟體，這樣剛好可以加速淘汰，可是對於那些真正用心的好軟體，這種小額支付一點也不公平。</p>
-
-<p>當然軟體也可以賣很貴，只是整個軟體生態瀰漫著一種廉價的氣息，只要比別人多賣幾塊錢就會引起眾人側目，像是昨天剛發佈的 <a href="http://tapbots.com/blog/news/tweetbot-mac/">Tweetbot for Mac</a>，售價 20 美元被一堆人嫌太貴。有人嫌其實也是好事，代表他們在乎這個產品。</p>
-
-<p>我很高興看到 Tweetbot for Mac 賣 20 美元，這是完全合理的報價。可以說 Tapbot 也同樣採用了免費試用的方法，但是他們沒有跟小額付費這種詭異的氛圍妥協。一個好軟體不只能夠解決真正的問題，也能符合使用者的需求，並且被正確的價格所支持。</p>
-
-<h2>後記</h2>
-
-<p>原本只是要稍微寫一下 Tweetbot for Mac 發佈正式版，結果寫成這篇亂七八糟又臭又長的文章，又好像沒寫什麼重點。XD</p>
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>真的不是要針對 Windows 啦，只是上面舉例用到它，所以只好一直抓它來打。:p <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>虛構出來的，沒這種東西。 <a href='#fnref:2' rev='footnote'>↩</a></li>
     </ol>
 </div>
 

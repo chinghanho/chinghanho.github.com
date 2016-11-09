@@ -4,7 +4,7 @@
   <title><![CDATA[@ChingHanHo]]></title>
   <link href="http://blog.chh.tw/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2016-10-02T20:19:53+08:00</updated>
+  <updated>2016-11-10T00:59:29+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,122 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Facebook Instant Articles「即時文章」是什麼？]]></title>
+    <link href="http://blog.chh.tw/posts/fb-instant-articles/"/>
+    <updated>2016-11-10T00:53:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/fb-instant-articles</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/QFqpxXZV3qUjUcR3LLrV3R5rcEPxvm-4DIP7Can_KyABedGdX9MEBFKYEasCx3VwVzoAZN9PqHmigIkyAkzMPswzcg1-BNiQxxPsKC3BhwWSG_ZboFlvygNePknmJAUlo-sCxAZMOwl8F1ZujQp-i_YxnvXEMJkSDqSYHNQESg7mCISjGUymV7KcQe-8hFh8jVhd7lHZkYWoeXwgJXjNPVYzzGcUkA26mnpSVo4yaQyf0aesuY-5-KIRxzb1WgCPUuhmsO5dTgTsTxU0zXBAX_XfldjuJ8AUx0SqOOPkzE9XKu6-Kw_rbTuoW07AeUAro_9Ly4sJgYf1yU3AF77W27uOtPWCQGf2eZypNES5NvyH8pgmvdZislP_hLzJ3vms8ffc3xqe1woCxDK69vfGyOQvQkgWP1o8C1a19sRaUncjhHVr_5AT17eqsRC8UHA_wB6o9XxXf26OOHlMQoQVJtAXMZNTvQY_ZSQvOqOwdETRCndDsWTy6Bm9dFp2ZWA19DdtVQkrwFMIQmvee58CVoH5d8cHe7JGOq-k3tm1P8U96PE9-XnqeJWPd_XyPQ_Z7oqQrDoloMXlHOovYlOwSvgcu44d8NaBhCMo0UopW5mUcEYWYA=w1280" alt="速度" /></p>
+
+<p>行動裝置時代瓶頸：</p>
+
+<ul>
+<li>手機頻寬小；</li>
+<li>手機速度慢；</li>
+</ul>
+
+
+<p>但是人們希望：</p>
+
+<ul>
+<li>速度快；</li>
+<li>速度要快；</li>
+<li>速度更快；</li>
+</ul>
+
+
+<p>快有什麼好處？遠古的網路傳說：</p>
+
+<ul>
+<li>Amazon 網頁平均載入時間多 1 秒，公司年度營收少 16 億美元；</li>
+<li>Google 網頁平均載入時間多 0.4 秒，每天搜尋次數減少 800 萬；</li>
+<li>使用者開啟網頁 4 秒內沒有出現任何內容便會放棄；</li>
+</ul>
+
+
+<p>所以 Facebook 推出「<a href="https://developers.facebook.com/docs/instant-articles">即時文章</a>」，讓文章內容可以在毫秒之間顯示。</p>
+
+<!-- more -->
+
+
+<h3>技術</h3>
+
+<p>即時文章原理：</p>
+
+<ul>
+<li>簡單說，他們預先把內容載入到 FB app 裡，讓使用者可以「不離開 FB app」直接讀取內容，省去網路訊號來往半個地球的時間；</li>
+<li>僅支援 iOS and Android，需要 iPhone iOS 7.0+ &amp; FB app 30.0+，以及 Android Jelly Bean+ &amp; FB app 57+。</li>
+</ul>
+
+
+<p>我想要我的網站內容可以有即時文章，有什麼條件？</p>
+
+<ul>
+<li>得要先有個網站；</li>
+<li>遵守 FB <a href="https://developers.facebook.com/docs/instant-articles/policy">文章政策</a>；</li>
+<li>遵守 FB <a href="https://developers.facebook.com/docs/instant-articles/design/overview#design-guidelines">設計規範</a>；</li>
+<li>網站內容頁面程式結構要為「即時文章」做準備；</li>
+<li>提交申請，至少準備 10 篇文章做「<a href="https://developers.facebook.com/docs/instant-articles/get-started/article-review">文章審查</a>」。</li>
+</ul>
+
+
+<p>「即時文章」要怎麼做？有以下幾種方式：</p>
+
+<ul>
+<li>RSS：網站要另外製作 RSS feed 的端口方便給 FB 抓資料，文件參考「<a href="https://developers.facebook.com/docs/instant-articles/publishing/setup-rss-feed">透過 RSS 摘要發佈</a>」。</li>
+<li>API：網站內容頁面的結構需要特別設計過，符合 HTML5 語義話結構；然後網站的內容在 CRUD（建立、讀取、更新、刪除）每個動作，都要與 FB 的程式溝通一次。文件參考「<a href="https://developers.facebook.com/docs/instant-articles/api">即時文章 API</a>」。</li>
+<li>另外還有 SDK 跟 WordPress 套件，前者要用 PHP 不討論，後者要用 WordPress 架站。</li>
+</ul>
+
+
+<p>實作了以上功能之後，要先提交 10 篇文章給 FB 進行「文章審查」，在那之前無法發佈即時文章。</p>
+
+<p>一旦完成設定以及審查過程後，FB app 上有 Instant Articles 的內容會出現一個閃點符號，點了<a href="https://twitter.com/mattjroper/status/598489543478751232">幾乎可以毫秒級出現內容</a>。</p>
+
+<h3>商業</h3>
+
+<p>內容都跑到 FB 上去顯示了，我的網站流量豈不是沒了？</p>
+
+<ul>
+<li>對，因為讀者「不離開 FB app」；</li>
+<li>可以用 <a href="http://www.comscore.com/">comScore</a>、<a href="https://www.google.com.tw/intl/zh-TW/analytics/">Google Analytics</a>、<a href="https://my.omniture.com/login/">Omniture</a> 或 Facebook 自己的工具追蹤「即時文章」的流量；</li>
+<li>因為網站本身流量減少，所以原本網站上的廣告收益減少；</li>
+<li>但是可以在即時文章放廣告，詳細見「<a href="https://developers.facebook.com/docs/instant-articles/monetization">即時文章的獲利方式</a>」。</li>
+</ul>
+
+
+<p>我的內容在 FB app 上出現得好快好爽，都沒有副作用？FB 轉型做慈善事業？</p>
+
+<p>簡單說，這是 FB 繼吃掉通訊平台、電商平台、支付平台的夢之後，另一個吃掉出版平台的夢。</p>
+
+<p>首先，FB 為內容產出者提供非常好的平台，為許多媒體帶來非常大的流量、讀者和廣告收益等，但這有點像嗑藥，FB 是個一但染上很難戒除的癮，因為：</p>
+
+<ul>
+<li>開始需要繳交「演算法維護費」跟「保護費」來維持流量；</li>
+<li>Facebook 網站如果掛了就無法導流；</li>
+<li>Facebook 有自己的一套「內容審查」決定權在他們，例如粉絲團被關閉的案例；</li>
+</ul>
+
+
+<p>尤其當「即時文章」是要媒體把內容「直接顯示在 FB 上」，讀者連媒體自家網站都不用過去了，對於媒體來說，對自家網站的控制權變得更弱了。</p>
+
+<p>所以，話說回來，我的網站適合「即時文章」嗎？ 以下是個思路：</p>
+
+<ul>
+<li>問問為什麼當初選擇花錢自架網站？為什麼不去用免費的 BSP？</li>
+<li>如果答案是說自己架網站可以對網站樣式、內容有更多的客製化跟掌控權……</li>
+<li>……</li>
+<li>……</li>
+<li>……</li>
+<li>……</li>
+<li>那用「即時文章」等於放棄以上這些，那怎麼不去用 BSP？</li>
+</ul>
+
+
+<p>報告完畢！👾</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SCSS 物件導向模組設計 (1)]]></title>
@@ -2266,96 +2382,6 @@ execute pathogen#infect()
 <p>跟我一樣的人應該也不少，Opera 改用 WebKit 應該多多少少會影響到市佔率，可是我想其實應該不會減少太多，因為「一般使用者」本來就沒有在乎 Opera 用的是哪一套 rendering 引擎，重點還是在 UI 的設計跟整體效能讓使用者滿不滿意。我對 Opera 沒有什麼偏見，真的只是純粹用不慣而已。</p>
 
 <p>Opera 放棄 Presto 後市場上就只剩下 WebKit、Gecko 和 Trident 三個主要的 rendering 引擎，也許以後會常見到「最佳瀏覽效果請使用 WebKit-base 瀏覽器」這樣的標語出現在網頁的尾部，也可能讓 WebKit 推向成為下一個「IE 世代」，誰知道呢？即便到真的有那麼一天，我相信以現在 web 的發展程度，一定會出現一個替代品讓堅持開放信仰的人們能夠有個地方去。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[關於 Ruby class 他們沒告訴你的真相：MetaClass]]></title>
-    <link href="http://blog.chh.tw/posts/ruby-metaclass-eigenclass/"/>
-    <updated>2013-01-17T20:19:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/ruby-metaclass-eigenclass</id>
-    <content type="html"><![CDATA[<h2>先從 Singleton Methods 講起</h2>
-
-<p>透過以下的 code 可以察覺，其實定義 singleton method 的方式跟定義實例方法（instance method）很像，就好像把某個 class 實例化後命名為大寫的 C，然後對這個實例定義方法：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># instance method</span>
-</span><span class='line'><span class="k">def</span> <span class="nc">c</span><span class="o">.</span><span class="nf">call_method</span>
-</span><span class='line'>  <span class="c1"># do something...</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># singleton method</span>
-</span><span class='line'><span class="k">def</span> <span class="nc">C</span><span class="o">.</span><span class="nf">call_method</span>
-</span><span class='line'>  <span class="c1"># do something...</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>為什麼舉這個例子呢？因為其實 singleton method 就是這樣創建的。</p>
-
-<p>在 Ruby 入門教學書籍上，幾乎每本書都說 class 是一種 Class，而 Class 的 superclass 是 Object，查找方法的路徑是這樣一層層往上找，但是他們沒有告訴我們，其實每一個 class 上面還有一個神祕的 class，就叫做 metaclass，而這個 metaclass 定義的實例方法就是該 class 的 singleton method。</p>
-
-<h2>再來說 MetaClass</h2>
-
-<p>metaclass 比較正規的稱呼是 eigenclass，會這樣叫可能是因為 Ruby 的歷史因素，metaclass 聽起來比較直覺所以我都習慣這樣用。而 metaclass 也是一種 Class，用我們比較熟悉的方法來理解的話，它就等於是以下這個例子的 <code>D</code> class：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">D</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">C</span> <span class="o">&lt;</span> <span class="n">D</span><span class="p">;</span> <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>也因為這樣的繼承結構，我們才能在「實例化」的 <code>C</code> class 物件上，呼叫定義在 metaclass 內的實例方法。不過跟一般的類別繼承關係比較不同的是，每個 metaclass 都只屬於一個 class，它不能同時被多個 class 繼承。</p>
-
-<p>由於每個 class 都有個 metaclass，當建立一個 class 的時候，Ruby 會自動為這個 class 創建一個 metaclass；而 class 的 singleton method 是定義在這裡面的，所以可以說 metaclass 才是「真正的」class。</p>
-
-<p>Ruby 用一個特殊的語法來取得 metaclass，即使在不知道 metaclass 之前，應該都有過這個語法，只是可能不知道原理，那就是 <code>class &lt;&lt; self</code>，這裡的 <code>self</code> 可以替換成任何想要取得 metaclass 的物件：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">;</span> <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c_meta</span> <span class="o">=</span> <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="n">C</span>
-</span><span class='line'>  <span class="nb">self</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c_meta</span>
-</span><span class='line'><span class="c1"># =&gt; #&lt;Class:C&gt; 這就是 C class 的 metaclass</span>
-</span><span class='line'><span class="c1"># 而 C 只是 Class:C 的一個 instance</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">c_meta</span><span class="o">.</span><span class="n">instance_methods</span>
-</span><span class='line'><span class="c1"># 這將會列出所有 C class 的 singleton method</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這是 Ruby 很抽象的部分，有時候光看文字解釋很難理解，又礙於篇幅我沒寫得特別詳細，只是就重點部分做一下筆記，提供記憶和回顧使用，如果是完全不熟悉 metaclass 的初學者，最好去看 <a href="http://pragprog.com/book/ppmetr/metaprogramming-ruby">Metaprogramming Ruby</a> 這本書，相信會有很大的收穫，更有效的作法，就是打開 irb 實際敲敲看。</p>
-
-<p>此外，關於 Ruby class 之間的繼承關係，可以參考這張 <a href="http://objectgraph.rubyforge.org/dotOG.html">RubyForge</a> 整理的圖表，畫得不算很好，但是可以清楚看出類別之間關係，對於學習也是個很好的教材。</p>
 ]]></content>
   </entry>
   
