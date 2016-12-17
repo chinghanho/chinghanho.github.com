@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="這篇文章在 iTunes 11 出來時就寫好，結果放在草稿夾裡一直忘記完成，今天因為看到了電腦玩物站長異塵行者對仿真設計的看法（舊文章今天才看到），才想起來還沒有發佈；異塵行者認為： 雖然高雅擬真風格看起來舒適，但畢竟我們不是真在紙本筆記使用 Evernote，而是在台數位裝置上， &hellip;">
+  <meta name="description" content="三天前開始看 Metaprogramming Ruby，希望可以在這個禮拜把整本讀完。讀書要寫筆記，一方面整理思緒、一方面幫助記憶、一方面還能分享，而且這本是英文原文，畢竟不是中文母語，有些內容當下看懂了，可是揮發得很快，所以我決定寫點東西下來。 Dynamic Dispatch 如果 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/6/" />
-<meta property="og:description" content="這篇文章在 iTunes 11 出來時就寫好，結果放在草稿夾裡一直忘記完成，今天因為看到了電腦玩物站長異塵行者對仿真設計的看法（舊文章今天才看到），才想起來還沒有發佈；異塵行者認為： 雖然高雅擬真風格看起來舒適，但畢竟我們不是真在紙本筆記使用 Evernote，而是在台數位裝置上， &hellip;" />
+<meta property="og:description" content="三天前開始看 Metaprogramming Ruby，希望可以在這個禮拜把整本讀完。讀書要寫筆記，一方面整理思緒、一方面幫助記憶、一方面還能分享，而且這本是英文原文，畢竟不是中文母語，有些內容當下看懂了，可是揮發得很快，所以我決定寫點東西下來。 Dynamic Dispatch 如果 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="這篇文章在 iTunes 11 出來時就寫好，結果放在草稿夾裡一直忘記完成，今天因為看到了電腦玩物站長異塵行者對仿真設計的看法（舊文章今天才看到），才想起來還沒有發佈；異塵行者認為： 雖然高雅擬真風格看起來舒適，但畢竟我們不是真在紙本筆記使用 Evernote，而是在台數位裝置上， &hellip;" />
+<meta itemprop="description" content="三天前開始看 Metaprogramming Ruby，希望可以在這個禮拜把整本讀完。讀書要寫筆記，一方面整理思緒、一方面幫助記憶、一方面還能分享，而且這本是英文原文，畢竟不是中文母語，有些內容當下看懂了，可是揮發得很快，所以我決定寫點東西下來。 Dynamic Dispatch 如果 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,119 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/dynamic-dispatch/">Ruby 的 Dynamic Dispatch 技巧</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-13T22:41:00+08:00" pubdate data-updated="true">Jan 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>三天前開始看 <a href="http://pragprog.com/book/ppmetr/metaprogramming-ruby">Metaprogramming Ruby</a>，希望可以在這個禮拜把整本讀完。讀書要寫筆記，一方面整理思緒、一方面幫助記憶、一方面還能分享，而且這本是英文原文，畢竟不是中文母語，有些內容當下看懂了，可是揮發得很快，所以我決定寫點東西下來。</p>
+
+<h2>Dynamic Dispatch</h2>
+
+<p>如果 <code>the_object.call_method</code>，那麼這個 <code>the_object</code> 就稱為接收者。<a href="http://en.wikipedia.org/wiki/Dynamic_dispatch">Dynamic Dispatch</a> 是指依照接收者的物件類型，來決定呼叫的方法，這個技巧會非常需要用到 <code>send</code>。</p>
+
+<h2>Send 用法</h2>
+
+<p><code>send</code> 其實跟 <code>.</code> 一樣，不同的是他可以把方法當成參數，傳送給接收者使用，接收者可能是個 class，也可能是個實例（instance），例如一般的 Ruby code 會這樣子在 class 裡定義一個方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ClassC</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is a method in class C.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>而我們可以透過以下的方法來呼叫這個 ClassC 的實例方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">call_method</span>        <span class="c1"># =&gt; &quot;This is a method in class C.&quot;</span>
+</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:call_method</span><span class="p">)</span> <span class="c1"># =&gt; &quot;This is a method in class C.&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這裡把 <code>call_method</code> 當成 <code>send</code> 的參數（可以是 hash，也可以是 string），然後丟給接收者；既然方法可以被當成物件來丟，意思也就是可以把一些方法存起來成一個 array，然後依照不同需求的時候丟給接收者使用。</p>
+
+<p>舉例來說，當 <code>ClassC</code> 有很多的實例方法時，可以把它們存成一個 array，然後用 Dynamic Dispatch 技巧傳給接收者：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ClassC</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_a</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is method_a in class C.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">call_method_b</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;This is method_b in class C.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">methods</span> <span class="o">=</span> <span class="no">ClassC</span><span class="o">.</span><span class="n">instance_methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span>
+</span><span class='line'><span class="nb">methods</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="nb">method</span><span class="o">|</span> <span class="n">c</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">method</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'><span class="c1"># =&gt; This is method_a in class C.</span>
+</span><span class='line'><span class="c1"># =&gt; This is method_b in class C.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>有時候我們只需要部分的方法，而不是全部，所以會加上一些過濾條件，只撈出自己需要的部分，這樣的行為又稱為 Pattern Dispatch，因為是基於某種 pattern 來篩選方法。</p>
+
+<p>以上就是 Dynamic Dispatch 的解釋，這個技巧經常可以在 Ruby 的 Test::Unit 標準庫裡看到，把 class 的實例方法（instance method）撈出來，然後一個一個代進測試程式碼裡面去跑。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -541,54 +654,6 @@ $ echo "config/database.yml" &gt;&gt; .gitignore
 
 
 <p>最後修改所有 controllers 的參數寫法，參考上面 Santiago Pastorino 寫的 <code>user_params</code> 例子。等到 Rails 4 正式發佈時，只要把 application.rb 和 models 做的修改復原回來，還有把 strong_parameters 從 Gemfile 踢出去就完成了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/better-way-to-watch-rails-log-rails-panel/">查看 Rails Log 更好用的工具：rails_panel</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-26T18:59:00+08:00" pubdate data-updated="true">Dec 26<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天早上 <a href="https://twitter.com/fxn">Xavier Noria</a> 轉推 <a href="http://www.rubyflow.com/">RubyFlow</a> 一則 <a href="https://twitter.com/rubyflow/status/283689153747644417">tweet</a>，看到這個有趣的工具，能用更友善的介面來顯示 <code>rails server</code> 下的 log 資訊，這東西就是 <a href="https://github.com/dejan/rails_panel">rails_panel</a>。</p>
-
-<p>安裝方式很容易，先在 Google Chrome Store 上下載 <a href="https://chrome.google.com/webstore/detail/railspanel/gjpfobpafnhjhbajcjgccbbdofdckggg">rails_panel</a> 這個擴充套件，再把 <a href="http://rubygems.org/gems/meta_request">meta_request</a> 這個 gem 加進 Gemfile，<code>bundle install</code> 後重啟伺服器，然後開 Chrome 的開發者面板就可以看到新的標籤頁。</p>
-
-<p>使用前：</p>
-
-<p><img src="http://lh6.googleusercontent.com/-sQP75CibCDg/UNrWZy9ID9I/AAAAAAAAFf8/w0WgsGmo2RQ/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-26%2520%25E4%25B8%258B%25E5%258D%25886.19.47.png" alt="rails-server-log" /></p>
-
-<p>使用後：</p>
-
-<p><img src="http://lh4.googleusercontent.com/-JUS4VoFaWwE/UNrNeRUEqkI/AAAAAAAAFfo/k69Phmixw8Q/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-26%2520%25E4%25B8%258B%25E5%258D%25885.59.32.png" alt="rails-panel" /></p>
-
-<p>超級清楚！我不曉得其他人都用什麼方式檢視 log，不過這目前是我用過最好的工具，對於查看 view render、資料庫拉資料的時間以及傳遞的參數內容都非常方便，推薦！</p>
 </div>
   
   

@@ -9,7 +9,13 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD Page 1 &hellip;">
+  <meta name="description" content="原生 HTML5 和 Javascript API 可以直接從瀏覽器存取硬體組件和感測器。這裏的硬體裝置主要是指手機。 點擊連結傳送簡訊 1
+2
+3
+4
+5
+6
+&lt;a href=&quot;tel:0912345678&quot;&gt;打給我！&lt;/a&gt; &lt;!-- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +36,26 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/2/" />
-<meta property="og:description" content="這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD Page 1 &hellip;" />
+<meta property="og:description" content="原生 HTML5 和 Javascript API 可以直接從瀏覽器存取硬體組件和感測器。這裏的硬體裝置主要是指手機。 點擊連結傳送簡訊 1
+2
+3
+4
+5
+6
+&lt;a href=&quot;tel:0912345678&quot;&gt;打給我！&lt;/a&gt; &lt;!-- &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="這篇文章不是要做深入的效能評比，只是最近 node.js v0.12.0 正式版釋出，又剛好人品很好地用 io.js 1.1 把專案建起來了，乾脆就在本機上做一下 node.js 新舊版和現在很熱的 io.js 效能紀錄。圖有點小，要嘛自己想辦法放大，要嘛就直接看結論吧！XD Page 1 &hellip;" />
+<meta itemprop="description" content="原生 HTML5 和 Javascript API 可以直接從瀏覽器存取硬體組件和感測器。這裏的硬體裝置主要是指手機。 點擊連結傳送簡訊 1
+2
+3
+4
+5
+6
+&lt;a href=&quot;tel:0912345678&quot;&gt;打給我！&lt;/a&gt; &lt;!-- &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +118,299 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/9-javascript-apis-accessing-device-sensors/">9 個存取硬體裝置的 Javascript API</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-30T17:09:00+08:00" pubdate data-updated="true">Aug 30<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原生 HTML5 和 Javascript API 可以直接從瀏覽器存取硬體組件和感測器。這裏的硬體裝置主要是指手機。</p>
+
+<h3>點擊連結傳送簡訊</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;tel:0912345678&quot;</span><span class="nt">&gt;</span>打給我！<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- Android --&gt;</span>
+</span><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;sms:0912345678?body=你到哪了？&quot;</span><span class="nt">&gt;</span>傳簡訊給我！<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'><span class="c">&lt;!-- iOS --&gt;</span>
+</span><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;sms:0912345678&amp;amp;body=你到哪了？&quot;</span><span class="nt">&gt;</span>傳簡訊給我！<span class="nt">&lt;/a&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>延伸資料：</p>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/6480462/how-to-pre-populate-the-sms-body-text-via-an-html-link">How to pre-populate the sms body text via an html link - StackOverflow</a></li>
+</ul>
+
+
+<h3>地理定位 API</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">geolocation</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">navigator</span><span class="p">.</span><span class="nx">geolocation</span><span class="p">.</span><span class="nx">getCurrentPosition</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">position</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">whereareyou</span> <span class="o">=</span> <span class="nx">position</span><span class="p">.</span><span class="nx">coords</span><span class="p">.</span><span class="nx">latitude</span> <span class="o">+</span> <span class="s1">&#39; ,&#39;</span> <span class="o">+</span> <span class="nx">position</span><span class="p">.</span><span class="nx">coords</span><span class="p">.</span><span class="nx">longitude</span>
+</span><span class='line'>    <span class="nx">alert</span><span class="p">(</span><span class="nx">whereareyou</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>裝置方向與裝置體感 API</h3>
+
+<p>這兩個功能是建立在裝置的陀螺儀和指南針感測器上，它能夠傳回目前裝置的旋轉角度，以及三個維度。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">DeviceOrientationEvent</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;deviceorientation&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// gamma 是左到右傾斜的角度</span>
+</span><span class='line'>    <span class="c1">// beta  是前到後傾斜的角度</span>
+</span><span class='line'>    <span class="c1">// alpha 是裝置面向在指南針方位上的角度</span>
+</span><span class='line'>    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">gamma</span> <span class="o">+</span> <span class="s1">&#39; ,&#39;</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">beta</span> <span class="o">+</span> <span class="s1">&#39; ,&#39;</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">alpha</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">},</span> <span class="kc">false</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>有了裝置體感的 API，也可以做出搖一搖復原輸入的功能。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">DeviceMotionEvent</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;devicemotion&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evnet</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="s1">&#39;&lt;br/&gt;&#39;</span> <span class="o">+</span> <span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">y</span> <span class="o">+</span> <span class="s1">&#39;&lt;br/&gt;&#39;</span> <span class="o">+</span> <span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">z</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 加速感測</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">x</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">acceleration</span><span class="p">.</span><span class="nx">z</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 加速感測包括重力參數</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">accelerationIncludingGravity</span><span class="p">.</span><span class="nx">x</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">accelerationIncludingGravity</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">accelerationIncludingGravity</span><span class="p">.</span><span class="nx">z</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 旋轉率</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">rotationRate</span><span class="p">.</span><span class="nx">alpha</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">rotationRate</span><span class="p">.</span><span class="nx">beta</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evnet</span><span class="p">.</span><span class="nx">rotationRate</span><span class="p">.</span><span class="nx">gamma</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="kc">false</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>延伸資料：</p>
+
+<ul>
+<li><a href="https://developers.google.com/web/fundamentals/device-access/device-orientation/dev-motion?hl=zh-tw">裝置動作 - Web Fundamentals</a></li>
+<li><a href="https://developers.google.com/web/fundamentals/device-access/device-orientation/?hl=zh-tw">裝置定向 - Web Fundamentals</a></li>
+</ul>
+
+
+<h3>震動馬達</h3>
+
+<p>目前只支援 Android 的 Chrome 以及 Opera、Firefox，iOS 尚不支援。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">btn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;btn&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">vibrate</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">vibrate</span> <span class="o">||</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozVibrate</span> <span class="o">||</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">webkitVibrate</span>
+</span><span class='line'><span class="nx">btn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">vibrate</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>延伸資料：</p>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate">Navigator.vibrate() - MDN</a></li>
+</ul>
+
+
+<h3>剩餘電力管理</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">battery</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">battery</span> <span class="o">||</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">webkitBattery</span> <span class="o">||</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozBattery</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">_battery</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;目前電力剩下：&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">_battery</span><span class="p">.</span><span class="nx">level</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span>
+</span><span class='line'>  <span class="nx">_battery</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;chargingchange&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;開始充電！&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">},</span> <span class="kc">false</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">getBattery</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">navigator</span><span class="p">.</span><span class="nx">getBattery</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">log</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">battery</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">log</span><span class="p">(</span><span class="nx">battery</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>亮度感測器</h3>
+
+<p>目前只有 Firefox 支援這個 API。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="s1">&#39;ondevicelight&#39;</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;devicelight&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// 回傳的是亮度單位 lux</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">&quot; lux&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>近距離感測 API</h3>
+
+<p>這個也是只有 Firefox 支援。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="k">if</span><span class="p">(</span><span class="s1">&#39;ondeviceproximity&#39;</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Fired when object is in the detection zone</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;deviceproximity&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// Object distance in centimeters</span>
+</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">&quot; centimeters&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;deviceproximity not supported&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="s1">&#39;ondeviceproximity&#39;</span> <span class="k">in</span> <span class="nb">window</span><span class="p">){</span>
+</span><span class='line'>  <span class="c1">// Fired when object is in the detection zone</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;userproximity&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">near</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Object is near&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Object is far&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;userproximity not supported&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p>參考：</p>
+
+<ul>
+<li><a href="http://www.webondevices.com/9-javascript-apis-accessing-device-sensors/">9 JavaScript APIs accessing Device Hardware</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -327,49 +638,6 @@
   
     <footer>
       <a rel="full-article" href="/posts/mongodb-odm-mongoose/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/node-http-vs-connect-vs-express/">Node.js 的 Http vs Connect vs Express</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-05T02:17:00+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="https://lh5.googleusercontent.com/-mk_3GdVqmSI/Uid55DfCYHI/AAAAAAAAGp4/3mW_vcrS63Q/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-05+%25E4%25B8%258A%25E5%258D%25882.19.28.png" alt="node-express" /></p>
-
-<p>這篇應該是我第一篇寫有關 <a href="http://nodejs.org/">Node.js</a> 的文章，未來應該會開始多寫一些有關 Javascript 的東西。這次主題要來聊聊 Node.js 的 http 模組，跟知名的 Connect 和 Express 之間的關係，如果上網去問，有人會回說就像是 Ruby 的 <a href="http://rack.github.io/">Rack</a> 一樣，但是具體到底是什麼東西呢？</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/posts/node-http-vs-connect-vs-express/">Read on &rarr;</a>
     </footer>
   
 

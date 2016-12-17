@@ -9,7 +9,10 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="這是老影片了，剛好在 Youtube 上亂逛看到，這部影片使用一套叫做 Gource 的工具，可以將版本控制的提交歷史，用生動的視覺化方式呈現。這部影片記錄了 2004 年到 2009 年間，Rails 社群生態圈的發展，一開始看著 DHH1 一人構築這套框架的基礎，隨後越來越多的社群加入， &hellip;">
+  <meta name="description" content="昨天在看新一期 RailsCasts 的時候，見到 Ryan Bates 用了一個有趣的小工具叫做 CLOC，如果用的是 OS X 可以透過 Homebrew 來安裝： 1
+2
+brew update
+brew install cloc 儘管 Rails 有內建的指令 rake stats &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +33,20 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/11/" />
-<meta property="og:description" content="這是老影片了，剛好在 Youtube 上亂逛看到，這部影片使用一套叫做 Gource 的工具，可以將版本控制的提交歷史，用生動的視覺化方式呈現。這部影片記錄了 2004 年到 2009 年間，Rails 社群生態圈的發展，一開始看著 DHH1 一人構築這套框架的基礎，隨後越來越多的社群加入， &hellip;" />
+<meta property="og:description" content="昨天在看新一期 RailsCasts 的時候，見到 Ryan Bates 用了一個有趣的小工具叫做 CLOC，如果用的是 OS X 可以透過 Homebrew 來安裝： 1
+2
+brew update
+brew install cloc 儘管 Rails 有內建的指令 rake stats &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="這是老影片了，剛好在 Youtube 上亂逛看到，這部影片使用一套叫做 Gource 的工具，可以將版本控制的提交歷史，用生動的視覺化方式呈現。這部影片記錄了 2004 年到 2009 年間，Rails 社群生態圈的發展，一開始看著 DHH1 一人構築這套框架的基礎，隨後越來越多的社群加入， &hellip;" />
+<meta itemprop="description" content="昨天在看新一期 RailsCasts 的時候，見到 Ryan Bates 用了一個有趣的小工具叫做 CLOC，如果用的是 OS X 可以透過 Homebrew 來安裝： 1
+2
+brew update
+brew install cloc 儘管 Rails 有內建的指令 rake stats &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +109,198 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/cloc-kuai-su-ji-suan-zhuan-an-zhong-yuan-shi-ma-xing-shu/">CLOC：快速計算專案中原始碼行數</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-09T07:37:00+08:00" pubdate data-updated="true">Oct 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天在看新一期 <a href="http://railscasts.com/episodes/384-exploring-rubygems">RailsCasts</a> 的時候，見到 <a href="http://twitter.com/rbates">Ryan Bates</a> 用了一個有趣的小工具叫做 <a href="http://cloc.sourceforge.net/">CLOC</a>，如果用的是 OS X 可以透過 <a href="http://mxcl.github.com/homebrew/">Homebrew</a> 來安裝：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew update
+</span><span class='line'>brew install cloc</span></code></pre></td></tr></table></div></figure>
+
+
+<p>儘管 Rails 有內建的指令 <code>rake stats</code> 可以查詢寫過多少程式碼，但是提供的資訊沒有很清楚；CLOC 不只可以詳細的計算寫了幾行程式碼，還可以清楚地辨識你用什麼語言來寫，每個語言個寫了多少行、多少註解、多少空白：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cloc rails-v3.2.8.tar.gz 
+</span><span class='line'>    2286 text files.
+</span><span class='line'>    2214 unique files.                                          
+</span><span class='line'>     533 files ignored.
+</span><span class='line'>
+</span><span class='line'>http://cloc.sourceforge.net v 1.56  T=11.0 s (160.0 files/s, 19893.3 lines/s)
+</span><span class='line'>-------------------------------------------------------------------------------
+</span><span class='line'>Language                     files          blank        comment           code
+</span><span class='line'>-------------------------------------------------------------------------------
+</span><span class='line'>Ruby                          1548          31995          31994         145742
+</span><span class='line'>CSS                             37            126            367           4093
+</span><span class='line'>YAML                           116            221            336           1867
+</span><span class='line'>Javascript                      40            189            514            999
+</span><span class='line'>HTML                            17             30              3            298
+</span><span class='line'>SQL                              1              6              0             43
+</span><span class='line'>CoffeeScript                     1              0              3              0
+</span><span class='line'>-------------------------------------------------------------------------------
+</span><span class='line'>SUM:                          1760          32567          33217         153042
+</span><span class='line'>-------------------------------------------------------------------------------</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果說想要知道 Rails 3.2.7 和 Rails 3.2.8 之間程式碼的行數差異，可以到 Github 直接下載整個專案，連解壓縮都不用就可以直接進行比對，計算結果會詳細列出有多少相同、多少被修改、多少是新增的、多少被移除掉的程式碼：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cloc --diff rails-v3.2.7.tar.gz rails-v3.2.8.tar.gz 
+</span><span class='line'>    2286 text files.
+</span><span class='line'>    2286 text files.s
+</span><span class='line'>    1066 files ignored.                                         
+</span><span class='line'>
+</span><span class='line'>http://cloc.sourceforge.net v 1.56  T=50.0 s (0.0 files/s, 0.0 lines/s)
+</span><span class='line'>-------------------------------------------------------------------------------
+</span><span class='line'>Language                     files          blank        comment           code
+</span><span class='line'>-------------------------------------------------------------------------------
+</span><span class='line'>HTML
+</span><span class='line'> same                           17              0              3            298
+</span><span class='line'> modified                        0              0              0              0
+</span><span class='line'> added                           0              0              0              0
+</span><span class='line'> removed                         0              0              0              0
+</span><span class='line'>SQL
+</span><span class='line'> same                            1              0              0             43
+</span><span class='line'> modified                        0              0              0              0
+</span><span class='line'> added                           0              0              0              0
+</span><span class='line'> removed                         0              0              0              0
+</span><span class='line'>Javascript
+</span><span class='line'> same                           40              0            514            999
+</span><span class='line'> modified                        0              0              0              0
+</span><span class='line'> added                           0              0              0              0
+</span><span class='line'> removed                         0              0              0              0
+</span><span class='line'>CoffeeScript
+</span><span class='line'> same                            1              0              3              0
+</span><span class='line'> modified                        0              0              0              0
+</span><span class='line'> added                           0              0              0              0
+</span><span class='line'> removed                         0              0              0              0
+</span><span class='line'>CSS
+</span><span class='line'> same                           37              0            367           4093
+</span><span class='line'> modified                        0              0              0              0
+</span><span class='line'> added                           0              0              0              0
+</span><span class='line'> removed                         0              0              0              0
+</span><span class='line'>YAML
+</span><span class='line'> same                          116              0            336           1867
+</span><span class='line'> modified                        0              0              0              0
+</span><span class='line'> added                           0              0              0              0
+</span><span class='line'> removed                         0              0              0              0
+</span><span class='line'>Ruby
+</span><span class='line'> same                         1501              0          31943         145562
+</span><span class='line'> modified                       47              0              7            124
+</span><span class='line'> added                           0              6             44             56
+</span><span class='line'> removed                         0             43             36            246
+</span><span class='line'>-------------------------------------------------------------------------------
+</span><span class='line'>SUM:
+</span><span class='line'> same                         1713              0          33166         152862
+</span><span class='line'> modified                       47              0              7            124
+</span><span class='line'> added                           0              6             44             56
+</span><span class='line'> removed                         0             43             36            246
+</span><span class='line'>-------------------------------------------------------------------------------</span></code></pre></td></tr></table></div></figure>
+
+
+<p>更多的玩法可以參考官方文件：<a href="http://cloc.sourceforge.net/#Options">CLOC Options</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -403,50 +604,6 @@
 <p>我也比較過同樣是 16:9 的 21.5 寸和 27 寸的 iMac，27 寸的 iMac 帶來的視覺體驗就比 21.5 寸的還要好，所以我最終還是認為，16:9 並不適合用在小螢幕上。</p>
 
 <p>（我不是 iOS app 的開發者，對於這次改變比例沒什麼感受，但是我非常喜歡原本 3.5 寸的 iPhone）</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/digital-is-not-forever/">Digital Is Not Forever</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-11T08:22:00+08:00" pubdate data-updated="true">Sep 11<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我一直相信唯有透過瞭解歷史，才能夠更明白當下與未來，而保存人類歷史的足跡是如此彌足珍貴，隨著時代不同，記錄的方法也有所不同。</p>
-
-<p>昨天我打開那台幾個月沒開的桌機，結果出現「Disk boot failure, insert system disk and press enter.」錯誤訊息，問題應該不大，大概重新確認一下硬碟接線和電源供應器，障礙就可以排除，只是也沒什麼要緊事，我也懶得拆機殼修理。</p>
-
-<p>這台桌機裡面存有我過去大學四年的一些回憶，不論是作業、報告還是任何多媒體。確切說起來可能是兩年，因為期間曾經重灌過。大部分經常使用的資料我已經放在 Dropbox 同步到我現在用的筆電，有些則沒有，事實上，還有些什麼資料我已經沒什麼印象了。</p>
-
-<p>曾經有幾次想要打開他的念頭，去回顧一下裡面有些什麼寶貝，可是因為桌機的螢幕被筆電給蠻橫地搶去，所以這台桌機放在我旁邊不到一條手臂的距離，數個月過去卻一直沒有動過它。</p>
-
-<p>現在，無法開機進入作業系統，結果我發現我突然有種「喔，這樣啊」的感覺，好像直接把硬碟換掉我也不會捨不得。如果，這不是一台電腦，而是一本本的摸得到的相簿、一張張的看得見的照片，我是不是還是一樣不想去碰它呢？</p>
 </div>
   
   

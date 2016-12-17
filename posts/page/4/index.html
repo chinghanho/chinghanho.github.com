@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。 從官網上的描述，tmux 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh &hellip;">
+  <meta name="description" content="早上整理 .dotfiles 因為對 Git 的 submodule 指令不熟悉弄得灰頭土臉，最後把整個目錄砍掉重新 clone 回來，結果發現 submodule 裡面的目錄都是空的，才知道原來 Git 不會自動去抓 submodule 的 repo，還要另外加一些指令。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/4/" />
-<meta property="og:description" content="每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。 從官網上的描述，tmux 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh &hellip;" />
+<meta property="og:description" content="早上整理 .dotfiles 因為對 Git 的 submodule 指令不熟悉弄得灰頭土臉，最後把整個目錄砍掉重新 clone 回來，結果發現 submodule 裡面的目錄都是空的，才知道原來 Git 不會自動去抓 submodule 的 repo，還要另外加一些指令。 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="每次把終端機關掉後，先前的狀態都無法記錄，這個問題困擾我好久，最近才知道 tmux 這個工具，終於解決了這個問題。 從官網上的描述，tmux 是個 terminal multiplexer，意思就是可以讓終端機同時跑多個程式，不用的時候可以把他們藏到背景去，需要的時候再叫出來，甚至 ssh &hellip;" />
+<meta itemprop="description" content="早上整理 .dotfiles 因為對 Git 的 submodule 指令不熟悉弄得灰頭土臉，最後把整個目錄砍掉重新 clone 回來，結果發現 submodule 裡面的目錄都是空的，才知道原來 Git 不會自動去抓 submodule 的 repo，還要另外加一些指令。 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/git-submodule/">Git Submodule 用法筆記</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-11T12:57:00+08:00" pubdate data-updated="true">Apr 11<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img class="center" src="https://lh3.googleusercontent.com/-FDLtETH15RA/UWZCV-K5HvI/AAAAAAAAF_8/_V4T3qnbxGQ/s512/submodule-screen.png" title="'git-submodule'" ></p>
+
+<p>早上整理 <a href="https://github.com/chinghanho/.dotfiles">.dotfiles</a> 因為對 Git 的 submodule 指令不熟悉弄得灰頭土臉，最後把整個目錄砍掉重新 clone 回來，結果發現 submodule 裡面的目錄都是空的，才知道原來 Git 不會自動去抓 submodule 的 repo，還要另外加一些指令。</p>
+
+<p>這些指令因為不會很常用（吧？），最近是因為在摸索 <a href="http://blog.chh.tw/posts/vim-plugins-manager-pathogen/">Vim 的補丁管理</a>才開始碰到 git submodule 問題，如果不寫可能後天就忘光了，所以我把今天碰到的問題整理記錄下來。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/git-submodule/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -328,52 +373,6 @@ execute pathogen#infect()
     <footer>
       <a rel="full-article" href="/posts/after-google-reader-dead/">Read on &rarr;</a>
     </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/opera-move-to-webkit/">Opera 產品全面改用 WebKit 引擎</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-14T08:40:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://lh3.googleusercontent.com/-81Na2LPt3oY/URwrpztPvcI/AAAAAAAAF0I/nW6cpHKy0xQ/s690/installed-browsers.png" alt="installed-browsers" /></p>
-
-<p>大約在一個月前就有看到 <a href="http://www.pocket-lint.com/news/49375/opera-ice-new-webkit-browser">Opera 要改用 WebKit rendering 引擎</a>的消息，所以昨天看到 <a href="http://my.opera.com/ODIN/blog/300-million-users-and-move-to-webkit">Opera 開發團隊發佈的新聞</a>其實沒有太驚訝，反而是看到<a href="http://news.ycombinator.com/item?id=5211953">鄉民們激動的表現</a>讓我有點意外。</p>
-
-<p>要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit 引擎說實在跟我沒有太大的關係，對於網站開發有沒有影響我也不知道，因為在我練功的路上目前都沒有碰到太多跟瀏覽器前端有關的部份，要說直接的影響大概就是寫 CSS 可以少個 prefix 吧！可是我寫 CSS 都是用 <a href="https://github.com/chriseppstein/compass">Compass</a> 這個武裝神器，本來就沒有在寫 prefix 啊。XD</p>
-
-<p>我最喜歡的瀏覽器是 Google Chrome，可是有時會因為不同的需求或是開發需要，我電腦裡同時安裝了各家瀏覽器，包括 Safari、Firefox 和 Opera 等等。裝 Firefox 是因為要用到某些特別的 add-ons；而 Opera 則是 UI 用得不是很習慣所以不喜歡，裝起來只是純粹開發測試用。現在 Opera 改用 WebKit 後突然發現好像已經可以移除它了齁！:p</p>
-
-<p>跟我一樣的人應該也不少，Opera 改用 WebKit 應該多多少少會影響到市佔率，可是我想其實應該不會減少太多，因為「一般使用者」本來就沒有在乎 Opera 用的是哪一套 rendering 引擎，重點還是在 UI 的設計跟整體效能讓使用者滿不滿意。我對 Opera 沒有什麼偏見，真的只是純粹用不慣而已。</p>
-
-<p>Opera 放棄 Presto 後市場上就只剩下 WebKit、Gecko 和 Trident 三個主要的 rendering 引擎，也許以後會常見到「最佳瀏覽效果請使用 WebKit-base 瀏覽器」這樣的標語出現在網頁的尾部，也可能讓 WebKit 推向成為下一個「IE 世代」，誰知道呢？即便到真的有那麼一天，我相信以現在 web 的發展程度，一定會出現一個替代品讓堅持開放信仰的人們能夠有個地方去。</p>
-</div>
-  
   
 
 

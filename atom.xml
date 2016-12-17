@@ -4,7 +4,7 @@
   <title><![CDATA[@ChingHanHo]]></title>
   <link href="http://blog.chh.tw/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2016-11-10T00:59:29+08:00</updated>
+  <updated>2016-12-17T13:03:42+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CSS Font (1) - EM square]]></title>
+    <link href="http://blog.chh.tw/posts/css-font-em-square/"/>
+    <updated>2016-12-17T12:59:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/css-font-em-square</id>
+    <content type="html"><![CDATA[<p>傳統金屬活版印刷把每個字母刻在一個金屬方塊上，方塊不一定是正方形，寬度可能不同但是高度相同，這樣才能整齊地排列字母。由於英文中「M」這個字母比例接近正方形幾乎是最大的一個，因此金屬塊的寬度被稱為「em（M）」。</p>
+
+<p>在數位時代一個字母的空間容器從實體金屬塊轉移到虛構的網格，這個網格空間被稱為 <a href="http://designwithfontforge.com/zh-CN/The_EM_Square.html">EM square</a>、EM size 或 UPM（Unit per EM），術語源自活版印刷技術的歷史。</p>
+
+<p>這個空間容器可以看作是個正方形網格，「標準化」的網格寬高尺寸為 2048x2048，每個網格格點表示為一個 FUnit；不過在技術上 EM square 應該說是個二維空間座標系統（x,y）而不是網格。</p>
+
+<!-- more -->
+
+
+<p><img src="https://lh3.googleusercontent.com/_vIG5mKzyW0lcp8INazZP3wb3d5tdN2fkEBLHzy-DJMsqzoski-1WcsUA4T-JlFYHgWqRce8Zk0ErcVQn2gR7UvaeN-MJAlFlWGh2n_sJC71dQZ_bFmXpLsOc1an7dH9u6vt44ES-Ljs6x-RbXMz_ObYyZ9vRgH18eTfVFipTJxjxPPgeynvgkWIzz6W2J6aPE6irkS0I8QXUcNMM0WNGW-b5utOd5AQl0qrp0Ti7YHiHArmd-WciTrzdi-M3AngJVw2EPt7WoBPl4DQE-NbIZHEXjp5CEoq-D6fyeefjCK6eWn-wRyqfAbVHID_R_xtajVEUz2ApIi4RxF-urECPudmJFmvy6mJTH1o5exK5-EY9sofFXxiApntimCfoRc1V8J7iyhIAO3er_JrSOAPe76DsQeC2LcHVUIE9zpos4SMgOXj4RsMjsd0U-jOJHeVmOFiMJJKV-BkHGEdQp9EV5L5nFJOoxX-Hd40mgPRwLJa1GflN055qBd0Fh44MxPTkncgBi8mhqaUNpJobO6qWRbXCga1gDRoJDUQL-Df9i5-agXegiwDpzMdW4tmu3QjFQ-e-DPLoeFmT4pYrHsYiBGCuS8pTD0rx5fG6HVaMFMy7W4dKQ=w483-h346-no" alt="2048" /></p>
+
+<p>（圖片取自「<a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/RM01/Chap1.html">Digitizing Letterform Designs</a>」，版權為原網站所有。）</p>
+
+<p>字型（font）指的是文字造型，又稱為字體，常見的字型例如標楷體、新細明體、微軟正黑體、蘋方體、Times New Roman、Helvetica 等。字形（Glyph）指的是字元的形狀，由程式演算法或是文字工程師、設計師手動調整的形狀本身；一個字型的所有字形都有相同的 EM square 尺寸，差別只在於字形的大小不同。</p>
+
+<p>之所以說「標準化」定義 EM square 尺寸是 2048x2048，是因為這取決於軟體的相容性，事實上可以設定更大的值，<a href="https://www.microsoft.com/typography/otspec/head.htm">OpenType 官方規格建議大小是 16 到 16384 之間</a>，但如果主流軟體無法支援便失去了意義，例如 <a href="http://typedrawers.com/discussion/comment/863/#Comment_863">InDesign、Illustrator 特定版本無法正確處理 EM square 超過 5000 的字型</a>。目前比較常見的尺寸通常是 1000 或是 2048，例如 <a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/RM01/Chap1.html#master">Apple 主要字型都是以 2048 FUnit 去設計</a>的。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Facebook Instant Articles「即時文章」是什麼？]]></title>
@@ -2363,25 +2387,6 @@ execute pathogen#infect()
 <p>Google Reader，快點從我的導航欄上消失吧！</p>
 
 <p>（突然想到我的 blog 目前只有提供 RSS 一種 feed 途徑……Orz）</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Opera 產品全面改用 WebKit 引擎]]></title>
-    <link href="http://blog.chh.tw/posts/opera-move-to-webkit/"/>
-    <updated>2013-02-14T08:40:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/opera-move-to-webkit</id>
-    <content type="html"><![CDATA[<p><img src="http://lh3.googleusercontent.com/-81Na2LPt3oY/URwrpztPvcI/AAAAAAAAF0I/nW6cpHKy0xQ/s690/installed-browsers.png" alt="installed-browsers" /></p>
-
-<p>大約在一個月前就有看到 <a href="http://www.pocket-lint.com/news/49375/opera-ice-new-webkit-browser">Opera 要改用 WebKit rendering 引擎</a>的消息，所以昨天看到 <a href="http://my.opera.com/ODIN/blog/300-million-users-and-move-to-webkit">Opera 開發團隊發佈的新聞</a>其實沒有太驚訝，反而是看到<a href="http://news.ycombinator.com/item?id=5211953">鄉民們激動的表現</a>讓我有點意外。</p>
-
-<p>要說有什麼感想其實沒有，因為 Opera 放棄 Presto 跟採用 WebKit 引擎說實在跟我沒有太大的關係，對於網站開發有沒有影響我也不知道，因為在我練功的路上目前都沒有碰到太多跟瀏覽器前端有關的部份，要說直接的影響大概就是寫 CSS 可以少個 prefix 吧！可是我寫 CSS 都是用 <a href="https://github.com/chriseppstein/compass">Compass</a> 這個武裝神器，本來就沒有在寫 prefix 啊。XD</p>
-
-<p>我最喜歡的瀏覽器是 Google Chrome，可是有時會因為不同的需求或是開發需要，我電腦裡同時安裝了各家瀏覽器，包括 Safari、Firefox 和 Opera 等等。裝 Firefox 是因為要用到某些特別的 add-ons；而 Opera 則是 UI 用得不是很習慣所以不喜歡，裝起來只是純粹開發測試用。現在 Opera 改用 WebKit 後突然發現好像已經可以移除它了齁！:p</p>
-
-<p>跟我一樣的人應該也不少，Opera 改用 WebKit 應該多多少少會影響到市佔率，可是我想其實應該不會減少太多，因為「一般使用者」本來就沒有在乎 Opera 用的是哪一套 rendering 引擎，重點還是在 UI 的設計跟整體效能讓使用者滿不滿意。我對 Opera 沒有什麼偏見，真的只是純粹用不慣而已。</p>
-
-<p>Opera 放棄 Presto 後市場上就只剩下 WebKit、Gecko 和 Trident 三個主要的 rendering 引擎，也許以後會常見到「最佳瀏覽效果請使用 WebKit-base 瀏覽器」這樣的標語出現在網頁的尾部，也可能讓 WebKit 推向成為下一個「IE 世代」，誰知道呢？即便到真的有那麼一天，我相信以現在 web 的發展程度，一定會出現一個替代品讓堅持開放信仰的人們能夠有個地方去。</p>
 ]]></content>
   </entry>
   

@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>CSS Font (1) - EM square - @ChingHanHo</title>
+  <meta name="author" content="Ching-Han Ho">
+
+  
+  <meta name="description" content="傳統金屬活版印刷把每個字母刻在一個金屬方塊上，方塊不一定是正方形，寬度可能不同但是高度相同，這樣才能整齊地排列字母。由於英文中「M」這個字母比例接近正方形幾乎是最大的一個，因此金屬塊的寬度被稱為「em（M）」。 在數位時代一個字母的空間容器從實體金屬塊轉移到虛構的網格，這個網格空間被稱為 EM &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.chh.tw/posts/css-font-em-square/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/chinghanho" rel="alternate" title="@ChingHanHo" type="application/atom+xml">
+  <!-- Facebook Open Graph
+     Facebook Debugger: https://developers.facebook.com/tools/debug -->
+<meta property="og:title" content="CSS Font (1) - EM square" /><meta itemprop="name" content="CSS Font (1) - EM square" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.chh.tw/posts/css-font-em-square/" />
+<meta property="og:description" content="傳統金屬活版印刷把每個字母刻在一個金屬方塊上，方塊不一定是正方形，寬度可能不同但是高度相同，這樣才能整齊地排列字母。由於英文中「M」這個字母比例接近正方形幾乎是最大的一個，因此金屬塊的寬度被稱為「em（M）」。 在數位時代一個字母的空間容器從實體金屬塊轉移到虛構的網格，這個網格空間被稱為 EM &hellip;" />
+
+<meta property="og:site_name" content="blog.chh.tw" />
+<meta property="article:author" content="https://plus.google.com/114787528537231301324">
+<meta property="article:published_time" content="2016-12-17 12:59:00 +0800" />
+
+<meta property="article:section" content="Programing" />
+<meta itemprop="description" content="傳統金屬活版印刷把每個字母刻在一個金屬方塊上，方塊不一定是正方形，寬度可能不同但是高度相同，這樣才能整齊地排列字母。由於英文中「M」這個字母比例接近正方形幾乎是最大的一個，因此金屬塊的寬度被稱為「em（M）」。 在數位時代一個字母的空間容器從實體金屬塊轉移到虛構的網格，這個網格空間被稱為 EM &hellip;" />
+
+<!-- Combine multiple fonts into one request -->
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
+<!-- Bing 網站管理員 -->
+<meta name="msvalidate.01" content="19C515A71936824B4CDA6CD6E8212149" />
+<!-- Facebook Insight -->
+<meta property="fb:admins" content="100003742510626" />
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- PICTOS -->
+<link href="//get.pictos.cc/fonts/2537/2" rel="stylesheet" type="text/css">
+<!-- Google+ -->
+<link rel="author" href="https://plus.google.com/114787528537231301324">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16561083-16']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">@ChingHanHo</a></h1>
+  
+    <h2>I Build Stuff.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/chinghanho" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.chh.tw" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/"><i class="icon-home"></i>Home</a></li>
+  <li><a href="/blog/archives"><i class="icon-book-alt"></i>Archives</a><span class="divider"></span></li>
+  <li><a href="http://about.chh.tw/"><i class="icon-user"></i>About</a><span class="divider"></span></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">CSS Font (1) - EM Square</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-12-17T12:59:00+08:00" pubdate data-updated="true">Dec 17<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>傳統金屬活版印刷把每個字母刻在一個金屬方塊上，方塊不一定是正方形，寬度可能不同但是高度相同，這樣才能整齊地排列字母。由於英文中「M」這個字母比例接近正方形幾乎是最大的一個，因此金屬塊的寬度被稱為「em（M）」。</p>
+
+<p>在數位時代一個字母的空間容器從實體金屬塊轉移到虛構的網格，這個網格空間被稱為 <a href="http://designwithfontforge.com/zh-CN/The_EM_Square.html">EM square</a>、EM size 或 UPM（Unit per EM），術語源自活版印刷技術的歷史。</p>
+
+<p>這個空間容器可以看作是個正方形網格，「標準化」的網格寬高尺寸為 2048x2048，每個網格格點表示為一個 FUnit；不過在技術上 EM square 應該說是個二維空間座標系統（x,y）而不是網格。</p>
+
+<!-- more -->
+
+
+<p><img src="https://lh3.googleusercontent.com/_vIG5mKzyW0lcp8INazZP3wb3d5tdN2fkEBLHzy-DJMsqzoski-1WcsUA4T-JlFYHgWqRce8Zk0ErcVQn2gR7UvaeN-MJAlFlWGh2n_sJC71dQZ_bFmXpLsOc1an7dH9u6vt44ES-Ljs6x-RbXMz_ObYyZ9vRgH18eTfVFipTJxjxPPgeynvgkWIzz6W2J6aPE6irkS0I8QXUcNMM0WNGW-b5utOd5AQl0qrp0Ti7YHiHArmd-WciTrzdi-M3AngJVw2EPt7WoBPl4DQE-NbIZHEXjp5CEoq-D6fyeefjCK6eWn-wRyqfAbVHID_R_xtajVEUz2ApIi4RxF-urECPudmJFmvy6mJTH1o5exK5-EY9sofFXxiApntimCfoRc1V8J7iyhIAO3er_JrSOAPe76DsQeC2LcHVUIE9zpos4SMgOXj4RsMjsd0U-jOJHeVmOFiMJJKV-BkHGEdQp9EV5L5nFJOoxX-Hd40mgPRwLJa1GflN055qBd0Fh44MxPTkncgBi8mhqaUNpJobO6qWRbXCga1gDRoJDUQL-Df9i5-agXegiwDpzMdW4tmu3QjFQ-e-DPLoeFmT4pYrHsYiBGCuS8pTD0rx5fG6HVaMFMy7W4dKQ=w483-h346-no" alt="2048" /></p>
+
+<p>（圖片取自「<a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/RM01/Chap1.html">Digitizing Letterform Designs</a>」，版權為原網站所有。）</p>
+
+<p>字型（font）指的是文字造型，又稱為字體，常見的字型例如標楷體、新細明體、微軟正黑體、蘋方體、Times New Roman、Helvetica 等。字形（Glyph）指的是字元的形狀，由程式演算法或是文字工程師、設計師手動調整的形狀本身；一個字型的所有字形都有相同的 EM square 尺寸，差別只在於字形的大小不同。</p>
+
+<p>之所以說「標準化」定義 EM square 尺寸是 2048x2048，是因為這取決於軟體的相容性，事實上可以設定更大的值，<a href="https://www.microsoft.com/typography/otspec/head.htm">OpenType 官方規格建議大小是 16 到 16384 之間</a>，但如果主流軟體無法支援便失去了意義，例如 <a href="http://typedrawers.com/discussion/comment/863/#Comment_863">InDesign、Illustrator 特定版本無法正確處理 EM square 超過 5000 的字型</a>。目前比較常見的尺寸通常是 1000 或是 2048，例如 <a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/RM01/Chap1.html#master">Apple 主要字型都是以 2048 FUnit 去設計</a>的。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ching-Han Ho</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-12-17T12:59:00+08:00" pubdate data-updated="true">Dec 17<span>th</span>, 2016</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programing/'>Programing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.chh.tw/posts/css-font-em-square/" data-via="" data-counturl="http://blog.chh.tw/posts/css-font-em-square/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/posts/fb-instant-articles/" title="Previous Post: Facebook Instant Articles「即時文章」是什麼？">&laquo; Facebook Instant Articles「即時文章」是什麼？</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Ching-Han Ho<span class="theme-version">Dropbot 0.8</span>
+  <section class="contruction-wrap">
+    <div class="contruction"></div>
+  </section>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'chinghanho';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.chh.tw/posts/css-font-em-square/';
+        var disqus_url = 'http://blog.chh.tw/posts/css-font-em-square/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            IIIIIIIIII       I
+                  II                     IIIIIIIIIIIIIIIIIIII
+                  IIII                  IIIIIIIIIIIIIIIIIIII
+                  IIIIII                IIIIIIIIIIIIIIIIII III
+                  IIIIIIII             IIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIII          IIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  I  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                   IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                         IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                     IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                        IIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                           IIIIIIIIIIIIIIIIIIIIIIIII
+                             IIIIIIIIIIIIIIIIIIIII
+                          IIIIIIIIIIIIIIIIIIIIIII
+                I   IIIIIIIIIIIIIIIIIIIIIIIIII
+                  IIIIIIIIIIIIIIIIIIIIIIIIII
+                      IIIIIIIIIIIIIIIIII
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+</body>
+</html>

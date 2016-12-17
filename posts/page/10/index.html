@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="TL;DR 第一次買軟體的經驗 記得我第一次花錢買「軟體」是在國小的時候，拿著存了幾個月的零用錢去偷買最新上市的戰地風雲，那價格好像是 1,000 多元左右，結果回家被老媽臭罵一頓，更慘的是，這遊戲後來玩不超過 50 次，Oops！真是虧爆了。:p 不過當一下阿 Q 換個精神勝利的方式想想， &hellip;">
+  <meta name="description" content="Rails Rumble 是國外相當有名的 Hackathon 大賽，是一場考驗 hacker 們的爆肝力體力和智力的「遊戲」，必須 48 小時之內用 Ruby on Rails 或是其他 Rack-based 的 Ruby 框架寫出一個「最小可行性產品1」。 48 小時內能完成什麼網站？ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/10/" />
-<meta property="og:description" content="TL;DR 第一次買軟體的經驗 記得我第一次花錢買「軟體」是在國小的時候，拿著存了幾個月的零用錢去偷買最新上市的戰地風雲，那價格好像是 1,000 多元左右，結果回家被老媽臭罵一頓，更慘的是，這遊戲後來玩不超過 50 次，Oops！真是虧爆了。:p 不過當一下阿 Q 換個精神勝利的方式想想， &hellip;" />
+<meta property="og:description" content="Rails Rumble 是國外相當有名的 Hackathon 大賽，是一場考驗 hacker 們的爆肝力體力和智力的「遊戲」，必須 48 小時之內用 Ruby on Rails 或是其他 Rack-based 的 Ruby 框架寫出一個「最小可行性產品1」。 48 小時內能完成什麼網站？ &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="TL;DR 第一次買軟體的經驗 記得我第一次花錢買「軟體」是在國小的時候，拿著存了幾個月的零用錢去偷買最新上市的戰地風雲，那價格好像是 1,000 多元左右，結果回家被老媽臭罵一頓，更慘的是，這遊戲後來玩不超過 50 次，Oops！真是虧爆了。:p 不過當一下阿 Q 換個精神勝利的方式想想， &hellip;" />
+<meta itemprop="description" content="Rails Rumble 是國外相當有名的 Hackathon 大賽，是一場考驗 hacker 們的爆肝力體力和智力的「遊戲」，必須 48 小時之內用 Ruby on Rails 或是其他 Rack-based 的 Ruby 框架寫出一個「最小可行性產品1」。 48 小時內能完成什麼網站？ &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,121 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/rails-rumble-top-ten-winners-what-gems-used/">Rails Rumble 贏家們都用哪些 Gems</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-24T08:27:00+08:00" pubdate data-updated="true">Oct 24<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh5.googleusercontent.com/-qvZPDwZ2xTQ/UIdKILEJtOI/AAAAAAAAEWI/Jzwy2lzNIKc/s720/rails-rumble-logo-large.png" alt="" /></p>
+
+<p>Rails Rumble 是國外相當有名的 Hackathon 大賽，是一場考驗 hacker 們的<del>爆肝力</del>體力和智力的「遊戲」，必須 48 小時之內用 Ruby on Rails 或是其他 Rack-based 的 Ruby 框架寫出一個「最小可行性產品<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>」。</p>
+
+<p>48 小時內能完成什麼網站？<a href="http://railsrumble.com/entries/winners">Rails Rumble</a> 網站上列出了今年 2012 贏得大賽的前十名作品，例如第一名的 <a href="http://grumpy-cat.r12.railsrumble.com/">findthin.gs</a> 可以找出電視影集和電影的線上資源，讓你選擇網路上直接收看或是線下購買回家。</p>
+
+<p>Rails 開發網站果然很快很強大，也仰賴 Ruby 語言的「<a href="http://en.wikipedia.org/wiki/Glue_language">膠水</a>」特性，利用「工具箱哲學」可以用很多簡單的小工具，快速拼裝起來一個成品。剛剛看到 <a href="http://www.dwellable.com/blog/Rails-Rumble-Winners-Gem-Teardown">Dwellable</a> 部落格寫了一篇文章，訪問 top 10 的參賽者，挖出他們的 Gemfile 窺探他們到底用了哪些 Gems 來「組裝」網站。感覺挺有趣的，所以我就順手翻譯了一下我看得懂的部分。</p>
+
+<h2>前端技術</h2>
+
+<p><img src="http://lh4.googleusercontent.com/-Y7Dm1PZ_Yjc/UIdDEnDyirI/AAAAAAAAEVQ/s5gfmI5TIZw/s642/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-10-24%2520%25E4%25B8%258A%25E5%258D%25889.21.33.png" alt="" /></p>
+
+<ul>
+<li><a href="http://jquery.com/">jQuery</a>：每個團隊都用到了 jQuery 這套輕量的 JavaScript 函式庫；</li>
+<li><a href="http://coffeescript.org/">CoffeeScript</a>：9 個，顯然大家都不喜歡單純的 JavaScript；</li>
+<li><a href="http://twitter.github.com/bootstrap/">Bootstrap</a>：6 個團隊採用這套由 Twitter 所維護的開源框架，對於不擅長前端的後端開發者而言，這真的非常好用；</li>
+<li><a href="http://sass-lang.com/">Sass</a>：9 個，Sass / SCSS 讓 CSS 寫起來更友善，而且更容易維護，尤其是當上了 Compass 後威力更強大；</li>
+<li><a href="http://haml.info/">HAML</a> / <a href="http://slim-lang.com/">Slim</a>：有 5 個團隊採用 HAML，有 3 個團隊採用 Slim，比起 HAML 來說 Slim 感覺是更輕量的引擎<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>；</li>
+</ul>
+
+
+<h2>後端技術</h2>
+
+<h3>資料庫</h3>
+
+<p><img src="http://lh4.googleusercontent.com/-Ak4RSlmv_04/UIdDEk1el2I/AAAAAAAAEVI/Zu78v5jhAH0/s635/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-10-24%2520%25E4%25B8%258A%25E5%258D%25889.21.54.png" alt="" /></p>
+
+<p>近年來 MongoDB<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup> 很火紅，還是只有在 Rails 圈內（？）。不過常被詬病的大數據處理的性能，我沒用過所以我也不曉得，但是在小數據的處理上我想大概沒什麼太大爭議，在這種 Hackathon 場合上用起來應該也是很適合的。</p>
+
+<p>在 Top 10 團隊當中，有 5 組採用 MySQL 資料庫，其他有 3 組採用 MongoDB，另外兩組用的是 Postgres。而其中有 5 組團隊採用了 Redis 這套開源的緩存資料庫系統。</p>
+
+<h3>測試</h3>
+
+<p><img src="http://lh3.googleusercontent.com/-5Yx1TxaXPCI/UIdDE3KMwOI/AAAAAAAAEVM/oQgMay8odFE/s630/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-10-24%2520%25E4%25B8%258A%25E5%258D%25889.22.05.png" alt="" /></p>
+
+<p>其中有 6 個團隊使用 RSpec 來寫測試，雖然他們也有用到其他測試相關的 gems，不過這裡提到的是最主要的。讓我感到訝異的是在 Hackathon 這麼短的時間內，他們竟然還有時間來寫測試？不曉得覆蓋率多少就是了。當然，也有團隊是完全不寫測試的。:p</p>
+
+<h2>佈署策略</h2>
+
+<p><a href="https://github.com/capistrano/capistrano">Capistrano</a> 看來還是最多人用的，有 7 個團隊用它來佈署應用程式，其中有個團隊使用的是 <a href="https://github.com/nadarei/mina">Mina</a>。在記憶體快取方面，有 2 個團隊用了 <a href="https://github.com/mperham/dalli">Dalli</a> 這套軟體，其他的團隊或許沒有用或者是用 Redis 來替代。</p>
+
+<h3>第三方服務</h3>
+
+<p>大量應用第三方網站的服務來「組裝」是一種趨勢，尤其對於網站的初期來說<sup id='fnref:4'><a href='#fn:4' rel='footnote'>4</a></sup>。比方說寄信這檔事好了，寄給一個人或是寄給十個人很簡單，但是如果今天要一次寄出幾千封 eDM 就是一門專業學問了，專業的還是讓給專業的去搞吧。而 Rails Rumble 比賽中就有 2 個團隊採用 <a href="http://mailchimp.com/">MailChimp</a> 來處理這方面的問題。</p>
+
+<p>此外，有 3 個團隊使用了 <a href="http://pusher.com/">Pusher</a> 這個服務來 host 即時訊息系統。</p>
+
+<h3>認證系統</h3>
+
+<p><img src="http://lh3.googleusercontent.com/-Gc6_Zwxm2Jw/UIdDFzvUbeI/AAAAAAAAEVw/4Nw_BVpJ2gc/s607/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-10-24%2520%25E4%25B8%258A%25E5%258D%25889.22.39.png" alt="" /></p>
+
+<p>大多數的團隊使用的是富具盛名的 <a href="https://github.com/plataformatec/devise">Devise</a>，也有少數幾個團隊用的是「純」<a href="https://github.com/intridea/omniauth">OmniAuth</a>。大多數的開發者都會把 OmniAuth 直接整合進 Devise。</p>
+
+<h2>該來用看看的 Gems</h2>
+
+<ul>
+<li><a href="https://github.com/pry/pry">Pry</a>：irb 的替代品，當然不是單單「替代」這麼簡單，能替代當然是因為它非常強大的 debug 功能，Rails Rumble top 10 團隊中就有 6 個團隊使用它；</li>
+<li><a href="https://github.com/vmg/redcarpet">Redcarpet</a>：<a href="http://markdown.tw/">Markdown</a> 語法的解析器，也是我常用的 gem 之一；</li>
+<li><a href="https://github.com/josh/useragent">UserAgent</a>：用來解析 HTTP user agent，可以判斷你是用什麼裝置來上網的；</li>
+<li><a href="https://github.com/javan/whenever">Whenever</a>：用 Ruby 產生例行性的工作，我之前寫推文演算法用的是 <a href="https://github.com/jmettraux/rufus-scheduler">rufus-scheduler</a> 這套；</li>
+<li><a href="https://github.com/jeremyw/stamp">Stamp</a>：用友善的時間表示法來表示日期，替代原本 <code>%m</code> 這種不曉得是 month 還是 minute 的格式。</li>
+</ul>
+
+
+<h2>後記</h2>
+
+<p>Hackthon 好像很好玩，不過以我現在的實力去參加，恐怕是被碾假的吧。前幾天才剛結束 Yahoo! Hack Day，最後獲勝者是 <a href="http://tw.polydice.com/2012/10/22/yahoo-open-hack-day-2012-get-your-ideas-into-action-appvengers/">Polydice</a> 報名的兩個隊伍，結果兩個隊伍全得獎了。XD</p>
+
+<p>而前幾個禮拜 Facebook 也來台灣舉辦 Facebook World Hack，台灣相當強的 Rails 高手 XDite 贏得最後的大獎，也在她的部落格分享<a href="http://blog.xdite.net/posts/2012/10/20/how-to-win-hackthon/">獲勝心得</a>，其中我覺得相當有參考價值的是：</p>
+
+<blockquote><p>評審希望得獎的題目是 valuable 的。搞笑、諷刺、主題模糊的題目，一定不會得獎。（我在 2009 的比賽跟一群大神等級的朋友合作做了一個精美的搞笑網站「<a href="http://wp.xdite.net/?p=1472">我是專家</a>」，但是……我們沒有得獎）</p></blockquote>
+
+<p>看到這裡再去瞄一下 <a href="http://railsrumble.com/entries/winners">Rails Rumble 前十名</a>，都是非常有實用性的網站。所以下次如果要去參加 Hackathon 比賽，我想選好題目是非常重要的。</p>
+
+<div class="footnotes">
+    <ol>
+        <li id='fn:1'><a href="http://www.books.com.tw/exep/prod/booksfile.php?item=0010547374" alt="精實創業">精實創業</a>所提倡的一種概念，產品或服務不需要等到「完美」才推出，只要「堪用」能夠滿足使用者需求就夠了。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'><a href="https://github.com/klaustopher/hamlerbslim" alt="hamlerbslim">Github</a> 上有人用 <a href="http://httpd.apache.org/docs/2.2/programs/ab.html">Apache Benchmark</a> 做了一個實驗，測試 ERb、HAML、Slim 這三套樣板處理引擎的性能，有興趣可以參考看看。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>值得提一下的是最近 <a href="https://education.10gen.com/" alt="10gen">10Gen</a> 在線上開課，可以上免費的 MongoDB 專業課程。 <a href='#fnref:3' rev='footnote'>↩</a></li><li id='fn:4'>例如國內的 <a href="http://www.inside.com.tw/2012/01/30/icook-cloud-service" alt="icook-cloud-service">iCook</a> 就用了非常多的網路服務來「組裝」。 <a href='#fnref:4' rev='footnote'>↩</a></li>
+    </ol>
+</div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -496,198 +611,6 @@ $$Score = \frac{P-1}{(T+2)^{G}}$$
 
 
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/cloc-kuai-su-ji-suan-zhuan-an-zhong-yuan-shi-ma-xing-shu/">CLOC：快速計算專案中原始碼行數</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-09T07:37:00+08:00" pubdate data-updated="true">Oct 9<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>昨天在看新一期 <a href="http://railscasts.com/episodes/384-exploring-rubygems">RailsCasts</a> 的時候，見到 <a href="http://twitter.com/rbates">Ryan Bates</a> 用了一個有趣的小工具叫做 <a href="http://cloc.sourceforge.net/">CLOC</a>，如果用的是 OS X 可以透過 <a href="http://mxcl.github.com/homebrew/">Homebrew</a> 來安裝：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>brew update
-</span><span class='line'>brew install cloc</span></code></pre></td></tr></table></div></figure>
-
-
-<p>儘管 Rails 有內建的指令 <code>rake stats</code> 可以查詢寫過多少程式碼，但是提供的資訊沒有很清楚；CLOC 不只可以詳細的計算寫了幾行程式碼，還可以清楚地辨識你用什麼語言來寫，每個語言個寫了多少行、多少註解、多少空白：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ cloc rails-v3.2.8.tar.gz 
-</span><span class='line'>    2286 text files.
-</span><span class='line'>    2214 unique files.                                          
-</span><span class='line'>     533 files ignored.
-</span><span class='line'>
-</span><span class='line'>http://cloc.sourceforge.net v 1.56  T=11.0 s (160.0 files/s, 19893.3 lines/s)
-</span><span class='line'>-------------------------------------------------------------------------------
-</span><span class='line'>Language                     files          blank        comment           code
-</span><span class='line'>-------------------------------------------------------------------------------
-</span><span class='line'>Ruby                          1548          31995          31994         145742
-</span><span class='line'>CSS                             37            126            367           4093
-</span><span class='line'>YAML                           116            221            336           1867
-</span><span class='line'>Javascript                      40            189            514            999
-</span><span class='line'>HTML                            17             30              3            298
-</span><span class='line'>SQL                              1              6              0             43
-</span><span class='line'>CoffeeScript                     1              0              3              0
-</span><span class='line'>-------------------------------------------------------------------------------
-</span><span class='line'>SUM:                          1760          32567          33217         153042
-</span><span class='line'>-------------------------------------------------------------------------------</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果說想要知道 Rails 3.2.7 和 Rails 3.2.8 之間程式碼的行數差異，可以到 Github 直接下載整個專案，連解壓縮都不用就可以直接進行比對，計算結果會詳細列出有多少相同、多少被修改、多少是新增的、多少被移除掉的程式碼：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ cloc --diff rails-v3.2.7.tar.gz rails-v3.2.8.tar.gz 
-</span><span class='line'>    2286 text files.
-</span><span class='line'>    2286 text files.s
-</span><span class='line'>    1066 files ignored.                                         
-</span><span class='line'>
-</span><span class='line'>http://cloc.sourceforge.net v 1.56  T=50.0 s (0.0 files/s, 0.0 lines/s)
-</span><span class='line'>-------------------------------------------------------------------------------
-</span><span class='line'>Language                     files          blank        comment           code
-</span><span class='line'>-------------------------------------------------------------------------------
-</span><span class='line'>HTML
-</span><span class='line'> same                           17              0              3            298
-</span><span class='line'> modified                        0              0              0              0
-</span><span class='line'> added                           0              0              0              0
-</span><span class='line'> removed                         0              0              0              0
-</span><span class='line'>SQL
-</span><span class='line'> same                            1              0              0             43
-</span><span class='line'> modified                        0              0              0              0
-</span><span class='line'> added                           0              0              0              0
-</span><span class='line'> removed                         0              0              0              0
-</span><span class='line'>Javascript
-</span><span class='line'> same                           40              0            514            999
-</span><span class='line'> modified                        0              0              0              0
-</span><span class='line'> added                           0              0              0              0
-</span><span class='line'> removed                         0              0              0              0
-</span><span class='line'>CoffeeScript
-</span><span class='line'> same                            1              0              3              0
-</span><span class='line'> modified                        0              0              0              0
-</span><span class='line'> added                           0              0              0              0
-</span><span class='line'> removed                         0              0              0              0
-</span><span class='line'>CSS
-</span><span class='line'> same                           37              0            367           4093
-</span><span class='line'> modified                        0              0              0              0
-</span><span class='line'> added                           0              0              0              0
-</span><span class='line'> removed                         0              0              0              0
-</span><span class='line'>YAML
-</span><span class='line'> same                          116              0            336           1867
-</span><span class='line'> modified                        0              0              0              0
-</span><span class='line'> added                           0              0              0              0
-</span><span class='line'> removed                         0              0              0              0
-</span><span class='line'>Ruby
-</span><span class='line'> same                         1501              0          31943         145562
-</span><span class='line'> modified                       47              0              7            124
-</span><span class='line'> added                           0              6             44             56
-</span><span class='line'> removed                         0             43             36            246
-</span><span class='line'>-------------------------------------------------------------------------------
-</span><span class='line'>SUM:
-</span><span class='line'> same                         1713              0          33166         152862
-</span><span class='line'> modified                       47              0              7            124
-</span><span class='line'> added                           0              6             44             56
-</span><span class='line'> removed                         0             43             36            246
-</span><span class='line'>-------------------------------------------------------------------------------</span></code></pre></td></tr></table></div></figure>
-
-
-<p>更多的玩法可以參考官方文件：<a href="http://cloc.sourceforge.net/#Options">CLOC Options</a></p>
 </div>
   
   
