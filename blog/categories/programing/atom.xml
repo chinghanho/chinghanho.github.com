@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Programing | @ChingHanHo]]></title>
   <link href="http://blog.chh.tw/blog/categories/programing/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2016-12-17T13:04:55+08:00</updated>
+  <updated>2016-12-24T22:12:04+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[CSS Font (1) - EM square]]></title>
+    <title type="html"><![CDATA[CSS Font (1) - 字型基本]]></title>
     <link href="http://blog.chh.tw/posts/css-font-em-square/"/>
     <updated>2016-12-17T12:59:00+08:00</updated>
     <id>http://blog.chh.tw/posts/css-font-em-square</id>
@@ -22,18 +22,35 @@
 
 <p>（圖片取自「<a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/RM01/Chap1.html">Digitizing Letterform Designs</a>」，版權為原網站所有。）</p>
 
-<p>傳統金屬活版印刷把每個字母刻在一個金屬方塊上，方塊不一定是正方形，寬度可能不同但是高度相同，這樣才能整齊地排列字母。由於英文中「M」這個字母比例接近正方形幾乎是最大的一個，因此金屬塊的寬度被稱為「em（M）」。</p>
-
-<p>在數位時代一個字母的空間容器從實體金屬塊轉移到虛構的網格，這個網格空間被稱為 <a href="http://designwithfontforge.com/zh-CN/The_EM_Square.html">EM square</a>、EM size 或 UPM（Unit per EM），術語源自活版印刷技術的歷史。</p>
-
-<p>這個空間容器可以看作是個正方形網格，「標準化」的網格寬高尺寸為 2048x2048，每個網格格點表示為一個 FUnit；不過在技術上 EM square 應該說是個二維空間座標系統（x,y）而不是網格。</p>
+<p>瞭解電腦字型如何被創造，能夠進一步理解文字如何在螢幕上顯示。本系列文章目的在於研究電腦字型在螢幕上顯示的原理，以便理解 CSS 有關字型的各項屬性背後的設計目的，以及要解決的問題。本文適合對象為從事網頁設計的專業人員，不論是網頁設計師、前端工程師，或是全端工程師。</p>
 
 <!-- more -->
 
 
-<p>字型（font）指的是文字造型，又稱為字體，常見的字型例如標楷體、新細明體、微軟正黑體、蘋方體、Times New Roman、Helvetica 等。字形（Glyph）指的是字元的形狀，由程式演算法或是文字工程師、設計師手動調整的形狀本身；一個字型的所有字形都有相同的 EM square 尺寸，差別只在於字形的大小不同。</p>
+<h2>EM square</h2>
 
-<p>之所以說「標準化」定義 EM square 尺寸是 2048x2048，是因為這取決於軟體的相容性，事實上可以設定更大的值，<a href="https://www.microsoft.com/typography/otspec/head.htm">OpenType 官方規格建議大小是 16 到 16384 之間</a>，但如果主流軟體無法支援便失去了意義，例如 <a href="http://typedrawers.com/discussion/comment/863/#Comment_863">InDesign、Illustrator 特定版本無法正確處理 EM square 超過 5000 的字型</a>。目前比較常見的尺寸通常是 1000 或是 2048，例如 <a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/RM01/Chap1.html#master">Apple 主要字型都是以 2048 FUnit 去設計</a>的。</p>
+<p>傳統金屬活版印刷把每個字母刻在一個金屬方塊上，方塊不一定是正方形，寬度可能不同但是高度相同，這樣才能整齊地排列字母。由於英文中「M」這個字母比例接近正方形幾乎是最大的一個，因此金屬塊的寬度被稱為「em（M）」。</p>
+
+<p>在數位時代一個字母的空間容器從實體金屬塊轉移到虛擬的電腦程式上，電腦程式會建構一個虛構的空間容器被稱為 <a href="http://designwithfontforge.com/zh-CN/The_EM_Square.html">EM square</a>、EM size 或 UPM（Unit per EM），術語源自活版印刷技術的歷史。</p>
+
+<p>字型（font）指的是文字造型，又稱為字體，常見的字型例如標楷體、新細明體、微軟正黑體、蘋方體、Times New Roman、Helvetica 等。字形（Glyph）指的是字元的形狀，由程式演算法或是文字工程師、設計師手動調整的形狀本身；一個字型的所有字形都有相同的 EM square 尺寸，差別在於字形的大小不同。</p>
+
+<p>在技術上 EM square 可以看作是個二維空間座標系統（x,y），有個預設的寬高尺寸是 2048x2048，單位以 FUnit 表示。字形基本上都被設計在這個尺寸的範圍內，但也能超出這個範圍。EM square 事實上可以設定更大的值，<a href="https://www.microsoft.com/typography/otspec/head.htm">OpenType 官方規格建議大小是 16 到 16384 之間</a>，但如果主流軟體無法支援便失去了意義，例如 <a href="http://typedrawers.com/discussion/comment/863/#Comment_863">InDesign、Illustrator 特定版本無法正確處理 EM square 超過 5000 的字型</a>。</p>
+
+<p>所以 EM square 的尺寸需要取決於軟體的相容性，目前比較常見的尺寸通常是 1000 或是 2048，例如 <a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/RM01/Chap1.html#master">Apple 主要字型都是以 2048 FUnit 去設計</a>的。</p>
+
+<h2>字形解構</h2>
+
+<p>將千萬個字形拆解可以找出一些相同的模式，瞭解分解部分的異同之處，可以幫助網頁設計師理解不同字型的差異之處，進而配對選出適合的字型組合到網頁上。</p>
+
+<p>技術上比較重要的幾個字形解構部分是：</p>
+
+<ul>
+<li>Baseline</li>
+<li>Descender</li>
+<li>Ascender</li>
+</ul>
+
 ]]></content>
   </entry>
   
