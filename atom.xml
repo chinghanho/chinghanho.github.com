@@ -4,7 +4,7 @@
   <title><![CDATA[@ChingHanHo]]></title>
   <link href="http://blog.chh.tw/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2017-01-02T11:00:39+08:00</updated>
+  <updated>2017-01-02T16:27:45+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[CSS Font (1) - 字型基本構造]]></title>
+    <title type="html"><![CDATA[CSS Font (1) - 字型基本]]></title>
     <link href="http://blog.chh.tw/posts/css-font-em-square/"/>
     <updated>2016-12-17T12:59:00+08:00</updated>
     <id>http://blog.chh.tw/posts/css-font-em-square</id>
@@ -45,22 +45,39 @@
 
 <p><img src="https://lh3.googleusercontent.com/87tTVmRKfgB9GM7NZWF6ip9nHW-NKYGy8gNU9f8K3aMZXCkg0f16JGgT4-_0tht9i5WpLWOHJYi3NKflZiRjHg5ve1V9lKnUVTGiubZwDXkMuizGc2jP-hozP4zLsLPQlVM_Jmfs65TrS_exYL-BmWRc_h2g9YwxAZkB08zoX3CmEiTfVsehGl31MPuB0C3JtpObW19usVSG98AMDSrYQIt_SxYu58sBQEpfTKpJprFjND5IP7um5IKWuqJixDHjr3ZwF4k4y9b3PiCr3KV7OrpzF51Gl7_HvNfZPzCKt-8vCEgIRODN26N5NjEv6Gq7wuKDDItU30Ukj1RUOibGYlv6grb39g2EkiPwQsnYx9R0FEBvOHP_LrZMfzPH8-Yhqka99lIAbQT2-29593zDY3CqKTB3pFADrqM9zJSUNz3zTU_qeBZppdVZ3IflBaDdD1uKDBlVSe9tu6HQqoxFgNpXBmQmuuX6uI7s5CNpWDtocaon9VfyhWPxzRsKYlABBP5L8Ag3TC7GOwFvKGjwK1lse5WIuK1t8HgC9MniNHW1iIenF0H33kvPruTispc31EV8lpz3w4uQNJFmFzMWVB-KmKXqOCdlTu5oJ1iqxVhsNB8bV8X1mVDzKu3w00-oQvVexxWi5FUd_ng1hs7oDY2VnOXW6nSyeCmrxOq0YPA=s799-no" alt="Character extending outside of the em square." /></p>
 
+<p>當指定 CSS <code>font-size</code> 16px 瀏覽器便會將字型 EM square 的大小映射到螢幕 16px 的大小上，我會在下一篇文章介紹這部分的原理。</p>
+
 <h2>字形解構</h2>
 
-<p>對於瀏覽器顯示字形在網頁上，技術上比較有意義的部分有三個：</p>
+<p>觀察英文字母的書法規則，可以歸納出一些模式，例如每個字母基本上都坐落在同一條水平線上，這條水平線稱為基準線（baseline），相對於其他字型或字形決定如何對齊，不過這是針對英文（正確來說是拉丁文）字型設計，中文字型由於都是方形等寬等高的，因此不需要基準線的設計。</p>
 
-<ul>
-<li>基線（Baseline）：字型在設計時放置的水平參考線，作為大部份英文文字坐落在同一條基準線上的參考線，相對於其他字型或字形決定如何對齊。基線的設計主要用於英文字型的設計，CJK 字型也會有基線，只是對於設計的意義來說並不大。</li>
-<li>升部（Ascent）：基線到字形最高的頂部稱為升部。</li>
-<li>降部（Descent）：基線到字形最底的底部稱為降部。</li>
-</ul>
-
+<p>此外，基線到字形最高的頂部稱為升部（Ascent）；基線到字形最底的底部稱為降部（Descent）。在數位字型中，這項規格制定在 OpenType、TrueType 的 <a href="https://www.microsoft.com/typography/otspec/os2.htm">OS/2 表格</a>中 <code>sTypoAscender</code> 及 <code>sTypoDescender</code> 的值，或是 <a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6hhea.html">HHEA 表格</a>中的 <code>Ascent</code> 及 <code>Descent</code>。OS/2 是給 Windows 的規格、HHEA 則是 Apple 的規格。</p>
 
 <p><img src="https://lh3.googleusercontent.com/qC070S-SC4Z330u2-mHASXfdcuMaSWZeJLLkMrdDcjZ-k5U5mPDwHJJPOSpT_mCwVtofFUjevRD3BI9mqIXEfJp39UFkk9cCRD-KcciLuOGQalz2xBk8i3skrqOCgv92jiJsqAnK99jXGV_Qjr0vosSo2_tgZmZXdMrGSRemvVDsw9Gn2PYg8VNhEjxnZNAZkoeCUPe9hPg7ecTpWWpJKhWgUY-UnQTRtV3KIGKEIufRnhjwMQrE4rkO2l3v6l5BX3_Gultxc-hNkJ9-0ScKhGMz5gyPHKHBLiykv0MATtp04_292JxcO8079Qoy65mMWIE8XPjvYdcfJR5GhxiKk2seNof0f4gAb-jjhDl3u7SvA8XI8-VAHm2wPS2qgMCP_w8jxM__VhbJDnOcBqBLBpbNz3P_o3AjXPUy6S5fVGbbT7DSfhPDSn2RAEUIi0K68ZnfaeX0VRWqPY3vQ_jq_wDsasqZYw2NedOFpR5VVvgK3MSfKN40jw1qn7_IaXnClwSgZzNZJqZ7UwYthjUO-QxZlTGQyCILBnnye3b5aEAJmIlDXD08GWMj9Hu778uap1AJcX1mseJb4L_fwlv3NSQzutLmJMeC2zFrCXtvO3Om970ucDOllxt3kP2-n08cy9igomlsEgUa1G46u3HyVvITc51D22ZbbkpfH0gLfMw=w914-h738-no" alt="" /></p>
 
-<p>升部參數與降部的參數，定義在 OpenType、TrueType 的 OS/2 表格中 <code>sTypoAscender</code> 及 <code>sTypoDescender</code> 的值，或是 HHEA 表格中的 <code>Ascent</code> 及 <code>Descent</code>。OS/2 是給 Windows 的規格、HHEA 則是 Apple 的規格。</p>
+<h2>行高</h2>
 
-<p>這些設定，將會讓瀏覽器決定如何將文字如何顯示在網頁上，瀏覽器會如何具體應用這些參數，我將留到下一篇文章說明。</p>
+<p>印刷排版中的行高英文是 leading，指的是兩行文字中間的距離或空白，但是 CSS 的行高（line height）略有不同的定義，因為它不是只是單純地加在行與行的中間，而是先計算出 leading：</p>
+
+<blockquote><p>leading = <code>line-height</code> - (ascent + descent)</p></blockquote>
+
+<p>然後 CSS 將其中一半的 leading 加到文字的上方，一半加到下方。舉例來說，指定某區塊字級大小 16px，行高設定 24px，則 (24 - 16) = 4，CSS 會在 16px 的文字上面及下面同時加上 4px 的空白，最後整體文字區塊（inline box）才會得到 24px 的高度。</p>
+
+<p><img src="https://lh3.googleusercontent.com/Bu_zLRhYf7ZpCx7345y6dTphFMjZzPyY0vVfGsWzgdBuny_-8FV15al81UKi5DjhIaOLz37hKMNL9-G-v3S7-z9TIGDdalNpZoSM7upqVLgdf0V41nzbu4ocrWzJpZ0qXu3HQtA-9f01NpwIYtFSRNV3BYvrORY5MiCGeDu56fD3VRFYlPJ0pXLOIGGPcbT29t7pnZcn7ZLb7gLgWj1hGrAHYWhXdzP5pugRkl9mtwI1hm2sxUGb4lklgbQWf_MvCHB_zAGltoJWC1ts3DvJwxYPTP5UtUEh1V-Go9AfUPLGwRXuTMDbkvZ21IlnwmKRp1O5d47u8S8P5FcXJxUug4zELKmUYR_X-RHBAxDFZK3fwZPsvHqyF-RKJtVlNIg_dOKN3YqU3JEP5Apyxbvv82tvGTCmvKqKPZHFjG0fxdP7ckMDfuNdxy3BtMocXfwKdzut-sK-4phuHXmsxXMFP9juu3R8HJPeRlwgLc3-sI5HplUAYZHAa3G9kGAlHxEegMq4S2_DAlx-PXbNeTFqHyRotxla5uKia8AEygEg2pVPC7aCvHWkwYuiwgYKP8NACGylVFI-I9mS0Gi6ndOZvQBaXu5DCuLqdS4r7cM71Wyo9_xM6w=w960-h255-no" alt="font" /></p>
+
+<p>W3 規定 CSS <code>line-height</code> <a href="https://www.w3.org/TR/2011/PR-CSS2-20110412/visudet.html#propdef-line-height">預設的值是 normal</a>，並且建議這個值可以介於 1.0 ~ 1.2 之間。為了測試實際 line-height 到底是多少，我準備了一個測試網頁，在 Chrome 跟 Firefox 兩種不同的 render engine 測試不同英文字跟中文字體，得到以下 4 個測試結果：</p>
+
+<ul>
+<li>不同瀏覽器 normal 不同；</li>
+<li>同個瀏覽器 <code>font-size</code> 不同 normal 實際值也不同；</li>
+<li>同個瀏覽器 <code>font-size</code> 相同 font-family 不同 normal 實際值也不同；</li>
+<li>雖然 W3 建議 normal 應該介於 1.0 ~ 1.2 但實際上隨著 <code>font-size</code> 與 <code>font-family</code> 變化，可能會大於 1.2；</li>
+</ul>
+
+
+<p><img src="https://lh3.googleusercontent.com/2YoOk7Z7nao8okS7x8r351ZcSxuz9OHWziJEkoYIIEfsZlm6pcN-2vEGGL_Meh001IBPfSdw_JApeQ2ONLzlIdjs-1jkWS9Nz1REdtiY6pbY4SUKZFYEcPTDLk5WuZFoo_UiGfgSVBUJ6F-mm549PqzgxBp279iQM0B5GrrAA62MKUAfHxVJmRLQohvPVh2PKA9I5tvHdQUO0Y0N1J_Up3CCSlPaSB9h4Zvoj4wZ6M51GeJi39OeqZUu_XL-YAPOmQSTXvDAgBwaiMlAXUevxBCkoARGDOKGXB8Z3mW_OyPHwv4Af37-MYgzO4SyMQWoHoocYLBxtPIV4QzRRQTUaU9lroOE2q5blXCwQHSTVWY5tIej_tjB_P4Gy6AV4RSyKJDnUXom5s5vCMGCma2CU851laqZV4nYiLRVQXv61ngtRDBLn5xujjTLM66AG4nwfr7yeCXrbCLpO8aA0__33F5lHlZITIaq5zvbDYfe2wME_j3AWmunQ2zir6pBJ9W8MTDttq0LG4d6MVW9P4_joHIcvO-670lGG6rLMiY14AJtTqrx6aminh9E4u_e2Nve6ayuPHipD5GxFtbRYHEJLFk81kgpNtdtQcGAuT79HxNn0TaHKg=w1071-h799-no" alt="line-height-compare" /></p>
+
+<p>不同瀏覽器預設 <code>line-height</code> 不同，要解決這個問題也容易，只要在 <code>&lt;html&gt;</code>、<code>&lt;body&gt;</code> 指定固定的值即可，例如 <a href="https://necolas.github.io/normalize.css/">normalize.css</a> 指定了 <code>line-height</code> 為 1.15，<a href="http://meyerweb.com/eric/tools/css/reset/">reset.css</a> 設定 <code>line-height</code> 為 1。</p>
 ]]></content>
   </entry>
   
