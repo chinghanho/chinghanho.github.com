@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "CSS Font (1) - 字型基本"
+title: "CSS Font (1) - 字型基本構造"
 date: 2016-12-17 12:59
 comments: true
 categories: Programing
@@ -18,20 +18,30 @@ categories: Programing
 
 傳統金屬活版印刷把每個字母刻在一個金屬方塊上，方塊不一定是正方形，寬度可能不同但是高度相同，這樣才能整齊地排列字母。由於英文中「M」這個字母比例接近正方形幾乎是最大的一個，因此金屬塊的寬度被稱為「em（M）」。
 
-在數位時代一個字母的空間容器從實體金屬塊轉移到虛擬的電腦程式上，電腦程式會建構一個虛構的空間容器被稱為 [EM square](http://designwithfontforge.com/zh-CN/The_EM_Square.html)、EM size 或 UPM（Unit per EM），術語源自活版印刷技術的歷史。
+在數位時代一個字母的空間容器從實體金屬塊轉移到虛擬的電腦程式上，電腦程式會建構一個虛構的空間容器被稱為 [EM square](http://designwithfontforge.com/zh-CN/The_EM_Square.html)、EM size 或 UPM（Unit per EM），術語源自活版印刷技術的歷史，而數位字型也將以此作為容器基礎。
 
-字型（font）指的是文字造型，又稱為字體，常見的字型例如標楷體、新細明體、微軟正黑體、蘋方體、Times New Roman、Helvetica 等。字形（Glyph）指的是字元的形狀，由程式演算法或是文字工程師、設計師手動調整的形狀本身；一個字型的所有字形都有相同的 EM square 尺寸，差別在於字形的大小不同。
+字型（font）指的是文字造型，又稱為字體，常見的字型例如標楷體、新細明體、微軟正黑體、蘋方體、Times New Roman、Helvetica 等，基於相似風格字形組成的家族（family）便稱為字型，也是 CSS 的 `font-family` 所設定的名稱。
 
-在技術上 EM square 可以看作是個二維空間座標系統（x,y），有個預設的寬高尺寸是 2048x2048，單位以 FUnit 表示。字形基本上都被設計在這個尺寸的範圍內，但也能超出這個範圍。EM square 事實上可以設定更大的值，[OpenType 官方規格建議大小是 16 到 16384 之間](https://www.microsoft.com/typography/otspec/head.htm)，但如果主流軟體無法支援便失去了意義，例如 [InDesign、Illustrator 特定版本無法正確處理 EM square 超過 5000 的字型](http://typedrawers.com/discussion/comment/863/#Comment_863)。
+字形（Glyph）指的是字元的形狀，由程式演算法或是文字工程師、設計師手動調整的形狀本身。一個字型的所有字形都有相同的 EM square 尺寸，差別在於字形的大小不同。
 
-所以 EM square 的尺寸需要取決於軟體的相容性，目前比較常見的尺寸通常是 1000 或是 2048，例如 [Apple 主要字型都是以 2048 FUnit 去設計](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM01/Chap1.html#master)的。
+![EM square](https://lh3.googleusercontent.com/g1lcXEFfL9nixF0Y2Y_iGmWdB_0IDR7x8lc1Qyvsmm9HaADlF3NuwPsYRAgYZGIDfiTkE70Bzplb8wTlXMlWomr5oW3pYh82SeoK4Up0JDWVTTfBFb1uGlhuqeOSgxVxY3EQnZv7z70PqQedGmiKk3bslIllLWK_qkm0UAkz_-bH8Tu5UofMGV79RDcMCLsPcTHmz4aIv8kgwSV1v9QOsBnwzHA5VxGkUhYaI43KF7wrI8671AiRWqdoVC50fEnAilnAZfdEOuJYemEPrK08WILJhE4TsU9vT-HyyNjVbyofFkZjAuoTz38Ar8Ui-fhF_2oyqIQ_eT8IyzcAqWJdID_LQpavb4l7t_oFXvtcUMUCmBgbr0vwwBghubTM3hCP1X-L4uDYLA3ZRcZRxUilyfvx77eY5Ql7ShBQbV_WODZxsEGlTvXJVKG_R63uS01mWg0JEXEmD-hWc75yDofawRB_9wXU9iAbqR6PrFlyUUXvrRBGqDj5tqlnz1IXaOO_yviAqlWaWLjOTEP5sayRQmzlM2XsS0IOalze94YySZN31VJ34Yisf5kBjhdDQVUz5XgENmTyBCjK_CKihb-BiuT1UceXbU_sYPDNrcvMKnV1BJOIEFd2b6pWUQZ0ZtKaFc5_RyiBRZH70dyaCw0VL4_Dm8l9hwMIsaXvK89Yxj0=s755-no)
+
+在技術上 EM square 可以看作是個有限的二維空間座標系統（x,y），寬高可能是 2048x2048（單位 FUnit），[OpenType 官方規格建議大小是 16 到 16384 之間](https://www.microsoft.com/typography/otspec/head.htm)，但如果主流軟體無法支援便失去了意義，例如 [InDesign、Illustrator 特定版本無法正確處理 EM square 超過 5000 的字型](http://typedrawers.com/discussion/comment/863/#Comment_863)，所以 EM square 的尺寸需要取決於軟體的相容性。目前比較常見的尺寸通常是 1000 或是 2048，例如 [Apple 主要字型都是以 2048 FUnit 去設計](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM01/Chap1.html#master)的。
+
+字形基本上都會設計在 EM square 的範圍內，但也能超出這個範圍，視字型製造商的偏好及決定。
+
+![Character extending outside of the em square.](https://lh3.googleusercontent.com/87tTVmRKfgB9GM7NZWF6ip9nHW-NKYGy8gNU9f8K3aMZXCkg0f16JGgT4-_0tht9i5WpLWOHJYi3NKflZiRjHg5ve1V9lKnUVTGiubZwDXkMuizGc2jP-hozP4zLsLPQlVM_Jmfs65TrS_exYL-BmWRc_h2g9YwxAZkB08zoX3CmEiTfVsehGl31MPuB0C3JtpObW19usVSG98AMDSrYQIt_SxYu58sBQEpfTKpJprFjND5IP7um5IKWuqJixDHjr3ZwF4k4y9b3PiCr3KV7OrpzF51Gl7_HvNfZPzCKt-8vCEgIRODN26N5NjEv6Gq7wuKDDItU30Ukj1RUOibGYlv6grb39g2EkiPwQsnYx9R0FEBvOHP_LrZMfzPH8-Yhqka99lIAbQT2-29593zDY3CqKTB3pFADrqM9zJSUNz3zTU_qeBZppdVZ3IflBaDdD1uKDBlVSe9tu6HQqoxFgNpXBmQmuuX6uI7s5CNpWDtocaon9VfyhWPxzRsKYlABBP5L8Ag3TC7GOwFvKGjwK1lse5WIuK1t8HgC9MniNHW1iIenF0H33kvPruTispc31EV8lpz3w4uQNJFmFzMWVB-KmKXqOCdlTu5oJ1iqxVhsNB8bV8X1mVDzKu3w00-oQvVexxWi5FUd_ng1hs7oDY2VnOXW6nSyeCmrxOq0YPA=s799-no)
 
 ## 字形解構
 
-將千萬個字形拆解可以找出一些相同的模式，瞭解分解部分的異同之處，可以幫助網頁設計師理解不同字型的差異之處，進而配對選出適合的字型組合到網頁上。
+對於瀏覽器顯示字形在網頁上，技術上比較有意義的部分有三個：
 
-技術上比較重要的幾個字形解構部分是：
+* 基線（Baseline）：字型在設計時放置的水平參考線，作為大部份英文文字坐落在同一條基準線上的參考線，相對於其他字型或字形決定如何對齊。基線的設計主要用於英文字型的設計，CJK 字型也會有基線，只是對於設計的意義來說並不大。
+* 升部（Ascent）：基線到字形最高的頂部稱為升部。
+* 降部（Descent）：基線到字形最底的底部稱為降部。
 
-* Baseline
-* Descender
-* Ascender
+![](https://lh3.googleusercontent.com/qC070S-SC4Z330u2-mHASXfdcuMaSWZeJLLkMrdDcjZ-k5U5mPDwHJJPOSpT_mCwVtofFUjevRD3BI9mqIXEfJp39UFkk9cCRD-KcciLuOGQalz2xBk8i3skrqOCgv92jiJsqAnK99jXGV_Qjr0vosSo2_tgZmZXdMrGSRemvVDsw9Gn2PYg8VNhEjxnZNAZkoeCUPe9hPg7ecTpWWpJKhWgUY-UnQTRtV3KIGKEIufRnhjwMQrE4rkO2l3v6l5BX3_Gultxc-hNkJ9-0ScKhGMz5gyPHKHBLiykv0MATtp04_292JxcO8079Qoy65mMWIE8XPjvYdcfJR5GhxiKk2seNof0f4gAb-jjhDl3u7SvA8XI8-VAHm2wPS2qgMCP_w8jxM__VhbJDnOcBqBLBpbNz3P_o3AjXPUy6S5fVGbbT7DSfhPDSn2RAEUIi0K68ZnfaeX0VRWqPY3vQ_jq_wDsasqZYw2NedOFpR5VVvgK3MSfKN40jw1qn7_IaXnClwSgZzNZJqZ7UwYthjUO-QxZlTGQyCILBnnye3b5aEAJmIlDXD08GWMj9Hu778uap1AJcX1mseJb4L_fwlv3NSQzutLmJMeC2zFrCXtvO3Om970ucDOllxt3kP2-n08cy9igomlsEgUa1G46u3HyVvITc51D22ZbbkpfH0gLfMw=w914-h738-no)
+
+升部參數與降部的參數，定義在 OpenType、TrueType 的 OS/2 表格中 `sTypoAscender` 及 `sTypoDescender` 的值，或是 HHEA 表格中的 `Ascent` 及 `Descent`。OS/2 是給 Windows 的規格、HHEA 則是 Apple 的規格。
+
+這些設定，將會讓瀏覽器決定如何將文字如何顯示在網頁上，瀏覽器會如何具體應用這些參數，我將留到下一篇文章說明。
