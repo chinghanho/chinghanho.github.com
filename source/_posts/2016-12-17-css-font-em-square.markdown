@@ -50,8 +50,6 @@ categories: Programing
 
 然後 CSS 將其中一半的 leading 加到文字的上方，一半加到下方。舉例來說，指定某區塊字級大小 16px，行高設定 24px，則 (24 - 16) = 4，CSS 會在 16px 的文字上面及下面同時加上 4px 的空白，最後整體文字區塊（inline box）才會得到 24px 的高度。
 
-![font](https://lh3.googleusercontent.com/Bu_zLRhYf7ZpCx7345y6dTphFMjZzPyY0vVfGsWzgdBuny_-8FV15al81UKi5DjhIaOLz37hKMNL9-G-v3S7-z9TIGDdalNpZoSM7upqVLgdf0V41nzbu4ocrWzJpZ0qXu3HQtA-9f01NpwIYtFSRNV3BYvrORY5MiCGeDu56fD3VRFYlPJ0pXLOIGGPcbT29t7pnZcn7ZLb7gLgWj1hGrAHYWhXdzP5pugRkl9mtwI1hm2sxUGb4lklgbQWf_MvCHB_zAGltoJWC1ts3DvJwxYPTP5UtUEh1V-Go9AfUPLGwRXuTMDbkvZ21IlnwmKRp1O5d47u8S8P5FcXJxUug4zELKmUYR_X-RHBAxDFZK3fwZPsvHqyF-RKJtVlNIg_dOKN3YqU3JEP5Apyxbvv82tvGTCmvKqKPZHFjG0fxdP7ckMDfuNdxy3BtMocXfwKdzut-sK-4phuHXmsxXMFP9juu3R8HJPeRlwgLc3-sI5HplUAYZHAa3G9kGAlHxEegMq4S2_DAlx-PXbNeTFqHyRotxla5uKia8AEygEg2pVPC7aCvHWkwYuiwgYKP8NACGylVFI-I9mS0Gi6ndOZvQBaXu5DCuLqdS4r7cM71Wyo9_xM6w=w960-h255-no)
-
 W3 規定 CSS `line-height` [預設的值是 normal](https://www.w3.org/TR/2011/PR-CSS2-20110412/visudet.html#propdef-line-height)，並且建議這個值可以介於 1.0 ~ 1.2 之間。為了測試實際 line-height 到底是多少，我準備了一個測試網頁，在 Chrome 跟 Firefox 兩種不同的 render engine 測試不同英文字跟中文字體，得到以下 4 個測試結果：
 
 * 不同瀏覽器 normal 不同；
