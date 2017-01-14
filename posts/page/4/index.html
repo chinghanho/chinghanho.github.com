@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="早上整理 .dotfiles 因為對 Git 的 submodule 指令不熟悉弄得灰頭土臉，最後把整個目錄砍掉重新 clone 回來，結果發現 submodule 裡面的目錄都是空的，才知道原來 Git 不會自動去抓 submodule 的 repo，還要另外加一些指令。 &hellip;">
+  <meta name="description" content="先前曾經寫過怎麼使用 Pathogen 管理 Vim 的外掛，Git 的 submodule 用久了開始覺得很不方便，有時候只是要測試一下新玩具，用完就刪掉，可是前後要操作的指令至少超過四個，實在有夠麻煩。 正打算來寫個 script 自動化過程，但這種東西怎麼可能沒人寫過，於是上網找了一下， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/4/" />
-<meta property="og:description" content="早上整理 .dotfiles 因為對 Git 的 submodule 指令不熟悉弄得灰頭土臉，最後把整個目錄砍掉重新 clone 回來，結果發現 submodule 裡面的目錄都是空的，才知道原來 Git 不會自動去抓 submodule 的 repo，還要另外加一些指令。 &hellip;" />
+<meta property="og:description" content="先前曾經寫過怎麼使用 Pathogen 管理 Vim 的外掛，Git 的 submodule 用久了開始覺得很不方便，有時候只是要測試一下新玩具，用完就刪掉，可是前後要操作的指令至少超過四個，實在有夠麻煩。 正打算來寫個 script 自動化過程，但這種東西怎麼可能沒人寫過，於是上網找了一下， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="早上整理 .dotfiles 因為對 Git 的 submodule 指令不熟悉弄得灰頭土臉，最後把整個目錄砍掉重新 clone 回來，結果發現 submodule 裡面的目錄都是空的，才知道原來 Git 不會自動去抓 submodule 的 repo，還要另外加一些指令。 &hellip;" />
+<meta itemprop="description" content="先前曾經寫過怎麼使用 Pathogen 管理 Vim 的外掛，Git 的 submodule 用久了開始覺得很不方便，有時候只是要測試一下新玩具，用完就刪掉，可是前後要操作的指令至少超過四個，實在有夠麻煩。 正打算來寫個 script 自動化過程，但這種東西怎麼可能沒人寫過，於是上網找了一下， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/vim-vundle/">更好用的 Vim 外掛管理工具：Vundle</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-25T16:38:00+08:00" pubdate data-updated="true">May 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh4.googleusercontent.com/-_0FBYCCvjPU/UaB5LuYVrWI/AAAAAAAAGXY/ewSOLLQ8_xU/s690/vim-vundle.png" alt="vim-vundle" /></p>
+
+<p>先前曾經寫過怎麼使用 <a href="/posts/vim-plugins-manager-pathogen/">Pathogen</a> 管理 Vim 的外掛，Git 的 submodule 用久了開始覺得很不方便，有時候只是要測試一下新玩具，用完就刪掉，可是<a href="/posts/git-submodule/">前後要操作的指令</a>至少超過四個，實在有夠麻煩。</p>
+
+<p>正打算來寫個 script 自動化過程，但這種東西怎麼可能沒人寫過，於是上網找了一下，被我發現 <a href="https://github.com/gmarik/vundle">Vundle</a> 這個管理工具，看完 README 後馬上就把 Pathogen 刪掉了，然後寫了這篇文章。XD</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/vim-vundle/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -327,51 +372,6 @@ execute pathogen#infect()
   
     <footer>
       <a rel="full-article" href="/posts/https-www-google-com-vs-https-encrypted-google-com/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/after-google-reader-dead/">寫在 Google Reader 死後</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-16T00:02:00+08:00" pubdate data-updated="true">Mar 16<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>昨天最熱門的消息就是 <a href="http://googlereader.blogspot.tw/2013/03/powering-down-google-reader.html">Google 宣布 Reader 的死亡</a>（GR 的官方部落格上次更新竟然是兩年前），判刑日定在今年 7 月 1 日，RIP。文章的意思是，在執行死刑之前，使用者可以用 <a href="https://www.google.com/takeout/?pli=1#custom:reader">Google Takeout</a> 把資料帶走，然後就趕快滾吧！雲端服務大概就是這麼回事吧，煙消雲散時<a href="https://news.ycombinator.com/item?id=5371725">使用者哭喊地再悲再慘</a>也沒用，只能把行李打包打包逃到下一個隨時可能散掉的雲。</p>
-
-<p>翻了一下統計資訊，我從 2010 年 4 月 10 日開始使用 Google Reader，直到今天將近三年的時間，總共閱讀過 70,194 個項目，平均起來每天至少瀏覽過 70 篇文章。這並不是很多，因為我的閱讀習慣早已經改變，不再依賴 RSS，以前早中晚都會習慣開 Google Reader 看新聞，現在幾乎只有一天一次、兩天一次，或者更少，頻率降低許多。</p>
-
-<p>現在我的主要資訊來源有以下這幾個：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/posts/after-google-reader-dead/">Read on &rarr;</a>
     </footer>
   
 

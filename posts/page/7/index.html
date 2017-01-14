@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="今天早上 Xavier Noria 轉推 RubyFlow 一則 tweet，看到這個有趣的工具，能用更友善的介面來顯示 rails server 下的 log 資訊，這東西就是 rails_panel。 安裝方式很容易，先在 Google Chrome Store 上下載 rails_panel &hellip;">
+  <meta name="description" content="前陣子爆發的 Github Hacked 事件，就是因為沒有在 model 裡面正確設定 attr_accessible 或 attr_protected 過濾屬性，所造成的 Mass Assignment 漏洞。可是在 model 裡面寫 attr_accessible 來過濾傳進來的參數， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/7/" />
-<meta property="og:description" content="今天早上 Xavier Noria 轉推 RubyFlow 一則 tweet，看到這個有趣的工具，能用更友善的介面來顯示 rails server 下的 log 資訊，這東西就是 rails_panel。 安裝方式很容易，先在 Google Chrome Store 上下載 rails_panel &hellip;" />
+<meta property="og:description" content="前陣子爆發的 Github Hacked 事件，就是因為沒有在 model 裡面正確設定 attr_accessible 或 attr_protected 過濾屬性，所造成的 Mass Assignment 漏洞。可是在 model 裡面寫 attr_accessible 來過濾傳進來的參數， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="今天早上 Xavier Noria 轉推 RubyFlow 一則 tweet，看到這個有趣的工具，能用更友善的介面來顯示 rails server 下的 log 資訊，這東西就是 rails_panel。 安裝方式很容易，先在 Google Chrome Store 上下載 rails_panel &hellip;" />
+<meta itemprop="description" content="前陣子爆發的 Github Hacked 事件，就是因為沒有在 model 裡面正確設定 attr_accessible 或 attr_protected 過濾屬性，所造成的 Mass Assignment 漏洞。可是在 model 裡面寫 attr_accessible 來過濾傳進來的參數， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,185 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/rails-4-mass-assignment/">Rails 4 Mass Assignment</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-30T16:07:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://lh3.googleusercontent.com/-hgXyfwvn2go/UN_3CJlzFMI/AAAAAAAAFhg/GiaBdbUll8k/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-12-30%2520%25E4%25B8%258B%25E5%258D%25884.09.42.png" alt="github-hacked" /></p>
+
+<p>前陣子爆發的 <a href="https://github.com/rails/rails/commit/b83965785db1eec019edf1fc272b1aa393e6dc57">Github Hacked</a> 事件，就是因為沒有在 model 裡面正確設定 <code>attr_accessible</code> 或 <code>attr_protected</code> 過濾屬性，所造成的 Mass Assignment 漏洞。可是在 model 裡面寫 <code>attr_accessible</code> 來過濾傳進來的參數，這樣的動作很不太對勁……</p>
+
+<p>我想 Github 的開發者多是 hacker 級的高手，不致於犯這麼初級的錯誤。MVC 架構中 model 單純用來進行資料庫相關的動作，controller 才是負責所有邏輯部份，包括 client input、output，所以 Github 肯定是把過濾機制寫在 controller 裡面（像 37signals 就是這麼做的）。但是不管怎麼樣，最後漏洞還是出現了。:p</p>
+
+<p>DHH 也在 <a href="https://twitter.com/dhh/status/176465643107909632">Twitter</a> 上說過：</p>
+
+<blockquote><p>The right place to guard against these issues is in the controller, not the model. AR&#8217;s attr_accessible is the wrong way about it.</p></blockquote>
+
+<p>所以處理 Mass Assignment 的程式碼，應該要放在 controller 而不是 model，所有從 client 傳來的資料，都應該要在 controller 先行處理，對此 DHH 也提供了 <a href="http://37signals.com/">37Signals</a> 的解決方案，亮點在那個 <code>slice</code>：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="no">Post</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">update</span>
+</span><span class='line'>    <span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">update_attributes!</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">post_params</span>
+</span><span class='line'>      <span class="n">params</span><span class="o">[</span><span class="ss">:post</span><span class="o">].</span><span class="n">slice</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:content</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>基於上述的這些種種原因，所以到了 Rails 4 就把原本 <code>attr_accessor</code> 的工作拉到 controller 裡來做。以下是 <a href="https://twitter.com/spastorino">Santiago Pastorino</a> 寫的範例，原本 Rails 3.2 的寫法是：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># app/models/user.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">attr_accessible</span> <span class="ss">:username</span><span class="p">,</span> <span class="ss">:password</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># app/controllers/users_controller.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">UsersControlelr</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create!</span> <span class="n">params</span><span class="o">[</span><span class="ss">:user</span><span class="o">]</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="vi">@user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>到了 Rails 4 的寫法改為以下，亮點在那個 <code>permit</code>：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># app/models/user.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="p">;</span> <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># app/controllers/users_controller.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">UsersControlelr</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create!</span> <span class="n">params</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:username</span><span class="p">,</span> <span class="ss">:password</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="vi">@user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這個方法其實就跟 DHH 提供的那個解法非常類似，在 actions 裡面決定哪些屬性是可以通過的，所以也可以把參數寫到 <code>private</code> 下方：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># app/controllers/users_controller.rb</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">UsersControlelr</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create!</span> <span class="n">user_params</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="vi">@user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">user_params</span>
+</span><span class='line'>      <span class="n">params</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:username</span><span class="p">,</span> <span class="ss">:password</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣一來就可以決定哪些參數在通過 <code>create</code> 這個 action 的時候會被過濾掉，而且不會影響到其他的 actions，在維護上我想應該也會相較容易一些。</p>
+
+<p>升級版本的過渡期間，如果想要使用舊寫法的可以安裝 <a href="https://github.com/rails/protected_attributes">protected_attributes</a> 這個 gem，就可以繼續使用 <code>attr_accessible</code> 和 <code>attr_protected</code>；而想要嘗鮮使用新寫法，則可以安裝 <a href="https://github.com/rails/strong_parameters">strong_parameters</a> 這個 gem，然後修改以下設定：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># config/application.rb</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">active_record</span><span class="o">.</span><span class="n">whitelist_attributes</span> <span class="o">=</span> <span class="kp">false</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># app/models/**.rb</span>
+</span><span class='line'><span class="kp">include</span> <span class="ss">ActiveModel</span><span class="p">:</span><span class="ss">:ForbiddenAttributesProtection</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最後修改所有 controllers 的參數寫法，參考上面 Santiago Pastorino 寫的 <code>user_params</code> 例子。等到 Rails 4 正式發佈時，只要把 application.rb 和 models 做的修改復原回來，還有把 strong_parameters 從 Gemfile 踢出去就完成了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -542,194 +721,6 @@
     </ol>
 </div>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/ruby-single-quotes-vs-double-quotes-comparision-and-performance/">Ruby 單引號、雙引號差別與效能測試</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-08T14:32:00+08:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Ruby 的單引號（<code>'</code>）跟雙引號（<code>"</code>）基本上只有在轉義字元（escaped character）和字串插值（string interpolation）有差異，單引號沒辦法解讀字串插值，例如：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s1">&#39;hello world\nnew line&#39;</span>
-</span><span class='line'><span class="c1"># =&gt; hello world\nnew line</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;hello world</span><span class="se">\n</span><span class="s2">new line&quot;</span>
-</span><span class='line'><span class="c1"># =&gt; hello world</span>
-</span><span class='line'><span class="c1"># =&gt; new line</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s1">&#39;#{var}&#39;</span>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'><span class="c1"># =&gt; #{var}</span>
-</span><span class='line'><span class="c1"># =&gt; hello world</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果兩個引號之間要插一個相同的引號，就要用不同風格的引號來包，否則就會噴出 SyntaxError 的錯誤，除非加一個 <code>\</code> 來轉義，例如：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s1">&#39;This is David\&#39;s pen&#39;</span>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;This is David&#39;s pen&quot;</span>
-</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
-</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可是這樣很麻煩，所以這時就會需要用到 <code>%q</code> 和 <code>%Q</code> 這個方法，前者等於單引號的用法，後者等於雙引號的用法（也可以直接寫成 <code>%{}</code>），例如：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="sx">%q{Hello world!\n This is David&#39;s pen}</span>
-</span><span class='line'><span class="c1"># =&gt; Hello world!\nThis is David&#39;s pen</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="sx">%Q{Hello world!</span><span class="se">\n</span><span class="sx"> This is David&#39;s pen}</span>
-</span><span class='line'><span class="c1"># =&gt; Hello world!</span>
-</span><span class='line'><span class="c1"># =&gt; This is David&#39;s pen</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>單引號跟雙引號之間的差別大致上就這樣，那效能呢？我寫了一個腳本來測試兩者的速度差異，結果如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s2">&quot;benchmark&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">CYCLES</span> <span class="o">=</span> <span class="mi">10_000_000</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Benchmark</span><span class="o">.</span><span class="n">bmbm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&#39;hello world&#39;]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span> <span class="p">}}</span>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&quot;hello world&quot;]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span> <span class="p">}}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%q{hello world}]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%q{hello world}</span> <span class="p">}}</span>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%Q{hello world}]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%Q{hello world}</span> <span class="p">}}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&#39;hello world&#39; + n.to_s]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span> <span class="o">+</span> <span class="mi">1</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}}</span>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[&quot;hello world </span><span class="se">\#</span><span class="sx">{n}&quot;]</span><span class="p">)</span>    <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;hello world </span><span class="si">#{</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%q{hello world } + n.to_s]</span><span class="p">)</span> <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%q{hello world }</span> <span class="o">+</span> <span class="mi">1</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}}</span>
-</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="sx">%[%Q{hello world </span><span class="se">\#</span><span class="sx">{n}}]</span><span class="p">)</span>     <span class="p">{</span> <span class="no">CYCLES</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="sx">%Q{hello world </span><span class="si">#{</span><span class="mi">1</span><span class="si">}</span><span class="sx">}</span> <span class="p">}}</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># ruby-1.9.3-p327</span>
-</span><span class='line'><span class="c1"># Rehearsal -------------------------------------------------------------</span>
-</span><span class='line'><span class="c1"># &#39;hello world&#39;               4.100000   0.010000   4.110000 (  4.112255)</span>
-</span><span class='line'><span class="c1"># &quot;hello world&quot;               4.060000   0.000000   4.060000 (  4.069385)</span>
-</span><span class='line'><span class="c1"># %q{hello world}             4.090000   0.010000   4.100000 (  4.099501)</span>
-</span><span class='line'><span class="c1"># %Q{hello world}             4.090000   0.000000   4.090000 (  4.104130)</span>
-</span><span class='line'><span class="c1"># &#39;hello world&#39; + n.to_s     10.680000   0.020000  10.700000 ( 10.705543)</span>
-</span><span class='line'><span class="c1"># &quot;hello world #{n}&quot;          9.870000   0.010000   9.880000 (  9.895310)</span>
-</span><span class='line'><span class="c1"># %q{hello world } + n.to_s  10.710000   0.020000  10.730000 ( 10.744212)</span>
-</span><span class='line'><span class="c1"># %Q{hello world #{n}}        9.810000   0.010000   9.820000 (  9.832551)</span>
-</span><span class='line'><span class="c1"># --------------------------------------------------- total: 57.490000sec</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">#                                 user     system      total        real</span>
-</span><span class='line'><span class="c1"># &#39;hello world&#39;               4.010000   0.010000   4.020000 (  4.018492)</span>
-</span><span class='line'><span class="c1"># &quot;hello world&quot;               4.010000   0.010000   4.020000 (  4.017989)</span>
-</span><span class='line'><span class="c1"># %q{hello world}             4.010000   0.000000   4.010000 (  4.021088)</span>
-</span><span class='line'><span class="c1"># %Q{hello world}             4.010000   0.010000   4.020000 (  4.019685)</span>
-</span><span class='line'><span class="c1"># &#39;hello world&#39; + n.to_s     10.700000   0.010000  10.710000 ( 10.730320)</span>
-</span><span class='line'><span class="c1"># &quot;hello world #{n}&quot;          9.860000   0.020000   9.880000 (  9.890101)</span>
-</span><span class='line'><span class="c1"># %q{hello world } + n.to_s  10.610000   0.010000  10.620000 ( 10.634330)</span>
-</span><span class='line'><span class="c1"># %Q{hello world #{n}}        9.860000   0.020000   9.880000 (  9.884285)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>得出兩個結果：</p>
-
-<ul>
-<li>字串插值的寫法會比用 <code>+</code> 拼接的效能好（而且可讀性也比較高）；</li>
-<li>雙引號比單引號效能好；</li>
-</ul>
-
-
-<p>一般情況，我的習慣都是使用雙引號，個人覺得看起來也比較好看。:p</p>
 </div>
   
   

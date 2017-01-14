@@ -4,7 +4,7 @@
   <title><![CDATA[@ChingHanHo]]></title>
   <link href="http://blog.chh.tw/atom.xml" rel="self"/>
   <link href="http://blog.chh.tw/"/>
-  <updated>2017-01-02T23:22:21+08:00</updated>
+  <updated>2017-01-14T23:23:17+08:00</updated>
   <id>http://blog.chh.tw/</id>
   <author>
     <name><![CDATA[Ching-Han Ho]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CSS Font (2) - 像素]]></title>
+    <link href="http://blog.chh.tw/posts/css-font-pixel/"/>
+    <updated>2017-01-14T22:49:00+08:00</updated>
+    <id>http://blog.chh.tw/posts/css-font-pixel</id>
+    <content type="html"><![CDATA[<p><img src="https://lh3.googleusercontent.com/QYgIGri4TjlqD74S4v_H39wBvIzcSIEr8wtKJAImXvSc-ZQO8B5WGE5qvYD3_k3PdinLcUXJ7UHZBLGtZJtAP880O5B9q-WcU_VXJPzVWAxgl3TsT27kXFIOYuPhXQ8koXbDjeQDmFOQ4btB2nw_cWIWaczmLL70eExzVdO_1_Wo7E6jXGdHlkYC8m2al-azmM_8vIY5zWKlrdT2ldDaAofCIV0wVOYZN3QwaRZ1vQyRLHa3Wtp1aP1pj2mIHhTpZBWtXcXOg6VFXS_ImBMKhzEFUtOHYkxKJ89p2aiYSq47XnLCDbBo-4ZdEHWqDvXBkWJcHXFalGwRm_HjhyravjJvcdiudp1NJdkQmYO8Yd06QNs7FY8DzSImi3sq-oJIuO4eHsWM8zOASEy0IgV6VubRVUq4VcOCjxd7DOxRzE6iEk2waFr7cI4IRiShvGQ2mkDjYRcf2bqk-aNlpSP1f3pMnK9B1pYSwz-_AgfIq4ZCkYSkKAxbxOF0q-HWb-QcDv_qnyU7S6bFnwjHXsAV8A1d41y9o5HCGIwJyejBdtbn4WFf_7o5gWJesDFU2Eg8sJoaFknTgvUMrbtoApsRlR8zNxayvAZZhILYPS_qXt1xfrI1SZYmeFPNgRbL818lTrQVd0lCf6a1UHrgtdZ2sndlRDRRi4nb-xlHiJYQHbM=w1276-h718-no" alt="" /></p>
+
+<p>（圖片取自 <a href="https://acko.net/files/fullfrontal/fullfrontal/webglmath/online.html">unconed</a> 網站，版權為原網站所有。）</p>
+
+<p>瞭解電腦字型如何被創造，能夠進一步理解文字如何在螢幕上顯示。本系列文章目的在於研究電腦字型在螢幕上顯示的原理，以便理解 CSS 有關字型的各項屬性背後的設計目的，以及要解決的問題。本文適合對象為從事網頁設計的專業人員，不論是網頁設計師、前端工程師，或是全端工程師。</p>
+
+<!-- more -->
+
+
+<h2>Pixel</h2>
+
+<p>現代螢幕最小的基本單位為像素（pixel），由非常非常多的「小燈泡」組成。一個像素是由紅、綠、藍三個顏色的「小燈泡」組成，他們透過控制開關、亮度，組成不同變化的加法混色，能夠產生非常多種顏色。為了簡化概念，可以將像素理解成一個個小格子，整齊排列構成一個巨大的矩形網格。電腦在繪圖時，是按照網格座標逐一設定每個格子（cell）顏色屬性的 <a href="https://en.wikipedia.org/wiki/RGB_color_model">RGB 值</a>來呈現圖案。有個說法，像素的英文 pixel 的是 picture + cell 組成的詞彙。</p>
+
+<p>Full HD 的螢幕解析度是 1920x1080，表示螢幕橫向 X 軸有 1920 個像素單位，縱向 Y 軸有 1080 個像素單位，總共超過 200 萬個像素單位，這種螢幕實際所擁有的像素數量通常稱為裝置像素（device pixel）。</p>
+
+<p>有些藝術家、工程師用人工的方式在網格上一格一格地點上顏色來製作圖案，這種圖案風格稱為 pixel art。使用像素方格將文字筆劃一點一點點出來的字型，稱為<a href="https://en.wikipedia.org/wiki/Computer_font#Bitmap_fonts">點陣字型</a>（bitmap font）。以前螢幕解析度不高，要在有限的像素內顯示可判斷的文字筆畫，需要使用點陣字型。現在使用最多的場合是大眾運輸上的跑馬燈，或是某些車票、收據仍可以看到點陣字型的使用。</p>
+
+<p><img src="https://lh3.googleusercontent.com/4EZC27DSZk60uyIXHkeLNCaCfp6gDi5UzHX6EVZmAbOpDuBWonrSRePE4cgxeslOSH4dzN6a3G8VzCwCEECWxE2finNMJRZtRxFvjk14gxhuBq4518uAd91c-CeI7uXpoV_sIYR7gML4aYNrqzAgepVfSJYHzgle0XQXxU_qsDOWHE_4swdo2ega1XiRaSJcBseZq5zSIxduP5evzrq4sbs6zfgmIY7PkwQdsEsi8xp85WR3_N9n8u25glDHThBRMAdGLyMGpR2FYFkmldkIWT0YmuZ2jnK_d_NqGbdFjL1vzvwA5WAyChxapxpsWAHYu5ie4lvjsQOFgWJKHfYdVGE3fJXZpvmoEw5_uroTV2bDtsswRMB13sED_TI_oHAzD03IFHWvqZfVRi-ZArFwrbxKGpH3maY7liAV24zmXq519SI3NPT9FLFMn4RHprv3YoEJMK-09QwZK_Nn3-x_jZIId0zwnDT8LF4kcXr6HYH2IJCrJ7p5BplXpba7i-BK0ou4GJhY59UMbGScAShHSR1Ku7JngJDnAkPhZmkpNWJEoNHgBpBR63G2m6iInAyM5pPmSxHfe7UlYFuP9zUI4j13Uy2nk7qT78X8sOKYuA6miHvn9DJeK7a7KjCYJBYrqibTAveIFNG9QSdWS2PjB-I1_6Jik4x7jEAODuEyKs0=s1600" alt="點陣字形" /></p>
+
+<p>若要滿足動輒超過一、兩百萬像素的現代螢幕，便不可能一點一點地點出文字的筆劃，需要用數學方程式來表達向量的線條、幾何圖形，例如 <a href="https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm">Bresenham 演算法</a>繪製線條、<a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Bézier 曲線算法</a>繪製曲線、<a href="https://en.wikipedia.org/wiki/Scanline_rendering">Scanline 填充算法</a>填滿實心的圖形。</p>
+
+<p>透過記錄文字線條變化的節點座標（x,y）來繪製筆劃輪廓的字型，叫做<a href="https://en.wikipedia.org/wiki/Computer_font#Outline_fonts">輪廓字型</a>（outline font）。輪廓字型使用許多直線與曲線組成文字筆劃的輪廓形狀，再以填充演算法填滿內部空間，繪製成文字，這個過程稱為算圖（render）。</p>
+
+<p><img src="https://lh3.googleusercontent.com/WHzAidFm9liuCdl8PO8dyPUWFYAOxwI2M4CNCh0xQoBCSo_tCdqQ3hX96y0qYyn4oLtZnjdIzlx4z_b6HBrgRII9UF_THi_EBNzDwsCOEHDqQzdzBb-EiohTtWNdvpNQWQPNI6z4FAesQROqPDil-i2-uLup3kagfCa-0qYAs5qrVYxG_Yb1ojAsxWJuuBQg2-h99jEHmypIBLc9J2MfUNuJReGsUl5tRKgJqjhVjJQatGfH01yjrTPNvSbjR3hnYZPm4CVSa1UT9byv9hGpH-nNl9EjvynQvArA0tzHXwDnV9BMNEaW7Q3A8iXwu03HbecCglRmc6grTr3EHoewmzRes15Hj79qxgCQXCEb3A-RHqZa71MQ9bykR1g4ZXmjTSwWRbdpDBRfHMNHYI7lS2JyaMonlPNWJxnMGg9ytfi2_kigx7EfCL5otj4YQQXnIPFKGt_6GoBBX0rjLYho5z3NkJk0mGrdRApua21Te0WPvR1RLuk7jm0v-0GUYMBX1rvoLvGmHemOuQPLISHFndtFTgPk4RYCWVTv1IvfqQI9HWpMsvFtgM_3QWJr56KcXwvCjMVhMvJ_waQZHQvj8D8sOSHGCPlSmAnwHeAWuVSwG2Bl-LshaZ4JgzboHdC7xR3-l5RL3h6bO4DgHCghpRf0UlsVi36JBtCADzzX6X4=w706-h628-no" alt="輪廓字" /></p>
+
+<p>目前算圖並沒有一個統一的規範標準，各個引擎的實作方式皆有些微差異，因此在不同的瀏覽器（Chrome、Firefox）、作業系統（macOS、Windows）上相同一套字型的同一個字母，都會看起來不太一樣。</p>
+
+<p><img src="https://lh3.googleusercontent.com/9Hy5Ta3RBWYdhc-IS8FaUwRFCVx795D_9jtScJhIaWsQJ2VLMU0HVf9S2ptpwuAyphS7x1sVuN9f3NPONlxsNUNU9DMQCWldsjKr12J-kLVV_4U0bfNiikauuq5RXB6Ytcf-HMZaN57hLk_o8HRXDubsg1jDvTISCCteow8C374bdfOxlmhbzHXMeTROMX9iZQWGWSvXT3aq_UXjHBBKZw_4uzn7utR3CIIp3MF9uy83JJscK-5-lhZiaXmhCJPYHJ3ZnhuGNJ2E_4FBdE1GkXJE2yr--GFiqW3vAR5BzQANp1h87f9iHIq_f4dWpC-IuvXKvzh5txrRBlVhGd06hXHFXjMDVy5OQQj-7Fq_FBTuWa-F5bnyq4pKdzsYh6NP1W3SENKqdn2-5RvKWJSUhg1m9M2pt93AD2PEejuMLzu4GkN1ivfCRoxOStabAi3fOlYv0z7DmlTaMrWBS1LgzpwT9M19gpTzXPRMImmXWJK9Mky66_Tezbd0cm0JXjjoEEfgwFtqCq6y5R4tG87Qi4fAcbcMOYFr_OOVbnxd9rcQ1cuXcB4sYgTh2jYTpBiPp4qGQpsC0r8rkrDJXJkL6t5g7DnroHftjSQWtMmofxT9Jld9unNWGWk3CyVqILN9IhbJZvb2HSB5otvOoI7ZXMCc1v-uR8Lj_0II1BtgHK4=w450-h74-no" alt="相同頁面不同瀏覽器 render 的結果不同" /></p>
+
+<p>不過螢幕像是個巨大的矩形網格，無法直接顯示向量的圖形，顯示過程需要經過點陣化（raster），由電腦程式自動設定每個格子的顏色屬性，將向量線條轉映到一格一格的像素上。</p>
+
+<h2>px 不是 Pixel</h2>
+
+<p>裝置像素的單位以 px 表示，但是 CSS 所定義的 px 並不與裝置像素 1:1 直接對應，至少不是想像中那麼單純的 1px 等於 1 個裝置像素單位，儘管他們都會使用相同的表示方式：1px、320px、1920px。可是兩者定義上卻有些微差異。</p>
+
+<p>須知 CSS 支援的長度單位相當多，有字型排版歷史流傳下來的 pt 以及 pc（pica），也可以使用日常生活可能每天用到的公分（cm）、英吋（in），還有個最特別的單位是 px。對於已經熟悉 CSS 的工程師、設計師大概沒人不知道什麼是 px。px 不像其他單位有實際的物理長度可以相互轉換：</p>
+
+<pre><code>1in = 2.54cm = 25.4mm = 72pt = 6pc
+</code></pre>
+
+<p>因為他們是由實際的物理長度組成的絕對單位，物理長度不論在哪都是相同的，基本上每個人伸兩根手指大概都可以比出一公分大概有多長，但是螢幕因為解析度不同，每英吋像素密度（pixels per inch，PPI）都不一樣，例如 iPhone 5s 的像素密度是 iPhone 3G 的兩倍，兩者裝置像素 1px 不會是相同的物理長度。</p>
+
+<p>W3 早在 CSS Level 1 就提出了<a href="https://www.w3.org/TR/css-values/#reference-pixel">參考像素（reference pixel）</a>的概念，定義了 CSS 的 px 單位是參考像素而不是裝置像素。參考像素 1px 等於 1/96 英吋（大約 0.26mm）。與其他絕對單位的轉換公式可以寫成：</p>
+
+<pre><code>1in = 96px = 72pt = 25.4mm
+</code></pre>
+
+<p>當設定字級 12pt，電腦需要將 pt 單位轉換為參考像素 px，才能知道螢幕需要用多少像素來顯示文字。依照前述的公式做簡單的單位換算：</p>
+
+<pre><code>12 / 72 * 96 = 16
+</code></pre>
+
+<p>計算結果是 12pt 的文字在網頁上顯示的合理邊長為 16px；當 CSS <code>font-size</code> 設定 16px 即表示設定 EM square 邊長的對應像素為 16px，換句話說，<code>font-size</code> 的大小等於 EM square 的大小。然而這只是字型的 EM square 的高度，並非字形本身的高度，要計算字形本身輪廓的像素寬高則需要從 EM square 的座標系統換算。</p>
+
+<h2>字形座標轉換 Pixel</h2>
+
+<p>技術上 EM square 是個二維空間的座標系統，FUnit 是等分座標系統的單位，沒有實際的物理長度，只用來表示相對的距離。為了能在螢幕上顯示字型文字，需要將相對的輪廓座標（x,y）等比例縮放到具體的像素座標上。</p>
+
+<p>輪廓字型以 Roboto Black 為例，這個字型 EM square 邊長為 2048 FUnit，大寫 I 用了四個座標點，座標點之間皆為直線線條連接：</p>
+
+<pre><code>x=474 y=0
+x=137 y=0
+x=137 y=1456
+x=474 y=1456
+</code></pre>
+
+<p><img src="https://lh3.googleusercontent.com/wwZ5ylRJC6VM5MVFhB7D4he8hF2x3-gjzHQmr_Lj01RJ0MonUrOe3Mzhgd4EgItDuynUZL9FhWjixWmHdfccX_MryTOFAFdy0A5E6s669-lMpzDTjqow_-P1PNVceVxeWud69JzRIh4g8gwVWVljvEZCCKwP9SJJifBjUxQFdGCaghsgvYhbomk2VXM2qdAu6KK-jMwZW_tQAuTq6SIaY294XZFBzMdvbkoFo4MGU89jTDJ0-elKs-WZQUlhBtjrQjbeVdlZA7e57SltdJNw2fCy94mO0GWhR4l_J8pe842wPBeI-qBnjJIimAGmTDwUJTKrhjhRUdyWt4BiMJ0sCW4MCXMh2-TcZXXB8rETfJpgWputpDI1S-QhvWNg56jxeOFee-MucQxPuD0bbicwBh8nQuIjRld4UEto2RyGgODq9T70Wgy_9MBRd30GzGMevFR_OZhFwG_IBhvzryxFS0FWloU90W6q8ispbs2LRnpU8058_JymUlRwmbfrIMJW-bplo_n23hIPV4N06oOFkB0_8zae2S4ecMQwGQO5CPhOoEun7_-TrmGdQioOFjpaX7k3gDlzpHENyrz_D5XcQCqkDTizEJStdsKxNUceH8--eEDAoLlbgIIpM57V4007j6hiVQnhGB8_7kWjni6XXEGX99bgv02Y6gAppvUxz7Q=w500-h382-no" alt="roboto-black" /></p>
+
+<p>網頁上如果設定 12pt 已經知道合理邊長為 16px，做個簡單的等比例縮放計算：</p>
+
+<pre><code>(round(x/2048*16), round(y/2048*16))
+</code></pre>
+
+<p>最後的像素座標分別為：</p>
+
+<pre><code>(3.7, 0)
+(1.07, 0)
+(1.07, 11.38)
+(3.7, 11.38)
+</code></pre>
+
+<p>由此得知這個字形最後在螢幕像素上會是個寬高 2.63x11.38 的矩形。也可另外使用以下公式計算字形會用到的像素寬度跟高度：</p>
+
+<pre><code>X/Y軸使用的FUnit * ((字級大小pt * PPI / 72 * 字型UPM尺寸))
+</code></pre>
+
+<p>試算結果：</p>
+
+<pre><code>337 * ((12 * 96) / (72 * 2048)) = 2.63
+1456 * ((12 * 96) / (72 * 2048)) = 11.38
+</code></pre>
+
+<p>因此可以計算出 Roboto Black 的大寫 I 寬度使用 2.63 個像素，以及高度使用了 11.38 個像素。不過像素是螢幕上的最小單位，基本上是一個一個的整數，無法只顯示半個像素，為了實現這個目的，需要用到反鋸齒與子像素的技術。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CSS Font (1) - 字型基本]]></title>
@@ -2383,52 +2484,6 @@ execute pathogen#infect()
 
 
 <p>所以我的 blog 從搜尋引擎來的訪客中，用關鍵字去查有 74% 都是「not provided」大概就是這個原因。如果這篇答案的結果是正確的，採用 HTTPS 連線加密的網站便可以正確地搜集到帶有查詢字串的參照資料，那網站採用 HTTPS 將會變成最基本的條件。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[寫在 Google Reader 死後]]></title>
-    <link href="http://blog.chh.tw/posts/after-google-reader-dead/"/>
-    <updated>2013-03-16T00:02:00+08:00</updated>
-    <id>http://blog.chh.tw/posts/after-google-reader-dead</id>
-    <content type="html"><![CDATA[<p>昨天最熱門的消息就是 <a href="http://googlereader.blogspot.tw/2013/03/powering-down-google-reader.html">Google 宣布 Reader 的死亡</a>（GR 的官方部落格上次更新竟然是兩年前），判刑日定在今年 7 月 1 日，RIP。文章的意思是，在執行死刑之前，使用者可以用 <a href="https://www.google.com/takeout/?pli=1#custom:reader">Google Takeout</a> 把資料帶走，然後就趕快滾吧！雲端服務大概就是這麼回事吧，煙消雲散時<a href="https://news.ycombinator.com/item?id=5371725">使用者哭喊地再悲再慘</a>也沒用，只能把行李打包打包逃到下一個隨時可能散掉的雲。</p>
-
-<p>翻了一下統計資訊，我從 2010 年 4 月 10 日開始使用 Google Reader，直到今天將近三年的時間，總共閱讀過 70,194 個項目，平均起來每天至少瀏覽過 70 篇文章。這並不是很多，因為我的閱讀習慣早已經改變，不再依賴 RSS，以前早中晚都會習慣開 Google Reader 看新聞，現在幾乎只有一天一次、兩天一次，或者更少，頻率降低許多。</p>
-
-<p>現在我的主要資訊來源有以下這幾個：</p>
-
-<!-- more -->
-
-
-<h3>Twitter</h3>
-
-<p>自從開始使用 <a href="https://twitter.com/">Twitter</a> 後就愛上了 Twitter 這種訂閱資訊流的方式。自己挑選資訊策展人，然後從極短的網摘和大量的連結，讓我能夠很快地找到我想看的內容。不論是 Google Reader 已死、RSS 已死也好，總之從 Twitter 上取得資訊是我最喜歡的途徑。</p>
-
-<h3>Hacker News</h3>
-
-<p><a href="http://news.ycombinator.com/">Hacker News</a> 是矽谷知名創投設立的網站，<a href="http://www.inside.com.tw/2011/02/15/what-you-should-subscribe-hacker-news-provided-by-y-combinator">Inside 曾經有寫過專文</a>介紹它，儘管近來有素質每況愈下的感覺，但是上面的資訊大部分都仍然很有可看性，所以我現在每天還是都會去看看置頂的新聞有哪些。</p>
-
-<h3>Prismatic</h3>
-
-<p>我很喜歡 <a href="http://www.zite.com/">Zite</a> 這個資訊策展服務，可是我只想要在電腦上瀏覽使用，而 Zite 似乎沒打算做 Web 版，所以我選擇了 <a href="http://getprismatic.com/">Prismatic</a> 作為了 Zite 替代品。Prismatic 會依照個人的主題偏好，提供客製化的資訊流，目前用起來很滿意。</p>
-
-<p><img src="http://lh3.googleusercontent.com/--vfXlScj0-s/UUNEW_s885I/AAAAAAAAF7A/cesErfD2F-k/s686/google-reader-versus-google-plus.jpg" alt="google-reader-versus-google-plus" /></p>
-
-<p>話說回來，Google 把 Reader 關掉讓我感到有點訝異，雖然這個消息在小道上已經傳很久，但是也沒想到會是這樣子收場。如果按 <a href="http://www.techbang.com/posts/12585-former-product-manager-brian-shih-explains-why-google-reader-to-step-down-everything-is-google">T 客邦這篇文章</a>寫的那樣，說是 Google+ 的原因，這樣的說法更讓人難以接受，從種種跡象來看 Google+ 完全沒有替代 Reader 的能力，Google 怎麼敢就這樣下決定？好歹這份市場也不算小，就這樣拱手讓給別人實在很可惜。</p>
-
-<p>我目前把訂閱的清單暫時轉移到 <a href="http://blog.feedly.com/2013/03/14/google-reader/">Feedly</a> 去，或許哪天心血來潮還是會去翻翻看有什麼東西可以挖。</p>
-
-<p>2013.03.20 更新：Feedly 的套件需要存取所有網站資料的授權，因為它會在每個網站上嵌入一個小小的按鈕方便分享，而要使用 Feedly 似乎一定得裝他們的套件，實在太不乾淨，所以我決定不用了。</p>
-
-<p>2013.03.21 更新：在 <a href="http://www.feedly.com/home#preferences/mini%20toolbar">Feedly 的偏好設定頁面</a> 可以關掉那顆 mini 按鈕，感謝網友的告知。雖然還是不喜歡看個 RSS 也要授權那麼多東西，不過我打算還是用一陣子觀察看看。</p>
-
-<p><img src="http://lh4.googleusercontent.com/-nCh6xqkpDYQ/UUMzsAes5NI/AAAAAAAAF6s/uTRxBGGa4JU/s578/removing-google-reader.png" alt="removing-google-reader" /></p>
-
-<p>最後，跟 Google Reader 說再見的時候到了，謝謝你曾經提供這麼棒的服務來製造我的資訊焦慮，讓我一度以為你是那麼不可或缺，但又同時讓我理解到你並不是那麼地重要。</p>
-
-<p>Google Reader，快點從我的導航欄上消失吧！</p>
-
-<p>（突然想到我的 blog 目前只有提供 RSS 一種 feed 途徑……Orz）</p>
 ]]></content>
   </entry>
   

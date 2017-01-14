@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="2012-08-02 更新：因為 whiteball.tw 這個域名還有幾個月才到期，我還等到那個時候再換好了…… Orz 我要換網址了。 原本想說就只是簡單換網址，後來想想反正域名都改了，乾脆從頭來吧！所以 whiteball.tw 上的東西我就放在原處不理它，先在 Heroku &hellip;">
+  <meta name="description" content="Octopress 是基於 Jekyll 產生靜態頁面的部落格框架，專門為 hackers 設計的，因為他沒有友善的後台，而是用超宅的 Ruby 語言和最潮的版本控制系統 Git 作為操作的主要方法。其實架設 Octopress 並不是很困難，對於想要我這樣的程式入門者，甚至是一個了解 Ruby &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/15/" />
-<meta property="og:description" content="2012-08-02 更新：因為 whiteball.tw 這個域名還有幾個月才到期，我還等到那個時候再換好了…… Orz 我要換網址了。 原本想說就只是簡單換網址，後來想想反正域名都改了，乾脆從頭來吧！所以 whiteball.tw 上的東西我就放在原處不理它，先在 Heroku &hellip;" />
+<meta property="og:description" content="Octopress 是基於 Jekyll 產生靜態頁面的部落格框架，專門為 hackers 設計的，因為他沒有友善的後台，而是用超宅的 Ruby 語言和最潮的版本控制系統 Git 作為操作的主要方法。其實架設 Octopress 並不是很困難，對於想要我這樣的程式入門者，甚至是一個了解 Ruby &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="2012-08-02 更新：因為 whiteball.tw 這個域名還有幾個月才到期，我還等到那個時候再換好了…… Orz 我要換網址了。 原本想說就只是簡單換網址，後來想想反正域名都改了，乾脆從頭來吧！所以 whiteball.tw 上的東西我就放在原處不理它，先在 Heroku &hellip;" />
+<meta itemprop="description" content="Octopress 是基於 Jekyll 產生靜態頁面的部落格框架，專門為 hackers 設計的，因為他沒有友善的後台，而是用超宅的 Ruby 語言和最潮的版本控制系統 Git 作為操作的主要方法。其實架設 Octopress 並不是很困難，對於想要我這樣的程式入門者，甚至是一個了解 Ruby &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/octopress-theme-customization/">Octopress Theme Customization</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-16T12:01:00+08:00" pubdate data-updated="true">Jun 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://octopress.org/">Octopress</a> 是基於 <a href="https://github.com/mojombo/jekyll">Jekyll</a> 產生靜態頁面的部落格框架，專門為 hackers 設計的，因為他沒有友善的後台，而是用超宅的 Ruby 語言和最潮的版本控制系統 Git 作為操作的主要方法。其實架設 Octopress 並不是很困難，對於想要我這樣的程式入門者，甚至是一個了解 Ruby 語言和練習 Git 的好機會。</p>
+
+<p>這裡有我調整 Octopress 版面的寫筆記，記錄我用什麼方法，以及我為什麼這樣改的原因：</p>
+
+<h2>Readability</h2>
+
+<p>我是 Instapaper、Readability 和 Pocket 這類應用的愛用者，很享受那種舒適的排版和文字。這次我把側邊欄整個移除掉，因為我想營造出閱讀最佳化的感受，而側邊欄亂七八糟的文字恰恰會破壞這份體驗。除此之外，為了保持網頁的效能和簡潔，我也決定不要安裝任何的社群按鈕。背景則使用的是 <a href="http://subtlepatterns.com">SubtlePatterns</a> 的 Assault 主題，相當有質感。</p>
+
+<h2>Typography</h2>
+
+<p><a href="http://www.google.com/webfonts">Google Font</a> 真的是網頁開發者的好朋友，上頭有非常多的免費字型可以使用，只要透過 API 就可以取得喜歡的字型。找了好幾組配對，最後部落格標題字體和內文標題字體，分別使用我超愛的 <a href="http://www.google.com/webfonts/specimen/Patua+One">Patua One</a> 和 <a href="http://www.google.com/webfonts/specimen/Yanone+Kaffeesatz">Yanone Kaffeesatz</a>，因為超好看的，所以我決定以後每一篇文章標題都要用英文寫。</p>
+
+<p>至於中文怎麼辦？內文我用中文來寫，原則上會依照每個使用者瀏覽器設定的襯線字型來顯示，例如同樣是 Chrome 瀏覽器，Mac 上是儷宋 Pro，Windows 則是新細明體，但這不是我想要的。我想要讓使用者在不同平台上都能夠看到相同的字體，目前我只找到 <a href="http://www.justfont.com/">justFont</a> 這個解決方案，而且成為付費會員後能夠使用非常棒的<a href="http://www.vmtype.com/index_c.html">信黑體</a>字型，只是這樣的開銷不小，以我這個沒有流量的個人網站來說，實在很不划算，還是暫且擱著吧。</p>
+
+<h2>Retina…ready?</h2>
+
+<p>如果到 <a href="../../about">About</a> 頁面你可以看到一些可愛的圖示嵌入在內文當中，那是使用 <a href="http://fortawesome.github.com/Font-Awesome/">Font Awesome</a> 這套圖示字型做到的，因為隨著 Apple 推出 Retina 這類變態螢幕的裝置賣得越來越好，影響到現在的網頁設計也要跟著適應，所以我網站裡面都會盡量避免直接套圖，目前……除了右上角那顆 RSS 按鈕，其他都是用 HTML / CSS 和字型來實現，包括漸層、圓角和陰影等等。</p>
+
+<p>不過也不要被 Retina 過度嚇壞了，因為還是必須看網站的使用者是哪種屬性，例如我們都知道 IE6 很該死，但是還是有人在用，所以我們做網站的時候真的要為了他們，然後殺光開發者的腦細胞去搞 hack 嗎？未必，如果這批人少到可以忽略的時候，那就放他們去吧！別理他們了！Retina 螢幕的裝置目前就只有 iPhone 4S、iPad 第三代和新版 Macbook Pro，如果使用這些裝置的使用者，在訪問你的網站流量中比例低到你認為可以忽略，那就別理他們吧！</p>
+
+<hr />
+
+<p>以上大概就是我這次改佈景的一些記錄，其實沒有改很多，只是至少不會這麼容易第一眼就看出來是 Octopress！XD</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>

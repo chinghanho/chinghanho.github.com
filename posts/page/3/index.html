@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="這篇應該是我第一篇寫有關 Node.js 的文章，未來應該會開始多寫一些有關 Javascript 的東西。這次主題要來聊聊 Node.js 的 http 模組，跟知名的 Connect 和 Express 之間的關係，如果上網去問，有人會回說就像是 Ruby 的 Rack 一樣， &hellip;">
+  <meta name="description" content="mongoose 是一套給 Node.js 用的 MongoDB ODM，跟常聽到的 ORM 不同的地方只是一些技術名詞定義上的把戲，其實是差不多的意思。 透過 mongoose 可以用包裝過的、更高階的、更直覺的 API 語法，以及模擬 SQL 資料庫 schema-based 的方式，來操作 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/3/" />
-<meta property="og:description" content="這篇應該是我第一篇寫有關 Node.js 的文章，未來應該會開始多寫一些有關 Javascript 的東西。這次主題要來聊聊 Node.js 的 http 模組，跟知名的 Connect 和 Express 之間的關係，如果上網去問，有人會回說就像是 Ruby 的 Rack 一樣， &hellip;" />
+<meta property="og:description" content="mongoose 是一套給 Node.js 用的 MongoDB ODM，跟常聽到的 ORM 不同的地方只是一些技術名詞定義上的把戲，其實是差不多的意思。 透過 mongoose 可以用包裝過的、更高階的、更直覺的 API 語法，以及模擬 SQL 資料庫 schema-based 的方式，來操作 &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="這篇應該是我第一篇寫有關 Node.js 的文章，未來應該會開始多寫一些有關 Javascript 的東西。這次主題要來聊聊 Node.js 的 http 模組，跟知名的 Connect 和 Express 之間的關係，如果上網去問，有人會回說就像是 Ruby 的 Rack 一樣， &hellip;" />
+<meta itemprop="description" content="mongoose 是一套給 Node.js 用的 MongoDB ODM，跟常聽到的 ORM 不同的地方只是一些技術名詞定義上的把戲，其實是差不多的意思。 透過 mongoose 可以用包裝過的、更高階的、更直覺的 API 語法，以及模擬 SQL 資料庫 schema-based 的方式，來操作 &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,74 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/mongodb-odm-mongoose/">MongoDB 的 ODM：mongoose 簡單介紹</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-06T11:11:00+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh3.googleusercontent.com/-Tdo_5cAPDnk/UilIbkRmleI/AAAAAAAAGqQ/vh6dM2gZvV4/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-06+%25E4%25B8%258A%25E5%258D%258811.12.48.png" alt="mongoose" /></p>
+
+<p><a href="http://mongoosejs.com/">mongoose</a> 是一套給 Node.js 用的 MongoDB ODM，跟常聽到的 ORM 不同的地方只是一些<a href="http://stackoverflow.com/questions/12261866/what-is-the-difference-between-an-orm-and-an-odm">技術名詞定義上的把戲</a>，其實是差不多的意思。</p>
+
+<p>透過 mongoose 可以用包裝過的、更高階的、更直覺的 API 語法，以及模擬 SQL 資料庫 schema-based 的方式，來操作 MongoDB 資料庫。以下是個官方文件給的簡單範例，先建立了一個叫做 Cat 的 Model，<code>model</code> 的第二個參數就是建立 schema 的所在：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">Cat</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Cat&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="nb">String</span> <span class="p">}</span>
+</span><span class='line'><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">kitty</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Zildjian&#39;</span> <span class="p">});</span>
+</span><span class='line'><span class="nx">kitty</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="c1">// ...</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;meow&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/mongodb-odm-mongoose/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -281,51 +349,6 @@
   
     <footer>
       <a rel="full-article" href="/posts/osx-windows-switch-applications-ux/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/vim-vundle/">更好用的 Vim 外掛管理工具：Vundle</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-25T16:38:00+08:00" pubdate data-updated="true">May 25<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="https://lh4.googleusercontent.com/-_0FBYCCvjPU/UaB5LuYVrWI/AAAAAAAAGXY/ewSOLLQ8_xU/s690/vim-vundle.png" alt="vim-vundle" /></p>
-
-<p>先前曾經寫過怎麼使用 <a href="/posts/vim-plugins-manager-pathogen/">Pathogen</a> 管理 Vim 的外掛，Git 的 submodule 用久了開始覺得很不方便，有時候只是要測試一下新玩具，用完就刪掉，可是<a href="/posts/git-submodule/">前後要操作的指令</a>至少超過四個，實在有夠麻煩。</p>
-
-<p>正打算來寫個 script 自動化過程，但這種東西怎麼可能沒人寫過，於是上網找了一下，被我發現 <a href="https://github.com/gmarik/vundle">Vundle</a> 這個管理工具，看完 README 後馬上就把 Pathogen 刪掉了，然後寫了這篇文章。XD</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/posts/vim-vundle/">Read on &rarr;</a>
     </footer>
   
 

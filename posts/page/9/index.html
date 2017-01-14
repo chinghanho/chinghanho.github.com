@@ -9,7 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="我的 Macbook Air 就一個硬碟一個磁區，所以硬碟快照備份在本機一點意義也沒有，因為一旦硬碟掛了，那連備份也一起跟著掛。而且總容量只有 128GB，備份的檔案就吃掉 7GB 了，所以我打算把這個本地備份的功能給關掉。 此外，備份的意思就是要備份在不同的地方，備份在本機也是多此一舉。 &hellip;">
+  <meta name="description" content="OS X 不知道在哪一個版本加進 Dashboard 這個功能，對我來說這東西一點用也沒有，如果把 widgets 挪到桌面上可能還方便一點，可是放到 Dashboard 上真的超級不方便。 不過就算把 widgets 弄到桌面上，我還是不會用到這些工具，所以我決定把它整個給移除掉， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,14 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/9/" />
-<meta property="og:description" content="我的 Macbook Air 就一個硬碟一個磁區，所以硬碟快照備份在本機一點意義也沒有，因為一旦硬碟掛了，那連備份也一起跟著掛。而且總容量只有 128GB，備份的檔案就吃掉 7GB 了，所以我打算把這個本地備份的功能給關掉。 此外，備份的意思就是要備份在不同的地方，備份在本機也是多此一舉。 &hellip;" />
+<meta property="og:description" content="OS X 不知道在哪一個版本加進 Dashboard 這個功能，對我來說這東西一點用也沒有，如果把 widgets 挪到桌面上可能還方便一點，可是放到 Dashboard 上真的超級不方便。 不過就算把 widgets 弄到桌面上，我還是不會用到這些工具，所以我決定把它整個給移除掉， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="我的 Macbook Air 就一個硬碟一個磁區，所以硬碟快照備份在本機一點意義也沒有，因為一旦硬碟掛了，那連備份也一起跟著掛。而且總容量只有 128GB，備份的檔案就吃掉 7GB 了，所以我打算把這個本地備份的功能給關掉。 此外，備份的意思就是要備份在不同的地方，備份在本機也是多此一舉。 &hellip;" />
+<meta itemprop="description" content="OS X 不知道在哪一個版本加進 Dashboard 這個功能，對我來說這東西一點用也沒有，如果把 widgets 挪到桌面上可能還方便一點，可是放到 Dashboard 上真的超級不方便。 不過就算把 widgets 弄到桌面上，我還是不會用到這些工具，所以我決定把它整個給移除掉， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -100,6 +100,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/disable-os-x-dashboard/">關閉 OS X 雞肋的 Dashboard</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-17T06:36:00+08:00" pubdate data-updated="true">Nov 17<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>OS X 不知道在哪一個版本加進 Dashboard 這個功能，對我來說這東西一點用也沒有，如果把 widgets 挪到桌面上可能還方便一點，可是放到 Dashboard 上真的超級不方便。</p>
+
+<p>不過就算把 widgets 弄到桌面上，我還是不會用到這些工具，所以我決定把它整個給移除掉，因為開在背景這東西也是會消耗資源的。關閉的方法很簡單，在終端機中輸入：</p>
+
+<pre><code>defaults write com.apple.dashboard mcx-disabled -boolean YES
+killall Dock
+</code></pre>
+
+<p>第一條指令後面的 YES 換成 NO 的話，就是復原這個動作，不過記得，都要下 <code>killall Dock</code> 這個指令重新啟動 Dock 才會生效。</p>
+
+<p><img src="http://lh5.googleusercontent.com/-sPmI3eSBgYU/UKbA4bQtJOI/AAAAAAAAFXs/LAGQ9ySlNVI/s690/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7%25202012-11-17%2520%25E4%25B8%258A%25E5%258D%25886.37.49.png" alt="" /></p>
+
+<p>現在滑到 Mission Control 也不會出現 Dashboard 了，整個心情都變好，頭腦也變聰明，考試都考一百分。XD</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -347,264 +395,6 @@
 <li><a href="http://passtest.net/2010/11/amazon-aws-ec2-vpn-vps-2/">Amazon EC2上一键安装配置PPTP VPN服务</a></li>
 <li><a href="http://www.mac52ipod.cn/post/set-vpn-on-apple-mac-os-x.php">Mac技巧之苹果电脑Mac OS X系统下设置VPN翻墙上真正互联网的教程</a></li>
 </ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/deply-rails-app-on-ec2/">如何佈署 Rails 應用程式到 Amazon EC2</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-02T08:39:00+08:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>上禮拜練習佈署 Rails 到 <a href="http://aws.amazon.com/ec2/">Amazon EC2</a> 伺服器上，也理解了一下如何透過 SSH 操作遠端 server，很多原理還不是很懂，大部分只是得過且過，碰到問題就用別人的解決方案，目前是能讓機器動起來就好。</p>
-
-<p>如果哪天能夠不再只是按照別人的食譜來架設，能夠依照自己需求去調整，我想應該就是跨越了新手入門的級別了吧！</p>
-
-<h2>申請 Amazon AWS 帳號</h2>
-
-<p>對於新手而言使用 PaaS 的 <a href="http://www.heroku.com/">Heroku</a> 比較方便，不過 AWS 給的是更豐富的彈性。</p>
-
-<p>申請 Amazon AWS 需要信用卡帳號，新註冊的使用者可以有 12 個月的<a href="http://aws.amazon.com/free/">免費方案</a>，適合初學者練習用。這部份可以參考<a href="http://blog.soft.idv.tw/?p=824">阿正老師</a>寫的教學，整個申請流程和選擇機器的步驟，都有詳細的說明。而這篇文章用的作業系統環境是 Ubuntu 12.04 LTS 這個版本。</p>
-
-<p>如果機器準備好了，應該會得到一個金鑰檔案（.pem）和一組 IP，這個時候就可以開終端機用 SSH 跟剛剛選好 server 連線：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh -i YOUR_NAME.pem ubuntu@IP位址
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>等等會用到以下幾個工具，需要逐一安裝到伺服器上：</p>
-
-<ul>
-<li>RVM</li>
-<li>Nginx</li>
-<li>Passenger</li>
-</ul>
-
-
-<h2>調整 Ubuntu 環境設定</h2>
-
-<p>在安裝其他軟體之前，現對系統進行更新，確保軟體清單都是最新的：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get update
-</span><span class='line'><span class="nv">$ </span>sudo apt-get upgrade <span class="c">#對系統進行升級</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>修改系統時間，選擇到台北的時區，可以用 <code>date</code> 指令來確認時間有沒有正確：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo dpkg-reconfigure tzdata
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install ntp
-</span><span class='line'><span class="nv">$ </span>sudo ntpdate ntp.ubuntu.com <span class="c"># Update time</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果平常有偏好用 alias 可以這個時候先設定好，例如：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;alias ls=&#39;ls -l&#39;&quot;</span> &gt;&gt; ~/.bash_aliases
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;alias sudo=&#39;sudo env PATH=$PATH&#39;&quot;</span> &gt;&gt; ~/.bash_aliases
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>RVM</h2>
-
-<p>有時候我們會需要同時安裝多個 Ruby 版本在機器上，所以需要一套版本控制系統來切換，這裡用的是 RVM（Ruby Version Manager）<sup id='fnref:1'><a href='#fn:1' rel='footnote'>1</a></sup>：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>curl -L https://get.rvm.io | sudo bash -s stable <span class="c"># 用 curl 指令安裝 RVM</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> /etc/profile.d/rvm.sh <span class="c"># 啟用 RVM</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>把 RVM 安裝好以後輸入 <code>rvm requirements</code> 查看需要哪些 dependencies，例如我要安裝標準的 Ruby MRI 版本<sup id='fnref:2'><a href='#fn:2' rel='footnote'>2</a></sup>，那就需要安裝以下這些套件：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion pkg-config
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>現在網路這麼方便，隨時可以在網路上找到最新的文件，所以沒有必要把文件下載到本機裡，以下這個指令可以預設不要下載 gem 的文件說明檔案：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;gem: --no-ri --no-rdoc&#39;</span>  &gt;&gt; ~/.gemrc
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>RVM 安裝 Ruby 前面要用 <code>rvmsudo</code>，因為 <code>sudo</code> 不會包含 RVM 的環境變數，這個步驟需要 compile 可能會花比較久的時間；安裝好以後安裝 Rails 套件，然後建立一個 app 來測試看看：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvmsudo rvm install 1.9.3 --default --with-openssl-dir<span class="o">=</span><span class="nv">$HOME</span>/.rvm/usr
-</span><span class='line'><span class="nv">$ </span>gem list <span class="c"># 查看有哪些 Gems，主要是確保安裝成功</span>
-</span><span class='line'><span class="nv">$ </span>rvmsudo gem install rails
-</span><span class='line'><span class="nv">$ </span>rails -v <span class="c"># 確認 Rails 安裝成功</span>
-</span><span class='line'><span class="nv">$ </span>rails new firstapp
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ubuntu 預設沒有 JavaScript 的直譯器，需要在 Gemfile 中解開這行註解，然後重新 <code>bundle install</code>：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;therubyracer&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這個時候已經可以打開 server，執行 <code>rails server</code> 啟動 WEBrick server<sup id='fnref:3'><a href='#fn:3' rel='footnote'>3</a></sup>。在 Amazon EC2 Management Console 後台的 Security Groups 打開 3000 port，連到 Amazon 給的 Public 域名，順利的話應該可以看到 Rails 的初始畫面。</p>
-
-<h2>Nginx + Phusion Passenger</h2>
-
-<p>要先把 Passenger 的 gem 安裝起來：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvmsudo gem install passenger
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然後再安裝 Nginx 的 Passenger 模組：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvmsudo passenger-install-nginx-module
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這時會先檢查軟體需要的 dependencies，如果找不到也不用擔心，會出現說明指導該怎麼做，例如我遇到這個軟體沒有安裝：</p>
-
-<pre><code>* To install Curl development headers with SSL support:
-  Please run apt-get install libcurl4-openssl-dev or libcurl4-gnutls-dev, whichever you prefer.
-</code></pre>
-
-<p>那就按照指示把它裝起來就好了，然後重新執行一次安裝模組的指令繼續安裝 Nginx：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install libcurl4-openssl-dev
-</span><span class='line'><span class="nv">$ </span>rvmsudo passenger-install-nginx-module
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果軟體需要的 dependencies 都安裝好了以後，會詢問是要自動下載安裝，還是自訂安裝：</p>
-
-<pre><code>Automatically download and install Nginx?
-
-Nginx doesn't support loadable modules such as some other web servers do,
-so in order to install Nginx with Passenger support, it must be recompiled.
-
-Do you want this installer to download, compile and install Nginx for you?
-
- 1. Yes: download, compile and install Nginx for me. (recommended)
-The easiest way to get started. A stock Nginx 1.2.3 with Passenger
-support, but with no other additional third party modules, will be
-installed for you to a directory of your choice.
-
- 2. No: I want to customize my Nginx installation. (for advanced users)
-Choose this if you want to compile Nginx with more third party modules
-besides Passenger, or if you need to pass additional options to Nginx's
-'configure' script. This installer will  1) ask you for the location of
-the Nginx source code,  2) run the 'configure' script according to your
-instructions, and  3) run 'make install'.
-
-Whichever you choose, if you already have an existing Nginx configuration file,
-then it will be preserved.
-
-Enter your choice (1 or 2) or press Ctrl-C to abort: 1
-</code></pre>
-
-<p>因為沒有特別的需求，所以選擇 <code>1</code> 完整安裝，詢問安裝路徑時，就用預設的即可。接下來等待 Nginx 編譯完成，這可能會花不少時間，可以去 <a href="http://news.ycombinator.com/">Hacker News</a> 先看個新聞。</p>
-
-<p>這裡我參考了 <a href="http://chloerei.com/2012/08/05/rails-deploy-guides-1-base-deploy/">@chloerei</a> 的作法，新增 Nginx 伺服器啟動腳本，事實上我不曉得這腳本是怎麼運作的，這也就是我前言講的，目前功力太弱只能照著別人的食譜作為解決方案：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/init.d
-</span><span class='line'><span class="nv">$ </span>sudo wget https://raw.github.com/chloerei/nginx-init-ubuntu-passenger/master/nginx
-</span><span class='line'><span class="nv">$ </span>sudo update-rc.d nginx defaults
-</span><span class='line'><span class="nv">$ </span>sudo chmod +x nginx
-</span><span class='line'><span class="nv">$ </span>sudo service nginx start
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這樣以後可以用 <code>sudo service nginx [start|stop|restart]</code> 方式來管理伺服器了，變得比較方便一些。</p>
-
-<p>修改 /opt/nginx/conf/nginx.conf 文件設定，裡面看起來很多東西，但是重點只有以下這幾個：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>http {
-</span><span class='line'>  ...
-</span><span class='line'>  passenger_root /usr/local/rvm/gems/ruby-1.9.3-p286/gems/passenger-3.0.17;
-</span><span class='line'>  passenger_ruby /usr/local/rvm/wrappers/ruby-1.9.3-p286/ruby;
-</span><span class='line'>  ...
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>server {
-</span><span class='line'>  listen 80;
-</span><span class='line'>  server_name www.yourhost.com;
-</span><span class='line'>  root /somewhere/public;   # &lt;--- be sure to point to 'public'!
-</span><span class='line'>  passenger_enabled on;
-</span><span class='line'>  }</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>passenger_root</code> 和 <code>passenger_ruby</code> 讓 Nginx 可以找到 Passenger 執行路徑；<code>server_name</code> 是網域名稱，<code>root</code> 指向 Rails app 下的 /public 目錄（!important）。</p>
-
-<p>如果在 nginx.conf 檔案中有 <code>location /</code> 這段程式碼，把它註解掉，因為這樣可能會導致你看到 403 Forbidden。最後只要在 EC2 後台開啟 80 port，作法跟前面測試 Rails app 一樣，應該就可以正常連上了。</p>
-
-<div class="footnotes">
-    <ol>
-        <li id='fn:1'>當然也有其他選擇，例如 <a href="https://github.com/sstephenson/rbenv">rbenv</a> 是相較下較輕量的 Ruby 版本控制系統。 <a href='#fnref:1' rev='footnote'>↩</a></li><li id='fn:2'>以 C 語言實作的官方版本，通常稱為 CRuby 或是 MRI，意思是 Matz&#8217;s Ruby Interpreter。 <a href='#fnref:2' rev='footnote'>↩</a></li><li id='fn:3'>WEBrick 是用 Ruby 實作的簡單 HTTP server，開發的時候很好用，可是拿來當 production server 就會不敷使用。 <a href='#fnref:3' rev='footnote'>↩</a></li>
-    </ol>
-</div>
 
 </div>
   

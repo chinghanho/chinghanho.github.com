@@ -9,13 +9,7 @@
   <meta name="author" content="Ching-Han Ho">
 
   
-  <meta name="description" content="原生 HTML5 和 Javascript API 可以直接從瀏覽器存取硬體組件和感測器。這裏的硬體裝置主要是指手機。 點擊連結傳送簡訊 1
-2
-3
-4
-5
-6
-&lt;a href=&quot;tel:0912345678&quot;&gt;打給我！&lt;/a&gt; &lt;!-- &hellip;">
+  <meta name="description" content="Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。 jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -36,26 +30,14 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://blog.chh.tw/posts/page/2/" />
-<meta property="og:description" content="原生 HTML5 和 Javascript API 可以直接從瀏覽器存取硬體組件和感測器。這裏的硬體裝置主要是指手機。 點擊連結傳送簡訊 1
-2
-3
-4
-5
-6
-&lt;a href=&quot;tel:0912345678&quot;&gt;打給我！&lt;/a&gt; &lt;!-- &hellip;" />
+<meta property="og:description" content="Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。 jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB， &hellip;" />
 
 <meta property="og:site_name" content="blog.chh.tw" />
 <meta property="article:author" content="https://plus.google.com/114787528537231301324">
 
 
 
-<meta itemprop="description" content="原生 HTML5 和 Javascript API 可以直接從瀏覽器存取硬體組件和感測器。這裏的硬體裝置主要是指手機。 點擊連結傳送簡訊 1
-2
-3
-4
-5
-6
-&lt;a href=&quot;tel:0912345678&quot;&gt;打給我！&lt;/a&gt; &lt;!-- &hellip;" />
+<meta itemprop="description" content="Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。 jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB， &hellip;" />
 
 <!-- Combine multiple fonts into one request -->
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic|Patua+One|Yanone+Kaffeesatz" rel="stylesheet" type="text/css">
@@ -118,6 +100,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/posts/using-zepto-replace-jquery/">使用 Zepto + Velocity 無縫取代 jQuery 更輕巧</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-01T00:26:00+08:00" pubdate data-updated="true">Oct 1<span>st</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://lh3.googleusercontent.com/fKcLfP4rJK5syiKv-cfmDYlbdC0_dV8sAdyQfYM3DxZW76knVkgxFsMC4sWsBpaN_27emoOHF504CNpmSDn0rnlDG2Eu1vw6RNowi18owUxdnBYaotT3hz2BIWnrQioS-tfQfOU4iDNAss3pzDKuNOPmSLWjNVP-zQrZJhZOK1Xf78TU9GdCSKnIApESyUZ777gjz7LC5PKw9Yk_NcNr8GCrKRsd7cCQciMf_sSmmZ1sqWKRcIAVWdt-B7_5fV9nW4vNfBYkFvJCI-BaIC_KmR-KPiVMUHi7y4hMzW1DmT4uzAJwfKIk3tvjWW6pEe345hE3R0nxqq-y0apP64DcndcDHFq16S1KqW465nsZRwvg6412LAjzp1cVM_XEimA9NekxAlTC1u89PNLyALrNtaaNRsAsj02D43lSFKu0gEKGMdAl23BhXkBtL-khwLYgoKWCbRkvZ7eznqnONx7zyGxxbNNU48Rn5NLDhw74Bxr0Xy72I1ROoGjm7E22V5-5BSl3CbsBAgczJ-fxCgxHzYWsmJpdqAIA6DVFmD5A8Vk=w690" alt="zeptojs" /></p>
+
+<p>Zepto 是個跟 jQuery API 相容的套件，但是非常輕巧。</p>
+
+<p>jQuery 1.11.2 不壓縮 278KB，壓縮後是 94.8KB。儘管 jQuery 2.0 比 jQuery 1.11 減少了 12% 的體積大小，仍然是個 200KB 級的套件。而 Zepto 不壓縮 56KB，壓縮後大約是 24.5KB，比 jQuery 平均小了 74%！</p>
+
+<p>Zepto 極其輕巧的秘訣在於它預設只有 jQuery 最關鍵的幾個核心功能，並且用友善的模組化設計，保持每個功能能夠輕易地被擴充。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/posts/using-zepto-replace-jquery/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -570,74 +599,6 @@
   
     <footer>
       <a rel="full-article" href="/posts/node-template-engine-jade-vs-handlebars/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/posts/mongodb-odm-mongoose/">MongoDB 的 ODM：mongoose 簡單介紹</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-06T11:11:00+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="https://lh3.googleusercontent.com/-Tdo_5cAPDnk/UilIbkRmleI/AAAAAAAAGqQ/vh6dM2gZvV4/w690-h450-no/%25E8%259E%25A2%25E5%25B9%2595%25E5%25BF%25AB%25E7%2585%25A7+2013-09-06+%25E4%25B8%258A%25E5%258D%258811.12.48.png" alt="mongoose" /></p>
-
-<p><a href="http://mongoosejs.com/">mongoose</a> 是一套給 Node.js 用的 MongoDB ODM，跟常聽到的 ORM 不同的地方只是一些<a href="http://stackoverflow.com/questions/12261866/what-is-the-difference-between-an-orm-and-an-odm">技術名詞定義上的把戲</a>，其實是差不多的意思。</p>
-
-<p>透過 mongoose 可以用包裝過的、更高階的、更直覺的 API 語法，以及模擬 SQL 資料庫 schema-based 的方式，來操作 MongoDB 資料庫。以下是個官方文件給的簡單範例，先建立了一個叫做 Cat 的 Model，<code>model</code> 的第二個參數就是建立 schema 的所在：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">Cat</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Cat&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="nb">String</span> <span class="p">}</span>
-</span><span class='line'><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">kitty</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Zildjian&#39;</span> <span class="p">});</span>
-</span><span class='line'><span class="nx">kitty</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="c1">// ...</span>
-</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;meow&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/posts/mongodb-odm-mongoose/">Read on &rarr;</a>
     </footer>
   
 
