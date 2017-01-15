@@ -32,7 +32,7 @@ categories: Programing
 
 ![Character extending outside of the em square.](https://lh3.googleusercontent.com/87tTVmRKfgB9GM7NZWF6ip9nHW-NKYGy8gNU9f8K3aMZXCkg0f16JGgT4-_0tht9i5WpLWOHJYi3NKflZiRjHg5ve1V9lKnUVTGiubZwDXkMuizGc2jP-hozP4zLsLPQlVM_Jmfs65TrS_exYL-BmWRc_h2g9YwxAZkB08zoX3CmEiTfVsehGl31MPuB0C3JtpObW19usVSG98AMDSrYQIt_SxYu58sBQEpfTKpJprFjND5IP7um5IKWuqJixDHjr3ZwF4k4y9b3PiCr3KV7OrpzF51Gl7_HvNfZPzCKt-8vCEgIRODN26N5NjEv6Gq7wuKDDItU30Ukj1RUOibGYlv6grb39g2EkiPwQsnYx9R0FEBvOHP_LrZMfzPH8-Yhqka99lIAbQT2-29593zDY3CqKTB3pFADrqM9zJSUNz3zTU_qeBZppdVZ3IflBaDdD1uKDBlVSe9tu6HQqoxFgNpXBmQmuuX6uI7s5CNpWDtocaon9VfyhWPxzRsKYlABBP5L8Ag3TC7GOwFvKGjwK1lse5WIuK1t8HgC9MniNHW1iIenF0H33kvPruTispc31EV8lpz3w4uQNJFmFzMWVB-KmKXqOCdlTu5oJ1iqxVhsNB8bV8X1mVDzKu3w00-oQvVexxWi5FUd_ng1hs7oDY2VnOXW6nSyeCmrxOq0YPA=s799-no)
 
-當指定 CSS `font-size` 16px 瀏覽器便會將字型 EM square 的大小映射到螢幕 16px 的大小上，我會在下一篇文章介紹這部分的原理。
+當指定 CSS `font-size` 16px 瀏覽器便會將字型 EM square 的大小映射到螢幕 16px 的大小上，可以參考我的另一篇文章「[CSS Font (2) - 像素](http://blog.chh.tw/posts/css-font-pixel/)」。
 
 ## 字形解構
 
