@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "CSS Font (1) - 字型基本"
+title: "CSS Font (1) - 基本概念"
 date: 2016-12-17 12:59
 comments: true
 categories: Programing
@@ -20,9 +20,9 @@ categories: Programing
 
 在數位時代一個字母的空間容器從實體金屬塊轉移到虛擬的電腦程式上，電腦程式會建構一個虛構的空間容器被稱為 [EM square](http://designwithfontforge.com/zh-CN/The_EM_Square.html)、EM size 或 UPM（Unit per EM），術語源自活版印刷技術的歷史，而數位字型也將以此作為容器基礎。
 
-字型（font）指的是文字造型，又稱為字體，常見的字型例如標楷體、新細明體、微軟正黑體、蘋方體、Times New Roman、Helvetica 等，基於相似風格字形組成的家族（family）便稱為字型，也是 CSS 的 `font-family` 所設定的名稱。
+字體（typeface）指的是文字的外觀風格，常見的字體例如標楷體、新細明體、微軟正黑體、蘋方體、Times New Roman、Helvetica 等，基於相似概念組成的集合便稱為字體家族（font family），也是 CSS 的 `font-family` 所設定的名稱。
 
-字形（Glyph）指的是字元的形狀，由程式演算法或是文字工程師、設計師手動調整的形狀本身。一個字型的所有字形都有相同的 EM square 尺寸，差別在於字形的大小不同。
+字形（glyph）指的是字元的形狀，由程式演算法或是文字工程師、設計師手動調整的形狀本身。一個字型的所有字形都有相同的 EM square 尺寸，差別在於字形的大小不同。
 
 ![EM square](https://lh3.googleusercontent.com/g1lcXEFfL9nixF0Y2Y_iGmWdB_0IDR7x8lc1Qyvsmm9HaADlF3NuwPsYRAgYZGIDfiTkE70Bzplb8wTlXMlWomr5oW3pYh82SeoK4Up0JDWVTTfBFb1uGlhuqeOSgxVxY3EQnZv7z70PqQedGmiKk3bslIllLWK_qkm0UAkz_-bH8Tu5UofMGV79RDcMCLsPcTHmz4aIv8kgwSV1v9QOsBnwzHA5VxGkUhYaI43KF7wrI8671AiRWqdoVC50fEnAilnAZfdEOuJYemEPrK08WILJhE4TsU9vT-HyyNjVbyofFkZjAuoTz38Ar8Ui-fhF_2oyqIQ_eT8IyzcAqWJdID_LQpavb4l7t_oFXvtcUMUCmBgbr0vwwBghubTM3hCP1X-L4uDYLA3ZRcZRxUilyfvx77eY5Ql7ShBQbV_WODZxsEGlTvXJVKG_R63uS01mWg0JEXEmD-hWc75yDofawRB_9wXU9iAbqR6PrFlyUUXvrRBGqDj5tqlnz1IXaOO_yviAqlWaWLjOTEP5sayRQmzlM2XsS0IOalze94YySZN31VJ34Yisf5kBjhdDQVUz5XgENmTyBCjK_CKihb-BiuT1UceXbU_sYPDNrcvMKnV1BJOIEFd2b6pWUQZ0ZtKaFc5_RyiBRZH70dyaCw0VL4_Dm8l9hwMIsaXvK89Yxj0=s755-no)
 
