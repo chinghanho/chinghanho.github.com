@@ -4,7 +4,7 @@ ruby "2.3.0"
 
 group :development do
   gem 'rake', '~> 0.9'
-  gem 'rack', '~> 1.4.1'
+  gem 'rack', '~> 1.6.12'
   gem 'jekyll', '~> 0.12'
   gem 'rdiscount', '~> 1.6.8'
   gem 'pygments.rb', '~> 0.3.4'
