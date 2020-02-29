@@ -3,7 +3,7 @@ source "http://rubygems.org"
 ruby "2.3.0"
 
 group :development do
-  gem 'rake', '~> 0.9'
+  gem 'rake', '~> 12.3'
   gem 'rack', '~> 1.4.1'
   gem 'jekyll', '~> 0.12'
   gem 'rdiscount', '~> 1.6.8'
